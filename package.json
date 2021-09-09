@@ -10,6 +10,10 @@
     "lint": "eslint \"**/*.js\""
   },
   "dependencies": {
+    "@orbit/coordinator": "^0.16.7",
+    "@orbit/data": "^0.16.7",
+    "@orbit/jsonapi": "^0.16.7",
+    "@orbit/memory": "^0.16.7",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
