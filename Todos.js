@@ -1,4 +1,5 @@
 import React from 'react';
+import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
 import store from './store';
 import useOrbitQuery from './useOrbitQuery';
@@ -12,14 +13,16 @@ export default function Todos() {
   const todos = useOrbitQuery({store, query});
 
   return (
-    <>
-      {todos.map(todo => (
+    <FlatList
+      data={todos}
+      keyExtractor={todo => todo.id}
+      renderItem={({item: todo}) => (
         <List.Item
           key={todo.id}
           title={todo.attributes.name}
           left={props => <List.Icon {...props} icon="checkbox-blank-outline" />}
         />
-      ))}
-    </>
+      )}
+    />
   );
 }
