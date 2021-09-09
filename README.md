@@ -1,12 +1,11 @@
-# (your app name)
+# Surely-Expo
 
-A brief description of your app.
+A client for the Surely todo app written in Expo, targeting iOS and web.
 
 ## Requirements
 
 - [Yarn](https://yarnpkg.com/en/docs/install)
-- [Expo CLI](https://facebook.github.io/react-native/docs/getting-started)
-- [Detox CLI](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
 
 ## Installation
 
@@ -20,7 +19,7 @@ $ yarn install
 $ yarn start
 ```
 
-Then click "Run on Android device/emulator" or "Run on iOS simulator".
+Then click "Run on Android device/emulator", "Run on iOS simulator", or "Run in web browser"
 
 ## Testing
 
