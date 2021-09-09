@@ -28,5 +28,8 @@
     "jest-expo": "^42.1.0",
     "react-test-renderer": "^17.0.2"
   },
+  "jest": {
+    "preset": "jest-expo"
+  },
   "private": true
 }
