@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {List, Title} from 'react-native-paper';
 import store from './store';
 import useOrbitQuery from './useOrbitQuery';
 
@@ -13,9 +13,13 @@ export default function Todos() {
 
   return (
     <>
-      <Text>Todos</Text>
+      <Title>Todos</Title>
       {todos.map(todo => (
-        <Text key={todo.id}>{todo.attributes.name}</Text>
+        <List.Item
+          key={todo.id}
+          title={todo.attributes.name}
+          left={props => <List.Icon {...props} icon="checkbox-blank-outline" />}
+        />
       ))}
     </>
   );
