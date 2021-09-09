@@ -1,15 +1,19 @@
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 import Todos from './Todos';
+createNativeStackNavigator;
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <PaperProvider>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Todos />
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Todos" component={Todos} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </PaperProvider>
   );
 }

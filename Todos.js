@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Title} from 'react-native-paper';
+import {List} from 'react-native-paper';
 import store from './store';
 import useOrbitQuery from './useOrbitQuery';
 
@@ -13,7 +13,6 @@ export default function Todos() {
 
   return (
     <>
-      <Title>Todos</Title>
       {todos.map(todo => (
         <List.Item
           key={todo.id}
