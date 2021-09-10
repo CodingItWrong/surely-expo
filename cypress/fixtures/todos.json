@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "id": "abc123",
+      "type": "todos",
+      "attributes": {
+        "name": "Todo 1"
+      }
+    }
+  ]
+}
