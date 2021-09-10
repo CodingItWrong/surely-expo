@@ -20,7 +20,12 @@ export default function CustomNavigationBar({route, navigation, back}) {
           visible={visible}
           onDismiss={closeMenu}
           anchor={
-            <Appbar.Action icon="menu" color="white" onPress={openMenu} />
+            <Appbar.Action
+              icon="menu"
+              color="black"
+              accessibilityLabel="Menu"
+              onPress={openMenu}
+            />
           }
         >
           <Menu.Item
