@@ -6,10 +6,12 @@ import Coordinator, {
 } from '@orbit/coordinator';
 import JSONAPISource from '@orbit/jsonapi';
 import MemorySource from '@orbit/memory';
+import {Platform} from 'react-native';
 import {token} from '../env';
 import schema from './schema';
 
-const baseURL = 'http://localhost:3000';
+const baseURL =
+  Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
 
 const memory = new MemorySource({schema});
 
