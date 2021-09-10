@@ -1,16 +1,21 @@
 import React, {useState} from 'react';
 import {Appbar, Menu} from 'react-native-paper';
 
-export default function CustomNavigationBar({route, navigation, previous}) {
+export default function CustomNavigationBar({route, navigation, back}) {
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
   return (
     <Appbar.Header>
-      {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
+      {back ? (
+        <Appbar.BackAction
+          onPress={navigation.goBack}
+          accessibilityLabel={`Back to ${back.title}`}
+        />
+      ) : null}
       <Appbar.Content title={route.name} />
-      {!previous ? (
+      {!back ? (
         <Menu
           visible={visible}
           onDismiss={closeMenu}
