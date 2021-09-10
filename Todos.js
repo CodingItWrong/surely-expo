@@ -1,3 +1,4 @@
+import {useLinkTo} from '@react-navigation/native';
 import React from 'react';
 import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
@@ -11,6 +12,7 @@ const query = q => q.findRecords('todo');
 
 export default function Todos() {
   const todos = useOrbitQuery({store, query});
+  const linkTo = useLinkTo();
 
   return (
     <FlatList
@@ -20,7 +22,7 @@ export default function Todos() {
         <List.Item
           key={todo.id}
           title={todo.attributes.name}
-          left={props => <List.Icon {...props} icon="checkbox-blank-outline" />}
+          onPress={() => linkTo(`/todos/${todo.id}`)}
         />
       )}
     />
