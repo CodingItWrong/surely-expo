@@ -68,6 +68,7 @@ const renderForm = ({username, password, error, handleChange, handleLogIn}) => (
       label="Email"
       value={username}
       onChangeText={handleChange('username')}
+      onSubmitEditing={handleLogIn}
       keyboardType="email-address"
       autoCapitalize="none"
       autoCorrect={false}
@@ -76,6 +77,7 @@ const renderForm = ({username, password, error, handleChange, handleLogIn}) => (
       label="Password"
       value={password}
       onChangeText={handleChange('password')}
+      onSubmitEditing={handleLogIn}
       secureTextEntry
     />
     <Button onPress={handleLogIn}>Sign in</Button>
