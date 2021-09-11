@@ -7,7 +7,6 @@ import Coordinator, {
 import JSONAPISource from '@orbit/jsonapi';
 import MemorySource from '@orbit/memory';
 import {Platform} from 'react-native';
-import {token} from '../env';
 import schema from './schema';
 
 const baseURL =
@@ -25,8 +24,10 @@ const remote = new JSONAPISource({
   host: baseURL,
 });
 
-// see https://github.com/orbitjs/orbit/issues/454
-remote.requestProcessor.defaultFetchSettings.headers.Authorization = `Bearer ${token}`;
+export function setToken(token) {
+  // see https://github.com/orbitjs/orbit/issues/454
+  remote.requestProcessor.defaultFetchSettings.headers.Authorization = `Bearer ${token}`;
+}
 
 remote.requestQueue.on('fail', () => {
   remote.requestQueue.skip();

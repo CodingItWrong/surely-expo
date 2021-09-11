@@ -3,6 +3,7 @@ import axios from 'axios';
 import React from 'react';
 import {Platform} from 'react-native';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
+import {setToken} from './store';
 
 const Auth = ({children}) => (
   <OAuth
@@ -20,7 +21,6 @@ const baseURL =
   Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
 
 const httpClient = axios.create({baseURL});
-const setToken = () => {}; // TODO
 
 const renderForm = ({username, password, error, handleChange, handleLogIn}) => (
   <>
