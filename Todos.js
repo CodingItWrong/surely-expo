@@ -4,10 +4,14 @@ import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
 import useOrbitQuery from './useOrbitQuery';
 
-// const query = q =>
-//   q.findRecords('todo').filter({attribute: 'status', value: 'available'});
-
-const query = q => q.findRecords('todo');
+// todos that are not completed and not deleted
+const query = q =>
+  q
+    .findRecords('todo')
+    .filter(
+      {attribute: 'completedAt', value: null},
+      {attribute: 'deletedAt', value: null},
+    );
 
 export default function Todos() {
   const todos = useOrbitQuery({query});
