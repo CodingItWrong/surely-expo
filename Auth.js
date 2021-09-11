@@ -27,7 +27,7 @@ const Auth = ({children}) => {
       httpClient={httpClient}
       handleAccessToken={handleAccessToken}
       renderForm={renderForm}
-      renderLoggedIn={children}
+      renderLoggedIn={renderLoggedIn(children)}
     />
   );
 };
@@ -41,7 +41,7 @@ async function handleAccessToken(token) {
   setToken(token);
 }
 
-export async function loadAccessToken() {
+async function loadAccessToken() {
   const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
   if (token) {
     setToken(token);
@@ -50,6 +50,8 @@ export async function loadAccessToken() {
     return null;
   }
 }
+
+const clearAccessToken = () => SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
 
 const baseURL =
   Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
@@ -79,3 +81,11 @@ const renderForm = ({username, password, error, handleChange, handleLogIn}) => (
     <Button onPress={handleLogIn}>Sign in</Button>
   </>
 );
+
+const renderLoggedIn = children => props => {
+  const {logOut, ...rest} = props;
+
+  const handleLogOut = () => clearAccessToken().then(logOut);
+
+  return children({logOut: handleLogOut, ...rest});
+};
