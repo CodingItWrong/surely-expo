@@ -1,3 +1,7 @@
+// WARNING: using localStorage to store keys has significant security risks.
+// It is safer to host a React app in a server-rendered webapp and store tokens
+// in cookie-secured sessions.
+
 const webStorage = {
   setStringAsync(key, value) {
     window.localStorage.setItem(key, value);
