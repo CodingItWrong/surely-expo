@@ -15,9 +15,19 @@ export function TokenProvider({children}) {
   const [isTokenLoaded, setIsTokenLoaded] = useState(false);
   const [token, setToken] = useState(null);
 
+  const setTokenWrapper = newToken => {
+    console.log('SET TOKEN', newToken);
+    setToken(newToken);
+  };
+
   return (
     <TokenContext.Provider
-      value={{token, setToken, isTokenLoaded, setIsTokenLoaded}}
+      value={{
+        token,
+        setToken: setTokenWrapper,
+        isTokenLoaded,
+        setIsTokenLoaded,
+      }}
     >
       {children}
     </TokenContext.Provider>
@@ -33,11 +43,8 @@ export function useToken() {
   } = useContext(TokenContext);
 
   useEffect(() => {
-    console.log(1);
     if (!isTokenLoaded) {
-      console.log(2);
       getStringAsync(ACCESS_TOKEN_KEY).then(newToken => {
-        console.log(3, {newToken});
         if (newToken) {
           setToken(newToken).then(() => {
             setIsTokenLoaded(true);
@@ -59,7 +66,7 @@ export function useToken() {
 
   async function clearToken() {
     await deleteStringAsync(ACCESS_TOKEN_KEY);
-    setToken(null);
+    setTokenInternal(null);
   }
 
   return {isTokenLoaded, token, setToken, clearToken};
