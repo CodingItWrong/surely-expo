@@ -1,4 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
+import sortBy from 'lodash/sortBy';
 import React from 'react';
 import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
@@ -15,11 +16,12 @@ const query = q =>
 
 export default function Todos() {
   const todos = useOrbitQuery({query});
+  const sortedTodos = sortBy(todos, [t => t.attributes.name.toLowerCase()]);
   const linkTo = useLinkTo();
 
   return (
     <FlatList
-      data={todos}
+      data={sortedTodos}
       keyExtractor={todo => todo.id}
       renderItem={({item: todo}) => (
         <List.Item
