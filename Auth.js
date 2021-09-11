@@ -34,7 +34,7 @@ const Auth = ({children}) => {
 
 export default Auth;
 
-const ACCESS_TOKEN_KEY = 'SURELY-ACCESS_TOKEN';
+const ACCESS_TOKEN_KEY = 'SURELY_ACCESS_TOKEN';
 
 async function handleAccessToken(token) {
   await setStringAsync(ACCESS_TOKEN_KEY, token);
