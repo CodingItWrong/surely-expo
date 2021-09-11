@@ -1,21 +1,55 @@
 import {OAuth} from '@codingitwrong/react-login';
 import axios from 'axios';
-import React from 'react';
+import * as SecureStore from 'expo-secure-store';
+import React, {useEffect, useState} from 'react';
 import {Platform} from 'react-native';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
 import {setToken} from './store';
 
-const Auth = ({children}) => (
-  <OAuth
-    initiallyLoggedIn={false}
-    httpClient={httpClient}
-    handleAccessToken={setToken}
-    renderForm={renderForm}
-    renderLoggedIn={children}
-  />
-);
+const Auth = ({children}) => {
+  const [loaded, setLoaded] = useState(false);
+  const [initiallyLoggedIn, setInitiallyLoggedIn] = useState(false);
+
+  useEffect(() => {
+    loadAccessToken().then(loggedIn => {
+      setInitiallyLoggedIn(loggedIn);
+      setLoaded(true);
+    });
+  }, []);
+
+  if (!loaded) {
+    return null;
+  }
+
+  return (
+    <OAuth
+      initiallyLoggedIn={initiallyLoggedIn}
+      httpClient={httpClient}
+      handleAccessToken={handleAccessToken}
+      renderForm={renderForm}
+      renderLoggedIn={children}
+    />
+  );
+};
 
 export default Auth;
+
+const ACCESS_TOKEN_KEY = 'SURELY-ACCESS_TOKEN';
+
+async function handleAccessToken(token) {
+  await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, token);
+  setToken(token);
+}
+
+export async function loadAccessToken() {
+  const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+  if (token) {
+    setToken(token);
+    return !!token;
+  } else {
+    return null;
+  }
+}
 
 const baseURL =
   Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
