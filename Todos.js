@@ -1,4 +1,3 @@
-import {useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
 import React from 'react';
 import {FlatList} from 'react-native';
@@ -20,13 +19,21 @@ export default function Todos() {
   const store = useStore();
   const todos = useOrbitQuery({query});
   const sortedTodos = sortBy(todos, [t => t.attributes.name.toLowerCase()]);
-  const linkTo = useLinkTo();
 
   const handleCreate = name =>
     store.update(t =>
       t.addRecord({
         type: 'todo',
         attributes: {name},
+      }),
+    );
+
+  const handleComplete = todo =>
+    store.update(t =>
+      t.updateRecord({
+        type: 'todo',
+        id: todo.id,
+        attributes: {completedAt: new Date()},
       }),
     );
 
@@ -40,7 +47,7 @@ export default function Todos() {
           <List.Item
             key={todo.id}
             title={todo.attributes.name}
-            onPress={() => linkTo(`/todos/${todo.id}`)}
+            onPress={() => handleComplete(todo)}
           />
         )}
       />
