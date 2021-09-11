@@ -1,9 +1,9 @@
 import {OAuth} from '@codingitwrong/react-login';
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
 import React, {useEffect, useState} from 'react';
 import {Platform} from 'react-native';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
+import {deleteStringAsync, getStringAsync, setStringAsync} from './storage';
 import {setToken} from './store';
 
 const Auth = ({children}) => {
@@ -37,12 +37,12 @@ export default Auth;
 const ACCESS_TOKEN_KEY = 'SURELY-ACCESS_TOKEN';
 
 async function handleAccessToken(token) {
-  await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, token);
+  await setStringAsync(ACCESS_TOKEN_KEY, token);
   setToken(token);
 }
 
 async function loadAccessToken() {
-  const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+  const token = await getStringAsync(ACCESS_TOKEN_KEY);
   if (token) {
     setToken(token);
     return !!token;
@@ -51,7 +51,7 @@ async function loadAccessToken() {
   }
 }
 
-const clearAccessToken = () => SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+const clearAccessToken = () => deleteStringAsync(ACCESS_TOKEN_KEY);
 
 const baseURL =
   Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
