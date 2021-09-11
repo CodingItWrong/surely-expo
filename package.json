@@ -21,6 +21,7 @@
     "expo": "~42.0.1",
     "expo-secure-store": "~10.2.0",
     "expo-status-bar": "~1.0.4",
+    "lodash": "^4.17.21",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
