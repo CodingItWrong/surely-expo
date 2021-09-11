@@ -1,8 +1,10 @@
 import {useEffect, useState} from 'react';
+import {useStore} from './store';
 
 const defaultStoreReady = () => Promise.resolve();
 
-const useOrbitQuery = ({storeReady = defaultStoreReady, store, query}) => {
+const useOrbitQuery = ({storeReady = defaultStoreReady, query}) => {
+  const store = useStore();
   const [records, setRecords] = useState([]);
 
   useEffect(() => {

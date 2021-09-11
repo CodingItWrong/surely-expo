@@ -6,6 +6,7 @@ import Auth from './Auth';
 import NavigationBar from './NavigationBar';
 import Todo from './Todo';
 import Todos from './Todos';
+import {StoreProvider} from './store';
 import {TokenProvider} from './token';
 
 const theme = {
@@ -31,20 +32,24 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <TokenProvider>
-        <Auth>
-          {({logOut}) => (
-            <NavigationContainer linking={linking}>
-              <Stack.Navigator
-                screenOptions={{
-                  header: props => <NavigationBar logOut={logOut} {...props} />,
-                }}
-              >
-                <Stack.Screen name="Todos" component={Todos} />
-                <Stack.Screen name="Todo" component={Todo} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          )}
-        </Auth>
+        <StoreProvider>
+          <Auth>
+            {({logOut}) => (
+              <NavigationContainer linking={linking}>
+                <Stack.Navigator
+                  screenOptions={{
+                    header: props => (
+                      <NavigationBar logOut={logOut} {...props} />
+                    ),
+                  }}
+                >
+                  <Stack.Screen name="Todos" component={Todos} />
+                  <Stack.Screen name="Todo" component={Todo} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            )}
+          </Auth>
+        </StoreProvider>
       </TokenProvider>
     </PaperProvider>
   );
