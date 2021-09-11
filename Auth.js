@@ -1,23 +1,16 @@
 import {OAuth} from '@codingitwrong/react-login';
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Platform} from 'react-native';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
-import {deleteStringAsync, getStringAsync, setStringAsync} from './storage';
-import {setToken} from './store';
+import {useToken} from './token';
 
 const Auth = ({children}) => {
-  const [loaded, setLoaded] = useState(false);
-  const [initiallyLoggedIn, setInitiallyLoggedIn] = useState(false);
+  const {isTokenLoaded, token, setToken, clearToken} = useToken();
 
-  useEffect(() => {
-    loadAccessToken().then(loggedIn => {
-      setInitiallyLoggedIn(loggedIn);
-      setLoaded(true);
-    });
-  }, []);
+  const initiallyLoggedIn = !!token;
 
-  if (!loaded) {
+  if (!isTokenLoaded) {
     return null;
   }
 
@@ -25,33 +18,14 @@ const Auth = ({children}) => {
     <OAuth
       initiallyLoggedIn={initiallyLoggedIn}
       httpClient={httpClient}
-      handleAccessToken={handleAccessToken}
+      handleAccessToken={setToken}
       renderForm={renderForm}
-      renderLoggedIn={renderLoggedIn(children)}
+      renderLoggedIn={renderLoggedIn({children, clearToken})}
     />
   );
 };
 
 export default Auth;
-
-const ACCESS_TOKEN_KEY = 'SURELY_ACCESS_TOKEN';
-
-async function handleAccessToken(token) {
-  await setStringAsync(ACCESS_TOKEN_KEY, token);
-  setToken(token);
-}
-
-async function loadAccessToken() {
-  const token = await getStringAsync(ACCESS_TOKEN_KEY);
-  if (token) {
-    setToken(token);
-    return !!token;
-  } else {
-    return null;
-  }
-}
-
-const clearAccessToken = () => deleteStringAsync(ACCESS_TOKEN_KEY);
 
 const baseURL =
   Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
@@ -84,10 +58,12 @@ const renderForm = ({username, password, error, handleChange, handleLogIn}) => (
   </>
 );
 
-const renderLoggedIn = children => props => {
-  const {logOut, ...rest} = props;
+const renderLoggedIn =
+  ({children, clearToken}) =>
+  props => {
+    const {logOut, ...rest} = props;
 
-  const handleLogOut = () => clearAccessToken().then(logOut);
+    const handleLogOut = () => clearToken().then(logOut);
 
-  return children({logOut: handleLogOut, ...rest});
-};
+    return children({logOut: handleLogOut, ...rest});
+  };

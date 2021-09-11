@@ -6,6 +6,7 @@ import Auth from './Auth';
 import NavigationBar from './NavigationBar';
 import Todo from './Todo';
 import Todos from './Todos';
+import {TokenProvider} from './token';
 
 const theme = {
   ...DefaultTheme,
@@ -29,20 +30,22 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <Auth>
-        {({logOut}) => (
-          <NavigationContainer linking={linking}>
-            <Stack.Navigator
-              screenOptions={{
-                header: props => <NavigationBar logOut={logOut} {...props} />,
-              }}
-            >
-              <Stack.Screen name="Todos" component={Todos} />
-              <Stack.Screen name="Todo" component={Todo} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        )}
-      </Auth>
+      <TokenProvider>
+        <Auth>
+          {({logOut}) => (
+            <NavigationContainer linking={linking}>
+              <Stack.Navigator
+                screenOptions={{
+                  header: props => <NavigationBar logOut={logOut} {...props} />,
+                }}
+              >
+                <Stack.Screen name="Todos" component={Todos} />
+                <Stack.Screen name="Todo" component={Todo} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          )}
+        </Auth>
+      </TokenProvider>
     </PaperProvider>
   );
 }
