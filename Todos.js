@@ -3,6 +3,8 @@ import sortBy from 'lodash/sortBy';
 import React from 'react';
 import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
+import NewTodoForm from './NewTodoForm';
+import {useStore} from './store';
 import useOrbitQuery from './useOrbitQuery';
 
 // todos that are not completed and not deleted
@@ -15,21 +17,33 @@ const query = q =>
     );
 
 export default function Todos() {
+  const store = useStore();
   const todos = useOrbitQuery({query});
   const sortedTodos = sortBy(todos, [t => t.attributes.name.toLowerCase()]);
   const linkTo = useLinkTo();
 
+  const handleCreate = name =>
+    store.update(t =>
+      t.addRecord({
+        type: 'todo',
+        attributes: {name},
+      }),
+    );
+
   return (
-    <FlatList
-      data={sortedTodos}
-      keyExtractor={todo => todo.id}
-      renderItem={({item: todo}) => (
-        <List.Item
-          key={todo.id}
-          title={todo.attributes.name}
-          onPress={() => linkTo(`/todos/${todo.id}`)}
-        />
-      )}
-    />
+    <>
+      <NewTodoForm onCreate={handleCreate} />
+      <FlatList
+        data={sortedTodos}
+        keyExtractor={todo => todo.id}
+        renderItem={({item: todo}) => (
+          <List.Item
+            key={todo.id}
+            title={todo.attributes.name}
+            onPress={() => linkTo(`/todos/${todo.id}`)}
+          />
+        )}
+      />
+    </>
   );
 }
