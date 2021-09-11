@@ -2,8 +2,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import Auth from './Auth';
 import NavigationBar from './NavigationBar';
-import OAuthLoginForm from './OAuthLoginForm';
 import Todo from './Todo';
 import Todos from './Todos';
 import {StoreProvider} from './store';
@@ -33,7 +33,7 @@ export default function App() {
     <PaperProvider theme={theme}>
       <TokenProvider>
         <StoreProvider>
-          <OAuthLoginForm>
+          <Auth>
             {({logOut}) => (
               <NavigationContainer linking={linking}>
                 <Stack.Navigator
@@ -48,7 +48,7 @@ export default function App() {
                 </Stack.Navigator>
               </NavigationContainer>
             )}
-          </OAuthLoginForm>
+          </Auth>
         </StoreProvider>
       </TokenProvider>
     </PaperProvider>

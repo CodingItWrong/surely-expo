@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 
-export default function LoginForm({onLogIn, formComponent: FormComponent}) {
+export default function useLoginForm(onLogIn) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -25,13 +25,5 @@ export default function LoginForm({onLogIn, formComponent: FormComponent}) {
 
   const handleLogIn = () => onLogIn({username, password}).catch(setError);
 
-  return (
-    <FormComponent
-      username={username}
-      password={password}
-      error={error}
-      onChange={handleChange}
-      onLogIn={handleLogIn}
-    />
-  );
+  return {username, password, error, handleChange, handleLogIn};
 }

@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 import {Platform} from 'react-native';
-import LoginForm from './LoginForm';
+import {useToken} from '../token';
 import PaperLoginForm from './PaperLoginForm';
 import oauthLogin from './oauthLogin';
-import {useToken} from './token';
 
 const baseURL =
   Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
@@ -25,7 +24,7 @@ export default function OAuthLoginForm({children}) {
   if (!isTokenLoaded) {
     return null;
   } else if (!token) {
-    return <LoginForm formComponent={PaperLoginForm} onLogIn={handleLogIn} />;
+    return <PaperLoginForm onLogIn={handleLogIn} />;
   } else {
     return children({logOut});
   }
