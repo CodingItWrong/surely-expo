@@ -58,6 +58,7 @@ export default function Todos() {
           <List.Item
             key={todo.id}
             title={todo.attributes.name}
+            titleNumberOfLines={4}
             onPress={() => linkTo(`/todos/${todo.id}`)}
           />
         )}
