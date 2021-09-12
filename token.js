@@ -15,16 +15,11 @@ export function TokenProvider({children}) {
   const [isTokenLoaded, setIsTokenLoaded] = useState(false);
   const [token, setToken] = useState(null);
 
-  const setTokenWrapper = newToken => {
-    console.log('SET TOKEN', newToken);
-    setToken(newToken);
-  };
-
   return (
     <TokenContext.Provider
       value={{
         token,
-        setToken: setTokenWrapper,
+        setToken,
         isTokenLoaded,
         setIsTokenLoaded,
       }}
