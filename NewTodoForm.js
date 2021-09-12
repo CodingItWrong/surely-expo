@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
+import {Keyboard} from 'react-native';
 import {TextInput} from 'react-native-paper';
 
 export default function NewTodoForm({onCreate}) {
   const [name, setName] = useState('');
 
   async function handleCreate() {
-    await onCreate(name);
-    setName('');
+    if (name !== '') {
+      await onCreate(name);
+      setName('');
+    }
+    Keyboard.dismiss();
   }
 
   return (
