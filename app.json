@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "surely",
+    "name": "Surely",
     "slug": "surely",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Native and web client for surelytodo.com todo list app",
+    "githubUrl": "https://github.com/CodingItWrong/surely-expo/"
   }
 }
