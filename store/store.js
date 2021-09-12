@@ -6,11 +6,8 @@ import Coordinator, {
 } from '@orbit/coordinator';
 import JSONAPISource from '@orbit/jsonapi';
 import MemorySource from '@orbit/memory';
-import {Platform} from 'react-native';
+import baseUrl from '../baseUrl';
 import schema from './schema';
-
-const baseURL =
-  Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
 
 const memory = new MemorySource({schema});
 
@@ -21,7 +18,7 @@ memory.requestQueue.on('fail', () => {
 const remote = new JSONAPISource({
   schema,
   name: 'remote',
-  host: baseURL,
+  host: baseUrl,
 });
 
 export function setToken(token) {
