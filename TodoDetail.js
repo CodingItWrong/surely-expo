@@ -3,7 +3,7 @@ import {Button, Text, Title} from 'react-native-paper';
 import api from './api';
 import {useToken} from './token';
 
-export default function Todo({navigation, route}) {
+export default function TodoDetail({navigation, route}) {
   const {token} = useToken();
   const config = useMemo(
     () => ({headers: {Authorization: `Bearer ${token}`}}),

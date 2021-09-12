@@ -4,8 +4,8 @@ import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Auth from './Auth';
 import NavigationBar from './NavigationBar';
-import Todo from './Todo';
-import Todos from './Todos';
+import TodoDetail from './TodoDetail';
+import TodoList from './TodoList';
 import {StoreProvider} from './store';
 import {TokenProvider} from './token';
 
@@ -20,8 +20,8 @@ const theme = {
 const linking = {
   config: {
     screens: {
-      Todos: '/',
-      Todo: '/todos/:id',
+      TodoList: '/',
+      TodoDetail: '/todos/:id',
     },
   },
 };
@@ -43,8 +43,8 @@ export default function App() {
                     ),
                   }}
                 >
-                  <Stack.Screen name="Todos" component={Todos} />
-                  <Stack.Screen name="Todo" component={Todo} />
+                  <Stack.Screen name="TodoList" component={TodoList} />
+                  <Stack.Screen name="TodoDetail" component={TodoDetail} />
                 </Stack.Navigator>
               </NavigationContainer>
             )}

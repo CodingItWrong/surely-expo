@@ -20,7 +20,7 @@ const sortedAvailableTodos = todos =>
     [t => t.attributes.name.toLowerCase()],
   );
 
-export default function Todos() {
+export default function TodoList() {
   const {token} = useToken();
   const config = useMemo(
     () => ({headers: {Authorization: `Bearer ${token}`}}),
