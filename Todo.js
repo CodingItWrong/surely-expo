@@ -25,6 +25,17 @@ export default function Todo({navigation, route}) {
       )
       .then(() => navigation.goBack());
 
+  const handleDelete = () =>
+    store
+      .update(t =>
+        t.updateRecord({
+          type: 'todo',
+          id: todo.id,
+          attributes: {deletedAt: new Date()},
+        }),
+      )
+      .then(() => navigation.goBack());
+
   if (!todo) {
     return <Text>Loading…</Text>;
   }
@@ -33,6 +44,7 @@ export default function Todo({navigation, route}) {
     <>
       <Title>{todo.attributes.name}</Title>
       <Button onPress={handleComplete}>Complete</Button>
+      <Button onPress={handleDelete}>Delete</Button>
     </>
   );
 }
