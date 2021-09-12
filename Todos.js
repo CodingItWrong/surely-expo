@@ -1,15 +1,12 @@
 import {useLinkTo} from '@react-navigation/native';
-import axios from 'axios';
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Button, List} from 'react-native-paper';
 import NewTodoForm from './NewTodoForm';
-import baseUrl from './baseUrl';
+import api from './api';
 import {useToken} from './token';
-
-const client = axios.create({baseURL: baseUrl});
 
 const sortedAvailableTodos = todos =>
   sortBy(
@@ -25,24 +22,27 @@ const sortedAvailableTodos = todos =>
 
 export default function Todos() {
   const {token} = useToken();
-  const Authorization = useMemo(() => `Bearer ${token}`, [token]);
+  const config = useMemo(
+    () => ({headers: {Authorization: `Bearer ${token}`}}),
+    [token],
+  );
   const linkTo = useLinkTo();
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
 
   const loadFromServer = useCallback(() => {
-    client
-      .get('/todos?filter[status]=available', {headers: {Authorization}})
-      .then(response => setTodos(response.data.data))
+    api
+      .get('/todos?filter[status]=available', config)
+      .then(response => setTodos(response.data))
       .catch(console.error);
-  }, [Authorization]);
+  }, [config]);
 
   useEffect(() => {
     loadFromServer();
   }, [loadFromServer]);
 
   const handleCreate = name =>
-    client
+    api
       .post(
         '/todos',
         {
@@ -51,9 +51,9 @@ export default function Todos() {
             attributes: {name},
           },
         },
-        {headers: {Authorization, 'Content-Type': 'application/vnd.api+json'}},
+        config,
       )
-      .then(response => setTodos([...todos, response.data.data]))
+      .then(response => setTodos([...todos, response.data]))
       .catch(console.error);
 
   return (
