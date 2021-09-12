@@ -14,7 +14,7 @@ export default function TodoDetail({navigation, route}) {
   useEffect(() => {
     todoClient
       .find({id})
-      .then(response => setTodo(response.data))
+      .then(({data}) => setTodo(data))
       .catch(console.error);
   }, [id, todoClient]);
 

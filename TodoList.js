@@ -29,7 +29,7 @@ export default function TodoList() {
     () =>
       todoClient
         .where({filter: {status: 'available'}})
-        .then(response => setTodos(response.data))
+        .then(({data}) => setTodos(data))
         .catch(console.error),
     [todoClient],
   );
@@ -41,7 +41,7 @@ export default function TodoList() {
   const handleCreate = name =>
     todoClient
       .create({attributes: {name}})
-      .then(response => setTodos([...todos, response.data]))
+      .then(({data}) => setTodos([...todos, data]))
       .catch(console.error);
 
   return (
