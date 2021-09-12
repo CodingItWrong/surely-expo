@@ -43,8 +43,12 @@ export default function Todo({navigation, route}) {
   return (
     <>
       <Title>{todo.attributes.name}</Title>
-      <Button onPress={handleComplete}>Complete</Button>
-      <Button onPress={handleDelete}>Delete</Button>
+      <Button mode="outlined" onPress={handleDelete}>
+        Delete
+      </Button>
+      <Button mode="contained" icon="checkbox-marked" onPress={handleComplete}>
+        Complete
+      </Button>
     </>
   );
 }
