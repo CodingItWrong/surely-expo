@@ -1,8 +1,8 @@
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
-import {List} from 'react-native-paper';
+import {Button, List} from 'react-native-paper';
 import NewTodoForm from './NewTodoForm';
 import {useStore} from './store';
 
@@ -28,12 +28,14 @@ export default function Todos() {
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
 
+  const loadFromServer = useCallback(() => store.query(serverQuery), [store]);
+
   useEffect(() => {
     store.on('transform', () => {
       setTodos(store.cache.query(clientQuery));
     });
-    store.query(serverQuery);
-  }, [store]);
+    loadFromServer();
+  }, [loadFromServer, store]);
 
   const handleCreate = name =>
     store.update(t =>
@@ -55,6 +57,7 @@ export default function Todos() {
   return (
     <>
       <NewTodoForm onCreate={handleCreate} />
+      <Button onPress={loadFromServer}>Reload</Button>
       <FlatList
         data={sortedTodos}
         keyExtractor={todo => todo.id}
