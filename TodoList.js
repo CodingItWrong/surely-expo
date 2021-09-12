@@ -1,7 +1,7 @@
-import {useLinkTo} from '@react-navigation/native';
+import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Button, List} from 'react-native-paper';
 import NewTodoForm from './NewTodoForm';
@@ -34,9 +34,11 @@ export default function TodoList() {
     [todoClient],
   );
 
-  useEffect(() => {
-    loadFromServer();
-  }, [loadFromServer]);
+  useFocusEffect(
+    useCallback(() => {
+      loadFromServer();
+    }, [loadFromServer]),
+  );
 
   const handleCreate = name =>
     todoClient
