@@ -1,14 +1,9 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Text, Title} from 'react-native-paper';
-import api from './api';
-import {useToken} from './token';
+import {useTodos} from './todos';
 
 export default function TodoDetail({navigation, route}) {
-  const {token} = useToken();
-  const config = useMemo(
-    () => ({headers: {Authorization: `Bearer ${token}`}}),
-    [token],
-  );
+  const todoClient = useTodos();
 
   const [todo, setTodo] = useState(null);
 
@@ -17,33 +12,21 @@ export default function TodoDetail({navigation, route}) {
   } = route;
 
   useEffect(() => {
-    api
-      .get(`/todos/${id}`, config)
+    todoClient
+      .find({id})
       .then(response => setTodo(response.data))
       .catch(console.error);
-  }, [id, config]);
+  }, [id, todoClient]);
 
   const handleComplete = () =>
-    api
-      .patch(
-        `/todos/${id}`,
-        {
-          data: {type: 'todos', id, attributes: {'completed-at': new Date()}},
-        },
-        config,
-      )
+    todoClient
+      .update({id, attributes: {'completed-at': new Date()}})
       .then(() => navigation.goBack())
       .catch(console.error);
 
   const handleDelete = () =>
-    api
-      .patch(
-        `/todos/${id}`,
-        {
-          data: {type: 'todos', id, attributes: {'deleted-at': new Date()}},
-        },
-        config,
-      )
+    todoClient
+      .update({id, attributes: {'deleted-at': new Date()}})
       .then(() => navigation.goBack())
       .catch(console.error);
 

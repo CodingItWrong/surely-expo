@@ -6,7 +6,7 @@ import Auth from './Auth';
 import NavigationBar from './NavigationBar';
 import TodoDetail from './TodoDetail';
 import TodoList from './TodoList';
-import {StoreProvider} from './store';
+import {TodoProvider} from './todos';
 import {TokenProvider} from './token';
 
 const theme = {
@@ -32,7 +32,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <TokenProvider>
-        <StoreProvider>
+        <TodoProvider>
           <Auth>
             {({logOut}) => (
               <NavigationContainer linking={linking}>
@@ -49,7 +49,7 @@ export default function App() {
               </NavigationContainer>
             )}
           </Auth>
-        </StoreProvider>
+        </TodoProvider>
       </TokenProvider>
     </PaperProvider>
   );

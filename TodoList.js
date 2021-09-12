@@ -5,54 +5,42 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Button, List} from 'react-native-paper';
 import NewTodoForm from './NewTodoForm';
-import api from './api';
-import {useToken} from './token';
+import {useTodos} from './todos';
 
 const sortedAvailableTodos = todos =>
   sortBy(
     filter(
       todos,
       todo =>
-        !todo.attributes.deletedAt &&
-        !todo.attributes.completedAt &&
-        !(todo.attributes.deferredUntil > new Date()),
+        !todo.attributes['deleted-at'] &&
+        !todo.attributes['completed-at'] &&
+        !(todo.attributes['deferred-until'] > new Date()),
     ),
     [t => t.attributes.name.toLowerCase()],
   );
 
 export default function TodoList() {
-  const {token} = useToken();
-  const config = useMemo(
-    () => ({headers: {Authorization: `Bearer ${token}`}}),
-    [token],
-  );
+  const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
 
-  const loadFromServer = useCallback(() => {
-    api
-      .get('/todos?filter[status]=available', config)
-      .then(response => setTodos(response.data))
-      .catch(console.error);
-  }, [config]);
+  const loadFromServer = useCallback(
+    () =>
+      todoClient
+        .where({filter: {status: 'available'}})
+        .then(response => setTodos(response.data))
+        .catch(console.error),
+    [todoClient],
+  );
 
   useEffect(() => {
     loadFromServer();
   }, [loadFromServer]);
 
   const handleCreate = name =>
-    api
-      .post(
-        '/todos',
-        {
-          data: {
-            type: 'todos',
-            attributes: {name},
-          },
-        },
-        config,
-      )
+    todoClient
+      .create({attributes: {name}})
       .then(response => setTodos([...todos, response.data]))
       .catch(console.error);
 
