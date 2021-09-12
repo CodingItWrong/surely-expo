@@ -1,24 +1,39 @@
+import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
-import React from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {List} from 'react-native-paper';
 import NewTodoForm from './NewTodoForm';
 import {useStore} from './store';
-import useOrbitQuery from './useOrbitQuery';
 
-// todos that are not completed and not deleted
-const query = q =>
-  q
-    .findRecords('todo')
-    .filter(
-      {attribute: 'completedAt', value: null},
-      {attribute: 'deletedAt', value: null},
-    );
+const serverQuery = q =>
+  q.findRecords('todo').filter({attribute: 'status', value: 'available'});
+
+const clientQuery = q => q.findRecords('todo');
+
+const sortedAvailableTodos = todos =>
+  sortBy(
+    filter(
+      todos,
+      todo =>
+        !todo.attributes.deletedAt &&
+        !todo.attributes.completedAt &&
+        !(todo.attributes.deferredUntil > new Date()),
+    ),
+    [t => t.attributes.name.toLowerCase()],
+  );
 
 export default function Todos() {
   const store = useStore();
-  const todos = useOrbitQuery({query});
-  const sortedTodos = sortBy(todos, [t => t.attributes.name.toLowerCase()]);
+  const [todos, setTodos] = useState([]);
+  const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
+
+  useEffect(() => {
+    store.on('transform', () => {
+      setTodos(store.cache.query(clientQuery));
+    });
+    store.query(serverQuery);
+  }, [store]);
 
   const handleCreate = name =>
     store.update(t =>
