@@ -1,11 +1,11 @@
+import axios from 'axios';
 import React from 'react';
 import baseUrl from '../baseUrl';
-import fetchAxiosAdapter from '../fetchAxiosAdapter';
 import {useToken} from '../token';
 import PaperLoginForm from './PaperLoginForm';
 import oauthLogin from './oauthLogin';
 
-const httpClient = fetchAxiosAdapter.create(baseUrl);
+const httpClient = axios.create({baseURL: baseUrl});
 
 export default function OAuthLoginForm({children}) {
   const {isTokenLoaded, token, setToken, clearToken} = useToken();
