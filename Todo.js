@@ -1,40 +1,51 @@
-import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Button, Text, Title} from 'react-native-paper';
-import {useStore} from './store';
+import baseUrl from './baseUrl';
+import {useToken} from './token';
+
+const client = axios.create({baseURL: baseUrl});
 
 export default function Todo({navigation, route}) {
+  const {token} = useToken();
+  const Authorization = useMemo(() => `Bearer ${token}`, [token]);
+
   const [todo, setTodo] = useState(null);
 
-  const store = useStore();
   const {
     params: {id},
   } = route;
 
   useEffect(() => {
-    store.query(q => q.findRecord({type: 'todo', id})).then(setTodo);
-  }, [id, store]);
+    client
+      .get(`/todos/${id}`, {headers: {Authorization}})
+      .then(response => setTodo(response.data.data))
+      .catch(console.error);
+  }, [id, Authorization]);
 
   const handleComplete = () =>
-    store
-      .update(t =>
-        t.updateRecord({
-          type: 'todo',
-          id: todo.id,
-          attributes: {completedAt: new Date()},
-        }),
+    client
+      .patch(
+        `/todos/${id}`,
+        {
+          data: {type: 'todos', id, attributes: {'completed-at': new Date()}},
+        },
+        {headers: {Authorization, 'Content-Type': 'application/vnd.api+json'}},
       )
-      .then(() => navigation.goBack());
+      .then(() => navigation.goBack())
+      .catch(console.error);
 
   const handleDelete = () =>
-    store
-      .update(t =>
-        t.updateRecord({
-          type: 'todo',
-          id: todo.id,
-          attributes: {deletedAt: new Date()},
-        }),
+    client
+      .patch(
+        `/todos/${id}`,
+        {
+          data: {type: 'todos', id, attributes: {'deleted-at': new Date()}},
+        },
+        {headers: {Authorization, 'Content-Type': 'application/vnd.api+json'}},
       )
-      .then(() => navigation.goBack());
+      .then(() => navigation.goBack())
+      .catch(console.error);
 
   if (!todo) {
     return <Text>Loading…</Text>;

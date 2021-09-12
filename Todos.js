@@ -1,16 +1,15 @@
 import {useLinkTo} from '@react-navigation/native';
+import axios from 'axios';
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Button, List} from 'react-native-paper';
 import NewTodoForm from './NewTodoForm';
-import {useStore} from './store';
+import baseUrl from './baseUrl';
+import {useToken} from './token';
 
-const serverQuery = q =>
-  q.findRecords('todo').filter({attribute: 'status', value: 'available'});
-
-const clientQuery = q => q.findRecords('todo');
+const client = axios.create({baseURL: baseUrl});
 
 const sortedAvailableTodos = todos =>
   sortBy(
@@ -25,27 +24,37 @@ const sortedAvailableTodos = todos =>
   );
 
 export default function Todos() {
+  const {token} = useToken();
+  const Authorization = useMemo(() => `Bearer ${token}`, [token]);
   const linkTo = useLinkTo();
-  const store = useStore();
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
 
-  const loadFromServer = useCallback(() => store.query(serverQuery), [store]);
+  const loadFromServer = useCallback(() => {
+    client
+      .get('/todos?filter[status]=available', {headers: {Authorization}})
+      .then(response => setTodos(response.data.data))
+      .catch(console.error);
+  }, [Authorization]);
 
   useEffect(() => {
-    store.on('transform', () => {
-      setTodos(store.cache.query(clientQuery));
-    });
     loadFromServer();
-  }, [loadFromServer, store]);
+  }, [loadFromServer]);
 
   const handleCreate = name =>
-    store.update(t =>
-      t.addRecord({
-        type: 'todo',
-        attributes: {name},
-      }),
-    );
+    client
+      .post(
+        '/todos',
+        {
+          data: {
+            type: 'todos',
+            attributes: {name},
+          },
+        },
+        {headers: {Authorization, 'Content-Type': 'application/vnd.api+json'}},
+      )
+      .then(response => setTodos([...todos, response.data.data]))
+      .catch(console.error);
 
   return (
     <>
