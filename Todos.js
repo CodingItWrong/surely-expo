@@ -1,3 +1,4 @@
+import {useLinkTo} from '@react-navigation/native';
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
@@ -24,6 +25,7 @@ const sortedAvailableTodos = todos =>
   );
 
 export default function Todos() {
+  const linkTo = useLinkTo();
   const store = useStore();
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
@@ -45,15 +47,6 @@ export default function Todos() {
       }),
     );
 
-  const handleComplete = todo =>
-    store.update(t =>
-      t.updateRecord({
-        type: 'todo',
-        id: todo.id,
-        attributes: {completedAt: new Date()},
-      }),
-    );
-
   return (
     <>
       <NewTodoForm onCreate={handleCreate} />
@@ -65,7 +58,7 @@ export default function Todos() {
           <List.Item
             key={todo.id}
             title={todo.attributes.name}
-            onPress={() => handleComplete(todo)}
+            onPress={() => linkTo(`/todos/${todo.id}`)}
           />
         )}
       />
