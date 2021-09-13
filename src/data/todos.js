@@ -1,7 +1,7 @@
 import {ResourceClient} from '@reststate/client';
 import axios from 'axios';
 import React, {createContext, useContext, useMemo} from 'react';
-import baseUrl from './baseUrl';
+import baseUrl from '../baseUrl';
 import {useToken} from './token';
 
 const TodoContext = createContext(null);

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Text, Title} from 'react-native-paper';
-import {useTodos} from './todos';
+import {useTodos} from '../../data/todos';
 
 export default function TodoDetail({navigation, route}) {
   const todoClient = useTodos();

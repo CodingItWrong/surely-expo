@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import {deleteStringAsync, getStringAsync, setStringAsync} from './storage';
+import {deleteStringAsync, getStringAsync, setStringAsync} from '../storage';
 
 const ACCESS_TOKEN_KEY = 'SURELY_ACCESS_TOKEN';
 

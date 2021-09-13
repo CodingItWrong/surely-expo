@@ -2,12 +2,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import Auth from './Auth';
-import NavigationBar from './NavigationBar';
-import TodoDetail from './TodoDetail';
-import TodoList from './TodoList';
-import {TodoProvider} from './todos';
-import {TokenProvider} from './token';
+import OAuthLoginContainer from './src/auth/OAuthLoginContainer';
+import NavigationBar from './src/components/NavigationBar';
+import {TodoProvider} from './src/data/todos';
+import {TokenProvider} from './src/data/token';
+import AvailableTodos from './src/screens/AvailableTodos';
+import TodoDetail from './src/screens/TodoDetail';
 
 const theme = {
   ...DefaultTheme,
@@ -20,7 +20,7 @@ const theme = {
 const linking = {
   config: {
     screens: {
-      TodoList: '/',
+      AvailableTodos: '/',
       TodoDetail: '/todos/:id',
     },
   },
@@ -32,9 +32,9 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <TokenProvider>
-        <TodoProvider>
-          <Auth>
-            {({logOut}) => (
+        <OAuthLoginContainer>
+          {({logOut}) => (
+            <TodoProvider>
               <NavigationContainer linking={linking}>
                 <Stack.Navigator
                   screenOptions={{
@@ -43,13 +43,16 @@ export default function App() {
                     ),
                   }}
                 >
-                  <Stack.Screen name="TodoList" component={TodoList} />
+                  <Stack.Screen
+                    name="AvailableTodos"
+                    component={AvailableTodos}
+                  />
                   <Stack.Screen name="TodoDetail" component={TodoDetail} />
                 </Stack.Navigator>
               </NavigationContainer>
-            )}
-          </Auth>
-        </TodoProvider>
+            </TodoProvider>
+          )}
+        </OAuthLoginContainer>
       </TokenProvider>
     </PaperProvider>
   );

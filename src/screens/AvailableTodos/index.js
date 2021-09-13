@@ -4,8 +4,8 @@ import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Button, List} from 'react-native-paper';
-import NewTodoForm from './NewTodoForm';
-import {useTodos} from './todos';
+import NewTodoForm from '../../components/NewTodoForm';
+import {useTodos} from '../../data/todos';
 
 const sortedAvailableTodos = todos =>
   sortBy(

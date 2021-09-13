@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React from 'react';
 import baseUrl from '../baseUrl';
-import {useToken} from '../token';
+import {useToken} from '../data/token';
 import PaperLoginForm from './PaperLoginForm';
 import oauthLogin from './oauthLogin';
 
 const httpClient = axios.create({baseURL: baseUrl});
 
-export default function OAuthLoginForm({children}) {
+export default function OAuthLoginContainer({children}) {
   const {isTokenLoaded, token, setToken, clearToken} = useToken();
   const handleLogIn = ({username, password}) =>
     oauthLogin({
