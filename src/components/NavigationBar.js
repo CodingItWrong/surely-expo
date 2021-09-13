@@ -2,7 +2,13 @@ import {useLinkTo} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Appbar, Menu} from 'react-native-paper';
 
-export default function CustomNavigationBar({route, navigation, back, logOut}) {
+export default function CustomNavigationBar({
+  route,
+  navigation,
+  options,
+  back,
+  logOut,
+}) {
   const linkTo = useLinkTo();
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
@@ -16,7 +22,7 @@ export default function CustomNavigationBar({route, navigation, back, logOut}) {
           accessibilityLabel={`Back to ${back.title}`}
         />
       ) : null}
-      <Appbar.Content title={route.name} />
+      <Appbar.Content title={options.title} />
       {!back ? (
         <Menu
           visible={visible}

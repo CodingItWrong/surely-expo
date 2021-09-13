@@ -48,9 +48,18 @@ export default function App() {
                   <Stack.Screen
                     name="AvailableTodos"
                     component={AvailableTodos}
+                    options={{title: 'Available'}}
                   />
-                  <Stack.Screen name="FutureTodos" component={FutureTodos} />
-                  <Stack.Screen name="TodoDetail" component={TodoDetail} />
+                  <Stack.Screen
+                    name="FutureTodos"
+                    component={FutureTodos}
+                    options={{title: 'Future'}}
+                  />
+                  <Stack.Screen
+                    name="TodoDetail"
+                    component={TodoDetail}
+                    options={{title: 'Todo'}}
+                  />
                 </Stack.Navigator>
               </NavigationContainer>
             </TodoProvider>
