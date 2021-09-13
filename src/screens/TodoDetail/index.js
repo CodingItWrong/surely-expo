@@ -6,10 +6,18 @@ export default function TodoDetail({navigation, route}) {
   const todoClient = useTodos();
 
   const [todo, setTodo] = useState(null);
+  const isCompleted = !!todo?.attributes['completed-at'];
+  const isDeleted = !!todo?.attributes['deleted-at'];
 
   const {
     params: {id},
   } = route;
+
+  const loadTodo = () =>
+    todoClient
+      .find({id})
+      .then(({data}) => setTodo(data))
+      .catch(console.error);
 
   useEffect(() => {
     todoClient
@@ -18,17 +26,25 @@ export default function TodoDetail({navigation, route}) {
       .catch(console.error);
   }, [id, todoClient]);
 
+  const updateAttributes = attributes => todoClient.update({id, attributes});
+
   const handleComplete = () =>
-    todoClient
-      .update({id, attributes: {'completed-at': new Date()}})
+    updateAttributes({'completed-at': new Date()})
       .then(() => navigation.goBack())
       .catch(console.error);
 
+  const handleUncomplete = () =>
+    updateAttributes({'completed-at': null})
+      .then(loadTodo)
+      .catch(console.error);
+
   const handleDelete = () =>
-    todoClient
-      .update({id, attributes: {'deleted-at': new Date()}})
+    updateAttributes({'deleted-at': new Date()})
       .then(() => navigation.goBack())
       .catch(console.error);
+
+  const handleUndelete = () =>
+    updateAttributes({'deleted-at': null}).then(loadTodo).catch(console.error);
 
   if (!todo) {
     return <Text>Loading…</Text>;
@@ -37,12 +53,32 @@ export default function TodoDetail({navigation, route}) {
   return (
     <>
       <Title>{todo.attributes.name}</Title>
-      <Button mode="outlined" onPress={handleDelete}>
-        Delete
-      </Button>
-      <Button mode="contained" icon="checkbox-marked" onPress={handleComplete}>
-        Complete
-      </Button>
+      {isDeleted ? (
+        <Button mode="outlined" onPress={handleUndelete}>
+          Undelete
+        </Button>
+      ) : (
+        <Button mode="outlined" onPress={handleDelete}>
+          Delete
+        </Button>
+      )}
+      {isCompleted ? (
+        <Button
+          mode="contained"
+          icon="checkbox-marked"
+          onPress={handleUncomplete}
+        >
+          Uncomplete
+        </Button>
+      ) : (
+        <Button
+          mode="contained"
+          icon="checkbox-marked"
+          onPress={handleComplete}
+        >
+          Complete
+        </Button>
+      )}
     </>
   );
 }
