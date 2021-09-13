@@ -9,6 +9,7 @@ import {TokenProvider} from './src/data/token';
 import AvailableTodos from './src/screens/AvailableTodos';
 import FutureTodos from './src/screens/FutureTodos';
 import TodoDetail from './src/screens/TodoDetail';
+import TomorrowTodos from './src/screens/TomorrowTodos';
 
 const theme = {
   ...DefaultTheme,
@@ -24,6 +25,7 @@ const linking = {
       AvailableTodos: '/',
       FutureTodos: '/todos/future',
       TodoDetail: '/todos/:id',
+      TomorrowTodos: '/todos/tomorrow',
     },
   },
 };
@@ -59,6 +61,11 @@ export default function App() {
                     name="TodoDetail"
                     component={TodoDetail}
                     options={{title: 'Todo'}}
+                  />
+                  <Stack.Screen
+                    name="TomorrowTodos"
+                    component={TomorrowTodos}
+                    options={{title: 'Tomorrow'}}
                   />
                 </Stack.Navigator>
               </NavigationContainer>

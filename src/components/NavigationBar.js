@@ -42,6 +42,11 @@ export default function CustomNavigationBar({
             icon="clock-outline"
           />
           <Menu.Item
+            onPress={() => linkTo('/todos/tomorrow')}
+            title="Tomorrow"
+            icon="weather-night"
+          />
+          <Menu.Item
             onPress={() => linkTo('/todos/future')}
             title="Future"
             icon="calendar-blank"
