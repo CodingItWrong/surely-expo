@@ -7,6 +7,8 @@ import NavigationBar from './src/components/NavigationBar';
 import {TodoProvider} from './src/data/todos';
 import {TokenProvider} from './src/data/token';
 import AvailableTodos from './src/screens/AvailableTodos';
+import CompletedTodos from './src/screens/CompletedTodos';
+import DeletedTodos from './src/screens/DeletedTodos';
 import FutureTodos from './src/screens/FutureTodos';
 import TodoDetail from './src/screens/TodoDetail';
 import TomorrowTodos from './src/screens/TomorrowTodos';
@@ -23,6 +25,8 @@ const linking = {
   config: {
     screens: {
       AvailableTodos: '/',
+      CompletedTodos: '/todos/completed',
+      DeletedTodos: '/todos/deleted',
       FutureTodos: '/todos/future',
       TodoDetail: '/todos/:id',
       TomorrowTodos: '/todos/tomorrow',
@@ -51,6 +55,16 @@ export default function App() {
                     name="AvailableTodos"
                     component={AvailableTodos}
                     options={{title: 'Available'}}
+                  />
+                  <Stack.Screen
+                    name="CompletedTodos"
+                    component={CompletedTodos}
+                    options={{title: 'Completed'}}
+                  />
+                  <Stack.Screen
+                    name="DeletedTodos"
+                    component={DeletedTodos}
+                    options={{title: 'Deleted'}}
                   />
                   <Stack.Screen
                     name="FutureTodos"

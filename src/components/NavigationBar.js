@@ -51,6 +51,16 @@ export default function CustomNavigationBar({
             title="Future"
             icon="calendar-blank"
           />
+          <Menu.Item
+            onPress={() => linkTo('/todos/completed')}
+            title="Completed"
+            icon="checkbox-marked"
+          />
+          <Menu.Item
+            onPress={() => linkTo('/todos/deleted')}
+            title="Deleted"
+            icon="delete"
+          />
           <Menu.Item onPress={logOut} title="Sign out" />
         </Menu>
       ) : null}
