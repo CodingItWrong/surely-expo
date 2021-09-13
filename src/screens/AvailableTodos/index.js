@@ -19,7 +19,7 @@ const sortedAvailableTodos = todos =>
     [t => t.attributes.name.toLowerCase()],
   );
 
-export default function TodoList() {
+export default function AvailableTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [todos, setTodos] = useState([]);
