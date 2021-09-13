@@ -16,7 +16,6 @@ const sortedFutureTodos = todos =>
   );
 
 export default function CompletedTodos() {
-  console.log('HI');
   const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [todos, setTodos] = useState([]);
