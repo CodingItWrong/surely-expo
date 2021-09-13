@@ -7,6 +7,7 @@ import NavigationBar from './src/components/NavigationBar';
 import {TodoProvider} from './src/data/todos';
 import {TokenProvider} from './src/data/token';
 import AvailableTodos from './src/screens/AvailableTodos';
+import FutureTodos from './src/screens/FutureTodos';
 import TodoDetail from './src/screens/TodoDetail';
 
 const theme = {
@@ -21,6 +22,7 @@ const linking = {
   config: {
     screens: {
       AvailableTodos: '/',
+      FutureTodos: '/todos/future',
       TodoDetail: '/todos/:id',
     },
   },
@@ -47,6 +49,7 @@ export default function App() {
                     name="AvailableTodos"
                     component={AvailableTodos}
                   />
+                  <Stack.Screen name="FutureTodos" component={FutureTodos} />
                   <Stack.Screen name="TodoDetail" component={TodoDetail} />
                 </Stack.Navigator>
               </NavigationContainer>

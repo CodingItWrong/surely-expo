@@ -1,7 +1,9 @@
+import {useLinkTo} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Appbar, Menu} from 'react-native-paper';
 
 export default function CustomNavigationBar({route, navigation, back, logOut}) {
+  const linkTo = useLinkTo();
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
@@ -28,6 +30,16 @@ export default function CustomNavigationBar({route, navigation, back, logOut}) {
             />
           }
         >
+          <Menu.Item
+            onPress={() => linkTo('/')}
+            title="Available"
+            icon="clock-outline"
+          />
+          <Menu.Item
+            onPress={() => linkTo('/todos/future')}
+            title="Future"
+            icon="calendar-blank"
+          />
           <Menu.Item onPress={logOut} title="Sign out" />
         </Menu>
       ) : null}
