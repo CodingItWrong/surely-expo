@@ -1,19 +1,7 @@
-import {useLinkTo} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {Appbar, Menu} from 'react-native-paper';
+import React from 'react';
+import {Appbar} from 'react-native-paper';
 
-export default function CustomNavigationBar({
-  route,
-  navigation,
-  options,
-  back,
-  logOut,
-}) {
-  const linkTo = useLinkTo();
-  const [visible, setVisible] = useState(false);
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
-
+export default function CustomNavigationBar({navigation, options, back}) {
   return (
     <Appbar.Header>
       {back ? (
