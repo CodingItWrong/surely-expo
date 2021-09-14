@@ -23,45 +23,11 @@ export default function CustomNavigationBar({
         />
       ) : null}
       <Appbar.Content title={options.title} />
-      <Menu
-        visible={visible}
-        onDismiss={closeMenu}
-        anchor={
-          <Appbar.Action
-            icon="menu"
-            color="black"
-            accessibilityLabel="Menu"
-            onPress={openMenu}
-          />
-        }
-      >
-        <Menu.Item
-          onPress={() => linkTo('/')}
-          title="Available"
-          icon="clock-outline"
-        />
-        <Menu.Item
-          onPress={() => linkTo('/todos/tomorrow')}
-          title="Tomorrow"
-          icon="weather-night"
-        />
-        <Menu.Item
-          onPress={() => linkTo('/todos/future')}
-          title="Future"
-          icon="calendar-blank"
-        />
-        <Menu.Item
-          onPress={() => linkTo('/todos/completed')}
-          title="Completed"
-          icon="checkbox-marked"
-        />
-        <Menu.Item
-          onPress={() => linkTo('/todos/deleted')}
-          title="Deleted"
-          icon="delete"
-        />
-        <Menu.Item onPress={logOut} title="Sign out" />
-      </Menu>
+      <Appbar.Action
+        icon="menu"
+        color="black"
+        onPress={navigation.toggleDrawer}
+      />
     </Appbar.Header>
   );
 }

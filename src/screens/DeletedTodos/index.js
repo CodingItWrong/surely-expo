@@ -44,7 +44,7 @@ export default function DeletedTodos() {
             key={todo.id}
             title={todo.attributes.name}
             titleNumberOfLines={4}
-            onPress={() => linkTo(`/todos/${todo.id}`)}
+            onPress={() => linkTo(`/todos/deleted/${todo.id}`)}
           />
         )}
       />

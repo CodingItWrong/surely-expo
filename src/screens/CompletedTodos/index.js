@@ -47,7 +47,7 @@ export default function CompletedTodos() {
             key={todo.id}
             title={todo.attributes.name}
             titleNumberOfLines={4}
-            onPress={() => linkTo(`/todos/${todo.id}`)}
+            onPress={() => linkTo(`/todos/completed/${todo.id}`)}
           />
         )}
       />
