@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Text} from 'react-native-paper';
+import {Button, IconButton, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
 import DetailDisplay from './DetailDisplay';
+import DetailForm from './DetailForm';
 import EventLog from './EventLog';
 
 export default function TodoDetail({navigation, route}) {
   const todoClient = useTodos();
 
   const [todo, setTodo] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const isCompleted = !!todo?.attributes['completed-at'];
   const isDeleted = !!todo?.attributes['deleted-at'];
 
@@ -48,13 +50,34 @@ export default function TodoDetail({navigation, route}) {
   const handleUndelete = () =>
     updateAttributes({'deleted-at': null}).then(loadTodo).catch(console.error);
 
+  const handleSave = attributes =>
+    updateAttributes(attributes)
+      .then(() => {
+        setIsEditing(false);
+        loadTodo();
+      })
+      .catch(console.error);
+
   if (!todo) {
     return <Text>Loading…</Text>;
   }
 
   return (
     <>
-      <DetailDisplay todo={todo} />
+      <IconButton
+        icon="pencil"
+        accessibilityLabel="Edit"
+        onPress={() => setIsEditing(true)}
+      />
+      {isEditing ? (
+        <DetailForm
+          todo={todo}
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
+      ) : (
+        <DetailDisplay todo={todo} />
+      )}
       <EventLog todo={todo} />
       {isDeleted ? (
         <Button mode="outlined" onPress={handleUndelete}>
