@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Text, Title} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
+import DetailDisplay from './DetailDisplay';
 import EventLog from './EventLog';
 
 export default function TodoDetail({navigation, route}) {
@@ -53,8 +54,7 @@ export default function TodoDetail({navigation, route}) {
 
   return (
     <>
-      <Title>{todo.attributes.name}</Title>
-      {todo.attributes.notes && <Text>{todo.attributes.notes}</Text>}
+      <DetailDisplay todo={todo} />
       <EventLog todo={todo} />
       {isDeleted ? (
         <Button mode="outlined" onPress={handleUndelete}>
