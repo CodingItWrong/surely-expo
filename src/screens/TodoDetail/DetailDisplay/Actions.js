@@ -39,26 +39,28 @@ export default function Actions({todo, onUpdate, onGoBack}) {
           Undelete
         </Button>
       ) : (
-        <Button mode="outlined" onPress={handleDelete}>
-          Delete
-        </Button>
-      )}
-      {isCompleted ? (
-        <Button
-          mode="contained"
-          icon="checkbox-marked"
-          onPress={handleUncomplete}
-        >
-          Uncomplete
-        </Button>
-      ) : (
-        <Button
-          mode="contained"
-          icon="checkbox-marked"
-          onPress={handleComplete}
-        >
-          Complete
-        </Button>
+        <>
+          <Button mode="outlined" onPress={handleDelete}>
+            Delete
+          </Button>
+          {isCompleted ? (
+            <Button
+              mode="contained"
+              icon="checkbox-marked"
+              onPress={handleUncomplete}
+            >
+              Uncomplete
+            </Button>
+          ) : (
+            <Button
+              mode="contained"
+              icon="checkbox-marked"
+              onPress={handleComplete}
+            >
+              Complete
+            </Button>
+          )}
+        </>
       )}
     </>
   );
