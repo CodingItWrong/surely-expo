@@ -3,7 +3,6 @@ import {Button, IconButton, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
-import EventLog from './EventLog';
 
 export default function TodoDetail({navigation, route, parentRouteName}) {
   const todoClient = useTodos();
@@ -73,7 +72,6 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
       ) : (
         <DetailDisplay todo={todo} />
       )}
-      <EventLog todo={todo} />
       {isDeleted ? (
         <Button mode="outlined" onPress={handleUndelete}>
           Undelete
