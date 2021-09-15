@@ -5,7 +5,7 @@ import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
 import EventLog from './EventLog';
 
-export default function TodoDetail({navigation, route}) {
+export default function TodoDetail({navigation, route, parentRouteName}) {
   const todoClient = useTodos();
 
   const [todo, setTodo] = useState(null);
@@ -25,9 +25,11 @@ export default function TodoDetail({navigation, route}) {
 
   const updateAttributes = attributes => todoClient.update({id, attributes});
 
+  const goBack = () => navigation.navigate(parentRouteName);
+
   const handleComplete = () =>
     updateAttributes({'completed-at': new Date()})
-      .then(() => navigation.goBack())
+      .then(goBack)
       .catch(console.error);
 
   const handleUncomplete = () =>
@@ -37,7 +39,7 @@ export default function TodoDetail({navigation, route}) {
 
   const handleDelete = () =>
     updateAttributes({'deleted-at': new Date()})
-      .then(() => navigation.goBack())
+      .then(goBack)
       .catch(console.error);
 
   const handleUndelete = () =>
@@ -101,3 +103,6 @@ export default function TodoDetail({navigation, route}) {
     </>
   );
 }
+
+export const createTodoDetail = parentRouteName => props =>
+  <TodoDetail {...props} parentRouteName={parentRouteName} />;

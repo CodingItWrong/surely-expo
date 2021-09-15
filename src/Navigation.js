@@ -8,7 +8,7 @@ import AvailableTodos from './screens/AvailableTodos';
 import CompletedTodos from './screens/CompletedTodos';
 import DeletedTodos from './screens/DeletedTodos';
 import FutureTodos from './screens/FutureTodos';
-import TodoDetail from './screens/TodoDetail';
+import TodoDetail, {createTodoDetail} from './screens/TodoDetail';
 import TomorrowTodos from './screens/TomorrowTodos';
 
 const linking = {
@@ -53,6 +53,7 @@ const Drawer = createDrawerNavigator();
 const AvailableStack = createNativeStackNavigator();
 const Available = () => (
   <AvailableStack.Navigator
+    initialRouteName="AvailableTodos"
     screenOptions={{
       header: props => <NavigationBar {...props} />,
     }}
@@ -64,7 +65,7 @@ const Available = () => (
     />
     <AvailableStack.Screen
       name="AvailableTodoDetail"
-      component={TodoDetail}
+      component={createTodoDetail('AvailableTodos')}
       options={{title: 'Todo'}}
     />
   </AvailableStack.Navigator>
@@ -84,7 +85,7 @@ const Tomorrow = () => (
     />
     <TomorrowStack.Screen
       name="TomorrowTodoDetail"
-      component={TodoDetail}
+      component={createTodoDetail('TomorrowTodos')}
       options={{title: 'Todo'}}
     />
   </TomorrowStack.Navigator>
@@ -104,7 +105,7 @@ const Future = () => (
     />
     <FutureStack.Screen
       name="FutureTodoDetail"
-      component={TodoDetail}
+      component={createTodoDetail('FutureTodos')}
       options={{title: 'Todo'}}
     />
   </FutureStack.Navigator>
@@ -124,7 +125,7 @@ const Completed = () => (
     />
     <CompletedStack.Screen
       name="CompletedTodoDetail"
-      component={TodoDetail}
+      component={createTodoDetail('CompletedTodos')}
       options={{title: 'Todo'}}
     />
   </CompletedStack.Navigator>
@@ -144,7 +145,7 @@ const Deleted = () => (
     />
     <DeletedStack.Screen
       name="DeletedTodoDetail"
-      component={TodoDetail}
+      component={createTodoDetail('DeletedTodos')}
       options={{title: 'Todo'}}
     />
   </DeletedStack.Navigator>
