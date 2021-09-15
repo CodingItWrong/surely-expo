@@ -28,7 +28,7 @@ export default function Actions({todo, onUpdate, onGoBack}) {
       .catch(console.error);
 
   const handleUndelete = () =>
-    updateAttributes({'deleted-at': null})
+    updateAttributes({'deleted-at': null, 'completed-at': null})
       .then(handleResponse)
       .catch(console.error);
 
