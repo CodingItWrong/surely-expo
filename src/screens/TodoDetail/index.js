@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {IconButton, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
-import Actions from './Actions';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
 
@@ -49,9 +48,8 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
           onCancel={() => setIsEditing(false)}
         />
       ) : (
-        <DetailDisplay todo={todo} />
+        <DetailDisplay todo={todo} onUpdate={setTodo} onGoBack={goBack} />
       )}
-      <Actions todo={todo} onUpdate={setTodo} onGoBack={goBack} />
     </>
   );
 }

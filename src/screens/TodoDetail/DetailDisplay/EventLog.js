@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native-paper';
-import {relativeDate, relativeDatetime} from '../../utils/time';
+import {relativeDate, relativeDatetime} from '../../../utils/time';
 
 function Entry({isPrimary, children}) {
   const style = {fontSize: isPrimary ? 16 : 12};
