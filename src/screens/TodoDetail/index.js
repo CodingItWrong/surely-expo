@@ -17,17 +17,10 @@ export default function TodoDetail({navigation, route}) {
     params: {id},
   } = route;
 
-  const loadTodo = () =>
-    todoClient
-      .find({id})
-      .then(({data}) => setTodo(data))
-      .catch(console.error);
+  const storeResponse = ({data}) => setTodo(data);
 
   useEffect(() => {
-    todoClient
-      .find({id})
-      .then(({data}) => setTodo(data))
-      .catch(console.error);
+    todoClient.find({id}).then(storeResponse).catch(console.error);
   }, [id, todoClient]);
 
   const updateAttributes = attributes => todoClient.update({id, attributes});
@@ -39,7 +32,7 @@ export default function TodoDetail({navigation, route}) {
 
   const handleUncomplete = () =>
     updateAttributes({'completed-at': null})
-      .then(loadTodo)
+      .then(storeResponse)
       .catch(console.error);
 
   const handleDelete = () =>
@@ -48,14 +41,14 @@ export default function TodoDetail({navigation, route}) {
       .catch(console.error);
 
   const handleUndelete = () =>
-    updateAttributes({'deleted-at': null}).then(loadTodo).catch(console.error);
+    updateAttributes({'deleted-at': null})
+      .then(storeResponse)
+      .catch(console.error);
 
   const handleSave = attributes =>
     updateAttributes(attributes)
-      .then(() => {
-        setIsEditing(false);
-        loadTodo();
-      })
+      .then(storeResponse)
+      .then(() => setIsEditing(false))
       .catch(console.error);
 
   if (!todo) {
