@@ -20,7 +20,7 @@ export default function App() {
         <OAuthLoginContainer>
           {({logOut}) => (
             <TodoProvider>
-              <Navigation />
+              <Navigation logOut={logOut} />
             </TodoProvider>
           )}
         </OAuthLoginContainer>
