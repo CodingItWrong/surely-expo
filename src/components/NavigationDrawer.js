@@ -1,11 +1,9 @@
 import {DrawerContentScrollView} from '@react-navigation/drawer';
-import {useLinkTo} from '@react-navigation/native';
 import React from 'react';
 import {List} from 'react-native-paper';
 
 export default function CustomNavigationDrawer(props) {
-  const linkTo = useLinkTo();
-  const {state, descriptors} = props;
+  const {state, navigation} = props;
 
   const isSelected = index => index === state.index;
 
@@ -16,7 +14,7 @@ export default function CustomNavigationDrawer(props) {
         <List.Item
           key={route.key}
           title={route.name}
-          onPress={() => linkTo(descriptors[route.key].options.link)}
+          onPress={() => navigation.navigate(route.name)}
           style={{
             backgroundColor: isSelected(index) ? '#4caf50' : null,
           }}

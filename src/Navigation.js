@@ -156,31 +156,11 @@ const Navigation = () => (
       screenOptions={{headerShown: false}}
       drawerContent={props => <CustomNavigationDrawer {...props} />}
     >
-      <Drawer.Screen
-        name="Available"
-        component={Available}
-        options={{link: '/todos/available'}}
-      />
-      <Drawer.Screen
-        name="Tomorrow"
-        component={Tomorrow}
-        options={{link: '/todos/tomorrow'}}
-      />
-      <Drawer.Screen
-        name="Future"
-        component={Future}
-        options={{link: '/todos/future'}}
-      />
-      <Drawer.Screen
-        name="Completed"
-        component={Completed}
-        options={{link: '/todos/completed'}}
-      />
-      <Drawer.Screen
-        name="Deleted"
-        component={Deleted}
-        options={{link: '/todos/deleted'}}
-      />
+      <Drawer.Screen name="Available" component={Available} />
+      <Drawer.Screen name="Tomorrow" component={Tomorrow} />
+      <Drawer.Screen name="Future" component={Future} />
+      <Drawer.Screen name="Completed" component={Completed} />
+      <Drawer.Screen name="Deleted" component={Deleted} />
     </Drawer.Navigator>
   </NavigationContainer>
 );
