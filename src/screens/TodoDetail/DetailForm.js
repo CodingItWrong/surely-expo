@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Button, TextInput} from 'react-native-paper';
 
 export default function DetailForm({todo, onSave, onCancel}) {
-  const [name, setName] = useState(todo.attributes.name);
-  const [notes, setNotes] = useState(todo.attributes.notes);
+  const [name, setName] = useState(todo.attributes.name ?? '');
+  const [notes, setNotes] = useState(todo.attributes.notes ?? '');
 
   function handlePressSave() {
     const attributes = {name, notes};
