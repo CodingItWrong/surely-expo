@@ -15,7 +15,7 @@ export default function EventLog({todo}) {
   const entries = [];
 
   if (isDeleted) {
-    entries.push(`Deleted ${relativeDatetime(todo.attributes['deleted-at'])}}`);
+    entries.push(`Deleted ${relativeDatetime(todo.attributes['deleted-at'])}`);
   }
   if (isCompleted) {
     entries.push(
