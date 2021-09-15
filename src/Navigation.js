@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import NavigationBar from './components/NavigationBar';
+import CustomNavigationDrawer from './components/NavigationDrawer';
 import AvailableTodos from './screens/AvailableTodos';
 import CompletedTodos from './screens/CompletedTodos';
 import DeletedTodos from './screens/DeletedTodos';
@@ -13,16 +14,36 @@ import TomorrowTodos from './screens/TomorrowTodos';
 const linking = {
   config: {
     screens: {
-      AvailableTodos: '/',
-      AvailableTodoDetail: '/todos/available/:id',
-      TomorrowTodos: '/todos/tomorrow',
-      TomorrowTodoDetail: '/todos/tomorrow/:id',
-      FutureTodos: '/todos/future',
-      FutureTodoDetail: '/todos/future/:id',
-      CompletedTodos: '/todos/completed',
-      CompletedTodoDetail: '/todos/completed/:id',
-      DeletedTodos: '/todos/deleted',
-      DeletedTodoDetail: '/todos/deleted/:id',
+      Available: {
+        screens: {
+          AvailableTodos: '/todos/available',
+          AvailableTodoDetail: '/todos/available/:id',
+        },
+      },
+      Tomorrow: {
+        screens: {
+          TomorrowTodos: '/todos/tomorrow',
+          TomorrowTodoDetail: '/todos/tomorrow/:id',
+        },
+      },
+      Future: {
+        screens: {
+          FutureTodos: '/todos/future',
+          FutureTodoDetail: '/todos/future/:id',
+        },
+      },
+      Completed: {
+        screens: {
+          CompletedTodos: '/todos/completed',
+          CompletedTodoDetail: '/todos/completed/:id',
+        },
+      },
+      Deleted: {
+        screens: {
+          DeletedTodos: '/todos/deleted',
+          DeletedTodoDetail: '/todos/deleted/:id',
+        },
+      },
     },
   },
 };
@@ -131,12 +152,35 @@ const Deleted = () => (
 
 const Navigation = () => (
   <NavigationContainer linking={linking}>
-    <Drawer.Navigator screenOptions={{headerShown: false}}>
-      <Drawer.Screen name="Available" component={Available} />
-      <Drawer.Screen name="Tomorrow" component={Tomorrow} />
-      <Drawer.Screen name="Future" component={Future} />
-      <Drawer.Screen name="Completed" component={Completed} />
-      <Drawer.Screen name="Deleted" component={Deleted} />
+    <Drawer.Navigator
+      screenOptions={{headerShown: false}}
+      drawerContent={props => <CustomNavigationDrawer {...props} />}
+    >
+      <Drawer.Screen
+        name="Available"
+        component={Available}
+        options={{link: '/todos/available'}}
+      />
+      <Drawer.Screen
+        name="Tomorrow"
+        component={Tomorrow}
+        options={{link: '/todos/tomorrow'}}
+      />
+      <Drawer.Screen
+        name="Future"
+        component={Future}
+        options={{link: '/todos/future'}}
+      />
+      <Drawer.Screen
+        name="Completed"
+        component={Completed}
+        options={{link: '/todos/completed'}}
+      />
+      <Drawer.Screen
+        name="Deleted"
+        component={Deleted}
+        options={{link: '/todos/deleted'}}
+      />
     </Drawer.Navigator>
   </NavigationContainer>
 );
