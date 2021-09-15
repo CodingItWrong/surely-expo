@@ -10,7 +10,6 @@ function getDateObject(dateObjectOrString) {
 }
 
 export function relativeDatetime(dateObjectOrString) {
-  console.log('relativeDatetime');
   if (!dateObjectOrString) {
     return dateObjectOrString;
   }
