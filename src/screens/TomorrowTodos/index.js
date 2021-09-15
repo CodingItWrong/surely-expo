@@ -9,17 +9,19 @@ import {Button, List} from 'react-native-paper';
 import NewTodoForm from '../../components/NewTodoForm';
 import {useTodos} from '../../data/todos';
 
+const today = now => startOfDay(new Date());
+const tomorrow = now => addDays(today(now), 1);
+
 const sortedAvailableTodos = todos =>
   sortBy(
     filter(todos, todo => {
       const deferredUntil = new Date(todo.attributes['deferred-until']);
-      const today = startOfDay(new Date());
-      const tomorrow = addDays(today, 1);
+      const date = new Date();
       return (
         !todo.attributes['deleted-at'] &&
         !todo.attributes['completed-at'] &&
-        deferredUntil > today &&
-        deferredUntil <= tomorrow
+        deferredUntil > today(date) &&
+        deferredUntil <= tomorrow(date)
       );
     }),
     [t => t.attributes.name.toLowerCase()],
@@ -48,7 +50,7 @@ export default function AvailableTodos() {
 
   const handleCreate = name =>
     todoClient
-      .create({attributes: {name}})
+      .create({attributes: {name, 'deferred-until': tomorrow(new Date())}})
       .then(({data}) => setTodos([...todos, data]))
       .catch(console.error);
 
