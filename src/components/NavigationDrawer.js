@@ -2,14 +2,13 @@ import {DrawerContentScrollView} from '@react-navigation/drawer';
 import React from 'react';
 import {List} from 'react-native-paper';
 
-export default function CustomNavigationDrawer(props) {
-  const {state, navigation} = props;
+export default function CustomNavigationDrawer({logOut, ...navProps}) {
+  const {state, navigation} = navProps;
 
   const isSelected = index => index === state.index;
 
-  console.log({props});
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...navProps}>
       {state.routes.map((route, index) => (
         <List.Item
           key={route.key}
@@ -20,6 +19,7 @@ export default function CustomNavigationDrawer(props) {
           }}
         />
       ))}
+      <List.Item title="Sign out" onPress={logOut} />
     </DrawerContentScrollView>
   );
 }

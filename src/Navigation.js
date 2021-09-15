@@ -150,11 +150,13 @@ const Deleted = () => (
   </DeletedStack.Navigator>
 );
 
-const Navigation = () => (
+const Navigation = ({logOut}) => (
   <NavigationContainer linking={linking}>
     <Drawer.Navigator
       screenOptions={{headerShown: false}}
-      drawerContent={props => <CustomNavigationDrawer {...props} />}
+      drawerContent={props => (
+        <CustomNavigationDrawer {...props} logOut={logOut} />
+      )}
     >
       <Drawer.Screen name="Available" component={Available} />
       <Drawer.Screen name="Tomorrow" component={Tomorrow} />
