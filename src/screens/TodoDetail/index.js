@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Button, IconButton, Text} from 'react-native-paper';
+import {IconButton, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
+import Actions from './Actions';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
 
@@ -9,8 +10,6 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
 
   const [todo, setTodo] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const isCompleted = !!todo?.attributes['completed-at'];
-  const isDeleted = !!todo?.attributes['deleted-at'];
 
   const {
     params: {id},
@@ -24,33 +23,13 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
 
   const updateAttributes = attributes => todoClient.update({id, attributes});
 
-  const goBack = () => navigation.navigate(parentRouteName);
-
-  const handleComplete = () =>
-    updateAttributes({'completed-at': new Date()})
-      .then(goBack)
-      .catch(console.error);
-
-  const handleUncomplete = () =>
-    updateAttributes({'completed-at': null})
-      .then(storeResponse)
-      .catch(console.error);
-
-  const handleDelete = () =>
-    updateAttributes({'deleted-at': new Date()})
-      .then(goBack)
-      .catch(console.error);
-
-  const handleUndelete = () =>
-    updateAttributes({'deleted-at': null})
-      .then(storeResponse)
-      .catch(console.error);
-
   const handleSave = attributes =>
     updateAttributes(attributes)
       .then(storeResponse)
       .then(() => setIsEditing(false))
       .catch(console.error);
+
+  const goBack = () => navigation.navigate(parentRouteName);
 
   if (!todo) {
     return <Text>Loading…</Text>;
@@ -72,32 +51,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
       ) : (
         <DetailDisplay todo={todo} />
       )}
-      {isDeleted ? (
-        <Button mode="outlined" onPress={handleUndelete}>
-          Undelete
-        </Button>
-      ) : (
-        <Button mode="outlined" onPress={handleDelete}>
-          Delete
-        </Button>
-      )}
-      {isCompleted ? (
-        <Button
-          mode="contained"
-          icon="checkbox-marked"
-          onPress={handleUncomplete}
-        >
-          Uncomplete
-        </Button>
-      ) : (
-        <Button
-          mode="contained"
-          icon="checkbox-marked"
-          onPress={handleComplete}
-        >
-          Complete
-        </Button>
-      )}
+      <Actions todo={todo} onUpdate={setTodo} onGoBack={goBack} />
     </>
   );
 }
