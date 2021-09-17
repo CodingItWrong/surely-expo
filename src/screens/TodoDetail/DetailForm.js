@@ -15,12 +15,9 @@ export default function DetailForm({todo, onSave, onCancel}) {
     useState(false);
 
   function handleChangeDeferredUntil({date}) {
-    console.log({date});
     if (date) {
-      console.log(1, date.toISOString());
       setDeferredUntil(date.toISOString());
     } else {
-      console.log(2);
       setDeferredUntil(null);
     }
     setIsDeferredUntilModalOpen(false);
