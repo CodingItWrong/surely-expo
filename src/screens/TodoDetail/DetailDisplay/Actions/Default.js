@@ -1,8 +1,8 @@
 import React from 'react';
 import {Button} from 'react-native-paper';
-import {useTodos} from '../../../data/todos';
+import {useTodos} from '../../../../data/todos';
 
-export default function Actions({todo, onUpdate, onGoBack}) {
+export default function Default({todo, onUpdate, onGoBack}) {
   const {id} = todo;
   const todoClient = useTodos();
   const isCompleted = !!todo?.attributes['completed-at'];
