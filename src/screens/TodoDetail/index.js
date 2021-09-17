@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {IconButton, Text} from 'react-native-paper';
+import {Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
@@ -34,24 +34,24 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
     return <Text>Loading…</Text>;
   }
 
-  return (
-    <>
-      <IconButton
-        icon="pencil"
-        accessibilityLabel="Edit"
-        onPress={() => setIsEditing(true)}
+  if (isEditing) {
+    return (
+      <DetailForm
+        todo={todo}
+        onSave={handleSave}
+        onCancel={() => setIsEditing(false)}
       />
-      {isEditing ? (
-        <DetailForm
-          todo={todo}
-          onSave={handleSave}
-          onCancel={() => setIsEditing(false)}
-        />
-      ) : (
-        <DetailDisplay todo={todo} onUpdate={setTodo} onGoBack={goBack} />
-      )}
-    </>
-  );
+    );
+  } else {
+    return (
+      <DetailDisplay
+        todo={todo}
+        onEdit={() => setIsEditing(true)}
+        onUpdate={setTodo}
+        onGoBack={goBack}
+      />
+    );
+  }
 }
 
 export const createTodoDetail = parentRouteName => props =>
