@@ -3,7 +3,7 @@ import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
-import {Button, List} from 'react-native-paper';
+import {Button, List, Text} from 'react-native-paper';
 import NewTodoForm from '../../components/NewTodoForm';
 import {useTodos} from '../../data/todos';
 
@@ -50,18 +50,22 @@ export default function AvailableTodos() {
     <>
       <NewTodoForm onCreate={handleCreate} />
       <Button onPress={loadFromServer}>Reload</Button>
-      <FlatList
-        data={sortedTodos}
-        keyExtractor={todo => todo.id}
-        renderItem={({item: todo}) => (
-          <List.Item
-            key={todo.id}
-            title={todo.attributes.name}
-            titleNumberOfLines={4}
-            onPress={() => linkTo(`/todos/available/${todo.id}`)}
-          />
-        )}
-      />
+      {sortedTodos.length === 0 ? (
+        <Text>You have no available todos. Nice work!</Text>
+      ) : (
+        <FlatList
+          data={sortedTodos}
+          keyExtractor={todo => todo.id}
+          renderItem={({item: todo}) => (
+            <List.Item
+              key={todo.id}
+              title={todo.attributes.name}
+              titleNumberOfLines={4}
+              onPress={() => linkTo(`/todos/available/${todo.id}`)}
+            />
+          )}
+        />
+      )}
     </>
   );
 }
