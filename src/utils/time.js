@@ -1,4 +1,5 @@
 import addDays from 'date-fns/addDays';
+import format from 'date-fns/format';
 import formatRelative from 'date-fns/formatRelative';
 import enUS from 'date-fns/locale/en-US';
 import startOfDay from 'date-fns/startOfDay';
@@ -59,4 +60,9 @@ export function deferDate({start, days, now = new Date()}) {
   }
 
   return startOfDay(addDays(startToUse, days));
+}
+
+export function dayOfWeek(dateObjectOrString) {
+  const date = getDateObject(dateObjectOrString);
+  return format(date, 'EEEE');
 }

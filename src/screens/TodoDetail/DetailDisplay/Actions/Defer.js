@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-native-paper';
 import {useTodos} from '../../../../data/todos';
-import {deferDate} from '../../../../utils/time';
+import {dayOfWeek, deferDate} from '../../../../utils/time';
 
 export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const {id} = todo;
@@ -37,7 +37,7 @@ function DeferButton({todo, numDays, label, onDefer}) {
   });
   return (
     <Button mode="outlined" onPress={onDefer(date)}>
-      {label}
+      {label} - {dayOfWeek(date)}
     </Button>
   );
 }
