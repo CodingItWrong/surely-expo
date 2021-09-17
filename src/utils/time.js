@@ -1,5 +1,7 @@
+import addDays from 'date-fns/addDays';
 import formatRelative from 'date-fns/formatRelative';
 import enUS from 'date-fns/locale/en-US';
+import startOfDay from 'date-fns/startOfDay';
 
 function getDateObject(dateObjectOrString) {
   if (typeof dateObjectOrString === 'string') {
@@ -44,4 +46,17 @@ export function relativeDate(dateObjectOrString) {
 
   const now = new Date();
   return formatRelative(date, now, {locale});
+}
+
+export function deferDate({start, days, now = new Date()}) {
+  let startToUse;
+  if (!start || start < now) {
+    // no future defer date: defer 1 day from now
+    startToUse = now;
+  } else {
+    // already future: defer one additional day
+    startToUse = getDateObject(start);
+  }
+
+  return startOfDay(addDays(startToUse, days));
 }

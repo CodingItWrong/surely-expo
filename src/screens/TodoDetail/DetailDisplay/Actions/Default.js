@@ -2,7 +2,7 @@ import React from 'react';
 import {Button} from 'react-native-paper';
 import {useTodos} from '../../../../data/todos';
 
-export default function Default({todo, onUpdate, onGoBack}) {
+export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   const {id} = todo;
   const todoClient = useTodos();
   const isCompleted = !!todo?.attributes['completed-at'];
@@ -42,6 +42,9 @@ export default function Default({todo, onUpdate, onGoBack}) {
         <>
           <Button mode="outlined" onPress={handleDelete}>
             Delete
+          </Button>
+          <Button mode="outlined" onPress={onDefer}>
+            Defer
           </Button>
           {isCompleted ? (
             <Button
