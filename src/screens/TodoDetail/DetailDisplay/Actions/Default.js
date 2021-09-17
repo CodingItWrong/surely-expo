@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from 'react-native-paper';
 import {useTodos} from '../../../../data/todos';
+import styles from './styles';
 
 export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   const {id} = todo;
@@ -35,15 +36,15 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   return (
     <>
       {isDeleted ? (
-        <Button mode="outlined" onPress={handleUndelete}>
+        <Button mode="outlined" onPress={handleUndelete} style={styles.button}>
           Undelete
         </Button>
       ) : (
         <>
-          <Button mode="outlined" onPress={handleDelete}>
+          <Button mode="outlined" onPress={handleDelete} style={styles.button}>
             Delete
           </Button>
-          <Button mode="outlined" onPress={onDefer}>
+          <Button mode="outlined" onPress={onDefer} style={styles.button}>
             Defer
           </Button>
           {isCompleted ? (
@@ -51,6 +52,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               mode="contained"
               icon="checkbox-marked"
               onPress={handleUncomplete}
+              style={styles.button}
             >
               Uncomplete
             </Button>
@@ -59,6 +61,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               mode="contained"
               icon="checkbox-marked"
               onPress={handleComplete}
+              style={styles.button}
             >
               Complete
             </Button>

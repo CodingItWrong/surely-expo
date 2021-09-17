@@ -3,6 +3,7 @@ import {Button} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import {useTodos} from '../../../../data/todos';
 import {dayOfWeek, deferDate} from '../../../../utils/time';
+import styles from './styles';
 
 export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
@@ -27,7 +28,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
 
   return (
     <>
-      <Button mode="outlined" onPress={onCancel}>
+      <Button mode="outlined" onPress={onCancel} style={styles.button}>
         Cancel
       </Button>
       <DeferButton
@@ -54,7 +55,11 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         label="1 Week"
         onDefer={handleDeferUntil}
       />
-      <Button mode="outlined" onPress={() => setIsDeferredUntilModalOpen(true)}>
+      <Button
+        mode="outlined"
+        onPress={() => setIsDeferredUntilModalOpen(true)}
+        style={styles.button}
+      >
         Pick Date
       </Button>
       <DatePickerModal
@@ -75,7 +80,7 @@ function DeferButton({todo, numDays, label, onDefer}) {
     days: numDays,
   });
   return (
-    <Button mode="outlined" onPress={() => onDefer(date)}>
+    <Button mode="outlined" onPress={() => onDefer(date)} style={styles.button}>
       {label} - {dayOfWeek(date)}
     </Button>
   );
