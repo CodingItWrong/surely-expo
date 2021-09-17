@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import {relativeDate} from '../../utils/time';
@@ -53,6 +54,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         value={notes}
         onChangeText={setNotes}
         multiline
+        style={styles.notesInput}
       />
       <Button mode="outlined" onPress={onCancel}>
         Cancel
@@ -63,3 +65,9 @@ export default function DetailForm({todo, onSave, onCancel}) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  notesInput: {
+    maxHeight: 200,
+  },
+});
