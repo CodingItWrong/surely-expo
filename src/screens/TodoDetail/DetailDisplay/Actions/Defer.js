@@ -3,7 +3,7 @@ import {Button} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import {useTodos} from '../../../../data/todos';
 import {dayOfWeek, deferDate} from '../../../../utils/time';
-import styles from './styles';
+import styles from '../../styles';
 
 export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =

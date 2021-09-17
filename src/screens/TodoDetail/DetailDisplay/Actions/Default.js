@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-native-paper';
 import {useTodos} from '../../../../data/todos';
-import styles from './styles';
+import styles from '../../styles';
 
 export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   const {id} = todo;

@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import {relativeDate} from '../../utils/time';
+import sharedStyles from './styles';
 
 export default function DetailForm({todo, onSave, onCancel}) {
   const [name, setName] = useState(todo.attributes.name ?? '');
@@ -53,10 +54,15 @@ export default function DetailForm({todo, onSave, onCancel}) {
         multiline
         style={styles.notesInput}
       />
-      <Button mode="outlined" onPress={onCancel}>
+      <Button mode="outlined" onPress={onCancel} style={sharedStyles.button}>
         Cancel
       </Button>
-      <Button mode="contained" icon="content-save" onPress={handlePressSave}>
+      <Button
+        mode="contained"
+        icon="content-save"
+        onPress={handlePressSave}
+        style={sharedStyles.button}
+      >
         Save
       </Button>
     </>
