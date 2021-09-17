@@ -1,7 +1,7 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Button, List, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
@@ -20,6 +20,7 @@ export default function CompletedTodos() {
   const linkTo = useLinkTo();
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedFutureTodos(todos), [todos]);
+  const flatListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
@@ -36,13 +37,19 @@ export default function CompletedTodos() {
     }, [loadFromServer]),
   );
 
+  async function reload() {
+    await loadFromServer();
+    flatListRef.current.scrollToOffset({offset: 0});
+  }
+
   return (
     <>
-      <Button onPress={loadFromServer}>Reload</Button>
+      <Button onPress={reload}>Reload</Button>
       {sortedTodos.length === 0 ? (
         <Text>You have no completed todos. You'll get there!</Text>
       ) : (
         <FlatList
+          ref={flatListRef}
           data={sortedTodos}
           keyExtractor={todo => todo.id}
           renderItem={({item: todo}) => (

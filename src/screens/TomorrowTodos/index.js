@@ -3,7 +3,7 @@ import addDays from 'date-fns/addDays';
 import startOfDay from 'date-fns/startOfDay';
 import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
 import {Button, List, Text} from 'react-native-paper';
 import NewTodoForm from '../../components/NewTodoForm';
@@ -32,6 +32,7 @@ export default function AvailableTodos() {
   const linkTo = useLinkTo();
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
+  const flatListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
@@ -48,6 +49,11 @@ export default function AvailableTodos() {
     }, [loadFromServer]),
   );
 
+  async function reload() {
+    await loadFromServer();
+    flatListRef.current.scrollToOffset({offset: 0});
+  }
+
   const handleCreate = name =>
     todoClient
       .create({attributes: {name, 'deferred-until': tomorrow(new Date())}})
@@ -57,11 +63,12 @@ export default function AvailableTodos() {
   return (
     <>
       <NewTodoForm onCreate={handleCreate} />
-      <Button onPress={loadFromServer}>Reload</Button>
+      <Button onPress={reload}>Reload</Button>
       {sortedTodos.length === 0 ? (
         <Text>You have no todos for tomorrow. Nice work!</Text>
       ) : (
         <FlatList
+          ref={flatListRef}
           data={sortedTodos}
           keyExtractor={todo => todo.id}
           renderItem={({item: todo}) => (
