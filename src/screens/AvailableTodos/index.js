@@ -1,6 +1,4 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
-import filter from 'lodash/filter';
-import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {SectionList} from 'react-native';
 import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
