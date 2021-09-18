@@ -12,7 +12,7 @@ import {useTodos} from '../../data/todos';
 const today = now => startOfDay(new Date());
 const tomorrow = now => addDays(today(now), 1);
 
-const sortedAvailableTodos = todos =>
+const sortedTomorrowTodos = todos =>
   sortBy(
     filter(todos, todo => {
       const deferredUntil = new Date(todo.attributes['deferred-until']);
@@ -32,7 +32,7 @@ export default function AvailableTodos() {
   const linkTo = useLinkTo();
   const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const [todos, setTodos] = useState([]);
-  const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
+  const sortedTodos = useMemo(() => sortedTomorrowTodos(todos), [todos]);
   const flatListRef = useRef(null);
 
   const loadFromServer = useCallback(
