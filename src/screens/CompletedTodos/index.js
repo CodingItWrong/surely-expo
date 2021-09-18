@@ -1,18 +1,22 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import filter from 'lodash/filter';
+import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
 import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
 
-const sortedFutureTodos = todos =>
-  sortBy(
-    filter(
-      todos,
-      todo => !todo.attributes['deleted-at'] && todo.attributes['completed-at'],
+const sortedCompletedTodos = todos =>
+  reverse(
+    sortBy(
+      filter(
+        todos,
+        todo =>
+          !todo.attributes['deleted-at'] && todo.attributes['completed-at'],
+      ),
+      [t => t.attributes['completed-at']],
     ),
-    [t => t.attributes.name.toLowerCase()],
   );
 
 export default function CompletedTodos() {
@@ -20,7 +24,7 @@ export default function CompletedTodos() {
   const linkTo = useLinkTo();
   const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const [todos, setTodos] = useState([]);
-  const sortedTodos = useMemo(() => sortedFutureTodos(todos), [todos]);
+  const sortedTodos = useMemo(() => sortedCompletedTodos(todos), [todos]);
   const flatListRef = useRef(null);
 
   const loadFromServer = useCallback(
