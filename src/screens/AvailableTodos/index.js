@@ -18,14 +18,17 @@ export default function AvailableTodos() {
     () => groupsToSections(groupByCategory(todoResponse)),
     [todoResponse],
   );
-  const flatListRef = useRef(null);
+  const sectionListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
       todoClient
         .where({filter: {status: 'available'}, options: {include: 'category'}})
-        .then(response => setTodoResponse(response))
-        .then(() => setShowLoadingIndicator(false))
+        .then(response => {
+          setShowLoadingIndicator(false);
+          setTodoResponse(response);
+          return response;
+        })
         .catch(console.error),
     [todoClient],
   );
@@ -38,8 +41,10 @@ export default function AvailableTodos() {
 
   async function reload() {
     setShowLoadingIndicator(true);
-    await loadFromServer();
-    // flatListRef.current.scrollToOffset({offset: 0});
+    const response = await loadFromServer();
+    if (response.data.length > 0) {
+      sectionListRef.current.scrollToLocation({sectionIndex: 0, itemIndex: 0});
+    }
   }
 
   const handleCreate = name =>
@@ -56,7 +61,7 @@ export default function AvailableTodos() {
     } else {
       return (
         <SectionList
-          ref={flatListRef}
+          ref={sectionListRef}
           sections={todoSections}
           keyExtractor={todo => todo.id}
           renderSectionHeader={({section}) => (
