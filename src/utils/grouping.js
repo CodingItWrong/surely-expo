@@ -16,7 +16,7 @@ export function groupByCategory(input) {
   });
   const groups = Object.entries(groupsObject).map(([, groupTodos]) => ({
     name: categoryForTodo(groupTodos[0])?.attributes?.name ?? 'No Category',
-    todos: sortBy(groupTodos, 'attributes.name'),
+    todos: sortBy(groupTodos, t => t.attributes.name.toLowerCase()),
   }));
   const sortedGroups = sortBy(
     groups,
