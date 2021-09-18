@@ -1,6 +1,6 @@
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import React from 'react';
-import {List} from 'react-native-paper';
+import {Drawer} from 'react-native-paper';
 
 const ICON_FOR_ROUTE = {
   Available: 'clock-outline',
@@ -18,19 +18,15 @@ export default function CustomNavigationDrawer({logOut, ...navProps}) {
   return (
     <DrawerContentScrollView {...navProps}>
       {state.routes.map((route, index) => (
-        <List.Item
+        <Drawer.Item
           key={route.key}
-          title={route.name}
-          left={props => (
-            <List.Icon icon={ICON_FOR_ROUTE[route.name]} {...props} />
-          )}
+          label={route.name}
+          icon={ICON_FOR_ROUTE[route.name]}
+          active={isSelected(index)}
           onPress={() => navigation.navigate(route.name)}
-          style={{
-            backgroundColor: isSelected(index) ? '#4caf50' : null,
-          }}
         />
       ))}
-      <List.Item title="Sign out" onPress={logOut} />
+      <Drawer.Item label="Sign out" onPress={logOut} />
     </DrawerContentScrollView>
   );
 }
