@@ -59,7 +59,7 @@ describe('grouping', () => {
       };
 
       const input = {
-        data: [todo1, todo4, todo3, todo2],
+        data: [todo1, todo3, todo4, todo2],
         included: [category2, category1],
       };
       const expectedOutput = [

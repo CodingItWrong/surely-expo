@@ -20,7 +20,8 @@ export function groupByCategory(input) {
   }));
   const sortedGroups = sortBy(
     groups,
-    group => categoryForTodo(group.todos[0])?.sortOrder ?? -9999,
+    group =>
+      categoryForTodo(group.todos[0])?.attributes?.['sort-order'] ?? -9999,
   );
   return sortedGroups;
 }
