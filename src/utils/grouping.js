@@ -7,7 +7,7 @@ export function groupByCategory(input) {
 
   function categoryForTodo(todo) {
     const categoryId = todo.relationships.category?.data?.id;
-    return categories.find(c => c.id === categoryId);
+    return categories?.find(c => c.id === categoryId);
   }
 
   const groupsObject = groupBy(todos, todo => {
