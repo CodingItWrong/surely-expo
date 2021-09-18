@@ -30,7 +30,7 @@ const sortedTomorrowTodos = todos =>
 export default function AvailableTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
-  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
+  const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedTomorrowTodos(todos), [todos]);
   const flatListRef = useRef(null);
@@ -40,7 +40,7 @@ export default function AvailableTodos() {
       todoClient
         .where({filter: {status: 'tomorrow'}})
         .then(({data}) => setTodos(data))
-        .then(() => setIsInitialLoadComplete(true))
+        .then(() => setShowLoadingIndicator(false))
         .catch(console.error),
     [todoClient],
   );
@@ -52,6 +52,7 @@ export default function AvailableTodos() {
   );
 
   async function reload() {
+    setShowLoadingIndicator(true);
     await loadFromServer();
     flatListRef.current.scrollToOffset({offset: 0});
   }
@@ -63,7 +64,7 @@ export default function AvailableTodos() {
       .catch(console.error);
 
   function contents() {
-    if (!isInitialLoadComplete) {
+    if (showLoadingIndicator) {
       return <ActivityIndicator size="large" />;
     } else if (sortedTodos.length === 0) {
       return <Text>You have no todos for tomorrow. Nice work!</Text>;

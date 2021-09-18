@@ -18,7 +18,7 @@ const sortedDeletedTodos = todos =>
 export default function DeletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
-  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
+  const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedDeletedTodos(todos), [todos]);
   const flatListRef = useRef(null);
@@ -28,7 +28,7 @@ export default function DeletedTodos() {
       todoClient
         .where({filter: {status: 'deleted'}})
         .then(({data}) => setTodos(data))
-        .then(() => setIsInitialLoadComplete(true))
+        .then(() => setShowLoadingIndicator(false))
         .catch(console.error),
     [todoClient],
   );
@@ -40,12 +40,13 @@ export default function DeletedTodos() {
   );
 
   async function reload() {
+    setShowLoadingIndicator(true);
     await loadFromServer();
     flatListRef.current.scrollToOffset({offset: 0});
   }
 
   function contents() {
-    if (!isInitialLoadComplete) {
+    if (showLoadingIndicator) {
       return <ActivityIndicator size="large" />;
     } else if (sortedTodos.length === 0) {
       return (

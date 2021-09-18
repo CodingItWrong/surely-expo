@@ -22,7 +22,7 @@ const sortedCompletedTodos = todos =>
 export default function CompletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
-  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
+  const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedCompletedTodos(todos), [todos]);
   const flatListRef = useRef(null);
@@ -32,7 +32,7 @@ export default function CompletedTodos() {
       todoClient
         .where({filter: {status: 'completed'}})
         .then(({data}) => setTodos(data))
-        .then(() => setIsInitialLoadComplete(true))
+        .then(() => setShowLoadingIndicator(false))
         .catch(console.error),
     [todoClient],
   );
@@ -44,12 +44,13 @@ export default function CompletedTodos() {
   );
 
   async function reload() {
+    setShowLoadingIndicator(true);
     await loadFromServer();
     flatListRef.current.scrollToOffset({offset: 0});
   }
 
   function contents() {
-    if (!isInitialLoadComplete) {
+    if (showLoadingIndicator) {
       return <ActivityIndicator size="large" />;
     } else if (sortedTodos.length === 0) {
       return <Text>You have no completed todos. You'll get there!</Text>;
