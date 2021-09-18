@@ -3,7 +3,7 @@ import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
-import {Button, List, Text} from 'react-native-paper';
+import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
 
 const sortedFutureTodos = todos =>
@@ -18,6 +18,7 @@ const sortedFutureTodos = todos =>
 export default function CompletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedFutureTodos(todos), [todos]);
   const flatListRef = useRef(null);
@@ -27,6 +28,7 @@ export default function CompletedTodos() {
       todoClient
         .where({filter: {status: 'completed'}})
         .then(({data}) => setTodos(data))
+        .then(() => setIsInitialLoadComplete(true))
         .catch(console.error),
     [todoClient],
   );
@@ -42,12 +44,13 @@ export default function CompletedTodos() {
     flatListRef.current.scrollToOffset({offset: 0});
   }
 
-  return (
-    <>
-      <Button onPress={reload}>Reload</Button>
-      {sortedTodos.length === 0 ? (
-        <Text>You have no completed todos. You'll get there!</Text>
-      ) : (
+  function contents() {
+    if (!isInitialLoadComplete) {
+      return <ActivityIndicator size="large" />;
+    } else if (sortedTodos.length === 0) {
+      return <Text>You have no completed todos. You'll get there!</Text>;
+    } else {
+      return (
         <FlatList
           ref={flatListRef}
           data={sortedTodos}
@@ -61,7 +64,14 @@ export default function CompletedTodos() {
             />
           )}
         />
-      )}
+      );
+    }
+  }
+
+  return (
+    <>
+      <Button onPress={reload}>Reload</Button>
+      {contents()}
     </>
   );
 }

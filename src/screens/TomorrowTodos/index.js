@@ -5,7 +5,7 @@ import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
-import {Button, List, Text} from 'react-native-paper';
+import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
 import NewTodoForm from '../../components/NewTodoForm';
 import {useTodos} from '../../data/todos';
 
@@ -30,6 +30,7 @@ const sortedAvailableTodos = todos =>
 export default function AvailableTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedAvailableTodos(todos), [todos]);
   const flatListRef = useRef(null);
@@ -39,6 +40,7 @@ export default function AvailableTodos() {
       todoClient
         .where({filter: {status: 'tomorrow'}})
         .then(({data}) => setTodos(data))
+        .then(() => setIsInitialLoadComplete(true))
         .catch(console.error),
     [todoClient],
   );
@@ -60,13 +62,13 @@ export default function AvailableTodos() {
       .then(({data}) => setTodos([...todos, data]))
       .catch(console.error);
 
-  return (
-    <>
-      <NewTodoForm onCreate={handleCreate} />
-      <Button onPress={reload}>Reload</Button>
-      {sortedTodos.length === 0 ? (
-        <Text>You have no todos for tomorrow. Nice work!</Text>
-      ) : (
+  function contents() {
+    if (!isInitialLoadComplete) {
+      return <ActivityIndicator size="large" />;
+    } else if (sortedTodos.length === 0) {
+      return <Text>You have no todos for tomorrow. Nice work!</Text>;
+    } else {
+      return (
         <FlatList
           ref={flatListRef}
           data={sortedTodos}
@@ -80,7 +82,15 @@ export default function AvailableTodos() {
             />
           )}
         />
-      )}
+      );
+    }
+  }
+
+  return (
+    <>
+      <NewTodoForm onCreate={handleCreate} />
+      <Button onPress={reload}>Reload</Button>
+      {contents()}
     </>
   );
 }

@@ -3,7 +3,7 @@ import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
-import {Button, List, Text} from 'react-native-paper';
+import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
 import {useTodos} from '../../data/todos';
 
 const sortedFutureTodos = todos =>
@@ -15,6 +15,7 @@ const sortedFutureTodos = todos =>
 export default function DeletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
   const [todos, setTodos] = useState([]);
   const sortedTodos = useMemo(() => sortedFutureTodos(todos), [todos]);
   const flatListRef = useRef(null);
@@ -24,6 +25,7 @@ export default function DeletedTodos() {
       todoClient
         .where({filter: {status: 'deleted'}})
         .then(({data}) => setTodos(data))
+        .then(() => setIsInitialLoadComplete(true))
         .catch(console.error),
     [todoClient],
   );
@@ -39,12 +41,15 @@ export default function DeletedTodos() {
     flatListRef.current.scrollToOffset({offset: 0});
   }
 
-  return (
-    <>
-      <Button onPress={reload}>Reload</Button>
-      {sortedTodos.length === 0 ? (
+  function contents() {
+    if (!isInitialLoadComplete) {
+      return <ActivityIndicator size="large" />;
+    } else if (sortedTodos.length === 0) {
+      return (
         <Text>You have no deleted todos. Don't be afraid to give up!</Text>
-      ) : (
+      );
+    } else {
+      return (
         <FlatList
           ref={flatListRef}
           data={sortedTodos}
@@ -58,7 +63,14 @@ export default function DeletedTodos() {
             />
           )}
         />
-      )}
+      );
+    }
+  }
+
+  return (
+    <>
+      <Button onPress={reload}>Reload</Button>
+      {contents()}
     </>
   );
 }
