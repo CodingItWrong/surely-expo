@@ -4,7 +4,8 @@ import filter from 'lodash/filter';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
-import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
+import {Button, List, Text} from 'react-native-paper';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
 
 const sortedFutureTodos = todos =>
@@ -53,7 +54,7 @@ export default function FutureTodos() {
 
   function contents() {
     if (showLoadingIndicator) {
-      return <ActivityIndicator size="large" />;
+      return <LoadingIndicator />;
     } else if (sortedTodos.length === 0) {
       return <Text>You have no future todos. Nice work!</Text>;
     } else {

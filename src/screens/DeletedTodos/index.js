@@ -4,7 +4,8 @@ import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
-import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
+import {Button, List, Text} from 'react-native-paper';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
 
 const sortedDeletedTodos = todos =>
@@ -47,7 +48,7 @@ export default function DeletedTodos() {
 
   function contents() {
     if (showLoadingIndicator) {
-      return <ActivityIndicator size="large" />;
+      return <LoadingIndicator />;
     } else if (sortedTodos.length === 0) {
       return (
         <Text>You have no deleted todos. Don't be afraid to give up!</Text>

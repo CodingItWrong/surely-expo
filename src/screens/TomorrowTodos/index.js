@@ -3,7 +3,8 @@ import addDays from 'date-fns/addDays';
 import startOfDay from 'date-fns/startOfDay';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {SectionList} from 'react-native';
-import {ActivityIndicator, Button, List, Text} from 'react-native-paper';
+import {Button, List, Text} from 'react-native-paper';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';
@@ -59,7 +60,7 @@ export default function AvailableTodos() {
 
   function contents() {
     if (showLoadingIndicator) {
-      return <ActivityIndicator size="large" />;
+      return <LoadingIndicator />;
     } else if (todoSections.length === 0) {
       return <Text>You have no todos for tomorrow. Nice work!</Text>;
     } else {
