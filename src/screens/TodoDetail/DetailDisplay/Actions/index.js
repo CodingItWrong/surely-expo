@@ -26,7 +26,7 @@ export default function Actions({todo, onUpdate, onGoBack}) {
           todo={todo}
           onUpdate={onUpdate}
           onCancel={() => setButtonSet(BUTTON_SET.DEFAULT)}
-          onComplete={() => setButtonSet(BUTTON_SET.DEFAULT)}
+          onComplete={onGoBack}
         />
       );
     default:
