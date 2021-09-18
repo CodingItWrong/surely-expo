@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text} from 'react-native-paper';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
@@ -31,7 +31,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   const goBack = () => navigation.navigate(parentRouteName);
 
   if (!todo) {
-    return <Text>Loading…</Text>;
+    return <LoadingIndicator />;
   }
 
   if (isEditing) {
