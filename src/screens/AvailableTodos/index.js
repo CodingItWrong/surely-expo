@@ -1,7 +1,8 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {SectionList} from 'react-native';
+import {SectionList, StyleSheet} from 'react-native';
 import {Button, List, Text} from 'react-native-paper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import {useTodos} from '../../data/todos';
@@ -84,10 +85,16 @@ export default function AvailableTodos() {
   }
 
   return (
-    <>
+    <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
       <NewTodoForm onCreate={handleCreate} />
       <Button onPress={reload}>Reload</Button>
       {contents()}
-    </>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
+});
