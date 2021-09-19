@@ -8,22 +8,38 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   const todoClient = useTodos();
 
   const [todo, setTodo] = useState(null);
+  const [category, setCategory] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
   const {
     params: {id},
   } = route;
 
-  const storeResponse = ({data}) => setTodo(data);
+  // TODO: confirm it updates the category too
+  const storeResponse = response => {
+    setTodo(response.data);
+    setCategory(response.included?.[0]);
+  };
 
   useEffect(() => {
-    todoClient.find({id}).then(storeResponse).catch(console.error);
+    todoClient
+      .find({id, options: {include: 'category'}})
+      .then(storeResponse)
+      .catch(console.error);
   }, [id, todoClient]);
 
-  const updateAttributes = attributes => todoClient.update({id, attributes});
+  const updateTodo = ({attributes, relationships}) =>
+    todoClient.update(
+      {
+        id,
+        attributes,
+        relationships,
+      },
+      {options: {include: 'category'}},
+    );
 
-  const handleSave = attributes =>
-    updateAttributes(attributes)
+  const handleSave = ({attributes, relationships}) =>
+    updateTodo({attributes, relationships})
       .then(storeResponse)
       .then(() => setIsEditing(false))
       .catch(console.error);
@@ -46,6 +62,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
     return (
       <DetailDisplay
         todo={todo}
+        category={category}
         onEdit={() => setIsEditing(true)}
         onUpdate={setTodo}
         onGoBack={goBack}

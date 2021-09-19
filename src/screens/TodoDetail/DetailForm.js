@@ -1,16 +1,33 @@
-import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import pick from 'lodash/pick';
+import React, {useEffect, useState} from 'react';
+import {Picker, StyleSheet} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
+import Chooser from '../../components/Chooser';
+import {useCategories} from '../../data/categories';
 import {relativeDate} from '../../utils/time';
 import sharedStyles from './styles';
 
 export default function DetailForm({todo, onSave, onCancel}) {
+  const categoryClient = useCategories();
+  const [categories, setCategories] = useState([]);
   const [name, setName] = useState(todo.attributes.name ?? '');
+  const [categoryId, setCategoryId] = useState(
+    todo.relationships.category.data?.id,
+  );
   const [notes, setNotes] = useState(todo.attributes.notes ?? '');
   const [deferredUntil, setDeferredUntil] = useState(
     todo.attributes['deferred-until'],
   );
+
+  const category = categories?.find(c => c.id === categoryId);
+
+  useEffect(() => {
+    categoryClient
+      .all()
+      .then(({data}) => setCategories(data))
+      .catch(console.error);
+  }, [categoryClient]);
 
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
     useState(false);
@@ -26,7 +43,9 @@ export default function DetailForm({todo, onSave, onCancel}) {
 
   function handlePressSave() {
     const attributes = {name, notes, 'deferred-until': deferredUntil};
-    onSave(attributes);
+    const categoryReference = category ? pick(category, ['type', 'id']) : null;
+    const relationships = {category: {data: categoryReference}};
+    onSave({attributes, relationships});
   }
 
   return (
@@ -37,6 +56,17 @@ export default function DetailForm({todo, onSave, onCancel}) {
         onChangeText={setName}
         multiline
       />
+      <Chooser
+        label="Category"
+        valueLabel={category?.attributes?.name ?? 'none'}
+        value={categoryId}
+        onValueChange={setCategoryId}
+      >
+        <Picker.Item key="none" label="none" value={null} />
+        {categories.map(c => (
+          <Picker.Item key={c.id} label={c.attributes.name} value={c.id} />
+        ))}
+      </Chooser>
       <Button mode="outlined" onPress={() => setIsDeferredUntilModalOpen(true)}>
         Deferred until {relativeDate(deferredUntil)}
       </Button>
