@@ -1,4 +1,5 @@
 import pick from 'lodash/pick';
+import sortBy from 'lodash/sortBy';
 import React, {useEffect, useState} from 'react';
 import {Picker, StyleSheet} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
@@ -25,7 +26,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
   useEffect(() => {
     categoryClient
       .all()
-      .then(({data}) => setCategories(data))
+      .then(({data}) => setCategories(sortBy(data, 'attributes.sort-order')))
       .catch(console.error);
   }, [categoryClient]);
 
