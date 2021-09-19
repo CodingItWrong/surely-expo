@@ -1,7 +1,7 @@
 import pick from 'lodash/pick';
 import sortBy from 'lodash/sortBy';
 import React, {useEffect, useState} from 'react';
-import {Picker, StyleSheet} from 'react-native';
+import {Picker, StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import Chooser from '../../components/Chooser';
@@ -50,7 +50,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
   }
 
   return (
-    <>
+    <View style={styles.bodyContainer}>
       <TextInput
         label="Todo name"
         value={name}
@@ -62,13 +62,18 @@ export default function DetailForm({todo, onSave, onCancel}) {
         valueLabel={category?.attributes?.name ?? 'none'}
         value={categoryId}
         onValueChange={setCategoryId}
+        style={styles.chooser}
       >
         <Picker.Item key="none" label="none" value={null} />
         {categories.map(c => (
           <Picker.Item key={c.id} label={c.attributes.name} value={c.id} />
         ))}
       </Chooser>
-      <Button mode="outlined" onPress={() => setIsDeferredUntilModalOpen(true)}>
+      <Button
+        mode="outlined"
+        onPress={() => setIsDeferredUntilModalOpen(true)}
+        style={sharedStyles.button}
+      >
         Deferred until {relativeDate(deferredUntil)}
       </Button>
       <DatePickerModal
@@ -96,12 +101,19 @@ export default function DetailForm({todo, onSave, onCancel}) {
       >
         Save
       </Button>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  bodyContainer: {
+    margin: 15,
+  },
+  chooser: {
+    marginTop: 10,
+  },
   notesInput: {
+    marginTop: 10,
     maxHeight: 200,
   },
 });
