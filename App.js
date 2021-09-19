@@ -1,5 +1,6 @@
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Navigation from './src/Navigation';
 import OAuthLoginContainer from './src/auth/OAuthLoginContainer';
 import {CategoryProvider} from './src/data/categories';
@@ -17,17 +18,19 @@ const theme = {
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <TokenProvider>
-        <OAuthLoginContainer>
-          {({logOut}) => (
-            <TodoProvider>
-              <CategoryProvider>
-                <Navigation logOut={logOut} />
-              </CategoryProvider>
-            </TodoProvider>
-          )}
-        </OAuthLoginContainer>
-      </TokenProvider>
+      <SafeAreaProvider>
+        <TokenProvider>
+          <OAuthLoginContainer>
+            {({logOut}) => (
+              <TodoProvider>
+                <CategoryProvider>
+                  <Navigation logOut={logOut} />
+                </CategoryProvider>
+              </TodoProvider>
+            )}
+          </OAuthLoginContainer>
+        </TokenProvider>
+      </SafeAreaProvider>
     </PaperProvider>
   );
 }
