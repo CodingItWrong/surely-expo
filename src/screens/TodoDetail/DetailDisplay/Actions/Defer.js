@@ -76,7 +76,9 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
 
 function DeferButton({todo, numDays, label, onDefer}) {
   const date = deferDate({
-    start: todo.attributes['deferred-until'],
+    start: todo.attributes['deferred-until']
+      ? new Date(todo.attributes['deferred-until'])
+      : null,
     days: numDays,
   });
   return (
