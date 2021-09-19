@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {IconButton, Text, Title} from 'react-native-paper';
 import Actions from './Actions';
 import EventLog from './EventLog';
@@ -13,7 +13,9 @@ export default function DetailDisplay({
 }) {
   return (
     <ScrollView contentContainerStyle={styles.bodyContainer}>
-      <IconButton icon="pencil" accessibilityLabel="Edit" onPress={onEdit} />
+      <View style={styles.editButtonRow}>
+        <IconButton icon="pencil" accessibilityLabel="Edit" onPress={onEdit} />
+      </View>
       <Title>{todo.attributes.name}</Title>
       <Text>Category: {category?.attributes?.name ?? 'none'}</Text>
       {todo.attributes.notes ? <Text>{todo.attributes.notes}</Text> : null}
@@ -26,5 +28,8 @@ export default function DetailDisplay({
 const styles = StyleSheet.create({
   bodyContainer: {
     marginHorizontal: 15,
+  },
+  editButtonRow: {
+    alignItems: 'flex-end',
   },
 });
