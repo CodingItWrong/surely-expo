@@ -29,14 +29,12 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   }, [id, todoClient]);
 
   const updateTodo = ({attributes, relationships}) =>
-    todoClient.update(
-      {
-        id,
-        attributes,
-        relationships,
-      },
-      {options: {include: 'category'}},
-    );
+    todoClient.update({
+      id,
+      attributes,
+      relationships,
+      options: {include: 'category'},
+    });
 
   const handleSave = ({attributes, relationships}) =>
     updateTodo({attributes, relationships})

@@ -1264,6 +1264,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@codingitwrong/jsonapi-client@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@codingitwrong/jsonapi-client/-/jsonapi-client-0.0.10.tgz#e9f96990b257b265b92be92cfd100f5ed96b4174"
+  integrity sha512-98S9I975JaOXywCXDKI9yVSMGZmM4rM2Nxh/BWep6p5yUN4TBbkLtwenBhNjZKfjlENQn13RrmvSWd0Ag1+hLQ==
+
 "@codingitwrong/react-login@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@codingitwrong/react-login/-/react-login-0.0.3.tgz#ef74366b0b3a98f496e65fc215005b3ea9802c5c"
@@ -2074,11 +2079,6 @@
   integrity sha512-5ctB49rmtTRQuTSBVgqMsEzBUjPP2ByUzBjNivA7jmvk+PDCl4oZsiR8KAm/twhxe215GYThfi2vUWXKAg6EEQ==
   dependencies:
     nanoid "^3.1.23"
-
-"@reststate/client@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@reststate/client/-/client-0.0.9.tgz#075a12be1f8d97b7a226bcf13482502ef1cfd089"
-  integrity sha512-i4FPxwDUdWJhM/kNHnbyqyOekaHzMJioSv3e+BnqOu+Dte3K7uvqRqovVLH7CffW2TOQDbxvpP76Q1wobtfcGg==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"

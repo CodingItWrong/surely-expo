@@ -1,4 +1,4 @@
-import {ResourceClient} from '@reststate/client';
+import {ResourceClient} from '@codingitwrong/jsonapi-client';
 import axios from 'axios';
 import React, {createContext, useContext, useMemo} from 'react';
 import baseUrl from '../baseUrl';
