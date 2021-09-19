@@ -3,7 +3,7 @@ import {Text} from 'react-native-paper';
 import {relativeDate, relativeDatetime} from '../../../utils/time';
 
 function Entry({isPrimary, children}) {
-  const style = {fontSize: isPrimary ? 16 : 12};
+  const style = {fontSize: isPrimary ? 14 : 12};
   return <Text style={style}>{children}</Text>;
 }
 
