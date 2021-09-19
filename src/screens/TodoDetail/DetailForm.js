@@ -57,6 +57,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         onChangeText={setName}
         mode="outlined"
         multiline
+        style={styles.nameInput}
       />
       <Chooser
         label="Category"
@@ -113,6 +114,9 @@ const styles = StyleSheet.create({
   },
   chooser: {
     marginTop: 10,
+  },
+  nameInput: {
+    fontSize: 20,
   },
   notesInput: {
     marginTop: 10,
