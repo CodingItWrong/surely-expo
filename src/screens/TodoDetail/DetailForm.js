@@ -55,6 +55,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         label="Todo name"
         value={name}
         onChangeText={setName}
+        mode="outlined"
         multiline
       />
       <Chooser
@@ -88,6 +89,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         value={notes}
         onChangeText={setNotes}
         multiline
+        mode="outlined"
         style={styles.notesInput}
       />
       <Button mode="outlined" onPress={onCancel} style={sharedStyles.button}>
