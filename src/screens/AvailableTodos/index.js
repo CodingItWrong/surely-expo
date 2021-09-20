@@ -8,9 +8,7 @@ import NewTodoForm from '../../components/NewTodoForm';
 import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';
-
-const groupsToSections = groups =>
-  groups.map(({name, todos}) => ({title: name, data: todos}));
+import {groupsToSections} from '../../utils/ui';
 
 export default function AvailableTodos() {
   const todoClient = useTodos();
