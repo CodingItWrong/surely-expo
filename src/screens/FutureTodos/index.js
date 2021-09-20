@@ -1,42 +1,33 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
-import startOfDay from 'date-fns/startOfDay';
-import filter from 'lodash/filter';
-import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {FlatList} from 'react-native';
+import {SectionList} from 'react-native';
 import {Button, List} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
-
-const sortedFutureTodos = todos =>
-  sortBy(
-    filter(todos, todo => {
-      const deferredUntil = new Date(todo.attributes['deferred-until']);
-      const today = startOfDay(new Date());
-      return (
-        !todo.attributes['deleted-at'] &&
-        !todo.attributes['completed-at'] &&
-        deferredUntil > today
-      );
-    }),
-    [t => t.attributes.name.toLowerCase()],
-  );
+import {groupByDate} from '../../utils/grouping';
+import {groupsToSections} from '../../utils/ui';
 
 export default function FutureTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todos, setTodos] = useState([]);
-  const sortedTodos = useMemo(() => sortedFutureTodos(todos), [todos]);
-  const flatListRef = useRef(null);
+  const todoSections = useMemo(
+    () => groupsToSections(groupByDate({todos, attribute: 'deferred-until'})),
+    [todos],
+  );
+  const sectionListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
       todoClient
         .where({filter: {status: 'future'}})
-        .then(({data}) => setTodos(data))
-        .then(() => setShowLoadingIndicator(false))
+        .then(response => {
+          setShowLoadingIndicator(false);
+          setTodos(response.data);
+          return response;
+        })
         .catch(console.error),
     [todoClient],
   );
@@ -49,23 +40,30 @@ export default function FutureTodos() {
 
   async function reload() {
     setShowLoadingIndicator(true);
-    await loadFromServer();
-    flatListRef.current.scrollToOffset({offset: 0});
+    const response = await loadFromServer();
+    if (response.data.length > 0) {
+      sectionListRef.current.scrollToLocation({sectionIndex: 0, itemIndex: 0});
+    }
   }
 
   function contents() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
-    } else if (sortedTodos.length === 0) {
+    } else if (todoSections.length === 0) {
       return (
         <NoTodosMessage>You have no future todos. Nice work!</NoTodosMessage>
       );
     } else {
       return (
-        <FlatList
-          ref={flatListRef}
-          data={sortedTodos}
+        <SectionList
+          ref={sectionListRef}
+          sections={todoSections}
           keyExtractor={todo => todo.id}
+          renderSectionHeader={({section}) => (
+            <List.Subheader>
+              {section.title} ({section.data.length})
+            </List.Subheader>
+          )}
           renderItem={({item: todo}) => (
             <List.Item
               key={todo.id}

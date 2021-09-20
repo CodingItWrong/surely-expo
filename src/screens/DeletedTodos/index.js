@@ -1,36 +1,36 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
-import filter from 'lodash/filter';
-import reverse from 'lodash/reverse';
-import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {FlatList} from 'react-native';
+import {SectionList} from 'react-native';
 import {Button, List} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
-
-const sortedDeletedTodos = todos =>
-  reverse(
-    sortBy(
-      filter(todos, todo => todo.attributes['deleted-at']),
-      [t => t.attributes['deleted-at']],
-    ),
-  );
+import {groupByDate} from '../../utils/grouping';
+import {groupsToSections} from '../../utils/ui';
 
 export default function DeletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todos, setTodos] = useState([]);
-  const sortedTodos = useMemo(() => sortedDeletedTodos(todos), [todos]);
-  const flatListRef = useRef(null);
+  const todoSections = useMemo(
+    () =>
+      groupsToSections(
+        groupByDate({todos, attribute: 'deleted-at', reverse: true}),
+      ),
+    [todos],
+  );
+  const sectionListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
       todoClient
         .where({filter: {status: 'deleted'}})
-        .then(({data}) => setTodos(data))
-        .then(() => setShowLoadingIndicator(false))
+        .then(response => {
+          setShowLoadingIndicator(false);
+          setTodos(response.data);
+          return response;
+        })
         .catch(console.error),
     [todoClient],
   );
@@ -43,14 +43,16 @@ export default function DeletedTodos() {
 
   async function reload() {
     setShowLoadingIndicator(true);
-    await loadFromServer();
-    flatListRef.current.scrollToOffset({offset: 0});
+    const response = await loadFromServer();
+    if (response.data.length > 0) {
+      sectionListRef.current.scrollToLocation({sectionIndex: 0, itemIndex: 0});
+    }
   }
 
   function contents() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
-    } else if (sortedTodos.length === 0) {
+    } else if (todoSections.length === 0) {
       return (
         <NoTodosMessage>
           You have no deleted todos. Don't be afraid to give up!
@@ -58,10 +60,15 @@ export default function DeletedTodos() {
       );
     } else {
       return (
-        <FlatList
-          ref={flatListRef}
-          data={sortedTodos}
+        <SectionList
+          ref={sectionListRef}
+          sections={todoSections}
           keyExtractor={todo => todo.id}
+          renderSectionHeader={({section}) => (
+            <List.Subheader>
+              {section.title} ({section.data.length})
+            </List.Subheader>
+          )}
           renderItem={({item: todo}) => (
             <List.Item
               key={todo.id}
