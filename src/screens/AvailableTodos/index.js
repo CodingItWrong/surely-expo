@@ -1,10 +1,11 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {SectionList, StyleSheet} from 'react-native';
-import {Button, List, Text} from 'react-native-paper';
+import {Button, List} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
+import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';
 
@@ -59,7 +60,9 @@ export default function AvailableTodos() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
     } else if (todoSections.length === 0) {
-      return <Text>You have no available todos. Nice work!</Text>;
+      return (
+        <NoTodosMessage>You have no available todos. Nice work!</NoTodosMessage>
+      );
     } else {
       return (
         <SectionList

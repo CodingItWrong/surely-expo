@@ -3,9 +3,10 @@ import addDays from 'date-fns/addDays';
 import startOfDay from 'date-fns/startOfDay';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {SectionList} from 'react-native';
-import {Button, List, Text} from 'react-native-paper';
+import {Button, List} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
+import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';
 
@@ -62,7 +63,11 @@ export default function AvailableTodos() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
     } else if (todoSections.length === 0) {
-      return <Text>You have no todos for tomorrow. Nice work!</Text>;
+      return (
+        <NoTodosMessage>
+          You have no todos for tomorrow. Nice work!
+        </NoTodosMessage>
+      );
     } else {
       return (
         <SectionList

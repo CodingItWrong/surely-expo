@@ -4,8 +4,9 @@ import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {FlatList} from 'react-native';
-import {Button, List, Text} from 'react-native-paper';
+import {Button, List} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
 
 const sortedCompletedTodos = todos =>
@@ -54,7 +55,11 @@ export default function CompletedTodos() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
     } else if (sortedTodos.length === 0) {
-      return <Text>You have no completed todos. You'll get there!</Text>;
+      return (
+        <NoTodosMessage>
+          You have no completed todos. You'll get there!
+        </NoTodosMessage>
+      );
     } else {
       return (
         <FlatList
