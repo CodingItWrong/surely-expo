@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {StyleSheet} from 'react-native';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
 import DetailDisplay from './DetailDisplay';
@@ -45,7 +46,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   const goBack = () => navigation.navigate(parentRouteName);
 
   if (!todo) {
-    return <LoadingIndicator />;
+    return <LoadingIndicator style={styles.loadingIndicator} />;
   }
 
   if (isEditing) {
@@ -71,3 +72,9 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
 
 export const createTodoDetail = parentRouteName => props =>
   <TodoDetail {...props} parentRouteName={parentRouteName} />;
+
+const styles = StyleSheet.create({
+  loadingIndicator: {
+    marginTop: 10,
+  },
+});
