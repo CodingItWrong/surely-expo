@@ -38,14 +38,13 @@ const locale = {
   formatRelative: token => formatRelativeLocaleWithoutTime[token],
 };
 
-export function relativeDate(dateObjectOrString) {
+export function relativeDate(dateObjectOrString, {now = new Date()} = {}) {
   if (!dateObjectOrString) {
     return dateObjectOrString;
   }
 
   const date = getDateObject(dateObjectOrString);
 
-  const now = new Date();
   return formatRelative(date, now, {locale});
 }
 

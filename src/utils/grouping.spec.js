@@ -1,4 +1,4 @@
-import {groupByCategory} from './grouping';
+import {groupByCategory, groupByDate} from './grouping';
 
 describe('grouping', () => {
   describe('groupByCategory', () => {
@@ -78,6 +78,89 @@ describe('grouping', () => {
       ];
 
       expect(groupByCategory(input)).toEqual(expectedOutput);
+    });
+  });
+
+  describe('groupByDate', () => {
+    it('creates groups with the relative date name', () => {
+      const todo1 = {
+        id: 't1',
+        attributes: {
+          name: 'Todo 1',
+          'deferred-until': '2021-09-29T04:00:00.000Z',
+        },
+      };
+      const todo2 = {
+        id: 't2',
+        attributes: {
+          name: 'Todo 2',
+          'deferred-until': '2021-09-29T06:00:00.000Z',
+        },
+      };
+      const todo3 = {
+        id: 't3',
+        attributes: {
+          name: 'Todo 3',
+          'deferred-until': '2021-08-29T04:00:00.000Z',
+        },
+      };
+      const todos = [todo3, todo2, todo1];
+      const now = new Date('2021-09-30T04:00:00.000Z');
+
+      const expectedResult = [
+        {
+          name: '08/29/2021',
+          todos: [todo3],
+        },
+        {
+          name: 'Yesterday',
+          todos: [todo1, todo2],
+        },
+      ];
+
+      const result = groupByDate({todos, attribute: 'deferred-until', now});
+      expect(result).toEqual(expectedResult);
+    });
+
+    it('allows reversing', () => {
+      const todo1 = {
+        id: 't1',
+        attributes: {
+          name: 'Todo 1',
+          'deferred-until': '2021-09-29T04:00:00.000Z',
+        },
+      };
+      const todo2 = {
+        id: 't2',
+        attributes: {
+          name: 'Todo 2',
+          'deferred-until': '2021-09-29T04:00:00.000Z',
+        },
+      };
+      const todo3 = {
+        id: 't3',
+        attributes: {
+          name: 'Todo 3',
+          'deferred-until': '2021-08-29T04:00:00.000Z',
+        },
+      };
+      const todos = [todo3, todo2, todo1];
+      const now = new Date('2021-09-30T04:00:00.000Z');
+
+      const expectedResult = [
+        {
+          name: 'Yesterday',
+          todos: [todo1, todo2],
+        },
+        {
+          name: '08/29/2021',
+          todos: [todo3],
+        },
+      ];
+
+      expect(
+        groupByDate({todos, attribute: 'deferred-until', reverse: true, now}),
+      ).toEqual(expectedResult);
     });
   });
 });
