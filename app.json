@@ -21,6 +21,8 @@
       "bundleIdentifier": "com.surelytodo"
     },
     "web": {
+      "name": "Surely",
+      "themeColor": "#4caf50",
       "favicon": "./assets/favicon.png"
     },
     "description": "Native and web client for surelytodo.com todo list app",
