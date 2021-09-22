@@ -39,11 +39,9 @@ $ yarn test
 
 ### iOS
 
-```bash
-$ expo build:ios
-```
-
-- Download the built `.ipa` file from the link Expo provides
+- Increment the `ios.buildNumber` in `app.json`
+- Run `expo build:ios` and choose build type "archive"
+- Once the build completes, download the built `.ipa` file from the link Expo provides
 - Upload the `.ipa` file to TestFlight using the Apple [Transporter](https://apps.apple.com/us/app/transporter/id1450874784?mt=12) app.
 
 ### Web
