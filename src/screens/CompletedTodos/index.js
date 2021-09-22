@@ -1,9 +1,10 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {SectionList, StyleSheet, View} from 'react-native';
-import {Button, IconButton, List, Text} from 'react-native-paper';
+import {SectionList} from 'react-native';
+import {Button, List} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NoTodosMessage from '../../components/NoTodosMessage';
+import PaginationControls from '../../components/PaginationControls';
 import {useTodos} from '../../data/todos';
 import {groupByDate} from '../../utils/grouping';
 import {groupsToSections} from '../../utils/ui';
@@ -26,7 +27,6 @@ export default function CompletedTodos() {
     [todoResponse],
   );
   const sectionListRef = useRef(null);
-  const maxPageNumber = todoResponse?.meta?.['page-count'];
 
   const loadFromServer = useCallback(
     () =>
@@ -58,21 +58,6 @@ export default function CompletedTodos() {
     }
   }
 
-  const pageNumberAtMin = pageNumber <= 1;
-  const pageNumberAtMax = pageNumber >= maxPageNumber;
-
-  function decrementPageNumber() {
-    if (!pageNumberAtMin) {
-      setPageNumber(pageNumber - 1);
-    }
-  }
-
-  function incrementPageNumber() {
-    if (!pageNumberAtMax) {
-      setPageNumber(pageNumber + 1);
-    }
-  }
-
   function contents() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
@@ -83,25 +68,15 @@ export default function CompletedTodos() {
         </NoTodosMessage>
       );
     } else {
+      const maxPageNumber = todoResponse?.meta?.['page-count'];
       return (
         <>
-          <View style={styles.paginationControls}>
-            <IconButton
-              icon="arrow-left-bold"
-              disabled={pageNumberAtMin}
-              onPress={decrementPageNumber}
-              accessibilityLabel="Go to previous page"
-            />
-            <Text>
-              Page {pageNumber} of {maxPageNumber}
-            </Text>
-            <IconButton
-              icon="arrow-right-bold"
-              disabled={pageNumberAtMax}
-              onPress={incrementPageNumber}
-              accessibilityLabel="Go to next page"
-            />
-          </View>
+          <PaginationControls
+            pageNumber={pageNumber}
+            maxPageNumber={maxPageNumber}
+            increment={() => setPageNumber(pageNumber + 1)}
+            decrement={() => setPageNumber(pageNumber - 1)}
+          />
           <SectionList
             ref={sectionListRef}
             sections={todoSections}
@@ -132,10 +107,3 @@ export default function CompletedTodos() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  paginationControls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
