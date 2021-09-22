@@ -4,6 +4,7 @@ import {SectionList} from 'react-native';
 import {Button, List} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NoTodosMessage from '../../components/NoTodosMessage';
+import PaginationControls from '../../components/PaginationControls';
 import {useTodos} from '../../data/todos';
 import {groupByDate} from '../../utils/grouping';
 import {groupsToSections} from '../../utils/ui';
@@ -12,27 +13,35 @@ export default function DeletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
-  const [todos, setTodos] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [todoResponse, setTodoResponse] = useState([]);
   const todoSections = useMemo(
     () =>
       groupsToSections(
-        groupByDate({todos, attribute: 'deleted-at', reverse: true}),
+        groupByDate({
+          todos: todoResponse.data,
+          attribute: 'deleted-at',
+          reverse: true,
+        }),
       ),
-    [todos],
+    [todoResponse],
   );
   const sectionListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
       todoClient
-        .where({filter: {status: 'deleted'}})
+        .where({
+          filter: {status: 'deleted'},
+          options: {sort: '-deletedAt', 'page[number]': pageNumber},
+        })
         .then(response => {
           setShowLoadingIndicator(false);
-          setTodos(response.data);
+          setTodoResponse(response);
           return response;
         })
         .catch(console.error),
-    [todoClient],
+    [todoClient, pageNumber],
   );
 
   useFocusEffect(
@@ -59,25 +68,34 @@ export default function DeletedTodos() {
         </NoTodosMessage>
       );
     } else {
+      const maxPageNumber = todoResponse?.meta?.['page-count'];
       return (
-        <SectionList
-          ref={sectionListRef}
-          sections={todoSections}
-          keyExtractor={todo => todo.id}
-          renderSectionHeader={({section}) => (
-            <List.Subheader>
-              {section.title} ({section.data.length})
-            </List.Subheader>
-          )}
-          renderItem={({item: todo}) => (
-            <List.Item
-              key={todo.id}
-              title={todo.attributes.name}
-              titleNumberOfLines={4}
-              onPress={() => linkTo(`/todos/deleted/${todo.id}`)}
-            />
-          )}
-        />
+        <>
+          <PaginationControls
+            pageNumber={pageNumber}
+            maxPageNumber={maxPageNumber}
+            increment={() => setPageNumber(pageNumber + 1)}
+            decrement={() => setPageNumber(pageNumber - 1)}
+          />
+          <SectionList
+            ref={sectionListRef}
+            sections={todoSections}
+            keyExtractor={todo => todo.id}
+            renderSectionHeader={({section}) => (
+              <List.Subheader>
+                {section.title} ({section.data.length})
+              </List.Subheader>
+            )}
+            renderItem={({item: todo}) => (
+              <List.Item
+                key={todo.id}
+                title={todo.attributes.name}
+                titleNumberOfLines={4}
+                onPress={() => linkTo(`/todos/deleted/${todo.id}`)}
+              />
+            )}
+          />
+        </>
       );
     }
   }
