@@ -1,7 +1,8 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {SectionList} from 'react-native';
+import {SectionList, StyleSheet} from 'react-native';
 import {Button, List} from 'react-native-paper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
@@ -78,9 +79,15 @@ export default function FutureTodos() {
   }
 
   return (
-    <>
+    <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
       <Button onPress={reload}>Reload</Button>
       {contents()}
-    </>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
+});
