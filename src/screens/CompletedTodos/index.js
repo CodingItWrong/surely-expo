@@ -13,13 +13,17 @@ export default function CompletedTodos() {
   const linkTo = useLinkTo();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
-  const [todos, setTodos] = useState([]);
+  const [todoResponse, setTodoResponse] = useState([]);
   const todoSections = useMemo(
     () =>
       groupsToSections(
-        groupByDate({todos, attribute: 'completed-at', reverse: true}),
+        groupByDate({
+          todos: todoResponse.data,
+          attribute: 'completed-at',
+          reverse: true,
+        }),
       ),
-    [todos],
+    [todoResponse],
   );
   const sectionListRef = useRef(null);
 
@@ -32,7 +36,7 @@ export default function CompletedTodos() {
         })
         .then(response => {
           setShowLoadingIndicator(false);
-          setTodos(response.data);
+          setTodoResponse(response);
           return response;
         })
         .catch(console.error),
