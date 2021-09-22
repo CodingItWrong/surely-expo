@@ -1,7 +1,7 @@
 import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {SectionList} from 'react-native';
-import {Button, List} from 'react-native-paper';
+import {SectionList, StyleSheet, View} from 'react-native';
+import {Button, IconButton, List, Text} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NoTodosMessage from '../../components/NoTodosMessage';
 import {useTodos} from '../../data/todos';
@@ -53,6 +53,17 @@ export default function CompletedTodos() {
     }
   }
 
+  function decrementPageNumber() {
+    if (pageNumber > 1) {
+      setPageNumber(pageNumber - 1);
+    }
+  }
+
+  function incrementPageNumber() {
+    // TODO set max
+    setPageNumber(pageNumber + 1);
+  }
+
   function contents() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
@@ -64,24 +75,31 @@ export default function CompletedTodos() {
       );
     } else {
       return (
-        <SectionList
-          ref={sectionListRef}
-          sections={todoSections}
-          keyExtractor={todo => todo.id}
-          renderSectionHeader={({section}) => (
-            <List.Subheader>
-              {section.title} ({section.data.length})
-            </List.Subheader>
-          )}
-          renderItem={({item: todo}) => (
-            <List.Item
-              key={todo.id}
-              title={todo.attributes.name}
-              titleNumberOfLines={4}
-              onPress={() => linkTo(`/todos/completed/${todo.id}`)}
-            />
-          )}
-        />
+        <>
+          <View style={styles.paginationControls}>
+            <IconButton icon="arrow-left-bold" onPress={decrementPageNumber} />
+            <Text>Page {pageNumber}</Text>
+            <IconButton icon="arrow-right-bold" onPress={incrementPageNumber} />
+          </View>
+          <SectionList
+            ref={sectionListRef}
+            sections={todoSections}
+            keyExtractor={todo => todo.id}
+            renderSectionHeader={({section}) => (
+              <List.Subheader>
+                {section.title} ({section.data.length})
+              </List.Subheader>
+            )}
+            renderItem={({item: todo}) => (
+              <List.Item
+                key={todo.id}
+                title={todo.attributes.name}
+                titleNumberOfLines={4}
+                onPress={() => linkTo(`/todos/completed/${todo.id}`)}
+              />
+            )}
+          />
+        </>
       );
     }
   }
@@ -93,3 +111,10 @@ export default function CompletedTodos() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  paginationControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
