@@ -26,6 +26,7 @@ export default function CompletedTodos() {
     [todoResponse],
   );
   const sectionListRef = useRef(null);
+  const maxPageNumber = todoResponse?.meta?.['page-count'];
 
   const loadFromServer = useCallback(
     () =>
@@ -57,15 +58,19 @@ export default function CompletedTodos() {
     }
   }
 
+  const pageNumberAtMin = pageNumber <= 1;
+  const pageNumberAtMax = pageNumber >= maxPageNumber;
+
   function decrementPageNumber() {
-    if (pageNumber > 1) {
+    if (!pageNumberAtMin) {
       setPageNumber(pageNumber - 1);
     }
   }
 
   function incrementPageNumber() {
-    // TODO set max
-    setPageNumber(pageNumber + 1);
+    if (!pageNumberAtMax) {
+      setPageNumber(pageNumber + 1);
+    }
   }
 
   function contents() {
@@ -81,9 +86,21 @@ export default function CompletedTodos() {
       return (
         <>
           <View style={styles.paginationControls}>
-            <IconButton icon="arrow-left-bold" onPress={decrementPageNumber} />
-            <Text>Page {pageNumber}</Text>
-            <IconButton icon="arrow-right-bold" onPress={incrementPageNumber} />
+            <IconButton
+              icon="arrow-left-bold"
+              disabled={pageNumberAtMin}
+              onPress={decrementPageNumber}
+              accessibilityLabel="Go to previous page"
+            />
+            <Text>
+              Page {pageNumber} of {maxPageNumber}
+            </Text>
+            <IconButton
+              icon="arrow-right-bold"
+              disabled={pageNumberAtMax}
+              onPress={incrementPageNumber}
+              accessibilityLabel="Go to next page"
+            />
           </View>
           <SectionList
             ref={sectionListRef}
