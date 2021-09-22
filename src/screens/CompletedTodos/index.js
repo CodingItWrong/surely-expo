@@ -12,6 +12,7 @@ export default function CompletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
+  const [pageNumber, setPageNumber] = useState(1);
   const [todos, setTodos] = useState([]);
   const todoSections = useMemo(
     () =>
@@ -25,14 +26,17 @@ export default function CompletedTodos() {
   const loadFromServer = useCallback(
     () =>
       todoClient
-        .where({filter: {status: 'completed'}})
+        .where({
+          filter: {status: 'completed'},
+          options: {sort: '-completedAt', 'page[number]': pageNumber},
+        })
         .then(response => {
           setShowLoadingIndicator(false);
           setTodos(response.data);
           return response;
         })
         .catch(console.error),
-    [todoClient],
+    [todoClient, pageNumber],
   );
 
   useFocusEffect(
