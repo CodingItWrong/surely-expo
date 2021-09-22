@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
@@ -6,6 +6,14 @@ import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
 
 export default function TodoDetail({navigation, route, parentRouteName}) {
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const todoClient = useTodos();
 
   const [todo, setTodo] = useState(null);
@@ -16,17 +24,20 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
     params: {id},
   } = route;
 
-  // TODO: confirm it updates the category too
   const storeResponse = response => {
-    setTodo(response.data);
-    setCategory(response.included?.[0]);
+    if (isMounted.current) {
+      setTodo(response.data);
+      setCategory(response.included?.[0]);
+    }
   };
 
   useEffect(() => {
-    todoClient
-      .find({id, options: {include: 'category'}})
-      .then(storeResponse)
-      .catch(console.error);
+    if (isMounted.current) {
+      todoClient
+        .find({id, options: {include: 'category'}})
+        .then(storeResponse)
+        .catch(console.error);
+    }
   }, [id, todoClient]);
 
   const updateTodo = ({attributes, relationships}) =>
@@ -40,7 +51,11 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   const handleSave = ({attributes, relationships}) =>
     updateTodo({attributes, relationships})
       .then(storeResponse)
-      .then(() => setIsEditing(false))
+      .then(() => {
+        if (isMounted.current) {
+          setIsEditing(false);
+        }
+      })
       .catch(console.error);
 
   const goBack = () => navigation.navigate(parentRouteName);
