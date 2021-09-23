@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll",
+    "test": "jest src --watchAll",
     "cypress": "cypress open",
     "lint": "eslint \"**/*.js\"",
     "build:web": "expo build:web"
