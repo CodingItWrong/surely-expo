@@ -13,7 +13,10 @@ export default function DetailDisplay({
   onGoBack,
 }) {
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']}>
+    <SafeAreaView
+      edges={['left', 'right', 'bottom']}
+      style={styles.safeAreaView}
+    >
       <ScrollView contentContainerStyle={styles.bodyContainer}>
         <View style={styles.editButtonRow}>
           <IconButton
@@ -33,6 +36,9 @@ export default function DetailDisplay({
 }
 
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
   bodyContainer: {
     marginHorizontal: 15,
   },
