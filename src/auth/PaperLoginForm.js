@@ -13,6 +13,7 @@ export default function PaperLoginForm({onLogIn}) {
       </Appbar.Header>
       {error && <Text>{error}</Text>}
       <TextInput
+        testID="email"
         label="Email"
         value={username}
         onChangeText={handleChange('username')}
@@ -22,13 +23,16 @@ export default function PaperLoginForm({onLogIn}) {
         autoCorrect={false}
       />
       <TextInput
+        testID="password"
         label="Password"
         value={password}
         onChangeText={handleChange('password')}
         onSubmitEditing={handleLogIn}
         secureTextEntry
       />
-      <Button onPress={handleLogIn}>Sign in</Button>
+      <Button testID="sign-in" onPress={handleLogIn}>
+        Sign in
+      </Button>
     </>
   );
 }

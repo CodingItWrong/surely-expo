@@ -15,6 +15,7 @@ export default function NewTodoForm({onCreate}) {
 
   return (
     <TextInput
+      testID="new-todo-name"
       label="New todo name"
       value={name}
       onChangeText={setName}

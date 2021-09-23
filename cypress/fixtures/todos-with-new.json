@@ -11,6 +11,18 @@
           "data": null
         }
       }
+    },
+    {
+      "id": "def456",
+      "type": "todos",
+      "attributes": {
+        "name": "My New Todo"
+      },
+      "relationships": {
+        "category": {
+          "data": null
+        }
+      }
     }
   ],
   "included": []
