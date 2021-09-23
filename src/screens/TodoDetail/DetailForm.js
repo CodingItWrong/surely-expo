@@ -2,6 +2,7 @@ import pick from 'lodash/pick';
 import sortBy from 'lodash/sortBy';
 import React, {useEffect, useState} from 'react';
 import {Picker, StyleSheet, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import Chooser from '../../components/Chooser';
@@ -50,61 +51,63 @@ export default function DetailForm({todo, onSave, onCancel}) {
   }
 
   return (
-    <View style={styles.bodyContainer}>
-      <TextInput
-        label="Todo name"
-        value={name}
-        onChangeText={setName}
-        mode="outlined"
-        multiline
-        style={styles.nameInput}
-      />
-      <Chooser
-        label="Category"
-        valueLabel={category?.attributes?.name ?? 'none'}
-        value={categoryId}
-        onValueChange={setCategoryId}
-        style={styles.chooser}
-      >
-        <Picker.Item key="none" label="none" value={null} />
-        {categories.map(c => (
-          <Picker.Item key={c.id} label={c.attributes.name} value={c.id} />
-        ))}
-      </Chooser>
-      <Button
-        mode="outlined"
-        onPress={() => setIsDeferredUntilModalOpen(true)}
-        style={sharedStyles.button}
-      >
-        Defer until day: {relativeDate(deferredUntil) ?? 'n/a'}
-      </Button>
-      <DatePickerModal
-        visible={isDeferredUntilModalOpen}
-        mode="single"
-        date={deferredUntil ? new Date(deferredUntil) : null}
-        onConfirm={handleChangeDeferredUntil}
-        onDismiss={() => setIsDeferredUntilModalOpen(false)}
-      />
-      <TextInput
-        label="Notes"
-        value={notes}
-        onChangeText={setNotes}
-        multiline
-        mode="outlined"
-        style={styles.notesInput}
-      />
-      <Button mode="outlined" onPress={onCancel} style={sharedStyles.button}>
-        Cancel
-      </Button>
-      <Button
-        mode="contained"
-        icon="content-save"
-        onPress={handlePressSave}
-        style={sharedStyles.button}
-      >
-        Save
-      </Button>
-    </View>
+    <KeyboardAwareScrollView>
+      <View style={styles.bodyContainer}>
+        <TextInput
+          label="Todo name"
+          value={name}
+          onChangeText={setName}
+          mode="outlined"
+          multiline
+          style={styles.nameInput}
+        />
+        <Chooser
+          label="Category"
+          valueLabel={category?.attributes?.name ?? 'none'}
+          value={categoryId}
+          onValueChange={setCategoryId}
+          style={styles.chooser}
+        >
+          <Picker.Item key="none" label="none" value={null} />
+          {categories.map(c => (
+            <Picker.Item key={c.id} label={c.attributes.name} value={c.id} />
+          ))}
+        </Chooser>
+        <Button
+          mode="outlined"
+          onPress={() => setIsDeferredUntilModalOpen(true)}
+          style={sharedStyles.button}
+        >
+          Defer until day: {relativeDate(deferredUntil) ?? 'n/a'}
+        </Button>
+        <DatePickerModal
+          visible={isDeferredUntilModalOpen}
+          mode="single"
+          date={deferredUntil ? new Date(deferredUntil) : null}
+          onConfirm={handleChangeDeferredUntil}
+          onDismiss={() => setIsDeferredUntilModalOpen(false)}
+        />
+        <TextInput
+          label="Notes"
+          value={notes}
+          onChangeText={setNotes}
+          multiline
+          mode="outlined"
+          style={styles.notesInput}
+        />
+        <Button mode="outlined" onPress={onCancel} style={sharedStyles.button}>
+          Cancel
+        </Button>
+        <Button
+          mode="contained"
+          icon="content-save"
+          onPress={handlePressSave}
+          style={sharedStyles.button}
+        >
+          Save
+        </Button>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 
