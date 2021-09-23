@@ -23,7 +23,9 @@ jobs:
       - name: Unit Tests
         run: yarn test --watchAll=false
       - name: Install Expo CLI
-        run: npm install -g expo-cli
+        run: yarn global add expo-cli
+      - name: Install Sharp CLI
+        run: yarn global add sharp-cli
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
