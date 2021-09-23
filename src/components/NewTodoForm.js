@@ -20,7 +20,7 @@ export default function NewTodoForm({onCreate}) {
       onChangeText={setName}
       onSubmitEditing={handleCreate}
       autoCapitalize="sentences"
-      autCorrect
+      autoCorrect
     />
   );
 }
