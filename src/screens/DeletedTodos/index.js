@@ -5,6 +5,7 @@ import {Button, List} from 'react-native-paper';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NoTodosMessage from '../../components/NoTodosMessage';
 import PaginationControls from '../../components/PaginationControls';
+import SearchForm from '../../components/SearchForm';
 import {useTodos} from '../../data/todos';
 import {groupByDate} from '../../utils/grouping';
 import {groupsToSections} from '../../utils/ui';
@@ -13,6 +14,7 @@ export default function DeletedTodos() {
   const todoClient = useTodos();
   const linkTo = useLinkTo();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
+  const [searchText, setSearchText] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [todoResponse, setTodoResponse] = useState([]);
   const todoSections = useMemo(
@@ -32,7 +34,7 @@ export default function DeletedTodos() {
     () =>
       todoClient
         .where({
-          filter: {status: 'deleted'},
+          filter: {status: 'deleted', search: searchText},
           options: {sort: '-deletedAt', 'page[number]': pageNumber},
         })
         .then(response => {
@@ -41,7 +43,7 @@ export default function DeletedTodos() {
           return response;
         })
         .catch(console.error),
-    [todoClient, pageNumber],
+    [todoClient, searchText, pageNumber],
   );
 
   useFocusEffect(
@@ -71,6 +73,7 @@ export default function DeletedTodos() {
       const maxPageNumber = todoResponse?.meta?.['page-count'];
       return (
         <>
+          <SearchForm value={searchText} onSubmit={setSearchText} />
           <PaginationControls
             pageNumber={pageNumber}
             maxPageNumber={maxPageNumber}
