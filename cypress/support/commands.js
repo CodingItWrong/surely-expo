@@ -25,3 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('getTestId', value => cy.get(`[data-testid="${value}"]`));
+
+Cypress.Commands.add('signIn', () =>
+  window.localStorage.setItem('SURELY_ACCESS_TOKEN', 'fake_access_token'),
+);
