@@ -18,8 +18,11 @@
     ],
     "ios": {
       "buildNumber": "2",
+      "bundleIdentifier": "com.surelytodo",
       "supportsTablet": true,
-      "bundleIdentifier": "com.surelytodo"
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "web": {
       "name": "Surely",
