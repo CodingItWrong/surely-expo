@@ -1264,10 +1264,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@codingitwrong/jsonapi-client@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@codingitwrong/jsonapi-client/-/jsonapi-client-0.0.10.tgz#e9f96990b257b265b92be92cfd100f5ed96b4174"
-  integrity sha512-98S9I975JaOXywCXDKI9yVSMGZmM4rM2Nxh/BWep6p5yUN4TBbkLtwenBhNjZKfjlENQn13RrmvSWd0Ag1+hLQ==
+"@codingitwrong/jsonapi-client@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@codingitwrong/jsonapi-client/-/jsonapi-client-0.0.11.tgz#94672fb42cb8fe15a1681f997565e59c0aebe256"
+  integrity sha512-0me56BMAj8KaCAK838AsBu7fXmytvbnFE1BbW8c1DlbNTcqrSd/yD3vWyuf4LLGFCdDHmVRWWRBclWeJh5+yjg==
 
 "@codingitwrong/react-login@^0.0.3":
   version "0.0.3"

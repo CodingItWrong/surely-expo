@@ -12,7 +12,7 @@
     "build:web": "expo build:web"
   },
   "dependencies": {
-    "@codingitwrong/jsonapi-client": "^0.0.10",
+    "@codingitwrong/jsonapi-client": "^0.0.11",
     "@codingitwrong/react-login": "^0.0.3",
     "@orbit/coordinator": "^0.16.7",
     "@orbit/data": "^0.16.7",
