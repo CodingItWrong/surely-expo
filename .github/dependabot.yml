@@ -9,3 +9,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "react-native-reanimated"
+      - dependency-name: "react-native-screens"
