@@ -23,7 +23,7 @@
     "@react-navigation/native-stack": "^6.1.0",
     "axios": "^0.21.4",
     "date-fns": "^2.23.0",
-    "expo": "~42.0.1",
+    "expo": "~42.0.4",
     "expo-secure-store": "~10.2.0",
     "expo-status-bar": "~1.0.4",
     "lodash": "^4.17.21",
