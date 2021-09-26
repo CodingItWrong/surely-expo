@@ -2,7 +2,7 @@ import {dayOfWeek, deferDate, relativeDate, relativeDatetime} from './time';
 
 describe('time utilities', () => {
   describe('relativeDatetime', () => {
-    const now = new Date(2021, 0, 10); // Jan 10
+    const now = new Date('Jan 10 2021 13:14:00 EST');
 
     it('returns null if null is passed in', () => {
       expect(relativeDatetime(null)).toBeNull();
