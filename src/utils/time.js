@@ -12,14 +12,12 @@ function getDateObject(dateObjectOrString) {
   }
 }
 
-export function relativeDatetime(dateObjectOrString) {
+export function relativeDatetime(dateObjectOrString, {now = new Date()} = {}) {
   if (!dateObjectOrString) {
     return dateObjectOrString;
   }
 
   const date = getDateObject(dateObjectOrString);
-
-  const now = new Date();
   return formatRelative(date, now);
 }
 
