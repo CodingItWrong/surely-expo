@@ -47,7 +47,7 @@
     "babel-jest": "^27.1.1",
     "cypress": "^8.4.1",
     "eslint": "^7.32.0",
-    "eslint-plugin-cypress": "^2.11.3",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.24.2",
     "jest-expo": "^42.1.0",
     "react-test-renderer": "^17.0.2"
