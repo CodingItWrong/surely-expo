@@ -1,4 +1,4 @@
-import {dayOfWeek, relativeDate, relativeDatetime} from './time';
+import {dayOfWeek, deferDate, relativeDate, relativeDatetime} from './time';
 
 describe('time utilities', () => {
   describe('relativeDatetime', () => {
@@ -143,6 +143,38 @@ describe('time utilities', () => {
     it('handles ISO strings', () => {
       const dateString = '2021-01-10T18:14:00.000Z';
       expect(dayOfWeek(dateString)).toEqual('Sunday');
+    });
+  });
+
+  describe('deferDate', () => {
+    const now = new Date(2021, 0, 10); // Jan 10
+
+    it('handles nulls by deferring from now', () => {
+      const result = deferDate({start: null, days: 1, now});
+      expect(result).toEqual(new Date(2021, 0, 11));
+    });
+
+    it('can defer multiple days', () => {
+      const result = deferDate({start: null, days: 2, now});
+      expect(result).toEqual(new Date(2021, 0, 12));
+    });
+
+    it('handles future start dates by deferring from the start date', () => {
+      const future = new Date(2021, 0, 11);
+      const result = deferDate({start: future, days: 1, now});
+      expect(result).toEqual(new Date(2021, 0, 12));
+    });
+
+    it('handles string start dates', () => {
+      const future = '2021-01-11T12:00:00.000Z';
+      const result = deferDate({start: future, days: 1, now});
+      expect(result).toEqual(new Date(2021, 0, 12));
+    });
+
+    it('handles past start dates by deferring from now', () => {
+      const future = new Date(2021, 0, 9);
+      const result = deferDate({start: future, days: 1, now});
+      expect(result).toEqual(new Date(2021, 0, 11));
     });
   });
 });

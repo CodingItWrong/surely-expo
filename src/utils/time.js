@@ -48,12 +48,17 @@ export function relativeDate(dateObjectOrString, {now = new Date()} = {}) {
 
 export function deferDate({start, days, now = new Date()}) {
   let startToUse;
-  if (!start || start < now) {
-    // no future defer date: defer 1 day from now
+  if (!start) {
     startToUse = now;
   } else {
-    // already future: defer one additional day
-    startToUse = getDateObject(start);
+    const startDate = getDateObject(start);
+    if (startDate < now) {
+      // no future defer date: defer 1 day from now
+      startToUse = now;
+    } else {
+      // already future: defer one additional day
+      startToUse = startDate;
+    }
   }
 
   return startOfDay(addDays(startToUse, days));
