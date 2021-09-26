@@ -1,4 +1,4 @@
-import {relativeDate, relativeDatetime} from './time';
+import {dayOfWeek, relativeDate, relativeDatetime} from './time';
 
 describe('time utilities', () => {
   describe('relativeDatetime', () => {
@@ -126,6 +126,23 @@ describe('time utilities', () => {
       const result = relativeDate(date, {now});
 
       expect(result).toEqual('01/17/2021');
+    });
+  });
+
+  describe('dayOfWeek', () => {
+    it('returns one day of the week', () => {
+      const date = new Date(2021, 0, 10);
+      expect(dayOfWeek(date)).toEqual('Sunday');
+    });
+
+    it('returns another day of the week', () => {
+      const date = new Date(2021, 0, 11);
+      expect(dayOfWeek(date)).toEqual('Monday');
+    });
+
+    it('handles ISO strings', () => {
+      const dateString = '2021-01-10T18:14:00.000Z';
+      expect(dayOfWeek(dateString)).toEqual('Sunday');
     });
   });
 });
