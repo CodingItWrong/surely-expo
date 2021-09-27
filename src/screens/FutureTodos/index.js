@@ -25,7 +25,10 @@ export default function FutureTodos() {
   const loadFromServer = useCallback(
     () =>
       todoClient
-        .where({filter: {status: 'future', search: searchText}})
+        .where({
+          filter: {status: 'future', search: searchText},
+          options: {sort: 'name'},
+        })
         .then(response => {
           setShowLoadingIndicator(false);
           setTodos(response.data);
