@@ -53,9 +53,10 @@ export default function FutureTodos() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
     } else if (todoSections.length === 0) {
-      return (
-        <NoTodosMessage>You have no future todos. Nice work!</NoTodosMessage>
-      );
+      const noTodosMessage = searchText
+        ? 'No future todos matched your search'
+        : 'You have no future todos. Nice work!';
+      return <NoTodosMessage>{noTodosMessage}</NoTodosMessage>;
     } else {
       return (
         <SectionList

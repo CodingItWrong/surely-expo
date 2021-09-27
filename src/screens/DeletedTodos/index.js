@@ -64,11 +64,10 @@ export default function DeletedTodos() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
     } else if (todoSections.length === 0) {
-      return (
-        <NoTodosMessage>
-          You have no deleted todos. Don't be afraid to give up!
-        </NoTodosMessage>
-      );
+      const noTodosMessage = searchText
+        ? 'No deleted todos matched your search'
+        : "You have no deleted todos. Don't be afraid to give up!";
+      return <NoTodosMessage>{noTodosMessage}</NoTodosMessage>;
     } else {
       const maxPageNumber = todoResponse?.meta?.['page-count'];
       return (

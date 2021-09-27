@@ -64,11 +64,10 @@ export default function CompletedTodos() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
     } else if (todoSections.length === 0) {
-      return (
-        <NoTodosMessage>
-          You have no completed todos. You'll get there!
-        </NoTodosMessage>
-      );
+      const noTodosMessage = searchText
+        ? 'No completed todos matched your search'
+        : "You have no completed todos. You'll get there!";
+      return <NoTodosMessage>{noTodosMessage}</NoTodosMessage>;
     } else {
       const maxPageNumber = todoResponse?.meta?.['page-count'];
       return (
