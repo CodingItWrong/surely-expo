@@ -73,7 +73,6 @@ export default function DeletedTodos() {
       const maxPageNumber = todoResponse?.meta?.['page-count'];
       return (
         <>
-          <SearchForm value={searchText} onSubmit={setSearchText} />
           <PaginationControls
             pageNumber={pageNumber}
             maxPageNumber={maxPageNumber}
@@ -105,6 +104,7 @@ export default function DeletedTodos() {
 
   return (
     <>
+      <SearchForm value={searchText} onSubmit={setSearchText} />
       <Button onPress={reload}>Reload</Button>
       {contents()}
     </>

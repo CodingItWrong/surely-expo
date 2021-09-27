@@ -58,33 +58,31 @@ export default function FutureTodos() {
       );
     } else {
       return (
-        <>
-          <SearchForm value={searchText} onSubmit={setSearchText} />
-          <SectionList
-            ref={sectionListRef}
-            sections={todoSections}
-            keyExtractor={todo => todo.id}
-            renderSectionHeader={({section}) => (
-              <List.Subheader>
-                {section.title} ({section.data.length})
-              </List.Subheader>
-            )}
-            renderItem={({item: todo}) => (
-              <List.Item
-                key={todo.id}
-                title={todo.attributes.name}
-                titleNumberOfLines={4}
-                onPress={() => linkTo(`/todos/future/${todo.id}`)}
-              />
-            )}
-          />
-        </>
+        <SectionList
+          ref={sectionListRef}
+          sections={todoSections}
+          keyExtractor={todo => todo.id}
+          renderSectionHeader={({section}) => (
+            <List.Subheader>
+              {section.title} ({section.data.length})
+            </List.Subheader>
+          )}
+          renderItem={({item: todo}) => (
+            <List.Item
+              key={todo.id}
+              title={todo.attributes.name}
+              titleNumberOfLines={4}
+              onPress={() => linkTo(`/todos/future/${todo.id}`)}
+            />
+          )}
+        />
       );
     }
   }
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
+      <SearchForm value={searchText} onSubmit={setSearchText} />
       <Button onPress={reload}>Reload</Button>
       {contents()}
     </SafeAreaView>

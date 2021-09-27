@@ -73,7 +73,6 @@ export default function CompletedTodos() {
       const maxPageNumber = todoResponse?.meta?.['page-count'];
       return (
         <>
-          <SearchForm value={searchText} onSubmit={setSearchText} />
           <PaginationControls
             pageNumber={pageNumber}
             maxPageNumber={maxPageNumber}
@@ -105,6 +104,7 @@ export default function CompletedTodos() {
 
   return (
     <>
+      <SearchForm value={searchText} onSubmit={setSearchText} />
       <Button onPress={reload}>Reload</Button>
       {contents()}
     </>
