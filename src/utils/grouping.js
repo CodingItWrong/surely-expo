@@ -48,6 +48,6 @@ export function groupByDate({
     : sortedGroupEntries;
   return groupEntriesToUse.map(([date, groupTodos]) => ({
     name: capitalize(relativeDate(date, {now})),
-    todos: sortBy(groupTodos, 'attributes.name'),
+    todos: groupTodos,
   }));
 }

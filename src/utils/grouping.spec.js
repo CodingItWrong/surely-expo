@@ -114,7 +114,7 @@ describe('grouping', () => {
         },
         {
           name: 'Yesterday',
-          todos: [todo1, todo2],
+          todos: [todo2, todo1],
         },
       ];
 
@@ -150,7 +150,7 @@ describe('grouping', () => {
       const expectedResult = [
         {
           name: 'Yesterday',
-          todos: [todo1, todo2],
+          todos: [todo2, todo1],
         },
         {
           name: '08/29/2021',
