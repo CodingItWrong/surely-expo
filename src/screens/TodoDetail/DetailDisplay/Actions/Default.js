@@ -36,19 +36,35 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   return (
     <>
       {isDeleted ? (
-        <Button mode="outlined" onPress={handleUndelete} style={styles.button}>
+        <Button
+          testID="undelete-button"
+          mode="outlined"
+          onPress={handleUndelete}
+          style={styles.button}
+        >
           Undelete
         </Button>
       ) : (
         <>
-          <Button mode="outlined" onPress={handleDelete} style={styles.button}>
+          <Button
+            testID="delete-button"
+            mode="outlined"
+            onPress={handleDelete}
+            style={styles.button}
+          >
             Delete
           </Button>
-          <Button mode="outlined" onPress={onDefer} style={styles.button}>
+          <Button
+            testID="defer-button"
+            mode="outlined"
+            onPress={onDefer}
+            style={styles.button}
+          >
             Defer
           </Button>
           {isCompleted ? (
             <Button
+              testID="uncomplete-button"
               mode="contained"
               icon="checkbox-marked"
               onPress={handleUncomplete}
@@ -58,6 +74,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             </Button>
           ) : (
             <Button
+              testID="complete-button"
               mode="contained"
               icon="checkbox-marked"
               onPress={handleComplete}
