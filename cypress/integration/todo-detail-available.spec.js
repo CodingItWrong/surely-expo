@@ -49,4 +49,42 @@ describe('todo detail - available', () => {
 
     cy.url().should('include', '/todos/available');
   });
+
+  it('allows editing the todo', () => {
+    cy.intercept('GET', 'http://localhost:3000/categories?', {
+      fixture: 'categories.json',
+    });
+    cy.intercept(
+      'PATCH',
+      `http://localhost:3000/todos/${todoId}?include=category`,
+      {
+        fixture: 'todo/available.json',
+      },
+    ).as('update');
+
+    const name = 'Updated Name';
+    const notes = 'Updated Notes';
+
+    cy.getTestId('edit-button').click();
+
+    cy.getTestId('name-field').clear().type(name);
+    cy.getTestId('notes-field').clear().type(notes);
+    cy.getTestId('cancel-button').click();
+    // cy.should('not.contain', name);
+    // cy.should('not.contain', notes);
+
+    cy.getTestId('edit-button').click();
+
+    cy.getTestId('name-field').clear().type(name);
+    cy.getTestId('notes-field').clear().type(notes);
+    cy.getTestId('save-button').click();
+
+    cy.wait('@update').then(({request}) => {
+      const {attributes} = request.body.data;
+      assert.equal(attributes.name, name);
+      assert.equal(attributes.notes, notes);
+    });
+
+    cy.getTestId('edit-button').should('exist');
+  });
 });

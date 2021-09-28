@@ -54,6 +54,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
     <KeyboardAwareScrollView>
       <View style={styles.bodyContainer}>
         <TextInput
+          testID="name-field"
           label="Todo name"
           value={name}
           onChangeText={setName}
@@ -88,6 +89,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           onDismiss={() => setIsDeferredUntilModalOpen(false)}
         />
         <TextInput
+          testID="notes-field"
           label="Notes"
           value={notes}
           onChangeText={setNotes}
@@ -95,10 +97,16 @@ export default function DetailForm({todo, onSave, onCancel}) {
           mode="outlined"
           style={styles.notesInput}
         />
-        <Button mode="outlined" onPress={onCancel} style={sharedStyles.button}>
+        <Button
+          testID="cancel-button"
+          mode="outlined"
+          onPress={onCancel}
+          style={sharedStyles.button}
+        >
           Cancel
         </Button>
         <Button
+          testID="save-button"
           mode="contained"
           icon="content-save"
           onPress={handlePressSave}

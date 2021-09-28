@@ -20,6 +20,7 @@ export default function DetailDisplay({
       <ScrollView contentContainerStyle={styles.bodyContainer}>
         <View style={styles.editButtonRow}>
           <IconButton
+            testID="edit-button"
             icon="pencil"
             accessibilityLabel="Edit"
             onPress={onEdit}

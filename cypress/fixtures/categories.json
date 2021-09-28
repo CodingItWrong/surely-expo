@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": "cat1",
+      "type": "categories",
+      "attributes": {
+        "name": "Category C",
+        "sort-order": 3
+      }
+    },
+    {
+      "id": "cat2",
+      "type": "categories",
+      "attributes": {
+        "name": "Category B",
+        "sort-order": 2
+      }
+    },
+    {
+      "id": "cat3",
+      "type": "categories",
+      "attributes": {
+        "name": "Category A",
+        "sort-order": 1
+      }
+    }
+  ]
+}
