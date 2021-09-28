@@ -7,7 +7,7 @@ describe('todo detail - completed', () => {
     cy.intercept(
       'GET',
       `http://localhost:3000/todos/${todoId}?include=category`,
-      {fixture: 'todo-deleted.json'},
+      {fixture: 'todo/deleted.json'},
     );
 
     cy.visit(`/todos/deleted/${todoId}`);
@@ -20,7 +20,7 @@ describe('todo detail - completed', () => {
 
   it('allows undeleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-      fixture: 'todo-available.json',
+      fixture: 'todo/available.json',
     }).as('update');
     cy.intercept('GET', 'http://localhost:3000/todos?*', {});
 
