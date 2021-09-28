@@ -5,7 +5,7 @@ describe('available todos', () => {
     cy.intercept(
       'GET',
       'http://localhost:3000/todos?filter[status]=available&include=category',
-      {fixture: 'todos.json'},
+      {fixture: 'todos/available.json'},
     );
 
     cy.visit('/');
@@ -27,7 +27,7 @@ describe('available todos', () => {
     cy.intercept(
       'GET',
       'http://localhost:3000/todos?filter[status]=available&include=category',
-      {fixture: 'todos-with-new.json'},
+      {fixture: 'todos/available-with-new.json'},
     );
 
     cy.getTestId('new-todo-name').type(`${todoName}{enter}`);

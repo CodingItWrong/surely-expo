@@ -6,7 +6,7 @@ describe('auth', () => {
     cy.intercept(
       'GET',
       'http://localhost:3000/todos?filter[status]=available&include=category',
-      {fixture: 'todos.json'},
+      {fixture: 'todos/available.json'},
     );
 
     const email = 'example@example.com';
