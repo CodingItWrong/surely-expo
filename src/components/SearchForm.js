@@ -8,6 +8,7 @@ export default function SearchForm({value, onSubmit}) {
 
   return (
     <TextInput
+      testID="search-field"
       label="search"
       value={searchText}
       onChangeText={setSearchText}
