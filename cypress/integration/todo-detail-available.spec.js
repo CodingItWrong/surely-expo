@@ -1,4 +1,4 @@
-describe('available todos', () => {
+describe('todo detail - available', () => {
   const todoId = 'abc123';
 
   beforeEach(() => {
