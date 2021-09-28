@@ -19,6 +19,7 @@ export default function CustomNavigationDrawer({logOut, ...navProps}) {
     <DrawerContentScrollView {...navProps}>
       {state.routes.map((route, index) => (
         <Drawer.Item
+          testID={`${route.name.toLowerCase()}-nav-button`}
           key={route.key}
           label={route.name}
           icon={ICON_FOR_ROUTE[route.name]}
