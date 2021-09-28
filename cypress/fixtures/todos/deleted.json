@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "abc123",
+      "type": "todos",
+      "attributes": {
+        "name": "Todo 1",
+        "deleted-at": "2021-08-28T23:54:49.483Z"
+      },
+      "relationships": {
+        "category": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "included": []
+}
