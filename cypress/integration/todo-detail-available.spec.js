@@ -87,4 +87,19 @@ describe('todo detail - available', () => {
 
     cy.getTestId('edit-button').should('exist');
   });
+
+  it('allows deferring the todo', () => {
+    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
+      fixture: 'todo/available.json',
+    }).as('update');
+
+    cy.getTestId('defer-button').click();
+    cy.getTestId('defer-1-day-button').click();
+
+    cy.wait('@update').then(({request}) => {
+      assert.isNotNull(request.body.data.attributes['deferred-until']);
+    });
+
+    cy.url().should('include', '/todos/available');
+  });
 });

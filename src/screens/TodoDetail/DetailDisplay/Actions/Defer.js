@@ -28,28 +28,37 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
 
   return (
     <>
-      <Button mode="outlined" onPress={onCancel} style={styles.button}>
+      <Button
+        testID="cancel-defer-button"
+        mode="outlined"
+        onPress={onCancel}
+        style={styles.button}
+      >
         Cancel
       </Button>
       <DeferButton
+        testID="defer-1-day-button"
         todo={todo}
         numDays={1}
         label="1 Day"
         onDefer={handleDeferUntil}
       />
       <DeferButton
+        testID="defer-2-days-button"
         todo={todo}
         numDays={2}
         label="2 Days"
         onDefer={handleDeferUntil}
       />
       <DeferButton
+        testID="defer-3-days-button"
         todo={todo}
         numDays={3}
         label="3 Days"
         onDefer={handleDeferUntil}
       />
       <DeferButton
+        testID="defer-1-week-button"
         todo={todo}
         numDays={7}
         label="1 Week"
@@ -74,13 +83,18 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   );
 }
 
-function DeferButton({todo, numDays, label, onDefer}) {
+function DeferButton({testID, todo, numDays, label, onDefer}) {
   const date = deferDate({
     start: todo.attributes['deferred-until'],
     days: numDays,
   });
   return (
-    <Button mode="outlined" onPress={() => onDefer(date)} style={styles.button}>
+    <Button
+      testID={testID}
+      mode="outlined"
+      onPress={() => onDefer(date)}
+      style={styles.button}
+    >
       {label} - {dayOfWeek(date)}
     </Button>
   );
