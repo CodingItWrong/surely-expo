@@ -10,7 +10,7 @@ describe('todo detail - completed', () => {
       {fixture: 'todo-completed.json'},
     );
 
-    cy.visit(`/todos/available/${todoId}`);
+    cy.visit(`/todos/completed/${todoId}`);
   });
 
   it('displays the todo completion date', () => {
@@ -29,7 +29,7 @@ describe('todo detail - completed', () => {
       assert.isNull(request.body.data.attributes['completed-at']);
     });
 
-    cy.url().should('include', '/todos/available');
+    cy.url().should('include', '/todos/completed');
   });
 
   it('allows deleting the todo', () => {
@@ -45,6 +45,6 @@ describe('todo detail - completed', () => {
       assert.isNotNull(request.body.data.attributes['deleted-at']);
     });
 
-    cy.url().should('include', '/todos/available');
+    cy.url().should('include', '/todos/completed');
   });
 });
