@@ -79,6 +79,7 @@ export default function DeletedTodos() {
             decrement={() => setPageNumber(pageNumber - 1)}
           />
           <SectionList
+            testID="deleted-todos"
             ref={sectionListRef}
             sections={todoSections}
             keyExtractor={todo => todo.id}
