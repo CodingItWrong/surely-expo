@@ -38,4 +38,9 @@ describe('available todos', () => {
 
     cy.getTestId('available-todos').contains(todoName);
   });
+
+  it('allows navigating to a todo detail', () => {
+    cy.getTestId('available-todos').contains('Todo 1').click();
+    cy.url().should('include', '/todos/available/abc123');
+  });
 });
