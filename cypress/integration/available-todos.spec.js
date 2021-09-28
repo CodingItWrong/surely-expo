@@ -1,7 +1,5 @@
-describe('managing todos', () => {
-  it('allows creating todos', () => {
-    const todoName = 'My New Todo';
-
+describe('available todos', () => {
+  beforeEach(() => {
     cy.signIn();
 
     cy.intercept(
@@ -9,10 +7,21 @@ describe('managing todos', () => {
       'http://localhost:3000/todos?filter[status]=available&include=category',
       {fixture: 'todos.json'},
     );
-    cy.intercept('post', 'http://localhost:3000/todos?', {}).as('create');
 
     cy.visit('/');
+  });
+
+  it('lists existing available todos', () => {
     cy.getTestId('available-todos').contains('Todo 1');
+  });
+
+  it('allows creating todos', () => {
+    // wait for existing todos to load
+    cy.getTestId('available-todos').contains('Todo 1');
+
+    const todoName = 'My New Todo';
+
+    cy.intercept('post', 'http://localhost:3000/todos?', {}).as('create');
 
     // update response to include new todo
     cy.intercept(
