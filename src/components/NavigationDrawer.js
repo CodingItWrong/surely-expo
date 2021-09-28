@@ -27,7 +27,7 @@ export default function CustomNavigationDrawer({logOut, ...navProps}) {
           onPress={() => navigation.navigate(route.name)}
         />
       ))}
-      <Drawer.Item label="Sign out" onPress={logOut} />
+      <Drawer.Item testID="sign-out-button" label="Sign out" onPress={logOut} />
     </DrawerContentScrollView>
   );
 }

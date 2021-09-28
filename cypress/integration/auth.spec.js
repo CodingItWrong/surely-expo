@@ -25,4 +25,21 @@ describe('auth', () => {
 
     cy.getTestId('available-todos').contains('Todo 1');
   });
+
+  it('allows logging out', () => {
+    cy.signIn();
+
+    cy.intercept(
+      'GET',
+      'http://localhost:3000/todos?filter[status]=available&include=category',
+      {fixture: 'todos/available.json'},
+    );
+
+    cy.visit('/');
+
+    cy.getTestId('toggle-navigation-button').click();
+    cy.getTestId('sign-out-button').click();
+
+    cy.getTestId('email');
+  });
 });
