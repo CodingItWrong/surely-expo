@@ -2,12 +2,13 @@ import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import addDays from 'date-fns/addDays';
 import startOfDay from 'date-fns/startOfDay';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {SectionList, StyleSheet} from 'react-native';
-import {Button, List} from 'react-native-paper';
+import {StyleSheet} from 'react-native';
+import {Button} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import NoTodosMessage from '../../components/NoTodosMessage';
+import TodoList from '../../components/TodoList';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';
 
@@ -71,24 +72,11 @@ export default function AvailableTodos() {
       );
     } else {
       return (
-        <SectionList
+        <TodoList
           testID="tomorrow-todos"
-          ref={sectionListRef}
-          sections={todoSections}
-          keyExtractor={todo => todo.id}
-          renderSectionHeader={({section}) => (
-            <List.Subheader>
-              {section.title} ({section.data.length})
-            </List.Subheader>
-          )}
-          renderItem={({item: todo}) => (
-            <List.Item
-              key={todo.id}
-              title={todo.attributes.name}
-              titleNumberOfLines={4}
-              onPress={() => linkTo(`/todos/tomorrow/${todo.id}`)}
-            />
-          )}
+          sectionListRef={sectionListRef}
+          todoSections={todoSections}
+          onPressTodo={todo => linkTo(`/todos/tomorrow/${todo.id}`)}
         />
       );
     }
