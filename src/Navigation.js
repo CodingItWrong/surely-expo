@@ -8,7 +8,7 @@ import AvailableTodos from './screens/AvailableTodos';
 import CompletedTodos from './screens/CompletedTodos';
 import DeletedTodos from './screens/DeletedTodos';
 import FutureTodos from './screens/FutureTodos';
-import TodoDetail, {createTodoDetail} from './screens/TodoDetail';
+import {createTodoDetail} from './screens/TodoDetail';
 import TomorrowTodos from './screens/TomorrowTodos';
 
 const linking = {
