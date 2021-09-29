@@ -8,10 +8,22 @@
       },
       "relationships": {
         "category": {
-          "data": null
+          "data": {
+            "type": "categories",
+            "id": "c1"
+          }
         }
       }
     }
   ],
-  "included": []
+  "included": [
+    {
+      "id": "c1",
+      "type": "categories",
+      "attributes": {
+        "name": "My Category",
+        "sort-order": 1
+      }
+    }
+  ]
 }

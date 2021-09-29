@@ -12,6 +12,7 @@ describe('available todos', () => {
   });
 
   it('lists existing available todos', () => {
+    cy.getTestId('available-todos').contains('My Category');
     cy.getTestId('available-todos').contains('Todo 1');
   });
 

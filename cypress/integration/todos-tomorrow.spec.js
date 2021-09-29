@@ -12,6 +12,7 @@ describe('tomorrow todos', () => {
   });
 
   it('lists existing tomorrow todos', () => {
+    cy.getTestId('tomorrow-todos').contains('My Category');
     cy.getTestId('tomorrow-todos').contains('Todo 1');
   });
 
