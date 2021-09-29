@@ -3,13 +3,13 @@ import React, {useCallback, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import LoadingIndicator from '../components/LoadingIndicator';
-import NewTodoForm from '../components/NewTodoForm';
-import NoTodosMessage from '../components/NoTodosMessage';
-import PaginationControls from '../components/PaginationControls';
-import SearchForm from '../components/SearchForm';
-import TodoList from '../components/TodoList';
-import {groupsToSections} from '../utils/ui';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import NewTodoForm from '../../components/NewTodoForm';
+import NoTodosMessage from '../../components/NoTodosMessage';
+import PaginationControls from '../../components/PaginationControls';
+import SearchForm from '../../components/SearchForm';
+import TodoList from '../../components/TodoList';
+import {groupsToSections} from '../../utils/ui';
 
 export default function TodoListScreen({
   search,

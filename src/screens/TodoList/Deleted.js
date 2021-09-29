@@ -2,7 +2,7 @@ import {useLinkTo} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import {useTodos} from '../../data/todos';
 import {groupByDate} from '../../utils/grouping';
-import TodoListScreen from '../TodoListScreen';
+import TodoListScreen from './TodoListScreen';
 
 export default function DeletedTodos() {
   const todoClient = useTodos();

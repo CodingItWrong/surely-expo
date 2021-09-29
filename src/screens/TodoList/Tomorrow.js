@@ -4,7 +4,7 @@ import startOfDay from 'date-fns/startOfDay';
 import React, {useCallback} from 'react';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';
-import TodoListScreen from '../TodoListScreen';
+import TodoListScreen from './TodoListScreen';
 
 const today = now => startOfDay(new Date());
 const tomorrow = now => addDays(today(now), 1);

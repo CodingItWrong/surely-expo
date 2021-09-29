@@ -4,12 +4,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
-import AvailableTodos from './screens/AvailableTodos';
-import CompletedTodos from './screens/CompletedTodos';
-import DeletedTodos from './screens/DeletedTodos';
-import FutureTodos from './screens/FutureTodos';
 import {createTodoDetail} from './screens/TodoDetail';
-import TomorrowTodos from './screens/TomorrowTodos';
+import AvailableTodos from './screens/TodoList/Available';
+import CompletedTodos from './screens/TodoList/Completed';
+import DeletedTodos from './screens/TodoList/Deleted';
+import FutureTodos from './screens/TodoList/Future';
+import TomorrowTodos from './screens/TodoList/Tomorrow';
 
 const linking = {
   config: {
