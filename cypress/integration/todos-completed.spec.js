@@ -1,4 +1,6 @@
 describe('completed todos', () => {
+  const searchText = 'MySearchText';
+
   beforeEach(() => {
     cy.signIn();
 
@@ -29,7 +31,6 @@ describe('completed todos', () => {
   });
 
   it('allows searching for todos', () => {
-    const searchText = 'MySearchText';
     cy.intercept(
       'GET',
       `http://localhost:3000/todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
@@ -39,6 +40,18 @@ describe('completed todos', () => {
     cy.getTestId('search-field').type(`${searchText}{enter}`);
 
     cy.wait('@search');
+  });
+
+  it('shows a message when no search results returned', () => {
+    cy.intercept(
+      'GET',
+      `http://localhost:3000/todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
+      {fixture: 'todos/none.json'},
+    );
+
+    cy.getTestId('search-field').type(`${searchText}{enter}`);
+
+    cy.contains('No completed todos matched your search');
   });
 
   it('allows navigating to a todo detail', () => {
