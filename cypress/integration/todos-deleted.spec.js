@@ -12,6 +12,7 @@ describe('deleted todos', () => {
   });
 
   it('lists existing deleted todos', () => {
+    cy.getTestId('deleted-todos').contains('08/28/2021');
     cy.getTestId('deleted-todos').contains('Todo 1');
   });
 

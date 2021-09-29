@@ -12,6 +12,7 @@ describe('future todos', () => {
   });
 
   it('lists existing future todos', () => {
+    cy.getTestId('future-todos').contains('08/28/2021');
     cy.getTestId('future-todos').contains('Todo 1');
   });
 

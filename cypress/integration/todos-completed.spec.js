@@ -12,6 +12,7 @@ describe('completed todos', () => {
   });
 
   it('lists existing completed todos', () => {
+    cy.getTestId('completed-todos').contains('08/28/2021');
     cy.getTestId('completed-todos').contains('Todo 1');
   });
 
