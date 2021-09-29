@@ -16,6 +16,18 @@ describe('available todos', () => {
     cy.getTestId('available-todos').contains('Todo 1');
   });
 
+  it('shows a message when no todos listed', () => {
+    cy.intercept(
+      'GET',
+      'http://localhost:3000/todos?filter[status]=available&include=category',
+      {fixture: 'todos/none.json'},
+    );
+
+    cy.visit('/');
+
+    cy.contains('You have no available todos. Nice work!');
+  });
+
   it('allows creating todos', () => {
     // wait for existing todos to load
     cy.getTestId('available-todos').contains('Todo 1');

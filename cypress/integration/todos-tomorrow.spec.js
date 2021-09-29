@@ -16,6 +16,18 @@ describe('tomorrow todos', () => {
     cy.getTestId('tomorrow-todos').contains('Todo 1');
   });
 
+  it('shows a message when no todos listed', () => {
+    cy.intercept(
+      'GET',
+      'http://localhost:3000/todos?filter[status]=tomorrow&include=category',
+      {fixture: 'todos/none.json'},
+    );
+
+    cy.visit('/todos/tomorrow');
+
+    cy.contains('You have no todos for tomorrow. Nice work!');
+  });
+
   it('allows creating a tomorrow todo', () => {
     // wait for existing todos to load
     cy.getTestId('tomorrow-todos').contains('Todo 1');

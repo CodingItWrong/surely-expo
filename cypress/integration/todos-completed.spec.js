@@ -16,6 +16,18 @@ describe('completed todos', () => {
     cy.getTestId('completed-todos').contains('Todo 1');
   });
 
+  it('shows a message when no todos listed', () => {
+    cy.intercept(
+      'GET',
+      'http://localhost:3000/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
+      {fixture: 'todos/none.json'},
+    );
+
+    cy.visit('/todos/completed');
+
+    cy.contains("You have no completed todos. You'll get there!");
+  });
+
   it('allows searching for todos', () => {
     const searchText = 'MySearchText';
     cy.intercept(
