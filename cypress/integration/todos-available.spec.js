@@ -12,8 +12,8 @@ describe('available todos', () => {
   });
 
   it('lists existing available todos', () => {
-    cy.getTestId('available-todos').contains('My Category');
-    cy.getTestId('available-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('My Category');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 
   it('shows a message when no todos listed', () => {
@@ -30,7 +30,7 @@ describe('available todos', () => {
 
   it('allows creating todos', () => {
     // wait for existing todos to load
-    cy.getTestId('available-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('Todo 1');
 
     const todoName = 'My New Todo';
 
@@ -49,11 +49,11 @@ describe('available todos', () => {
       assert.equal(request.body.data.attributes.name, todoName);
     });
 
-    cy.getTestId('available-todos').contains(todoName);
+    cy.getTestId('todo-list').contains(todoName);
   });
 
   it('allows navigating to a todo detail', () => {
-    cy.getTestId('available-todos').contains('Todo 1').click();
+    cy.getTestId('todo-list').contains('Todo 1').click();
     cy.url().should('include', '/todos/available/abc123');
   });
 });

@@ -61,7 +61,7 @@ export default function TodoListScreen({
     } else {
       return (
         <TodoList
-          testID="available-todos"
+          testID="todo-list"
           sectionListRef={sectionListRef}
           todoSections={todoSections}
           onPressTodo={onPressTodo}
