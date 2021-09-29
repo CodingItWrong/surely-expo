@@ -23,7 +23,7 @@ describe('auth', () => {
       assert.equal(request.body.password, password);
     });
 
-    cy.getTestId('available-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 
   it('allows logging out', () => {
