@@ -14,8 +14,8 @@ describe('deleted todos', () => {
   });
 
   it('lists existing deleted todos', () => {
-    cy.getTestId('deleted-todos').contains('08/28/2021');
-    cy.getTestId('deleted-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('08/28/2021');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 
   it('shows a message when no todos listed', () => {
@@ -55,7 +55,7 @@ describe('deleted todos', () => {
   });
 
   it('allows navigating to a todo detail', () => {
-    cy.getTestId('deleted-todos').contains('Todo 1').click();
+    cy.getTestId('todo-list').contains('Todo 1').click();
     cy.url().should('include', '/todos/deleted/abc123');
   });
 
@@ -67,9 +67,9 @@ describe('deleted todos', () => {
     );
 
     cy.getTestId('next-page-button').click();
-    cy.getTestId('deleted-todos').contains('Todo 4');
+    cy.getTestId('todo-list').contains('Todo 4');
 
     cy.getTestId('previous-page-button').click();
-    cy.getTestId('deleted-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 });
