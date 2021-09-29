@@ -1,39 +1,38 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LoadingIndicator from '../components/LoadingIndicator';
 import NewTodoForm from '../components/NewTodoForm';
 import NoTodosMessage from '../components/NoTodosMessage';
+import SearchForm from '../components/SearchForm';
 import TodoList from '../components/TodoList';
-import {groupByCategory} from '../utils/grouping';
 import {groupsToSections} from '../utils/ui';
 
 export default function TodoListScreen({
+  search,
   onLoadTodos,
   onCreateTodo,
   onPressTodo,
   noTodosMessage,
+  noSearchResultsMessage,
 }) {
+  const [searchText, setSearchText] = useState('');
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
-  const [todoResponse, setTodoResponse] = useState([]);
-  const todoSections = useMemo(
-    () => groupsToSections(groupByCategory(todoResponse)),
-    [todoResponse],
-  );
+  const [todoSections, setTodoSections] = useState([]);
   const sectionListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
-      onLoadTodos()
-        .then(response => {
+      onLoadTodos({searchText})
+        .then(todoGroups => {
           setShowLoadingIndicator(false);
-          setTodoResponse(response);
-          return response;
+          setTodoSections(groupsToSections(todoGroups));
+          return todoGroups;
         })
         .catch(console.error),
-    [onLoadTodos],
+    [onLoadTodos, searchText],
   );
 
   useFocusEffect(
@@ -57,7 +56,8 @@ export default function TodoListScreen({
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
     } else if (todoSections.length === 0) {
-      return <NoTodosMessage>{noTodosMessage}</NoTodosMessage>;
+      const message = searchText ? noSearchResultsMessage : noTodosMessage;
+      return <NoTodosMessage>{message}</NoTodosMessage>;
     } else {
       return (
         <TodoList
@@ -72,7 +72,8 @@ export default function TodoListScreen({
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
-      <NewTodoForm onCreate={handleCreate} />
+      {onCreateTodo && <NewTodoForm onCreate={handleCreate} />}
+      {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
       <Button onPress={reload}>Reload</Button>
       {contents()}
     </SafeAreaView>

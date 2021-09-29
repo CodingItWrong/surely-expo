@@ -1,6 +1,7 @@
 import {useLinkTo} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import {useTodos} from '../../data/todos';
+import {groupByCategory} from '../../utils/grouping';
 import TodoListScreen from '../TodoListScreen';
 
 export default function AvailableTodos() {
@@ -8,10 +9,12 @@ export default function AvailableTodos() {
   const linkTo = useLinkTo();
   const loadAvailableTodos = useCallback(
     () =>
-      todoClient.where({
-        filter: {status: 'available'},
-        options: {include: 'category'},
-      }),
+      todoClient
+        .where({
+          filter: {status: 'available'},
+          options: {include: 'category'},
+        })
+        .then(todoResponse => groupByCategory(todoResponse)),
     [todoClient],
   );
 

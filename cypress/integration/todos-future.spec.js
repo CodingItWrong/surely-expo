@@ -12,8 +12,8 @@ describe('future todos', () => {
   });
 
   it('lists existing future todos', () => {
-    cy.getTestId('future-todos').contains('08/28/2021');
-    cy.getTestId('future-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('08/28/2021');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 
   it('shows a message when no todos listed', () => {
@@ -42,7 +42,7 @@ describe('future todos', () => {
   });
 
   it('allows navigating to a todo detail', () => {
-    cy.getTestId('future-todos').contains('Todo 1').click();
+    cy.getTestId('todo-list').contains('Todo 1').click();
     cy.url().should('include', '/todos/future/abc123');
   });
 });

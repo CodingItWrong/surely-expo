@@ -3,6 +3,7 @@ import addDays from 'date-fns/addDays';
 import startOfDay from 'date-fns/startOfDay';
 import React, {useCallback} from 'react';
 import {useTodos} from '../../data/todos';
+import {groupByCategory} from '../../utils/grouping';
 import TodoListScreen from '../TodoListScreen';
 
 const today = now => startOfDay(new Date());
@@ -14,10 +15,12 @@ export default function AvailableTodos() {
 
   const loadTomorrowTodos = useCallback(
     () =>
-      todoClient.where({
-        filter: {status: 'tomorrow'},
-        options: {include: 'category'},
-      }),
+      todoClient
+        .where({
+          filter: {status: 'tomorrow'},
+          options: {include: 'category'},
+        })
+        .then(todoResponse => groupByCategory(todoResponse)),
     [todoClient],
   );
   const createTomorrowTodo = name =>
