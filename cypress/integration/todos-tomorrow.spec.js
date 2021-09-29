@@ -12,8 +12,8 @@ describe('tomorrow todos', () => {
   });
 
   it('lists existing tomorrow todos', () => {
-    cy.getTestId('tomorrow-todos').contains('My Category');
-    cy.getTestId('tomorrow-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('My Category');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 
   it('shows a message when no todos listed', () => {
@@ -30,7 +30,7 @@ describe('tomorrow todos', () => {
 
   it('allows creating a tomorrow todo', () => {
     // wait for existing todos to load
-    cy.getTestId('tomorrow-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('Todo 1');
 
     const todoName = 'My New Todo';
 
@@ -51,11 +51,11 @@ describe('tomorrow todos', () => {
       assert.isNotNull(attributes['deferred-until']);
     });
 
-    cy.getTestId('tomorrow-todos').contains(todoName);
+    cy.getTestId('todo-list').contains(todoName);
   });
 
   it('allows navigating to a todo detail', () => {
-    cy.getTestId('tomorrow-todos').contains('Todo 1').click();
+    cy.getTestId('todo-list').contains('Todo 1').click();
     cy.url().should('include', '/todos/tomorrow/abc123');
   });
 });
