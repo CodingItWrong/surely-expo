@@ -6,12 +6,14 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import LoadingIndicator from '../components/LoadingIndicator';
 import NewTodoForm from '../components/NewTodoForm';
 import NoTodosMessage from '../components/NoTodosMessage';
+import PaginationControls from '../components/PaginationControls';
 import SearchForm from '../components/SearchForm';
 import TodoList from '../components/TodoList';
 import {groupsToSections} from '../utils/ui';
 
 export default function TodoListScreen({
   search,
+  paginate,
   onLoadTodos,
   onCreateTodo,
   onPressTodo,
@@ -19,20 +21,23 @@ export default function TodoListScreen({
   noSearchResultsMessage,
 }) {
   const [searchText, setSearchText] = useState('');
+  const [pageNumber, setPageNumber] = useState(1);
+  const [maxPageNumber, setMaxPageNumber] = useState(null);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todoSections, setTodoSections] = useState([]);
   const sectionListRef = useRef(null);
 
   const loadFromServer = useCallback(
     () =>
-      onLoadTodos({searchText})
-        .then(todoGroups => {
+      onLoadTodos({searchText, pageNumber})
+        .then(({todoGroups, maxPageNumber: newMaxPageNumber}) => {
           setShowLoadingIndicator(false);
+          setMaxPageNumber(newMaxPageNumber);
           setTodoSections(groupsToSections(todoGroups));
           return todoGroups;
         })
         .catch(console.error),
-    [onLoadTodos, searchText],
+    [onLoadTodos, searchText, pageNumber],
   );
 
   useFocusEffect(
@@ -60,12 +65,22 @@ export default function TodoListScreen({
       return <NoTodosMessage>{message}</NoTodosMessage>;
     } else {
       return (
-        <TodoList
-          testID="todo-list"
-          sectionListRef={sectionListRef}
-          todoSections={todoSections}
-          onPressTodo={onPressTodo}
-        />
+        <>
+          {paginate && (
+            <PaginationControls
+              pageNumber={pageNumber}
+              maxPageNumber={maxPageNumber}
+              increment={() => setPageNumber(pageNumber + 1)}
+              decrement={() => setPageNumber(pageNumber - 1)}
+            />
+          )}
+          <TodoList
+            testID="todo-list"
+            sectionListRef={sectionListRef}
+            todoSections={todoSections}
+            onPressTodo={onPressTodo}
+          />
+        </>
       );
     }
   }

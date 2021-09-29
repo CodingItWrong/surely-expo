@@ -20,7 +20,7 @@ export default function AvailableTodos() {
           filter: {status: 'tomorrow'},
           options: {include: 'category'},
         })
-        .then(todoResponse => groupByCategory(todoResponse)),
+        .then(todoResponse => ({todoGroups: groupByCategory(todoResponse)})),
     [todoClient],
   );
   const createTomorrowTodo = name =>

@@ -14,7 +14,7 @@ export default function AvailableTodos() {
           filter: {status: 'available'},
           options: {include: 'category'},
         })
-        .then(todoResponse => groupByCategory(todoResponse)),
+        .then(todoResponse => ({todoGroups: groupByCategory(todoResponse)})),
     [todoClient],
   );
 

@@ -14,8 +14,8 @@ describe('completed todos', () => {
   });
 
   it('lists existing completed todos', () => {
-    cy.getTestId('completed-todos').contains('08/28/2021');
-    cy.getTestId('completed-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('08/28/2021');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 
   it('shows a message when no todos listed', () => {
@@ -55,7 +55,7 @@ describe('completed todos', () => {
   });
 
   it('allows navigating to a todo detail', () => {
-    cy.getTestId('completed-todos').contains('Todo 1').click();
+    cy.getTestId('todo-list').contains('Todo 1').click();
     cy.url().should('include', '/todos/completed/abc123');
   });
 
@@ -67,9 +67,9 @@ describe('completed todos', () => {
     );
 
     cy.getTestId('next-page-button').click();
-    cy.getTestId('completed-todos').contains('Todo 4');
+    cy.getTestId('todo-list').contains('Todo 4');
 
     cy.getTestId('previous-page-button').click();
-    cy.getTestId('completed-todos').contains('Todo 1');
+    cy.getTestId('todo-list').contains('Todo 1');
   });
 });

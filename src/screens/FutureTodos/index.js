@@ -15,12 +15,12 @@ export default function FutureTodos() {
           filter: {status: 'future', search: searchText},
           options: {sort: 'name'},
         })
-        .then(todoResponse =>
-          groupByDate({
+        .then(todoResponse => ({
+          todoGroups: groupByDate({
             todos: todoResponse.data,
             attribute: 'deferred-until',
           }),
-        ),
+        })),
     [todoClient],
   );
 
