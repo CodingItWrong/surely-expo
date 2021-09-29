@@ -14,6 +14,7 @@ export default function PaginationControls({
   return (
     <View style={styles.paginationControls}>
       <IconButton
+        testID="previous-page-button"
         icon="arrow-left-bold"
         disabled={pageNumberAtMin}
         onPress={decrement}
@@ -23,6 +24,7 @@ export default function PaginationControls({
         Page {pageNumber} of {maxPageNumber}
       </Text>
       <IconButton
+        testID="next-page-button"
         icon="arrow-right-bold"
         disabled={pageNumberAtMax}
         onPress={increment}

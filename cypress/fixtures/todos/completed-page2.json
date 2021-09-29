@@ -1,0 +1,21 @@
+{
+  "data": [
+    {
+      "id": "t4",
+      "type": "todos",
+      "attributes": {
+        "name": "Todo 4",
+        "completed-at": "2021-08-28T23:54:49.483Z"
+      },
+      "relationships": {
+        "category": {
+          "data": null
+        }
+      }
+    }
+  ],
+  "included": [],
+  "meta": {
+    "page-count": 2
+  }
+}

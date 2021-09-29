@@ -33,4 +33,18 @@ describe('completed todos', () => {
     cy.getTestId('completed-todos').contains('Todo 1').click();
     cy.url().should('include', '/todos/completed/abc123');
   });
+
+  it('allows page navigation', () => {
+    cy.intercept(
+      'GET',
+      'http://localhost:3000/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=2',
+      {fixture: 'todos/completed-page2.json'},
+    );
+
+    cy.getTestId('next-page-button').click();
+    cy.getTestId('completed-todos').contains('Todo 4');
+
+    cy.getTestId('previous-page-button').click();
+    cy.getTestId('completed-todos').contains('Todo 1');
+  });
 });

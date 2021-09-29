@@ -33,4 +33,18 @@ describe('deleted todos', () => {
     cy.getTestId('deleted-todos').contains('Todo 1').click();
     cy.url().should('include', '/todos/deleted/abc123');
   });
+
+  it('allows page navigation', () => {
+    cy.intercept(
+      'GET',
+      'http://localhost:3000/todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=2',
+      {fixture: 'todos/deleted-page2.json'},
+    );
+
+    cy.getTestId('next-page-button').click();
+    cy.getTestId('deleted-todos').contains('Todo 4');
+
+    cy.getTestId('previous-page-button').click();
+    cy.getTestId('deleted-todos').contains('Todo 1');
+  });
 });
