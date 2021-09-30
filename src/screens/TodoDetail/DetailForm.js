@@ -1,11 +1,11 @@
 import pick from 'lodash/pick';
 import sortBy from 'lodash/sortBy';
 import React, {useEffect, useState} from 'react';
-import {Picker, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
-import Chooser from '../../components/Chooser';
+import PaperDropdown from '../../components/PaperDropdown';
 import {useCategories} from '../../data/categories';
 import {relativeDate} from '../../utils/time';
 import sharedStyles from './styles';
@@ -23,6 +23,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
   );
 
   const category = categories?.find(c => c.id === categoryId);
+  const setCategory = c => setCategoryId(c.id);
 
   useEffect(() => {
     categoryClient
@@ -62,18 +63,15 @@ export default function DetailForm({todo, onSave, onCancel}) {
           multiline
           style={styles.nameInput}
         />
-        <Chooser
-          label="Category"
-          valueLabel={category?.attributes?.name ?? 'none'}
-          value={categoryId}
-          onValueChange={setCategoryId}
+        <PaperDropdown
+          fieldLabel="Category"
+          value={category}
+          onValueChange={setCategory}
+          options={categories}
           style={styles.chooser}
-        >
-          <Picker.Item key="none" label="none" value={null} />
-          {categories.map(c => (
-            <Picker.Item key={c.id} label={c.attributes.name} value={c.id} />
-          ))}
-        </Chooser>
+          keyExtractor={option => option.id}
+          labelExtractor={option => option.attributes.name}
+        />
         <Button
           mode="outlined"
           onPress={() => setIsDeferredUntilModalOpen(true)}
