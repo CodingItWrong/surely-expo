@@ -18,7 +18,8 @@ export default function DetailDisplay({
       style={styles.safeAreaView}
     >
       <ScrollView contentContainerStyle={styles.bodyContainer}>
-        <View style={styles.editButtonRow}>
+        <View style={styles.titleRow}>
+          <Title style={styles.title}>{todo.attributes.name}</Title>
           <IconButton
             testID="edit-button"
             icon="pencil"
@@ -26,7 +27,6 @@ export default function DetailDisplay({
             onPress={onEdit}
           />
         </View>
-        <Title>{todo.attributes.name}</Title>
         <Text>Category: {category?.attributes?.name ?? 'none'}</Text>
         {todo.attributes.notes ? <Text>{todo.attributes.notes}</Text> : null}
         <EventLog todo={todo} />
@@ -43,7 +43,12 @@ const styles = StyleSheet.create({
   bodyContainer: {
     marginHorizontal: 15,
   },
-  editButtonRow: {
-    alignItems: 'flex-end',
+  titleRow: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  title: {
+    flex: 1,
   },
 });
