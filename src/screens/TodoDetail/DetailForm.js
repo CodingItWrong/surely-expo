@@ -23,7 +23,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
   );
 
   const category = categories?.find(c => c.id === categoryId);
-  const setCategory = c => setCategoryId(c.id);
+  const setCategory = c => setCategoryId(c?.id);
 
   useEffect(() => {
     categoryClient
@@ -65,6 +65,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         />
         <PaperDropdown
           fieldLabel="Category"
+          emptyLabel="none"
           value={category}
           onValueChange={setCategory}
           options={categories}

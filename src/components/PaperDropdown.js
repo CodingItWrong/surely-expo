@@ -3,6 +3,7 @@ import {Button, Menu} from 'react-native-paper';
 
 export default function PaperDropdown({
   fieldLabel,
+  emptyLabel,
   value,
   onValueChange,
   options,
@@ -27,10 +28,15 @@ export default function PaperDropdown({
           style={style}
           onPress={() => setIsMenuShown(true)}
         >
-          {fieldLabel}: {value ? labelExtractor(value) : 'none'}
+          {fieldLabel}: {value ? labelExtractor(value) : emptyLabel}
         </Button>
       }
     >
+      <Menu.Item
+        key="paper-dropdown-empty-item"
+        title={emptyLabel}
+        onPress={() => handleChoose(null)}
+      />
       {options.map(option => (
         <Menu.Item
           key={keyExtractor(option)}
