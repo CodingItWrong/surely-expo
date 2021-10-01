@@ -17,36 +17,42 @@ const linking = {
   config: {
     screens: {
       Available: {
+        initialRouteName: 'AvailableTodos',
         screens: {
           AvailableTodos: '/todos/available',
           AvailableTodoDetail: '/todos/available/:id',
         },
       },
       Tomorrow: {
+        initialRouteName: 'TomorrowTodos',
         screens: {
           TomorrowTodos: '/todos/tomorrow',
           TomorrowTodoDetail: '/todos/tomorrow/:id',
         },
       },
       Future: {
+        initialRouteName: 'FutureTodos',
         screens: {
           FutureTodos: '/todos/future',
           FutureTodoDetail: '/todos/future/:id',
         },
       },
       Completed: {
+        initialRouteName: 'CompletedTodos',
         screens: {
           CompletedTodos: '/todos/completed',
           CompletedTodoDetail: '/todos/completed/:id',
         },
       },
       Deleted: {
+        initialRouteName: 'DeletedTodos',
         screens: {
           DeletedTodos: '/todos/deleted',
           DeletedTodoDetail: '/todos/deleted/:id',
         },
       },
       Categories: {
+        initialRouteName: 'CategoryList',
         screens: {
           CategoryList: '/categories',
           CategoryDetail: '/categories/:id',
