@@ -6,6 +6,7 @@ export default function CustomNavigationBar({navigation, options, back}) {
     <Appbar.Header>
       {back ? (
         <Appbar.BackAction
+          testID="back-button"
           onPress={navigation.goBack}
           accessibilityLabel={`Back to ${back.title}`}
         />

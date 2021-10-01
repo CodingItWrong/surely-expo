@@ -17,6 +17,11 @@ describe('todo detail - completed', () => {
     cy.contains('Completed 08/28/2021');
   });
 
+  it('allows going back to available todos', () => {
+    cy.getTestId('back-button').click();
+    cy.url().should('match', /\/todos\/completed/);
+  });
+
   it('allows uncompleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       fixture: 'todo/available.json',

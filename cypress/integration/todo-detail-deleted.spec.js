@@ -18,6 +18,11 @@ describe('todo detail - completed', () => {
     cy.contains('Deleted 08/29/2021');
   });
 
+  it('allows going back to available todos', () => {
+    cy.getTestId('back-button').click();
+    cy.url().should('match', /\/todos\/deleted/);
+  });
+
   it('allows undeleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       fixture: 'todo/available.json',
