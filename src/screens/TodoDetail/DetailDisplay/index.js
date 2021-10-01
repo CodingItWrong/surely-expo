@@ -19,8 +19,8 @@ export default function DetailDisplay({
     >
       <ScrollView contentContainerStyle={styles.bodyContainer}>
         <View style={styles.titleRow}>
-          <Pressable onPress={onEdit}>
-            <Title style={styles.title}>{todo.attributes.name}</Title>
+          <Pressable onPress={onEdit} style={styles.title}>
+            <Title>{todo.attributes.name}</Title>
           </Pressable>
           <IconButton
             testID="edit-button"
