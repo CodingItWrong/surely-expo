@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
+import CategoryList from './screens/CategoryList';
 import {createTodoDetail} from './screens/TodoDetail';
 import AvailableTodos from './screens/TodoList/Available';
 import CompletedTodos from './screens/TodoList/Completed';
@@ -42,6 +43,11 @@ const linking = {
         screens: {
           DeletedTodos: '/todos/deleted',
           DeletedTodoDetail: '/todos/deleted/:id',
+        },
+      },
+      Categories: {
+        screens: {
+          CategoryList: '/categories',
         },
       },
     },
@@ -151,6 +157,21 @@ const Deleted = () => (
   </DeletedStack.Navigator>
 );
 
+const CategoryStack = createNativeStackNavigator();
+const Categories = () => (
+  <CategoryStack.Navigator
+    screenOptions={{
+      header: props => <NavigationBar {...props} />,
+    }}
+  >
+    <CategoryStack.Screen
+      name="CategoryList"
+      component={CategoryList}
+      options={{title: 'Categories'}}
+    />
+  </CategoryStack.Navigator>
+);
+
 const Navigation = ({logOut}) => (
   <NavigationContainer linking={linking}>
     <Drawer.Navigator
@@ -164,6 +185,7 @@ const Navigation = ({logOut}) => (
       <Drawer.Screen name="Future" component={Future} />
       <Drawer.Screen name="Completed" component={Completed} />
       <Drawer.Screen name="Deleted" component={Deleted} />
+      <Drawer.Screen name="Categories" component={Categories} />
     </Drawer.Navigator>
   </NavigationContainer>
 );

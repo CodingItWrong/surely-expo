@@ -8,6 +8,7 @@ const ICON_FOR_ROUTE = {
   Future: 'calendar-blank',
   Completed: 'checkbox-marked',
   Deleted: 'delete',
+  Categories: 'tag',
 };
 
 export default function CustomNavigationDrawer({logOut, ...navProps}) {
