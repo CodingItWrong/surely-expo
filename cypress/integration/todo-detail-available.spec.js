@@ -77,12 +77,15 @@ describe('todo detail - available', () => {
 
     cy.getTestId('name-field').clear().type(name);
     cy.getTestId('notes-field').clear().type(notes);
+    cy.getTestId('choose-category-field').click();
+    cy.contains('Category B').click({force: true});
     cy.getTestId('save-button').click();
 
     cy.wait('@update').then(({request}) => {
-      const {attributes} = request.body.data;
+      const {attributes, relationships} = request.body.data;
       assert.equal(attributes.name, name);
       assert.equal(attributes.notes, notes);
+      assert.equal(relationships.category.data.id, 'cat2');
     });
 
     cy.getTestId('edit-button').should('exist');

@@ -10,6 +10,7 @@ export default function PaperDropdown({
   style,
   keyExtractor,
   labelExtractor,
+  testID,
 }) {
   const [isMenuShown, setIsMenuShown] = useState(false);
 
@@ -24,6 +25,7 @@ export default function PaperDropdown({
       onDismiss={() => setIsMenuShown(false)}
       anchor={
         <Button
+          testID={testID}
           mode="outlined"
           style={style}
           onPress={() => setIsMenuShown(true)}

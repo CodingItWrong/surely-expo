@@ -64,6 +64,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           style={styles.nameInput}
         />
         <PaperDropdown
+          testID="choose-category-field"
           fieldLabel="Category"
           emptyLabel="none"
           value={category}
