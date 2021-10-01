@@ -2,7 +2,7 @@ import {useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {List} from 'react-native-paper';
+import {Button, List} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useCategories} from '../data/categories';
 
@@ -12,6 +12,8 @@ export default function CategoryList() {
   const linkTo = useLinkTo();
 
   const onPressCategory = category => linkTo(`/categories/${category.id}`);
+
+  const handleAdd = () => linkTo('/categories/new');
 
   useEffect(() => {
     categoryClient
@@ -34,6 +36,14 @@ export default function CategoryList() {
           />
         )}
       />
+      <Button
+        testID="add-button"
+        mode="outlined"
+        icon="plus"
+        onPress={handleAdd}
+      >
+        Add
+      </Button>
     </SafeAreaView>
   );
 }

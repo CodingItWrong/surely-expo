@@ -14,19 +14,22 @@ export default function CategoryList({route}) {
   const {
     params: {id},
   } = route;
+  const isNewCategory = id === 'new';
 
   useEffect(() => {
-    categoryClient
-      .find({id})
-      .then(response => {
-        const returnedCategory = response.data;
-        setCategory(returnedCategory);
-        setName(returnedCategory.attributes.name);
-      })
-      .catch(console.error);
-  }, [id, categoryClient]);
+    if (!isNewCategory) {
+      categoryClient
+        .find({id})
+        .then(response => {
+          const returnedCategory = response.data;
+          setCategory(returnedCategory);
+          setName(returnedCategory.attributes.name);
+        })
+        .catch(console.error);
+    }
+  }, [id, isNewCategory, categoryClient]);
 
-  if (!category) {
+  if (!isNewCategory && !category) {
     return <LoadingIndicator />;
   }
 
@@ -35,11 +38,19 @@ export default function CategoryList({route}) {
   const handleDelete = () =>
     categoryClient.delete({id}).then(goBack).catch(console.error);
 
-  const handleSave = () =>
-    categoryClient
-      .update({id, attributes: {name}})
-      .then(goBack)
-      .catch(console.error);
+  const handleSave = async () => {
+    try {
+      const attributes = {name};
+      if (isNewCategory) {
+        await categoryClient.create({attributes});
+      } else {
+        await categoryClient.update({id, attributes});
+      }
+      goBack();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
@@ -55,9 +66,11 @@ export default function CategoryList({route}) {
       <Button testID="cancel-button" mode="outlined" onPress={goBack}>
         Cancel
       </Button>
-      <Button testID="delete-button" mode="outlined" onPress={handleDelete}>
-        Delete
-      </Button>
+      {!isNewCategory && (
+        <Button testID="delete-button" mode="outlined" onPress={handleDelete}>
+          Delete
+        </Button>
+      )}
       <Button
         testID="save-button"
         mode="contained"
