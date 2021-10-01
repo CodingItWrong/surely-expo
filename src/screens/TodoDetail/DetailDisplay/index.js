@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import {IconButton, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Actions from './Actions';
@@ -19,7 +19,9 @@ export default function DetailDisplay({
     >
       <ScrollView contentContainerStyle={styles.bodyContainer}>
         <View style={styles.titleRow}>
-          <Title style={styles.title}>{todo.attributes.name}</Title>
+          <Pressable onPress={onEdit}>
+            <Title style={styles.title}>{todo.attributes.name}</Title>
+          </Pressable>
           <IconButton
             testID="edit-button"
             icon="pencil"
@@ -27,8 +29,10 @@ export default function DetailDisplay({
             onPress={onEdit}
           />
         </View>
-        <Text>Category: {category?.attributes?.name ?? 'none'}</Text>
-        {todo.attributes.notes ? <Text>{todo.attributes.notes}</Text> : null}
+        <Pressable onPress={onEdit}>
+          <Text>Category: {category?.attributes?.name ?? 'none'}</Text>
+          {todo.attributes.notes ? <Text>{todo.attributes.notes}</Text> : null}
+        </Pressable>
         <EventLog todo={todo} />
         <Actions todo={todo} onUpdate={onUpdate} onGoBack={onGoBack} />
       </ScrollView>
