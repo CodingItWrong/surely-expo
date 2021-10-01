@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
+import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
 import {createTodoDetail} from './screens/TodoDetail';
 import AvailableTodos from './screens/TodoList/Available';
@@ -48,6 +49,7 @@ const linking = {
       Categories: {
         screens: {
           CategoryList: '/categories',
+          CategoryDetail: '/categories/:id',
         },
       },
     },
@@ -168,6 +170,11 @@ const Categories = () => (
       name="CategoryList"
       component={CategoryList}
       options={{title: 'Categories'}}
+    />
+    <CategoryStack.Screen
+      name="CategoryDetail"
+      component={CategoryDetail}
+      options={{title: 'Category'}}
     />
   </CategoryStack.Navigator>
 );

@@ -11,7 +11,11 @@ export default function CategoryList() {
   const categoryClient = useCategories();
   const linkTo = useLinkTo();
 
-  const onPressCategory = category => {};
+  const onPressCategory = category => {
+    const url = `/categories/${category.id}`;
+    console.log({url});
+    linkTo(url);
+  };
 
   useEffect(() => {
     categoryClient
