@@ -1,8 +1,16 @@
 {
   "expo": {
+    "ios": {
+      "buildNumber": "5",
+      "bundleIdentifier": "com.surelytodo",
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "version": "1.0.0",
     "name": "Surely",
     "slug": "surely",
-    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -16,14 +24,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "buildNumber": "5",
-      "bundleIdentifier": "com.surelytodo",
-      "supportsTablet": true,
-      "config": {
-        "usesNonExemptEncryption": false
-      }
-    },
     "web": {
       "name": "Surely",
       "themeColor": "#4caf50",
