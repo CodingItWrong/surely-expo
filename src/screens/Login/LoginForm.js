@@ -19,7 +19,7 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
         </Text>
       )}
       <TextInput
-        testID="email"
+        testID="email-field"
         label="Email"
         value={username}
         onChangeText={handleChange('username')}
@@ -29,7 +29,7 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
         autoCorrect={false}
       />
       <TextInput
-        testID="password"
+        testID="password-field"
         label="Password"
         value={password}
         onChangeText={handleChange('password')}
@@ -39,7 +39,7 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
       <Button mode="outlined" testID="sign-up-button" onPress={onSignUp}>
         Sign up
       </Button>
-      <Button mode="contained" testID="sign-in" onPress={handleLogIn}>
+      <Button mode="contained" testID="sign-in-button" onPress={handleLogIn}>
         Sign in
       </Button>
     </>

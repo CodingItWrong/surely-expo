@@ -39,6 +39,6 @@ describe('sign-in', () => {
     cy.getTestId('toggle-navigation-button').click();
     cy.getTestId('sign-out-button').click();
 
-    cy.getTestId('email');
+    cy.getTestId('email-field').should('exist');
   });
 });
