@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import baseUrl from '../baseUrl';
 import {useToken} from '../data/token';
-import PaperLoginForm from './PaperLoginForm';
+import LoginScreen from '../screens/Login';
 import oauthLogin from './oauthLogin';
 
 const httpClient = axios.create({baseURL: baseUrl});
@@ -21,7 +21,7 @@ export default function OAuthLoginContainer({children}) {
   if (!isTokenLoaded) {
     return null;
   } else if (!token) {
-    return <PaperLoginForm onLogIn={handleLogIn} />;
+    return <LoginScreen onLogIn={handleLogIn} />;
   } else {
     return children({logOut});
   }

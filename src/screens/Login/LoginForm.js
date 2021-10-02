@@ -1,8 +1,8 @@
 import React from 'react';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
-import useLoginForm from './useLoginForm';
+import useLoginForm from '../../auth/useLoginForm';
 
-export default function PaperLoginForm({onLogIn}) {
+export default function LoginForm({onLogIn, onSignUp}) {
   const {username, password, error, handleChange, handleLogIn} =
     useLoginForm(onLogIn);
 
@@ -30,7 +30,10 @@ export default function PaperLoginForm({onLogIn}) {
         onSubmitEditing={handleLogIn}
         secureTextEntry
       />
-      <Button testID="sign-in" onPress={handleLogIn}>
+      <Button mode="outlined" testID="sign-up-button" onPress={onSignUp}>
+        Sign up
+      </Button>
+      <Button mode="contained" testID="sign-in" onPress={handleLogIn}>
         Sign in
       </Button>
     </>
