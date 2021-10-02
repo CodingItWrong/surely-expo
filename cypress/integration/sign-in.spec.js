@@ -1,8 +1,8 @@
-describe('auth', () => {
-  it('allows logging in', () => {
+describe('sign-in', () => {
+  it('allows signing in', () => {
     cy.intercept('POST', 'http://localhost:3000/oauth/token', {
       fixture: 'session.json',
-    }).as('login');
+    }).as('signin');
     cy.intercept(
       'GET',
       'http://localhost:3000/todos?filter[status]=available&include=category',
@@ -17,7 +17,7 @@ describe('auth', () => {
     cy.getTestId('password').type(password);
     cy.getTestId('sign-in').click();
 
-    cy.wait('@login').then(({request}) => {
+    cy.wait('@signin').then(({request}) => {
       console.log(request.body);
       assert.equal(request.body.username, email);
       assert.equal(request.body.password, password);
@@ -26,7 +26,7 @@ describe('auth', () => {
     cy.getTestId('todo-list').contains('Todo 1');
   });
 
-  it('allows logging out', () => {
+  it('allows signing out', () => {
     cy.signIn();
 
     cy.intercept(
