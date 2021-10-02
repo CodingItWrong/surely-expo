@@ -26,6 +26,7 @@ export default function TodoListScreen({
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todoSections, setTodoSections] = useState([]);
   const sectionListRef = useRef(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const loadFromServer = useCallback(
     () =>
@@ -39,6 +40,12 @@ export default function TodoListScreen({
         .catch(console.error),
     [onLoadTodos, searchText, pageNumber],
   );
+
+  const refresh = async () => {
+    setIsRefreshing(true);
+    await loadFromServer();
+    setIsRefreshing(false);
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -79,6 +86,8 @@ export default function TodoListScreen({
             sectionListRef={sectionListRef}
             todoSections={todoSections}
             onPressTodo={onPressTodo}
+            onRefresh={refresh}
+            refreshing={isRefreshing}
           />
         </>
       );

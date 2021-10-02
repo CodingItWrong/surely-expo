@@ -7,12 +7,16 @@ export default function TodoList({
   todoSections,
   sectionListRef,
   onPressTodo,
+  onRefresh,
+  refreshing,
 }) {
   return (
     <SectionList
       testID={testID}
       ref={sectionListRef}
       sections={todoSections}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
       keyExtractor={todo => todo.id}
       renderSectionHeader={({section}) => (
         <List.Subheader>
