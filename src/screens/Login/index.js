@@ -4,17 +4,27 @@ import SignUpForm from './SignUpForm';
 
 export default function Login({onLogIn}) {
   const [showSignupForm, setShowSignUpForm] = useState(false);
+  const [showSignedUpMessage, setShowSignedUpMessage] = useState(false);
+
+  function handleSignUpSuccess() {
+    setShowSignUpForm(false);
+    setShowSignedUpMessage(true);
+  }
 
   if (showSignupForm) {
     return (
       <SignUpForm
-        onSignUpSuccess={() => setShowSignUpForm(false)}
+        onSignUpSuccess={handleSignUpSuccess}
         onCancel={() => setShowSignUpForm(false)}
       />
     );
   } else {
     return (
-      <LoginForm onLogIn={onLogIn} onSignUp={() => setShowSignUpForm(true)} />
+      <LoginForm
+        onLogIn={onLogIn}
+        onSignUp={() => setShowSignUpForm(true)}
+        showSignedUpMessage={showSignedUpMessage}
+      />
     );
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
 import useLoginForm from '../../auth/useLoginForm';
 
-export default function LoginForm({onLogIn, onSignUp}) {
+export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
   const {username, password, error, handleChange, handleLogIn} =
     useLoginForm(onLogIn);
 
@@ -12,6 +12,12 @@ export default function LoginForm({onLogIn, onSignUp}) {
         <Appbar.Content title="Surely" />
       </Appbar.Header>
       {error && <Text>{error}</Text>}
+      {showSignedUpMessage && (
+        <Text>
+          Sign up successful. Log in with the email and password you used to
+          sign up.
+        </Text>
+      )}
       <TextInput
         testID="email"
         label="Email"
