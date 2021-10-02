@@ -1,11 +1,19 @@
 import {useLinkTo} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {useCategories} from '../data/categories';
 
 export default function CategoryList({route}) {
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const [category, setCategory] = useState(null);
   const [name, setName] = useState('');
   const categoryClient = useCategories();
@@ -21,9 +29,11 @@ export default function CategoryList({route}) {
       categoryClient
         .find({id})
         .then(response => {
-          const returnedCategory = response.data;
-          setCategory(returnedCategory);
-          setName(returnedCategory.attributes.name);
+          if (isMounted.current) {
+            const returnedCategory = response.data;
+            setCategory(returnedCategory);
+            setName(returnedCategory.attributes.name);
+          }
         })
         .catch(console.error);
     }
