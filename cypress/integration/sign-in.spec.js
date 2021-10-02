@@ -13,12 +13,11 @@ describe('sign-in', () => {
     const password = 'password';
 
     cy.visit('/');
-    cy.getTestId('email').type(email);
-    cy.getTestId('password').type(password);
-    cy.getTestId('sign-in').click();
+    cy.getTestId('email-field').type(email);
+    cy.getTestId('password-field').type(password);
+    cy.getTestId('sign-in-button').click();
 
     cy.wait('@signin').then(({request}) => {
-      console.log(request.body);
       assert.equal(request.body.username, email);
       assert.equal(request.body.password, password);
     });
