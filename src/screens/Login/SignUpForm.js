@@ -37,7 +37,16 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
     userClient
       .create({attributes: {email, password}})
       .then(onSignUpSuccess)
-      .catch(console.error);
+      .catch(errorResponse => {
+        if (errorResponse?.data?.errors?.[0]?.detail) {
+          setError(errorResponse?.data?.errors?.[0]?.detail);
+        } else if (errorResponse?.message) {
+          setError(errorResponse?.message);
+        } else {
+          setError('An error occurred. Please try again.');
+          console.log(errorResponse);
+        }
+      });
   }
 
   return (
