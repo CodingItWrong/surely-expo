@@ -1,18 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
+import useIsMounted from '../../utils/useIsMounted';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
 
 export default function TodoDetail({navigation, route, parentRouteName}) {
-  const isMounted = useRef(true);
-
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+  const isMounted = useIsMounted();
 
   const todoClient = useTodos();
 
@@ -24,12 +19,15 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
     params: {id},
   } = route;
 
-  const storeResponse = response => {
-    if (isMounted.current) {
-      setTodo(response.data);
-      setCategory(response.included?.[0]);
-    }
-  };
+  const storeResponse = useCallback(
+    response => {
+      if (isMounted.current) {
+        setTodo(response.data);
+        setCategory(response.included?.[0]);
+      }
+    },
+    [isMounted],
+  );
 
   useEffect(() => {
     if (isMounted.current) {
@@ -38,7 +36,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
         .then(storeResponse)
         .catch(console.error);
     }
-  }, [id, todoClient]);
+  }, [isMounted, id, todoClient, storeResponse]);
 
   const updateTodo = ({attributes, relationships}) =>
     todoClient.update({
