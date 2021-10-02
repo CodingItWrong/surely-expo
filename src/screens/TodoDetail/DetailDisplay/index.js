@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bodyContainer: {
-    marginHorizontal: 15,
+    margin: 15,
   },
   titleRow: {
     width: '100%',
