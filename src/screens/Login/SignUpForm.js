@@ -22,7 +22,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
       setError('Password confirmation is required.');
       return false;
     } else if (passwordConfirmation !== password) {
-      setError('Passwords do not match');
+      setError('Passwords do not match.');
       return false;
     }
 
@@ -57,7 +57,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
       <Title>Sign up</Title>
       {error && <Text>{error}</Text>}
       <TextInput
-        testID="email"
+        testID="email-field"
         label="Email"
         value={email}
         onChangeText={setEmail}
@@ -67,7 +67,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
         autoCorrect={false}
       />
       <TextInput
-        testID="password"
+        testID="password-field"
         label="Password"
         value={password}
         onChangeText={setPassword}
@@ -75,7 +75,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
         secureTextEntry
       />
       <TextInput
-        testID="password"
+        testID="password-confirmation-field"
         label="Confirm password"
         value={passwordConfirmation}
         onChangeText={setPasswordConfirmation}
