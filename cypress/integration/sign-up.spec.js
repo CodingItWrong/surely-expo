@@ -12,7 +12,7 @@ describe('sign-up', () => {
     cy.getTestId('sign-up-button').should('exist');
   });
 
-  it.only('allows signing up', () => {
+  it('allows signing up', () => {
     cy.intercept('POST', 'http://localhost:3000/users?', {}).as('signup');
 
     cy.getTestId('email-field').type(email);
