@@ -58,8 +58,8 @@ export default function TodoListScreen({
 
   async function reload() {
     setShowLoadingIndicator(true);
-    const response = await loadFromServer();
-    if (response.data.length > 0) {
+    const todoGroups = await loadFromServer();
+    if (todoGroups.length > 0) {
       sectionListRef.current.scrollToLocation({sectionIndex: 0, itemIndex: 0});
     }
   }
