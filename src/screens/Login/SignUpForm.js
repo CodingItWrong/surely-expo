@@ -1,18 +1,44 @@
 import React, {useState} from 'react';
-import {Appbar, Button, TextInput, Title} from 'react-native-paper';
+import {Appbar, Button, Text, TextInput, Title} from 'react-native-paper';
 import {useUsers} from '../../data/users';
 
 export default function SignUpForm({onCancel, onSignUpSuccess}) {
   const userClient = useUsers();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [error, setError] = useState(null);
 
-  const handleSignUp = () =>
+  function validate() {
+    if (!email) {
+      setError('Email is required.');
+      return false;
+    }
+    if (!password) {
+      setError('Password is required.');
+      return false;
+    }
+    if (!passwordConfirmation) {
+      setError('Password confirmation is required.');
+      return false;
+    } else if (passwordConfirmation !== password) {
+      setError('Passwords do not match');
+      return false;
+    }
+
+    return true;
+  }
+
+  function handleSignUp() {
+    if (!validate()) {
+      return;
+    }
+
     userClient
       .create({attributes: {email, password}})
       .then(onSignUpSuccess)
       .catch(console.error);
+  }
 
   return (
     <>
@@ -20,6 +46,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
         <Appbar.Content title="Surely" />
       </Appbar.Header>
       <Title>Sign up</Title>
+      {error && <Text>{error}</Text>}
       <TextInput
         testID="email"
         label="Email"
@@ -41,8 +68,8 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
       <TextInput
         testID="password"
         label="Confirm password"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
+        value={passwordConfirmation}
+        onChangeText={setPasswordConfirmation}
         onSubmitEditing={handleSignUp}
         secureTextEntry
       />
