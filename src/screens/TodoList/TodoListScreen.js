@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useRef, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -98,7 +98,7 @@ export default function TodoListScreen({
     <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
       {onCreateTodo && <NewTodoForm onCreate={handleCreate} />}
       {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
-      <Button onPress={reload}>Reload</Button>
+      {Platform.OS === 'web' && <Button onPress={reload}>Reload</Button>}
       {contents()}
     </SafeAreaView>
   );
