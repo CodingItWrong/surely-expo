@@ -41,12 +41,6 @@ export default function TodoListScreen({
     [onLoadTodos, searchText, pageNumber],
   );
 
-  const refresh = async () => {
-    setIsRefreshing(true);
-    await loadFromServer();
-    setIsRefreshing(false);
-  };
-
   useFocusEffect(
     useCallback(() => {
       loadFromServer();
@@ -56,7 +50,13 @@ export default function TodoListScreen({
   const handleCreate = newTodoName =>
     onCreateTodo(newTodoName).then(loadFromServer).catch(console.error);
 
-  async function reload() {
+  async function reloadFromPull() {
+    setIsRefreshing(true);
+    await loadFromServer();
+    setIsRefreshing(false);
+  }
+
+  async function reloadFromButton() {
     setShowLoadingIndicator(true);
     const todoGroups = await loadFromServer();
     if (todoGroups.length > 0) {
@@ -86,7 +86,7 @@ export default function TodoListScreen({
             sectionListRef={sectionListRef}
             todoSections={todoSections}
             onPressTodo={onPressTodo}
-            onRefresh={refresh}
+            onRefresh={reloadFromPull}
             refreshing={isRefreshing}
           />
         </>
@@ -98,7 +98,9 @@ export default function TodoListScreen({
     <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
       {onCreateTodo && <NewTodoForm onCreate={handleCreate} />}
       {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
-      {Platform.OS === 'web' && <Button onPress={reload}>Reload</Button>}
+      {Platform.OS === 'web' && (
+        <Button onPress={reloadFromButton}>Reload</Button>
+      )}
       {contents()}
     </SafeAreaView>
   );
