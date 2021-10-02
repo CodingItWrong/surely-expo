@@ -87,10 +87,12 @@ export default function CategoryList() {
               right={() => (
                 <>
                   <IconButton
+                    testID="move-up-button"
                     icon="arrow-up"
                     onPress={() => moveUpward(category)}
                   />
                   <IconButton
+                    testID="move-down-button"
                     icon="arrow-down"
                     onPress={() => moveDownward(category)}
                   />
