@@ -4,9 +4,10 @@ import {StyleSheet} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {useCategories} from '../data/categories';
+import sharedStyles from '../sharedStyles';
 import useIsMounted from '../utils/useIsMounted';
 
-export default function CategoryList({route}) {
+export default function CategoryDetail({route}) {
   const isMounted = useIsMounted();
 
   const [category, setCategory] = useState(null);
