@@ -33,27 +33,26 @@ export default function TodoListScreen({
   const [errorMessage, setErrorMessage] = useState(null);
 
   const loadFromServer = useCallback(async () => {
-    setShowLoadingIndicator(true);
     setErrorMessage(null);
     try {
       const {todoGroups, maxPageNumber: newMaxPageNumber} = await onLoadTodos({
         searchText,
         pageNumber,
       });
-      setShowLoadingIndicator(false);
       setMaxPageNumber(newMaxPageNumber);
       setTodoSections(groupsToSections(todoGroups));
       return todoGroups;
     } catch (error) {
       console.error(error);
       setErrorMessage('An error occurred while loading todos.');
-      setShowLoadingIndicator(false);
     }
   }, [onLoadTodos, searchText, pageNumber]);
 
   useFocusEffect(
     useCallback(() => {
-      loadFromServer();
+      loadFromServer().then(() => {
+        setShowLoadingIndicator(false);
+      });
     }, [loadFromServer]),
   );
 
@@ -69,15 +68,14 @@ export default function TodoListScreen({
   async function reloadFromButton() {
     setShowLoadingIndicator(true);
     const todoGroups = await loadFromServer();
+    setShowLoadingIndicator(false);
     if (todoGroups.length > 0) {
       sectionListRef.current.scrollToLocation({sectionIndex: 0, itemIndex: 0});
     }
   }
 
   function contents() {
-    if (showLoadingIndicator) {
-      return <LoadingIndicator />;
-    } else if (todoSections.length === 0 && !errorMessage) {
+    if (todoSections.length === 0 && !errorMessage) {
       const message = searchText ? noSearchResultsMessage : noTodosMessage;
       return <NoTodosMessage>{message}</NoTodosMessage>;
     } else {
@@ -113,6 +111,7 @@ export default function TodoListScreen({
       {Platform.OS === 'web' && (
         <Button onPress={reloadFromButton}>Reload</Button>
       )}
+      {showLoadingIndicator && <LoadingIndicator />}
       {contents()}
     </View>
   );
