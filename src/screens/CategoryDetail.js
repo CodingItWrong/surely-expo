@@ -69,11 +69,21 @@ export default function CategoryDetail({route}) {
         multiline
         style={styles.nameInput}
       />
-      <Button testID="cancel-button" mode="outlined" onPress={goBack}>
+      <Button
+        testID="cancel-button"
+        mode="outlined"
+        onPress={goBack}
+        style={sharedStyles.buttonSpacing}
+      >
         Cancel
       </Button>
       {!isNewCategory && (
-        <Button testID="delete-button" mode="outlined" onPress={handleDelete}>
+        <Button
+          testID="delete-button"
+          mode="outlined"
+          onPress={handleDelete}
+          style={sharedStyles.buttonSpacing}
+        >
           Delete
         </Button>
       )}
@@ -82,6 +92,7 @@ export default function CategoryDetail({route}) {
         mode="contained"
         icon="content-save"
         onPress={handleSave}
+        style={sharedStyles.buttonSpacing}
       >
         Save
       </Button>
