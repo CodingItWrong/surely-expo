@@ -93,7 +93,7 @@ export default function CategoryList() {
   function contents() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
-    } else if (categories.length === 0) {
+    } else if (categories?.length === 0) {
       return <NoTodosMessage>No categories yet</NoTodosMessage>;
     } else {
       return (
