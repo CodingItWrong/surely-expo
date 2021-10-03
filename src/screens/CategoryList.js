@@ -4,6 +4,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import {Button, IconButton, List} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import NoTodosMessage from '../components/NoTodosMessage';
 import {useCategories} from '../data/categories';
@@ -21,23 +22,28 @@ export default function CategoryList() {
   const categoryClient = useCategories();
   const linkTo = useLinkTo();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const onPressCategory = category => linkTo(`/categories/${category.id}`);
 
   const handleAdd = () => linkTo('/categories/new');
 
-  const loadFromServer = useCallback(
-    () =>
-      categoryClient
-        .all()
-        .then(({data}) => {
-          setCategories(sortBy(data, 'attributes.sort-order'));
-          setShowLoadingIndicator(false);
-          return data;
-        })
-        .catch(console.error),
-    [categoryClient],
-  );
+  const loadFromServer = useCallback(() => {
+    setShowLoadingIndicator(true);
+    setErrorMessage(null);
+    return categoryClient
+      .all()
+      .then(({data}) => {
+        setCategories(sortBy(data, 'attributes.sort-order'));
+        setShowLoadingIndicator(false);
+        return data;
+      })
+      .catch(error => {
+        console.error(error);
+        setErrorMessage('An error occurred while loading todos.');
+        setShowLoadingIndicator(false);
+      });
+  }, [categoryClient]);
 
   useEffect(() => {
     loadFromServer();
@@ -102,6 +108,7 @@ export default function CategoryList() {
           >
             Add
           </Button>
+          <ErrorMessage>{errorMessage}</ErrorMessage>
           <FlatList
             testID="category-list"
             ref={flatListRef}
