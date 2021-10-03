@@ -1,6 +1,6 @@
 import {useLinkTo} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {useCategories} from '../data/categories';
@@ -59,7 +59,7 @@ export default function CategoryDetail({route}) {
   };
 
   return (
-    <>
+    <View style={sharedStyles.bodyContainer}>
       <TextInput
         testID="name-field"
         label="Category name"
@@ -96,7 +96,7 @@ export default function CategoryDetail({route}) {
       >
         Save
       </Button>
-    </>
+    </View>
   );
 }
 
