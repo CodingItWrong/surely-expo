@@ -28,21 +28,19 @@ export default function CategoryList() {
 
   const handleAdd = () => linkTo('/categories/new');
 
-  const loadFromServer = useCallback(() => {
+  const loadFromServer = useCallback(async () => {
     setShowLoadingIndicator(true);
     setErrorMessage(null);
-    return categoryClient
-      .all()
-      .then(({data}) => {
-        setCategories(sortBy(data, 'attributes.sort-order'));
-        setShowLoadingIndicator(false);
-        return data;
-      })
-      .catch(error => {
-        console.error(error);
-        setErrorMessage('An error occurred while loading todos.');
-        setShowLoadingIndicator(false);
-      });
+    try {
+      const {data} = await categoryClient.all();
+      setCategories(sortBy(data, 'attributes.sort-order'));
+      setShowLoadingIndicator(false);
+      return data;
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('An error occurred while loading todos.');
+      setShowLoadingIndicator(false);
+    }
   }, [categoryClient]);
 
   useEffect(() => {

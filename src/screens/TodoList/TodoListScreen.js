@@ -32,21 +32,23 @@ export default function TodoListScreen({
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const loadFromServer = useCallback(() => {
+  const loadFromServer = useCallback(async () => {
     setShowLoadingIndicator(true);
     setErrorMessage(null);
-    return onLoadTodos({searchText, pageNumber})
-      .then(({todoGroups, maxPageNumber: newMaxPageNumber}) => {
-        setShowLoadingIndicator(false);
-        setMaxPageNumber(newMaxPageNumber);
-        setTodoSections(groupsToSections(todoGroups));
-        return todoGroups;
-      })
-      .catch(error => {
-        console.error(error);
-        setErrorMessage('An error occurred while loading todos.');
-        setShowLoadingIndicator(false);
+    try {
+      const {todoGroups, maxPageNumber: newMaxPageNumber} = await onLoadTodos({
+        searchText,
+        pageNumber,
       });
+      setShowLoadingIndicator(false);
+      setMaxPageNumber(newMaxPageNumber);
+      setTodoSections(groupsToSections(todoGroups));
+      return todoGroups;
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('An error occurred while loading todos.');
+      setShowLoadingIndicator(false);
+    }
   }, [onLoadTodos, searchText, pageNumber]);
 
   useFocusEffect(
