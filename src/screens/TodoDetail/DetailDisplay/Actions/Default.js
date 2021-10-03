@@ -40,7 +40,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
           testID="undelete-button"
           mode="outlined"
           onPress={handleUndelete}
-          style={sharedStyles.button}
+          style={sharedStyles.buttonSpacing}
         >
           Undelete
         </Button>
@@ -50,7 +50,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             testID="delete-button"
             mode="outlined"
             onPress={handleDelete}
-            style={sharedStyles.button}
+            style={sharedStyles.buttonSpacing}
           >
             Delete
           </Button>
@@ -58,7 +58,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             testID="defer-button"
             mode="outlined"
             onPress={onDefer}
-            style={sharedStyles.button}
+            style={sharedStyles.buttonSpacing}
           >
             Defer
           </Button>
@@ -68,7 +68,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               mode="contained"
               icon="checkbox-marked"
               onPress={handleUncomplete}
-              style={sharedStyles.button}
+              style={sharedStyles.buttonSpacing}
             >
               Uncomplete
             </Button>
@@ -78,7 +78,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               mode="contained"
               icon="checkbox-marked"
               onPress={handleComplete}
-              style={sharedStyles.button}
+              style={sharedStyles.buttonSpacing}
             >
               Complete
             </Button>

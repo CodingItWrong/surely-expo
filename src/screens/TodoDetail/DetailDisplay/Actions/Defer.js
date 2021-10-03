@@ -32,7 +32,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         testID="cancel-defer-button"
         mode="outlined"
         onPress={onCancel}
-        style={sharedStyles.button}
+        style={sharedStyles.buttonSpacing}
       >
         Cancel
       </Button>
@@ -67,7 +67,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
       <Button
         mode="outlined"
         onPress={() => setIsDeferredUntilModalOpen(true)}
-        style={sharedStyles.button}
+        style={sharedStyles.buttonSpacing}
       >
         Pick Date
       </Button>
@@ -93,7 +93,7 @@ function DeferButton({testID, todo, numDays, label, onDefer}) {
       testID={testID}
       mode="outlined"
       onPress={() => onDefer(date)}
-      style={sharedStyles.button}
+      style={sharedStyles.buttonSpacing}
     >
       {label} - {dayOfWeek(date)}
     </Button>

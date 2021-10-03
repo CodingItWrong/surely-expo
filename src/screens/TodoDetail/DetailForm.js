@@ -77,7 +77,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         <Button
           mode="outlined"
           onPress={() => setIsDeferredUntilModalOpen(true)}
-          style={sharedStyles.button}
+          style={sharedStyles.buttonSpacing}
         >
           Defer until day: {relativeDate(deferredUntil) ?? 'n/a'}
         </Button>
@@ -101,7 +101,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           testID="cancel-button"
           mode="outlined"
           onPress={onCancel}
-          style={sharedStyles.button}
+          style={sharedStyles.buttonSpacing}
         >
           Cancel
         </Button>
@@ -110,7 +110,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           mode="contained"
           icon="content-save"
           onPress={handlePressSave}
-          style={sharedStyles.button}
+          style={sharedStyles.buttonSpacing}
         >
           Save
         </Button>
