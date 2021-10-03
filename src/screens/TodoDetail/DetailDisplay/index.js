@@ -31,12 +31,16 @@ export default function DetailDisplay({
           />
         </View>
         <Pressable onPress={onEdit}>
-          {todo.attributes.notes && <Text>{todo.attributes.notes}</Text>}
+          {todo.attributes.notes && (
+            <Text style={styles.sectionSpacing}>{todo.attributes.notes}</Text>
+          )}
           {category && (
-            <Text>Category: {category.attributes.name ?? 'none'}</Text>
+            <Text style={styles.sectionSpacing}>
+              Category: {category.attributes.name ?? 'none'}
+            </Text>
           )}
         </Pressable>
-        <EventLog todo={todo} />
+        <EventLog todo={todo} style={styles.sectionSpacing} />
         <Actions todo={todo} onUpdate={onUpdate} onGoBack={onGoBack} />
       </ScrollView>
     </SafeAreaView>
@@ -54,5 +58,8 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
+  },
+  sectionSpacing: {
+    marginTop: 10,
   },
 });
