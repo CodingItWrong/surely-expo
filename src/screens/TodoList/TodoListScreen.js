@@ -9,6 +9,7 @@ import NoTodosMessage from '../../components/NoTodosMessage';
 import PaginationControls from '../../components/PaginationControls';
 import SearchForm from '../../components/SearchForm';
 import TodoList from '../../components/TodoList';
+import theme from '../../theme';
 import {groupsToSections} from '../../utils/ui';
 
 export default function TodoListScreen({
@@ -111,5 +112,6 @@ export default function TodoListScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: theme.colors.background,
   },
 });
