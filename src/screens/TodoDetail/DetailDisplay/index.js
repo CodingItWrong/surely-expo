@@ -31,14 +31,14 @@ export default function DetailDisplay({
           />
         </View>
         <Pressable onPress={onEdit}>
-          {todo.attributes.notes && (
+          {todo.attributes.notes ? (
             <Text style={styles.sectionSpacing}>{todo.attributes.notes}</Text>
-          )}
-          {category && (
+          ) : null}
+          {category ? (
             <Text style={styles.sectionSpacing}>
               Category: {category.attributes.name ?? 'none'}
             </Text>
-          )}
+          ) : null}
         </Pressable>
         <EventLog todo={todo} style={styles.sectionSpacing} />
         <Actions todo={todo} onUpdate={onUpdate} onGoBack={onGoBack} />
