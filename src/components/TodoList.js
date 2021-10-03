@@ -9,6 +9,7 @@ export default function TodoList({
   onPressTodo,
   onRefresh,
   refreshing,
+  contentContainerStyle,
 }) {
   return (
     <SectionList
@@ -18,6 +19,7 @@ export default function TodoList({
       onRefresh={onRefresh}
       refreshing={refreshing}
       keyExtractor={todo => todo.id}
+      contentContainerStyle={contentContainerStyle}
       renderSectionHeader={({section}) => (
         <List.Subheader>
           {section.title} ({section.data.length})

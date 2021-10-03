@@ -1,8 +1,8 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useRef, useState} from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import NoTodosMessage from '../../components/NoTodosMessage';
@@ -20,6 +20,7 @@ export default function TodoListScreen({
   noTodosMessage,
   noSearchResultsMessage,
 }) {
+  const insets = useSafeAreaInsets();
   const [searchText, setSearchText] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [maxPageNumber, setMaxPageNumber] = useState(null);
@@ -88,6 +89,7 @@ export default function TodoListScreen({
             onPressTodo={onPressTodo}
             onRefresh={reloadFromPull}
             refreshing={isRefreshing}
+            contentContainerStyle={{paddingBottom: insets.bottom}}
           />
         </>
       );
@@ -95,19 +97,19 @@ export default function TodoListScreen({
   }
 
   return (
-    <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
+    <View style={styles.container}>
       {onCreateTodo && <NewTodoForm onCreate={handleCreate} />}
       {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
       {Platform.OS === 'web' && (
         <Button onPress={reloadFromButton}>Reload</Button>
       )}
       {contents()}
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
   },
 });
