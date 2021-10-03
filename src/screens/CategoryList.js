@@ -20,6 +20,7 @@ export default function CategoryList() {
   const [categories, setCategories] = useState(null);
   const categoryClient = useCategories();
   const linkTo = useLinkTo();
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const onPressCategory = category => linkTo(`/categories/${category.id}`);
 
@@ -71,6 +72,12 @@ export default function CategoryList() {
     return loadFromServer();
   }
 
+  async function reloadFromPull() {
+    setIsRefreshing(true);
+    await loadFromServer();
+    setIsRefreshing(false);
+  }
+
   async function reloadFromButton() {
     setShowLoadingIndicator(true);
     const newCategories = await loadFromServer();
@@ -100,6 +107,8 @@ export default function CategoryList() {
             ref={flatListRef}
             data={categories}
             keyExtractor={todo => todo.id}
+            onRefresh={reloadFromPull}
+            refreshing={isRefreshing}
             contentContainerStyle={{paddingBottom: insets.bottom}}
             renderItem={({item: category}) => (
               <List.Item
@@ -130,7 +139,9 @@ export default function CategoryList() {
 
   return (
     <View style={styles.container}>
-      <Button onPress={reloadFromButton}>Reload</Button>
+      {Platform.OS === 'web' && (
+        <Button onPress={reloadFromButton}>Reload</Button>
+      )}
       {contents()}
     </View>
   );
