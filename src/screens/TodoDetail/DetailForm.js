@@ -7,8 +7,8 @@ import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import PaperDropdown from '../../components/PaperDropdown';
 import {useCategories} from '../../data/categories';
+import sharedStyles from '../../sharedStyles';
 import {relativeDate} from '../../utils/time';
-import sharedStyles from './styles';
 
 export default function DetailForm({todo, onSave, onCancel}) {
   const categoryClient = useCategories();

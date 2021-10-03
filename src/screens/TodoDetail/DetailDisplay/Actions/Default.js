@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-native-paper';
 import {useTodos} from '../../../../data/todos';
-import styles from '../../styles';
+import sharedStyles from '../../../../sharedStyles';
 
 export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   const {id} = todo;
@@ -40,7 +40,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
           testID="undelete-button"
           mode="outlined"
           onPress={handleUndelete}
-          style={styles.button}
+          style={sharedStyles.button}
         >
           Undelete
         </Button>
@@ -50,7 +50,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             testID="delete-button"
             mode="outlined"
             onPress={handleDelete}
-            style={styles.button}
+            style={sharedStyles.button}
           >
             Delete
           </Button>
@@ -58,7 +58,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             testID="defer-button"
             mode="outlined"
             onPress={onDefer}
-            style={styles.button}
+            style={sharedStyles.button}
           >
             Defer
           </Button>
@@ -68,7 +68,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               mode="contained"
               icon="checkbox-marked"
               onPress={handleUncomplete}
-              style={styles.button}
+              style={sharedStyles.button}
             >
               Uncomplete
             </Button>
@@ -78,7 +78,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               mode="contained"
               icon="checkbox-marked"
               onPress={handleComplete}
-              style={styles.button}
+              style={sharedStyles.button}
             >
               Complete
             </Button>
