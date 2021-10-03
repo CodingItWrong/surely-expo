@@ -3,6 +3,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import ErrorMessage from '../../components/ErrorMessage';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import NoTodosMessage from '../../components/NoTodosMessage';
@@ -29,19 +30,24 @@ export default function TodoListScreen({
   const [todoSections, setTodoSections] = useState([]);
   const sectionListRef = useRef(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const loadFromServer = useCallback(
-    () =>
-      onLoadTodos({searchText, pageNumber})
-        .then(({todoGroups, maxPageNumber: newMaxPageNumber}) => {
-          setShowLoadingIndicator(false);
-          setMaxPageNumber(newMaxPageNumber);
-          setTodoSections(groupsToSections(todoGroups));
-          return todoGroups;
-        })
-        .catch(console.error),
-    [onLoadTodos, searchText, pageNumber],
-  );
+  const loadFromServer = useCallback(() => {
+    setShowLoadingIndicator(true);
+    setErrorMessage(null);
+    return onLoadTodos({searchText, pageNumber})
+      .then(({todoGroups, maxPageNumber: newMaxPageNumber}) => {
+        setShowLoadingIndicator(false);
+        setMaxPageNumber(newMaxPageNumber);
+        setTodoSections(groupsToSections(todoGroups));
+        return todoGroups;
+      })
+      .catch(error => {
+        console.error(error);
+        setErrorMessage('An error occurred while loading todos.');
+        setShowLoadingIndicator(false);
+      });
+  }, [onLoadTodos, searchText, pageNumber]);
 
   useFocusEffect(
     useCallback(() => {
@@ -69,7 +75,7 @@ export default function TodoListScreen({
   function contents() {
     if (showLoadingIndicator) {
       return <LoadingIndicator />;
-    } else if (todoSections.length === 0) {
+    } else if (todoSections.length === 0 && !errorMessage) {
       const message = searchText ? noSearchResultsMessage : noTodosMessage;
       return <NoTodosMessage>{message}</NoTodosMessage>;
     } else {
@@ -83,6 +89,7 @@ export default function TodoListScreen({
               decrement={() => setPageNumber(pageNumber - 1)}
             />
           )}
+          <ErrorMessage>{errorMessage}</ErrorMessage>
           <TodoList
             testID="todo-list"
             sectionListRef={sectionListRef}
