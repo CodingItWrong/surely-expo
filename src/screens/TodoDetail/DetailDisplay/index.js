@@ -31,8 +31,10 @@ export default function DetailDisplay({
           />
         </View>
         <Pressable onPress={onEdit}>
-          <Text>Category: {category?.attributes?.name ?? 'none'}</Text>
-          {todo.attributes.notes ? <Text>{todo.attributes.notes}</Text> : null}
+          {todo.attributes.notes && <Text>{todo.attributes.notes}</Text>}
+          {category && (
+            <Text>Category: {category.attributes.name ?? 'none'}</Text>
+          )}
         </Pressable>
         <EventLog todo={todo} />
         <Actions todo={todo} onUpdate={onUpdate} onGoBack={onGoBack} />
