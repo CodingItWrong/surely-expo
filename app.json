@@ -1,7 +1,7 @@
 {
   "expo": {
     "ios": {
-      "buildNumber": "6",
+      "buildNumber": "7",
       "bundleIdentifier": "com.surelytodo",
       "supportsTablet": true,
       "config": {
