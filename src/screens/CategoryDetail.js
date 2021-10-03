@@ -35,10 +35,6 @@ export default function CategoryDetail({route}) {
     }
   }, [id, isNewCategory, categoryClient, isMounted]);
 
-  if (!isNewCategory && !category) {
-    return <LoadingIndicator />;
-  }
-
   const goBack = () => linkTo('/categories');
 
   const handleDelete = () =>
@@ -57,6 +53,10 @@ export default function CategoryDetail({route}) {
       console.error(e);
     }
   };
+
+  if (!isNewCategory && !category) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <View style={sharedStyles.bodyContainer}>
