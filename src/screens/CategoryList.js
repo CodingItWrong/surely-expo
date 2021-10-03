@@ -1,9 +1,9 @@
 import {useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useEffect, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Button, IconButton, List} from 'react-native-paper';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LoadingIndicator from '../components/LoadingIndicator';
 import NoTodosMessage from '../components/NoTodosMessage';
 import {useCategories} from '../data/categories';
@@ -14,6 +14,7 @@ import {
 } from '../utils/array';
 
 export default function CategoryList() {
+  const insets = useSafeAreaInsets();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [categories, setCategories] = useState(null);
   const categoryClient = useCategories();
@@ -74,11 +75,20 @@ export default function CategoryList() {
     return <NoTodosMessage>No categories yet</NoTodosMessage>;
   } else {
     return (
-      <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.safeArea}>
+      <View style={styles.listContainer}>
+        <Button
+          testID="add-button"
+          mode="outlined"
+          icon="plus"
+          onPress={handleAdd}
+        >
+          Add
+        </Button>
         <FlatList
           testID="category-list"
           data={categories}
           keyExtractor={todo => todo.id}
+          contentContainerStyle={{paddingBottom: insets.bottom}}
           renderItem={({item: category}) => (
             <List.Item
               key={category.id}
@@ -101,21 +111,13 @@ export default function CategoryList() {
             />
           )}
         />
-        <Button
-          testID="add-button"
-          mode="outlined"
-          icon="plus"
-          onPress={handleAdd}
-        >
-          Add
-        </Button>
-      </SafeAreaView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  listContainer: {
     flex: 1,
   },
 });
