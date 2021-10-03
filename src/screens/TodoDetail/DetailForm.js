@@ -53,7 +53,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
 
   return (
     <KeyboardAwareScrollView>
-      <View style={styles.bodyContainer}>
+      <View style={sharedStyles.bodyContainer}>
         <TextInput
           testID="name-field"
           label="Todo name"
@@ -120,9 +120,6 @@ export default function DetailForm({todo, onSave, onCancel}) {
 }
 
 const styles = StyleSheet.create({
-  bodyContainer: {
-    margin: 15,
-  },
   chooser: {
     marginTop: 10,
   },

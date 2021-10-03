@@ -2,6 +2,7 @@ import React from 'react';
 import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import {IconButton, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import sharedStyles from '../../../sharedStyles';
 import Actions from './Actions';
 import EventLog from './EventLog';
 
@@ -17,7 +18,7 @@ export default function DetailDisplay({
       edges={['left', 'right', 'bottom']}
       style={styles.safeAreaView}
     >
-      <ScrollView contentContainerStyle={styles.bodyContainer}>
+      <ScrollView contentContainerStyle={sharedStyles.bodyContainer}>
         <View style={styles.titleRow}>
           <Pressable onPress={onEdit} style={styles.title}>
             <Title>{todo.attributes.name}</Title>
@@ -43,9 +44,6 @@ export default function DetailDisplay({
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
-  },
-  bodyContainer: {
-    margin: 15,
   },
   titleRow: {
     width: '100%',
