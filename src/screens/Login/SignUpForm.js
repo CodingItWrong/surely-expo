@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
-import {Appbar, Button, Text, TextInput, Title} from 'react-native-paper';
+import {View} from 'react-native';
+import {Appbar, Button, TextInput, Title} from 'react-native-paper';
+import ErrorMessage from '../../components/ErrorMessage';
 import {useUsers} from '../../data/users';
+import sharedStyles from '../../sharedStyles';
 
 export default function SignUpForm({onCancel, onSignUpSuccess}) {
   const userClient = useUsers();
@@ -54,40 +57,52 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
       <Appbar.Header>
         <Appbar.Content title="Surely" />
       </Appbar.Header>
-      <Title>Sign up</Title>
-      {error && <Text>{error}</Text>}
-      <TextInput
-        testID="email-field"
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        onSubmitEditing={handleSignUp}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
-      <TextInput
-        testID="password-field"
-        label="Password"
-        value={password}
-        onChangeText={setPassword}
-        onSubmitEditing={handleSignUp}
-        secureTextEntry
-      />
-      <TextInput
-        testID="password-confirmation-field"
-        label="Confirm password"
-        value={passwordConfirmation}
-        onChangeText={setPasswordConfirmation}
-        onSubmitEditing={handleSignUp}
-        secureTextEntry
-      />
-      <Button mode="outlined" testID="cancel-button" onPress={onCancel}>
-        Cancel
-      </Button>
-      <Button mode="contained" testID="sign-up-button" onPress={handleSignUp}>
-        Sign up
-      </Button>
+      <View style={sharedStyles.bodyContainer}>
+        <Title>Sign up</Title>
+        <TextInput
+          testID="email-field"
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
+          onSubmitEditing={handleSignUp}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <TextInput
+          testID="password-field"
+          label="Password"
+          value={password}
+          onChangeText={setPassword}
+          onSubmitEditing={handleSignUp}
+          secureTextEntry
+        />
+        <TextInput
+          testID="password-confirmation-field"
+          label="Confirm password"
+          value={passwordConfirmation}
+          onChangeText={setPasswordConfirmation}
+          onSubmitEditing={handleSignUp}
+          secureTextEntry
+        />
+        <ErrorMessage>{error}</ErrorMessage>
+        <Button
+          mode="outlined"
+          testID="cancel-button"
+          onPress={onCancel}
+          style={sharedStyles.buttonSpacing}
+        >
+          Cancel
+        </Button>
+        <Button
+          mode="contained"
+          testID="sign-up-button"
+          onPress={handleSignUp}
+          style={sharedStyles.buttonSpacing}
+        >
+          Sign up
+        </Button>
+      </View>
     </>
   );
 }
