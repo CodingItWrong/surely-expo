@@ -56,9 +56,6 @@ export default function TodoListScreen({
     }, [loadFromServer]),
   );
 
-  const handleCreate = newTodoName =>
-    onCreateTodo(newTodoName).then(loadFromServer);
-
   async function reloadFromPull() {
     setIsRefreshing(true);
     await loadFromServer();
@@ -73,6 +70,9 @@ export default function TodoListScreen({
       sectionListRef.current.scrollToLocation({sectionIndex: 0, itemIndex: 0});
     }
   }
+
+  const handleCreate = newTodoName =>
+    onCreateTodo(newTodoName).then(loadFromServer);
 
   function contents() {
     if (todoSections.length === 0 && !errorMessage) {

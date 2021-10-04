@@ -29,23 +29,37 @@ export default function CategoryList() {
   const handleAdd = () => linkTo('/categories/new');
 
   const loadFromServer = useCallback(async () => {
-    setShowLoadingIndicator(true);
     setErrorMessage(null);
     try {
       const {data} = await categoryClient.all();
       setCategories(sortBy(data, 'attributes.sort-order'));
-      setShowLoadingIndicator(false);
       return data;
     } catch (error) {
       console.error(error);
       setErrorMessage('An error occurred while loading todos.');
-      setShowLoadingIndicator(false);
     }
   }, [categoryClient]);
 
   useEffect(() => {
-    loadFromServer();
+    loadFromServer().then(() => {
+      setShowLoadingIndicator(false);
+    });
   }, [loadFromServer]);
+
+  async function reloadFromPull() {
+    setIsRefreshing(true);
+    await loadFromServer();
+    setIsRefreshing(false);
+  }
+
+  async function reloadFromButton() {
+    setShowLoadingIndicator(true);
+    const newCategories = await loadFromServer();
+    setShowLoadingIndicator(false);
+    if (newCategories.length > 0) {
+      flatListRef.current.scrollToIndex({index: 0});
+    }
+  }
 
   function moveUpward(categoryToMove) {
     const categoriesAfterMove = arrayWithItemMovedUpward(
@@ -76,36 +90,12 @@ export default function CategoryList() {
     return loadFromServer();
   }
 
-  async function reloadFromPull() {
-    setIsRefreshing(true);
-    await loadFromServer();
-    setIsRefreshing(false);
-  }
-
-  async function reloadFromButton() {
-    setShowLoadingIndicator(true);
-    const newCategories = await loadFromServer();
-    if (newCategories.length > 0) {
-      flatListRef.current.scrollToIndex({index: 0});
-    }
-  }
-
   function contents() {
-    if (showLoadingIndicator) {
-      return <LoadingIndicator />;
-    } else if (categories?.length === 0) {
+    if (categories?.length === 0) {
       return <NoTodosMessage>No categories yet</NoTodosMessage>;
     } else {
       return (
         <View style={styles.listContainer}>
-          <Button
-            testID="add-button"
-            mode="outlined"
-            icon="plus"
-            onPress={handleAdd}
-          >
-            Add
-          </Button>
           <ErrorMessage>{errorMessage}</ErrorMessage>
           <FlatList
             testID="category-list"
@@ -147,6 +137,15 @@ export default function CategoryList() {
       {Platform.OS === 'web' && (
         <Button onPress={reloadFromButton}>Reload</Button>
       )}
+      <Button
+        testID="add-button"
+        mode="outlined"
+        icon="plus"
+        onPress={handleAdd}
+      >
+        Add
+      </Button>
+      {showLoadingIndicator && <LoadingIndicator />}
       {contents()}
     </View>
   );
