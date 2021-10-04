@@ -29,6 +29,7 @@ export default function TodoListScreen({
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
   const [todoSections, setTodoSections] = useState([]);
   const sectionListRef = useRef(null);
+  const [isCreating, setIsCreating] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -71,8 +72,12 @@ export default function TodoListScreen({
     }
   }
 
-  const handleCreate = newTodoName =>
-    onCreateTodo(newTodoName).then(loadFromServer);
+  async function handleCreate(newTodoName) {
+    setIsCreating(true);
+    await onCreateTodo(newTodoName);
+    await loadFromServer();
+    setIsCreating(false);
+  }
 
   function contents() {
     if (todoSections.length === 0 && !errorMessage) {
@@ -106,7 +111,9 @@ export default function TodoListScreen({
 
   return (
     <View style={styles.container}>
-      {onCreateTodo && <NewTodoForm onCreate={handleCreate} />}
+      {onCreateTodo && (
+        <NewTodoForm isCreating={isCreating} onCreate={handleCreate} />
+      )}
       {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
       {Platform.OS === 'web' && (
         <Button mode="outlined" onPress={reloadFromButton}>
