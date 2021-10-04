@@ -109,7 +109,9 @@ export default function TodoListScreen({
       {onCreateTodo && <NewTodoForm onCreate={handleCreate} />}
       {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
       {Platform.OS === 'web' && (
-        <Button onPress={reloadFromButton}>Reload</Button>
+        <Button mode="outlined" onPress={reloadFromButton}>
+          Reload
+        </Button>
       )}
       {showLoadingIndicator && <LoadingIndicator />}
       {contents()}

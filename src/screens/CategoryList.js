@@ -135,7 +135,9 @@ export default function CategoryList() {
   return (
     <View style={styles.container}>
       {Platform.OS === 'web' && (
-        <Button onPress={reloadFromButton}>Reload</Button>
+        <Button mode="outlined" onPress={reloadFromButton}>
+          Reload
+        </Button>
       )}
       <Button
         testID="add-button"
