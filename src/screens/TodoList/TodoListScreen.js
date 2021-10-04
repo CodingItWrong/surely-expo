@@ -57,7 +57,7 @@ export default function TodoListScreen({
   );
 
   const handleCreate = newTodoName =>
-    onCreateTodo(newTodoName).then(loadFromServer).catch(console.error);
+    onCreateTodo(newTodoName).then(loadFromServer);
 
   async function reloadFromPull() {
     setIsRefreshing(true);
