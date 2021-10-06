@@ -12,6 +12,7 @@ export default function CategoryDetail({route}) {
 
   const [category, setCategory] = useState(null);
   const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const categoryClient = useCategories();
   const linkTo = useLinkTo();
 
@@ -37,11 +38,9 @@ export default function CategoryDetail({route}) {
 
   const goBack = () => linkTo('/categories');
 
-  const handleDelete = () =>
-    categoryClient.delete({id}).then(goBack).catch(console.error);
-
-  const handleSave = async () => {
+  async function handleSave() {
     try {
+      setIsLoading(true);
       const attributes = {name};
       if (isNewCategory) {
         await categoryClient.create({attributes});
@@ -50,9 +49,21 @@ export default function CategoryDetail({route}) {
       }
       goBack();
     } catch (e) {
+      setIsLoading(false);
       console.error(e);
     }
-  };
+  }
+
+  async function handleDelete() {
+    try {
+      setIsLoading(true);
+      categoryClient.delete({id});
+      goBack();
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
+  }
 
   if (!isNewCategory && !category) {
     return <LoadingIndicator />;
@@ -74,6 +85,7 @@ export default function CategoryDetail({route}) {
         mode="outlined"
         onPress={goBack}
         style={sharedStyles.buttonSpacing}
+        disabled={isLoading}
       >
         Cancel
       </Button>
@@ -83,6 +95,7 @@ export default function CategoryDetail({route}) {
           mode="outlined"
           onPress={handleDelete}
           style={sharedStyles.buttonSpacing}
+          disabled={isLoading}
         >
           Delete
         </Button>
@@ -93,6 +106,7 @@ export default function CategoryDetail({route}) {
         icon="content-save"
         onPress={handleSave}
         style={sharedStyles.buttonSpacing}
+        disabled={isLoading}
       >
         Save
       </Button>
