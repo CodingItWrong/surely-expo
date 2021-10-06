@@ -73,10 +73,21 @@ export default function TodoListScreen({
   }
 
   async function handleCreate(newTodoName) {
+    setErrorMessage(null);
     setIsCreating(true);
-    await onCreateTodo(newTodoName);
-    await loadFromServer();
+    try {
+      await onCreateTodo(newTodoName);
+    } catch (error) {
+      setErrorMessage(
+        'An error occurred while creating the todo. Please try again.',
+      );
+      setIsCreating(false);
+      console.error(error);
+      throw error;
+    }
+
     setIsCreating(false);
+    return loadFromServer();
   }
 
   function contents() {

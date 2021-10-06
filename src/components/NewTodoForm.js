@@ -6,11 +6,15 @@ export default function NewTodoForm({isCreating, onCreate}) {
   const [name, setName] = useState('');
 
   async function handleCreate() {
-    if (name !== '') {
-      await onCreate(name);
-      setName('');
+    try {
+      if (name !== '') {
+        await onCreate(name);
+        setName('');
+      }
+      Keyboard.dismiss();
+    } catch {
+      // no-op so browser sees promise rejection handled
     }
-    Keyboard.dismiss();
   }
 
   return (
