@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Button} from 'react-native-paper';
+import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
 import sharedStyles from '../../../../sharedStyles';
 
@@ -9,6 +10,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   const isCompleted = !!todo?.attributes['completed-at'];
   const isDeleted = !!todo?.attributes['deleted-at'];
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const updateAttributes = attributes => todoClient.update({id, attributes});
 
@@ -16,10 +18,13 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
 
   async function handleComplete() {
     try {
+      setErrorMessage(null);
       setIsLoading(true);
       await updateAttributes({'completed-at': new Date()});
       onGoBack();
     } catch (error) {
+      setIsLoading(false);
+      setErrorMessage('An error occurred marking the todo complete.');
       console.error(error);
     }
   }
@@ -61,6 +66,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
 
   return (
     <>
+      <ErrorMessage>{errorMessage}</ErrorMessage>
       {isDeleted ? (
         <Button
           testID="undelete-button"

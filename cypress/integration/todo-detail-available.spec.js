@@ -39,6 +39,14 @@ describe('todo detail - available', () => {
     cy.url().should('include', '/todos/available');
   });
 
+  it('shows a message when there is an error completing the todo', () => {
+    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
+      statusCode: 500,
+    });
+    cy.getTestId('complete-button').click();
+    cy.contains('An error occurred');
+  });
+
   it('allows deleting the todo', () => {
     // PATCH because it is a soft delete
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
