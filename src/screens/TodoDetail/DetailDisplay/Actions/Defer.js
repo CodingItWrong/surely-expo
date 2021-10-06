@@ -8,6 +8,7 @@ import {dayOfWeek, deferDate} from '../../../../utils/time';
 export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
     useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {id} = todo;
   const deferredUntil = todo.attributes['deferred-until'];
@@ -17,13 +18,18 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
 
   const handleResponse = ({data}) => onUpdate(data);
 
-  const handleDeferUntil = date => {
-    return updateAttributes({'deferred-until': date})
-      .then(handleResponse)
-      .then(() => setIsDeferredUntilModalOpen(false))
-      .then(onComplete)
-      .catch(console.error);
-  };
+  async function handleDeferUntil(date) {
+    try {
+      setIsLoading(true);
+      const response = await updateAttributes({'deferred-until': date});
+      handleResponse(response);
+      setIsDeferredUntilModalOpen(false);
+      setIsLoading(false);
+      onComplete();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -32,6 +38,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         mode="outlined"
         onPress={onCancel}
         style={sharedStyles.buttonSpacing}
+        disabled={isLoading}
       >
         Cancel
       </Button>
@@ -41,6 +48,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         numDays={1}
         label="1 Day"
         onDefer={handleDeferUntil}
+        disabled={isLoading}
       />
       <DeferButton
         testID="defer-2-days-button"
@@ -48,6 +56,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         numDays={2}
         label="2 Days"
         onDefer={handleDeferUntil}
+        disabled={isLoading}
       />
       <DeferButton
         testID="defer-3-days-button"
@@ -55,6 +64,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         numDays={3}
         label="3 Days"
         onDefer={handleDeferUntil}
+        disabled={isLoading}
       />
       <DeferButton
         testID="defer-1-week-button"
@@ -62,11 +72,13 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         numDays={7}
         label="1 Week"
         onDefer={handleDeferUntil}
+        disabled={isLoading}
       />
       <Button
         mode="outlined"
         onPress={() => setIsDeferredUntilModalOpen(true)}
         style={sharedStyles.buttonSpacing}
+        disabled={isLoading}
       >
         Pick Date
       </Button>
@@ -82,7 +94,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   );
 }
 
-function DeferButton({testID, todo, numDays, label, onDefer}) {
+function DeferButton({testID, todo, numDays, label, onDefer, disabled}) {
   const date = deferDate({
     start: todo.attributes['deferred-until'],
     days: numDays,
@@ -93,6 +105,7 @@ function DeferButton({testID, todo, numDays, label, onDefer}) {
       mode="outlined"
       onPress={() => onDefer(date)}
       style={sharedStyles.buttonSpacing}
+      disabled={disabled}
     >
       {label} - {dayOfWeek(date)}
     </Button>
