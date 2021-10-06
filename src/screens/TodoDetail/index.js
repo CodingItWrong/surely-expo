@@ -52,8 +52,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
         if (isMounted.current) {
           setIsEditing(false);
         }
-      })
-      .catch(console.error);
+      });
 
   const goBack = () => navigation.navigate(parentRouteName);
 

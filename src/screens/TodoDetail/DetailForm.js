@@ -21,6 +21,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
   const [deferredUntil, setDeferredUntil] = useState(
     todo.attributes['deferred-until'],
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const category = categories?.find(c => c.id === categoryId);
   const setCategory = c => setCategoryId(c?.id);
@@ -48,7 +49,14 @@ export default function DetailForm({todo, onSave, onCancel}) {
     const attributes = {name, notes, 'deferred-until': deferredUntil};
     const categoryReference = category ? pick(category, ['type', 'id']) : null;
     const relationships = {category: {data: categoryReference}};
-    onSave({attributes, relationships});
+    setIsLoading(true);
+    try {
+      onSave({attributes, relationships});
+      // don't need to setIsLoading(false) because form will unmount
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
   }
 
   return (
@@ -102,6 +110,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           mode="outlined"
           onPress={onCancel}
           style={sharedStyles.buttonSpacing}
+          disabled={isLoading}
         >
           Cancel
         </Button>
@@ -111,6 +120,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           icon="content-save"
           onPress={handlePressSave}
           style={sharedStyles.buttonSpacing}
+          disabled={isLoading}
         >
           Save
         </Button>
