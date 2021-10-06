@@ -14,10 +14,6 @@
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
     "@codingitwrong/react-login": "^0.0.3",
-    "@orbit/coordinator": "^0.16.7",
-    "@orbit/data": "^0.16.7",
-    "@orbit/jsonapi": "^0.16.7",
-    "@orbit/memory": "^0.16.7",
     "@react-navigation/drawer": "^6.1.6",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
