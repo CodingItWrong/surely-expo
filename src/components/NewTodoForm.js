@@ -20,7 +20,7 @@ export default function NewTodoForm({isCreating, onCreate}) {
   return (
     <TextInput
       testID="new-todo-name"
-      label="New todo name!!!1!"
+      label="New todo name"
       value={name}
       onChangeText={setName}
       onSubmitEditing={handleCreate}
