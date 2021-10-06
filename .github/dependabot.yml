@@ -10,5 +10,9 @@ updates:
     schedule:
       interval: "daily"
     ignore:
+      # the following are locked to Expo and will be updated along with it
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
       - dependency-name: "react-native-reanimated"
       - dependency-name: "react-native-screens"
+      - dependency-name: "react-native-web"
