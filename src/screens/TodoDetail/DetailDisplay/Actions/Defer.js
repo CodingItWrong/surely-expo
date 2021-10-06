@@ -18,7 +18,6 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const handleResponse = ({data}) => onUpdate(data);
 
   const handleDeferUntil = date => {
-    console.log({date});
     return updateAttributes({'deferred-until': date})
       .then(handleResponse)
       .then(() => setIsDeferredUntilModalOpen(false))
