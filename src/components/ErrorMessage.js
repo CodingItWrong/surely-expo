@@ -5,7 +5,11 @@ import theme from '../theme';
 
 export default function ErrorMessage({children, style}) {
   return (
-    children && <Text style={[styles.errorMessage, style]}>{children}</Text>
+    children && (
+      <Text testID="error-message" style={[styles.errorMessage, style]}>
+        {children}
+      </Text>
+    )
   );
 }
 
