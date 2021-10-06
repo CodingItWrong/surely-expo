@@ -63,6 +63,14 @@ describe('todo detail - available', () => {
     cy.url().should('include', '/todos/available');
   });
 
+  it('shows a message when there is an error deleting the todo', () => {
+    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
+      statusCode: 500,
+    });
+    cy.getTestId('delete-button').click();
+    cy.contains('An error occurred');
+  });
+
   it('allows editing the todo', () => {
     cy.intercept('GET', 'http://localhost:3000/categories?', {
       fixture: 'categories.json',

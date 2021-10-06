@@ -46,6 +46,8 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
       await updateAttributes({'deleted-at': new Date()});
       onGoBack();
     } catch (error) {
+      setIsLoading(false);
+      setErrorMessage('An error occurred deleting the todo.');
       console.error(error);
     }
   }
