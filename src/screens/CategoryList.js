@@ -61,20 +61,28 @@ export default function CategoryList() {
     }
   }
 
-  function moveUpward(categoryToMove) {
+  async function moveUpward(categoryToMove) {
     const categoriesAfterMove = arrayWithItemMovedUpward(
       categories,
       categoryToMove,
     );
-    updateCategorySortOrder(categoriesAfterMove);
+    try {
+      await updateCategorySortOrder(categoriesAfterMove);
+    } catch (error) {
+      setErrorMessage('An error occurred moving todo up.');
+    }
   }
 
-  function moveDownward(categoryToMove) {
+  async function moveDownward(categoryToMove) {
     const categoriesAfterMove = arrayWithItemMovedDownward(
       categories,
       categoryToMove,
     );
-    updateCategorySortOrder(categoriesAfterMove);
+    try {
+      await updateCategorySortOrder(categoriesAfterMove);
+    } catch (error) {
+      setErrorMessage('An error occurred moving todo down.');
+    }
   }
 
   async function updateCategorySortOrder(sortedCategories) {

@@ -62,6 +62,14 @@ describe('categories', () => {
     });
   });
 
+  it('shows a message when an error occurs moving an item down', () => {
+    cy.intercept('PATCH', 'http://localhost:3000/categories/*?', {
+      statusCode: 500,
+    });
+    cy.getTestId('move-down-button').first().click();
+    cy.contains('An error occurred');
+  });
+
   it('allows moving an item up in the sort order', () => {
     cy.intercept('PATCH', 'http://localhost:3000/categories/cat1?', {
       fixture: 'category.json',
@@ -84,5 +92,13 @@ describe('categories', () => {
     cy.wait('@updateCat2').then(({request}) => {
       assert.equal(request.body.data.attributes['sort-order'], 2);
     });
+  });
+
+  it('shows a message when an error occurs moving an item up', () => {
+    cy.intercept('PATCH', 'http://localhost:3000/categories/*?', {
+      statusCode: 500,
+    });
+    cy.getTestId('move-up-button').first().click();
+    cy.contains('An error occurred');
   });
 });
