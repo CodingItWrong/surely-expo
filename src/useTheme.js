@@ -5,7 +5,6 @@ const SURELY_GREEN = '#4caf50';
 
 export default function useTheme() {
   const colorScheme = useColorScheme();
-  console.log({colorScheme});
 
   const baseTheme = colorScheme === 'dark' ? DarkTheme : DefaultTheme;
 
