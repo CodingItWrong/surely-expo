@@ -19,6 +19,25 @@ describe('todo detail - available', () => {
     cy.contains('Created 08/27/2021');
   });
 
+  it('shows a message when there is an error loading the todo', () => {
+    cy.intercept(
+      'GET',
+      `http://localhost:3000/todos/${todoId}?include=category`,
+      {statusCode: 500},
+    );
+    cy.contains('An error occurred');
+
+    cy.intercept(
+      'GET',
+      `http://localhost:3000/todos/${todoId}?include=category`,
+      {fixture: 'todo/available.json'},
+    );
+
+    cy.getTestId('retry-button').click();
+
+    cy.contains('My Available Todo');
+  });
+
   it('allows going back to available todos', () => {
     cy.getTestId('back-button').click();
     cy.url().should('match', /\/todos\/available$/);

@@ -1,6 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import {View} from 'react-native';
+import {Button} from 'react-native-paper';
+import ErrorMessage from '../../components/ErrorMessage';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
+import sharedStyles from '../../sharedStyles';
 import useIsMounted from '../../utils/useIsMounted';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
@@ -13,6 +17,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   const [todo, setTodo] = useState(null);
   const [category, setCategory] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const {
     params: {id},
@@ -28,14 +33,27 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
     [isMounted],
   );
 
+  const loadTodo = useCallback(
+    async function () {
+      try {
+        setErrorMessage(null);
+        const response = await todoClient.find({
+          id,
+          options: {include: 'category'},
+        });
+        storeResponse(response);
+      } catch (error) {
+        setErrorMessage('An error occurred loading the todo.');
+      }
+    },
+    [id, todoClient, storeResponse],
+  );
+
   useEffect(() => {
     if (isMounted.current) {
-      todoClient
-        .find({id, options: {include: 'category'}})
-        .then(storeResponse)
-        .catch(console.error);
+      loadTodo();
     }
-  }, [isMounted, id, todoClient, storeResponse]);
+  }, [isMounted, loadTodo]);
 
   const updateTodo = ({attributes, relationships}) =>
     todoClient.update({
@@ -55,6 +73,17 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
       });
 
   const goBack = () => navigation.navigate(parentRouteName);
+
+  if (errorMessage) {
+    return (
+      <View style={sharedStyles.bodyContainer}>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <Button testID="retry-button" mode="contained" onPress={loadTodo}>
+          Retry
+        </Button>
+      </View>
+    );
+  }
 
   if (!todo) {
     return <LoadingIndicator />;
