@@ -1,16 +1,17 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useRef, useState} from 'react';
-import {Platform, View} from 'react-native';
-import {Button, withTheme} from 'react-native-paper';
+import {Platform} from 'react-native';
+import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import PaginationControls from '../../components/PaginationControls';
+import ScreenBackground from '../../components/ScreenBackground';
 import SearchForm from '../../components/SearchForm';
 import TodoList from '../../components/TodoList';
 import {groupsToSections} from '../../utils/ui';
 
-function TodoListScreen({
+export default function TodoListScreen({
   search,
   paginate,
   onLoadTodos,
@@ -18,7 +19,6 @@ function TodoListScreen({
   onPressTodo,
   noTodosMessage,
   noSearchResultsMessage,
-  theme,
 }) {
   const insets = useSafeAreaInsets();
   const [searchText, setSearchText] = useState('');
@@ -30,11 +30,6 @@ function TodoListScreen({
   const [isCreating, setIsCreating] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const containerStyle = {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  };
 
   const loadFromServer = useCallback(async () => {
     setErrorMessage(null);
@@ -121,7 +116,7 @@ function TodoListScreen({
   }
 
   return (
-    <View style={containerStyle}>
+    <ScreenBackground>
       {onCreateTodo && (
         <NewTodoForm isCreating={isCreating} onCreate={handleCreate} />
       )}
@@ -133,8 +128,6 @@ function TodoListScreen({
       )}
       {showLoadingIndicator && <LoadingIndicator />}
       {contents()}
-    </View>
+    </ScreenBackground>
   );
 }
-
-export default withTheme(TodoListScreen);

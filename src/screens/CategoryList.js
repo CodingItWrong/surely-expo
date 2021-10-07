@@ -2,11 +2,12 @@ import {useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
-import {Button, IconButton, List, withTheme} from 'react-native-paper';
+import {Button, IconButton, List} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import NoTodosMessage from '../components/NoTodosMessage';
+import ScreenBackground from '../components/ScreenBackground';
 import {useCategories} from '../data/categories';
 import {
   arrayWithItemMovedDownward,
@@ -14,7 +15,7 @@ import {
   elementsWithIndex,
 } from '../utils/array';
 
-function CategoryList({theme}) {
+export default function CategoryList() {
   const insets = useSafeAreaInsets();
   const flatListRef = useRef();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
@@ -23,11 +24,6 @@ function CategoryList({theme}) {
   const linkTo = useLinkTo();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const containerStyle = {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  };
 
   const onPressCategory = category => linkTo(`/categories/${category.id}`);
 
@@ -148,7 +144,7 @@ function CategoryList({theme}) {
   }
 
   return (
-    <View style={containerStyle}>
+    <ScreenBackground>
       {Platform.OS === 'web' && (
         <Button mode="outlined" onPress={reloadFromButton}>
           Reload
@@ -164,8 +160,6 @@ function CategoryList({theme}) {
       </Button>
       {showLoadingIndicator && <LoadingIndicator />}
       {contents()}
-    </View>
+    </ScreenBackground>
   );
 }
-
-export default withTheme(CategoryList);

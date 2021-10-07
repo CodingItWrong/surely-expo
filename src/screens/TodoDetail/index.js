@@ -1,20 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
-import {Button, withTheme} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import ScreenBackground from '../../components/ScreenBackground';
 import {useTodos} from '../../data/todos';
 import sharedStyles from '../../sharedStyles';
 import useIsMounted from '../../utils/useIsMounted';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
 
-const TodoDetail = withTheme(({theme, navigation, route, parentRouteName}) => {
-  const containerStyle = {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  };
-
+export default function TodoDetail({navigation, route, parentRouteName}) {
   const isMounted = useIsMounted();
 
   const todoClient = useTodos();
@@ -116,10 +112,8 @@ const TodoDetail = withTheme(({theme, navigation, route, parentRouteName}) => {
     }
   }
 
-  return <View style={containerStyle}>{contents()}</View>;
-});
-
-export default TodoDetail;
+  return <ScreenBackground>{contents()}</ScreenBackground>;
+}
 
 export const createTodoDetail = parentRouteName => props =>
   <TodoDetail {...props} parentRouteName={parentRouteName} />;

@@ -1,14 +1,15 @@
 import {useLinkTo} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, TextInput, withTheme} from 'react-native-paper';
+import {Button, TextInput} from 'react-native-paper';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
+import ScreenBackground from '../components/ScreenBackground';
 import {useCategories} from '../data/categories';
 import sharedStyles from '../sharedStyles';
 import useIsMounted from '../utils/useIsMounted';
 
-function CategoryDetail({theme, route}) {
+export default function CategoryDetail({route}) {
   const isMounted = useIsMounted();
 
   const [category, setCategory] = useState(null);
@@ -17,11 +18,6 @@ function CategoryDetail({theme, route}) {
   const [errorMessage, setErrorMessage] = useState(null);
   const categoryClient = useCategories();
   const linkTo = useLinkTo();
-
-  const containerStyle = {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  };
 
   const {
     params: {id},
@@ -127,10 +123,8 @@ function CategoryDetail({theme, route}) {
     );
   }
 
-  return <View style={containerStyle}>{contents()}</View>;
+  return <ScreenBackground>{contents()}</ScreenBackground>;
 }
-
-export default withTheme(CategoryDetail);
 
 const styles = StyleSheet.create({
   nameInput: {
