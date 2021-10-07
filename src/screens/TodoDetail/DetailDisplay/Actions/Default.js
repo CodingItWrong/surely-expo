@@ -33,10 +33,12 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
     try {
       setIsLoading(true);
       const response = await updateAttributes({'completed-at': null});
-      setIsLoading(false);
       handleResponse(response);
     } catch (error) {
       console.error(error);
+      setErrorMessage('An error occurred marking the todo incomplete.');
+    } finally {
+      setIsLoading(false);
     }
   }
 
