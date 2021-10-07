@@ -5,7 +5,6 @@ import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
-import NoTodosMessage from '../../components/NoTodosMessage';
 import PaginationControls from '../../components/PaginationControls';
 import SearchForm from '../../components/SearchForm';
 import TodoList from '../../components/TodoList';
@@ -90,33 +89,30 @@ export default function TodoListScreen({
   }
 
   function contents() {
-    if (todoSections.length === 0 && !errorMessage) {
-      const message = searchText ? noSearchResultsMessage : noTodosMessage;
-      return <NoTodosMessage>{message}</NoTodosMessage>;
-    } else {
-      return (
-        <>
-          {paginate && (
-            <PaginationControls
-              pageNumber={pageNumber}
-              maxPageNumber={maxPageNumber}
-              increment={() => setPageNumber(pageNumber + 1)}
-              decrement={() => setPageNumber(pageNumber - 1)}
-            />
-          )}
-          <TodoList
-            testID="todo-list"
-            sectionListRef={sectionListRef}
-            todoSections={todoSections}
-            errorMessage={errorMessage}
-            onPressTodo={onPressTodo}
-            onRefresh={reloadFromPull}
-            refreshing={isRefreshing}
-            contentContainerStyle={{paddingBottom: insets.bottom}}
+    const message = searchText ? noSearchResultsMessage : noTodosMessage;
+    return (
+      <>
+        {paginate && (
+          <PaginationControls
+            pageNumber={pageNumber}
+            maxPageNumber={maxPageNumber}
+            increment={() => setPageNumber(pageNumber + 1)}
+            decrement={() => setPageNumber(pageNumber - 1)}
           />
-        </>
-      );
-    }
+        )}
+        <TodoList
+          testID="todo-list"
+          sectionListRef={sectionListRef}
+          todoSections={todoSections}
+          noTodosMessage={message}
+          errorMessage={errorMessage}
+          onPressTodo={onPressTodo}
+          onRefresh={reloadFromPull}
+          refreshing={isRefreshing}
+          contentContainerStyle={{paddingBottom: insets.bottom}}
+        />
+      </>
+    );
   }
 
   return (

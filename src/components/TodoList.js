@@ -3,10 +3,12 @@ import {SectionList, StyleSheet} from 'react-native';
 import {List} from 'react-native-paper';
 import theme from '../theme';
 import ErrorMessage from './ErrorMessage';
+import NoTodosMessage from './NoTodosMessage';
 
 export default function TodoList({
   testID,
   todoSections,
+  noTodosMessage,
   errorMessage,
   sectionListRef,
   onPressTodo,
@@ -14,6 +16,16 @@ export default function TodoList({
   refreshing,
   contentContainerStyle,
 }) {
+  function listHeader() {
+    if (errorMessage) {
+      return <ErrorMessage>{errorMessage}</ErrorMessage>;
+    } else if (todoSections.length === 0) {
+      return <NoTodosMessage>{noTodosMessage}</NoTodosMessage>;
+    } else {
+      return null;
+    }
+  }
+
   return (
     <SectionList
       testID={testID}
@@ -23,7 +35,7 @@ export default function TodoList({
       refreshing={refreshing}
       keyExtractor={todo => todo.id}
       contentContainerStyle={contentContainerStyle}
-      ListHeaderComponent={<ErrorMessage>{errorMessage}</ErrorMessage>}
+      ListHeaderComponent={listHeader()}
       renderSectionHeader={({section}) => (
         <List.Subheader style={styles.subheader}>
           {section.title} ({section.data.length})
