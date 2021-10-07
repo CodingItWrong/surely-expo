@@ -50,4 +50,12 @@ describe('category detail', () => {
 
     cy.url().should('include', '/categories');
   });
+
+  it('shows a message upon error saving edits to the category', () => {
+    cy.intercept('PATCH', `http://localhost:3000/categories/${categoryId}?`, {
+      statusCode: 500,
+    });
+    cy.getTestId('save-button').click();
+    cy.contains('An error occurred').should('be.visible');
+  });
 });

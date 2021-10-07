@@ -2,6 +2,7 @@ import {useLinkTo} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
+import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {useCategories} from '../data/categories';
 import sharedStyles from '../sharedStyles';
@@ -13,6 +14,7 @@ export default function CategoryDetail({route}) {
   const [category, setCategory] = useState(null);
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const categoryClient = useCategories();
   const linkTo = useLinkTo();
 
@@ -50,6 +52,7 @@ export default function CategoryDetail({route}) {
       goBack();
     } catch (e) {
       setIsLoading(false);
+      setErrorMessage('An error occurred saving the category.');
       console.error(e);
     }
   }
@@ -80,6 +83,7 @@ export default function CategoryDetail({route}) {
         multiline
         style={styles.nameInput}
       />
+      <ErrorMessage>{errorMessage}</ErrorMessage>
       <Button
         testID="cancel-button"
         mode="outlined"
