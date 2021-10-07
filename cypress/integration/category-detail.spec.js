@@ -39,7 +39,7 @@ describe('category detail', () => {
       statusCode: 500,
     });
     cy.getTestId('delete-button').click();
-    cy.contains('An error occurred').should('be.visible');
+    cy.contains('An error occurred deleting the category').should('be.visible');
   });
 
   it('allows editing the category', () => {
@@ -64,6 +64,6 @@ describe('category detail', () => {
       statusCode: 500,
     });
     cy.getTestId('save-button').click();
-    cy.contains('An error occurred').should('be.visible');
+    cy.contains('An error occurred saving the category').should('be.visible');
   });
 });

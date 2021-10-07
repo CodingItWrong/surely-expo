@@ -66,7 +66,7 @@ export default function CategoryDetail({route}) {
       goBack();
     } catch (error) {
       setIsLoading(false);
-      setErrorMessage('An error occurred saving the category.');
+      setErrorMessage('An error occurred deleting the category.');
       console.error(error);
     }
   }
