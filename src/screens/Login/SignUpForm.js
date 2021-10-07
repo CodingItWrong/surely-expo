@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
 import {Appbar, Button, TextInput, Title} from 'react-native-paper';
 import ErrorMessage from '../../components/ErrorMessage';
+import ScreenBackground from '../../components/ScreenBackground';
 import {useUsers} from '../../data/users';
 import sharedStyles from '../../sharedStyles';
 
@@ -57,7 +57,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
       <Appbar.Header>
         <Appbar.Content title="Surely" />
       </Appbar.Header>
-      <View style={sharedStyles.bodyContainer}>
+      <ScreenBackground style={sharedStyles.bodyPadding}>
         <Title>Sign up</Title>
         <TextInput
           testID="email-field"
@@ -102,7 +102,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
         >
           Sign up
         </Button>
-      </View>
+      </ScreenBackground>
     </>
   );
 }

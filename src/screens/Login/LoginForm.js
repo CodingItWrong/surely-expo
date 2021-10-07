@@ -1,8 +1,8 @@
 import React from 'react';
-import {View} from 'react-native';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
 import useLoginForm from '../../auth/useLoginForm';
 import ErrorMessage from '../../components/ErrorMessage';
+import ScreenBackground from '../../components/ScreenBackground';
 import sharedStyles from '../../sharedStyles';
 
 export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
@@ -14,7 +14,7 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
       <Appbar.Header>
         <Appbar.Content title="Surely" />
       </Appbar.Header>
-      <View style={sharedStyles.bodyContainer}>
+      <ScreenBackground style={sharedStyles.bodyPadding}>
         {showSignedUpMessage && (
           <Text>
             Sign up successful. Log in with the email and password you used to
@@ -56,7 +56,7 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
         >
           Sign in
         </Button>
-      </View>
+      </ScreenBackground>
     </>
   );
 }

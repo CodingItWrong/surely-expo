@@ -4,6 +4,9 @@ const sharedStyles = StyleSheet.create({
   bodyContainer: {
     margin: 15,
   },
+  bodyPadding: {
+    padding: 15,
+  },
   buttonSpacing: {
     marginTop: 10,
   },
