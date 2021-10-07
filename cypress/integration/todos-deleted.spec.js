@@ -60,6 +60,9 @@ describe('deleted todos', () => {
   });
 
   it('allows page navigation', () => {
+    // wait for page to load
+    cy.getTestId('todo-list').contains('Todo 1');
+
     cy.intercept(
       'GET',
       'http://localhost:3000/todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=2',

@@ -60,6 +60,9 @@ describe('completed todos', () => {
   });
 
   it('allows page navigation', () => {
+    // wait for page to load
+    cy.getTestId('todo-list').contains('Todo 1');
+
     cy.intercept(
       'GET',
       'http://localhost:3000/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=2',
