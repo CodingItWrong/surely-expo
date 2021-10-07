@@ -112,6 +112,20 @@ describe('todo detail - available', () => {
     cy.getTestId('edit-button').should('exist');
   });
 
+  it('shows a message when there is an error saving edits to the todo', () => {
+    cy.intercept('GET', 'http://localhost:3000/categories?', {
+      fixture: 'categories.json',
+    });
+    cy.intercept(
+      'PATCH',
+      `http://localhost:3000/todos/${todoId}?include=category`,
+      {statusCode: 500},
+    );
+    cy.getTestId('edit-button').click();
+    cy.getTestId('save-button').click();
+    cy.contains('An error occurred');
+  });
+
   it('allows deferring the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       fixture: 'todo/available.json',

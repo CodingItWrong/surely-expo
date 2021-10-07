@@ -5,6 +5,7 @@ import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
+import ErrorMessage from '../../components/ErrorMessage';
 import PaperDropdown from '../../components/PaperDropdown';
 import {useCategories} from '../../data/categories';
 import sharedStyles from '../../sharedStyles';
@@ -22,6 +23,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
     todo.attributes['deferred-until'],
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const category = categories?.find(c => c.id === categoryId);
   const setCategory = c => setCategoryId(c?.id);
@@ -45,16 +47,17 @@ export default function DetailForm({todo, onSave, onCancel}) {
     setIsDeferredUntilModalOpen(false);
   }
 
-  function handlePressSave() {
+  async function handlePressSave() {
     const attributes = {name, notes, 'deferred-until': deferredUntil};
     const categoryReference = category ? pick(category, ['type', 'id']) : null;
     const relationships = {category: {data: categoryReference}};
     setIsLoading(true);
     try {
-      onSave({attributes, relationships});
+      await onSave({attributes, relationships});
       // don't need to setIsLoading(false) because form will unmount
     } catch (error) {
       setIsLoading(false);
+      setErrorMessage('An error occurred saving the todo.');
       console.error(error);
     }
   }
@@ -105,6 +108,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           mode="outlined"
           style={styles.notesInput}
         />
+        <ErrorMessage>{errorMessage}</ErrorMessage>
         <Button
           testID="cancel-button"
           mode="outlined"
