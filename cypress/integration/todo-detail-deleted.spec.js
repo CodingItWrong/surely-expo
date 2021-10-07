@@ -38,4 +38,12 @@ describe('todo detail - completed', () => {
 
     cy.url().should('include', '/todos/deleted');
   });
+
+  it('shows a message when there is an error undeleting the todo', () => {
+    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
+      statusCode: 500,
+    });
+    cy.getTestId('undelete-button').click();
+    cy.contains('An error occurred');
+  });
 });

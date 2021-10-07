@@ -61,10 +61,12 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
         'deleted-at': null,
         'completed-at': null,
       });
-      setIsLoading(false);
       handleResponse(response);
     } catch (error) {
       console.error(error);
+      setErrorMessage('An error occurred undeleting the todo.');
+    } finally {
+      setIsLoading(false);
     }
   }
 
