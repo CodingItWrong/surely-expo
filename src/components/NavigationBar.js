@@ -15,7 +15,6 @@ export default function CustomNavigationBar({navigation, options, back}) {
       <Appbar.Action
         testID="toggle-navigation-button"
         icon="menu"
-        color="black"
         onPress={navigation.toggleDrawer}
       />
     </Appbar.Header>
