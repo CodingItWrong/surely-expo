@@ -1,7 +1,5 @@
 import {Platform} from 'react-native';
 
-console.log('__DEV__', __DEV__);
-
 function getBaseUrl() {
   if (__DEV__) {
     if (Platform.OS === 'android') {
