@@ -3,7 +3,6 @@ import React, {useCallback, useRef, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import ErrorMessage from '../../components/ErrorMessage';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import NoTodosMessage from '../../components/NoTodosMessage';
@@ -105,11 +104,11 @@ export default function TodoListScreen({
               decrement={() => setPageNumber(pageNumber - 1)}
             />
           )}
-          <ErrorMessage>{errorMessage}</ErrorMessage>
           <TodoList
             testID="todo-list"
             sectionListRef={sectionListRef}
             todoSections={todoSections}
+            errorMessage={errorMessage}
             onPressTodo={onPressTodo}
             onRefresh={reloadFromPull}
             refreshing={isRefreshing}
