@@ -1,22 +1,20 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Text} from 'react-native-paper';
-import theme from '../theme';
+import {Text, withTheme} from 'react-native-paper';
 
-export default function ErrorMessage({children, style}) {
+function ErrorMessage({theme, children, style}) {
+  const errorMessageStyle = {
+    color: theme.colors.error,
+    textAlign: 'center',
+    margin: 10,
+  };
+
   return (
     children && (
-      <Text testID="error-message" style={[styles.errorMessage, style]}>
+      <Text testID="error-message" style={[errorMessageStyle, style]}>
         {children}
       </Text>
     )
   );
 }
 
-const styles = StyleSheet.create({
-  errorMessage: {
-    color: theme.colors.error,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
+export default withTheme(ErrorMessage);

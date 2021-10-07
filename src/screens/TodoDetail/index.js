@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
-import {Button} from 'react-native-paper';
+import {Button, withTheme} from 'react-native-paper';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import {useTodos} from '../../data/todos';
@@ -9,7 +9,12 @@ import useIsMounted from '../../utils/useIsMounted';
 import DetailDisplay from './DetailDisplay';
 import DetailForm from './DetailForm';
 
-export default function TodoDetail({navigation, route, parentRouteName}) {
+const TodoDetail = withTheme(({theme, navigation, route, parentRouteName}) => {
+  const containerStyle = {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  };
+
   const isMounted = useIsMounted();
 
   const todoClient = useTodos();
@@ -74,41 +79,47 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
 
   const goBack = () => navigation.navigate(parentRouteName);
 
-  if (errorMessage) {
-    return (
-      <View style={sharedStyles.bodyContainer}>
-        <ErrorMessage>{errorMessage}</ErrorMessage>
-        <Button testID="retry-button" mode="contained" onPress={loadTodo}>
-          Retry
-        </Button>
-      </View>
-    );
+  function contents() {
+    if (errorMessage) {
+      return (
+        <View style={sharedStyles.bodyContainer}>
+          <ErrorMessage>{errorMessage}</ErrorMessage>
+          <Button testID="retry-button" mode="contained" onPress={loadTodo}>
+            Retry
+          </Button>
+        </View>
+      );
+    }
+
+    if (!todo) {
+      return <LoadingIndicator />;
+    }
+
+    if (isEditing) {
+      return (
+        <DetailForm
+          todo={todo}
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
+      );
+    } else {
+      return (
+        <DetailDisplay
+          todo={todo}
+          category={category}
+          onEdit={() => setIsEditing(true)}
+          onUpdate={setTodo}
+          onGoBack={goBack}
+        />
+      );
+    }
   }
 
-  if (!todo) {
-    return <LoadingIndicator />;
-  }
+  return <View style={containerStyle}>{contents()}</View>;
+});
 
-  if (isEditing) {
-    return (
-      <DetailForm
-        todo={todo}
-        onSave={handleSave}
-        onCancel={() => setIsEditing(false)}
-      />
-    );
-  } else {
-    return (
-      <DetailDisplay
-        todo={todo}
-        category={category}
-        onEdit={() => setIsEditing(true)}
-        onUpdate={setTodo}
-        onGoBack={goBack}
-      />
-    );
-  }
-}
+export default TodoDetail;
 
 export const createTodoDetail = parentRouteName => props =>
   <TodoDetail {...props} parentRouteName={parentRouteName} />;

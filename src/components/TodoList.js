@@ -1,11 +1,10 @@
 import React from 'react';
-import {SectionList, StyleSheet} from 'react-native';
-import {List} from 'react-native-paper';
-import theme from '../theme';
+import {SectionList} from 'react-native';
+import {List, withTheme} from 'react-native-paper';
 import ErrorMessage from './ErrorMessage';
 import NoTodosMessage from './NoTodosMessage';
 
-export default function TodoList({
+function TodoList({
   testID,
   todoSections,
   noTodosMessage,
@@ -15,7 +14,12 @@ export default function TodoList({
   onRefresh,
   refreshing,
   contentContainerStyle,
+  theme,
 }) {
+  const subheaderStyle = {
+    backgroundColor: theme.colors.background,
+  };
+
   function listHeader() {
     if (errorMessage) {
       return <ErrorMessage>{errorMessage}</ErrorMessage>;
@@ -37,7 +41,7 @@ export default function TodoList({
       contentContainerStyle={contentContainerStyle}
       ListHeaderComponent={listHeader()}
       renderSectionHeader={({section}) => (
-        <List.Subheader style={styles.subheader}>
+        <List.Subheader style={subheaderStyle}>
           {section.title} ({section.data.length})
         </List.Subheader>
       )}
@@ -53,8 +57,4 @@ export default function TodoList({
   );
 }
 
-const styles = StyleSheet.create({
-  subheader: {
-    backgroundColor: theme.colors.background,
-  },
-});
+export default withTheme(TodoList);

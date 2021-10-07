@@ -1,6 +1,6 @@
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import React from 'react';
-import {Drawer} from 'react-native-paper';
+import {Drawer, withTheme} from 'react-native-paper';
 
 const ICON_FOR_ROUTE = {
   Available: 'clock-outline',
@@ -11,13 +11,17 @@ const ICON_FOR_ROUTE = {
   Categories: 'tag',
 };
 
-export default function CustomNavigationDrawer({logOut, ...navProps}) {
+function CustomNavigationDrawer({theme, logOut, ...navProps}) {
   const {state, navigation} = navProps;
 
   const isSelected = index => index === state.index;
 
+  const scrollViewStyle = {
+    backgroundColor: theme.colors.background,
+  };
+
   return (
-    <DrawerContentScrollView {...navProps}>
+    <DrawerContentScrollView style={scrollViewStyle} {...navProps}>
       {state.routes.map((route, index) => (
         <Drawer.Item
           testID={`${route.name.toLowerCase()}-nav-button`}
@@ -32,3 +36,5 @@ export default function CustomNavigationDrawer({logOut, ...navProps}) {
     </DrawerContentScrollView>
   );
 }
+
+export default withTheme(CustomNavigationDrawer);

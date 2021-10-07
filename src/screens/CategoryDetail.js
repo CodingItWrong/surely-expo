@@ -1,14 +1,14 @@
 import {useLinkTo} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, TextInput, withTheme} from 'react-native-paper';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {useCategories} from '../data/categories';
 import sharedStyles from '../sharedStyles';
 import useIsMounted from '../utils/useIsMounted';
 
-export default function CategoryDetail({route}) {
+function CategoryDetail({theme, route}) {
   const isMounted = useIsMounted();
 
   const [category, setCategory] = useState(null);
@@ -17,6 +17,11 @@ export default function CategoryDetail({route}) {
   const [errorMessage, setErrorMessage] = useState(null);
   const categoryClient = useCategories();
   const linkTo = useLinkTo();
+
+  const containerStyle = {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  };
 
   const {
     params: {id},
@@ -71,55 +76,61 @@ export default function CategoryDetail({route}) {
     }
   }
 
-  if (!isNewCategory && !category) {
-    return <LoadingIndicator />;
-  }
+  function contents() {
+    if (!isNewCategory && !category) {
+      return <LoadingIndicator />;
+    }
 
-  return (
-    <View style={sharedStyles.bodyContainer}>
-      <TextInput
-        testID="name-field"
-        label="Category name"
-        value={name}
-        onChangeText={setName}
-        mode="outlined"
-        multiline
-        style={styles.nameInput}
-      />
-      <ErrorMessage>{errorMessage}</ErrorMessage>
-      <Button
-        testID="cancel-button"
-        mode="outlined"
-        onPress={goBack}
-        style={sharedStyles.buttonSpacing}
-        disabled={isLoading}
-      >
-        Cancel
-      </Button>
-      {!isNewCategory && (
-        <Button
-          testID="delete-button"
+    return (
+      <View style={sharedStyles.bodyContainer}>
+        <TextInput
+          testID="name-field"
+          label="Category name"
+          value={name}
+          onChangeText={setName}
           mode="outlined"
-          onPress={handleDelete}
+          multiline
+          style={styles.nameInput}
+        />
+        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <Button
+          testID="cancel-button"
+          mode="outlined"
+          onPress={goBack}
           style={sharedStyles.buttonSpacing}
           disabled={isLoading}
         >
-          Delete
+          Cancel
         </Button>
-      )}
-      <Button
-        testID="save-button"
-        mode="contained"
-        icon="content-save"
-        onPress={handleSave}
-        style={sharedStyles.buttonSpacing}
-        disabled={isLoading}
-      >
-        Save
-      </Button>
-    </View>
-  );
+        {!isNewCategory && (
+          <Button
+            testID="delete-button"
+            mode="outlined"
+            onPress={handleDelete}
+            style={sharedStyles.buttonSpacing}
+            disabled={isLoading}
+          >
+            Delete
+          </Button>
+        )}
+        <Button
+          testID="save-button"
+          mode="contained"
+          icon="content-save"
+          onPress={handleSave}
+          style={sharedStyles.buttonSpacing}
+          disabled={isLoading}
+        >
+          Save
+        </Button>
+      </View>
+    );
+  }
+
+  return <View style={containerStyle}>{contents()}</View>;
 }
+
+export default withTheme(CategoryDetail);
 
 const styles = StyleSheet.create({
   nameInput: {

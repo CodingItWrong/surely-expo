@@ -1,8 +1,8 @@
 import {useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, StyleSheet, View} from 'react-native';
-import {Button, IconButton, List} from 'react-native-paper';
+import {FlatList, Platform, View} from 'react-native';
+import {Button, IconButton, List, withTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -14,7 +14,7 @@ import {
   elementsWithIndex,
 } from '../utils/array';
 
-export default function CategoryList() {
+function CategoryList({theme}) {
   const insets = useSafeAreaInsets();
   const flatListRef = useRef();
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(true);
@@ -23,6 +23,11 @@ export default function CategoryList() {
   const linkTo = useLinkTo();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const containerStyle = {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  };
 
   const onPressCategory = category => linkTo(`/categories/${category.id}`);
 
@@ -105,7 +110,7 @@ export default function CategoryList() {
       return <NoTodosMessage>No categories yet</NoTodosMessage>;
     } else {
       return (
-        <View style={styles.listContainer}>
+        <View>
           <ErrorMessage>{errorMessage}</ErrorMessage>
           <FlatList
             testID="category-list"
@@ -143,7 +148,7 @@ export default function CategoryList() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       {Platform.OS === 'web' && (
         <Button mode="outlined" onPress={reloadFromButton}>
           Reload
@@ -163,8 +168,4 @@ export default function CategoryList() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+export default withTheme(CategoryList);
