@@ -43,6 +43,7 @@ export default function CategoryDetail({route}) {
   async function handleSave() {
     try {
       setIsLoading(true);
+      setErrorMessage(null);
       const attributes = {name};
       if (isNewCategory) {
         await categoryClient.create({attributes});
@@ -60,6 +61,7 @@ export default function CategoryDetail({route}) {
   async function handleDelete() {
     try {
       setIsLoading(true);
+      setErrorMessage(null);
       await categoryClient.delete({id});
       goBack();
     } catch (error) {

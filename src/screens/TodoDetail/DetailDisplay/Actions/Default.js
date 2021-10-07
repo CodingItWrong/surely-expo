@@ -18,8 +18,8 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
 
   async function handleComplete() {
     try {
-      setErrorMessage(null);
       setIsLoading(true);
+      setErrorMessage(null);
       await updateAttributes({'completed-at': new Date()});
       onGoBack();
     } catch (error) {
@@ -32,11 +32,12 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   async function handleUncomplete() {
     try {
       setIsLoading(true);
+      setErrorMessage(null);
       const response = await updateAttributes({'completed-at': null});
       handleResponse(response);
     } catch (error) {
-      console.error(error);
       setErrorMessage('An error occurred marking the todo incomplete.');
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -45,6 +46,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   async function handleDelete() {
     try {
       setIsLoading(true);
+      setErrorMessage(null);
       await updateAttributes({'deleted-at': new Date()});
       onGoBack();
     } catch (error) {
@@ -57,14 +59,15 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   async function handleUndelete() {
     try {
       setIsLoading(true);
+      setErrorMessage(null);
       const response = await updateAttributes({
         'deleted-at': null,
         'completed-at': null,
       });
       handleResponse(response);
     } catch (error) {
-      console.error(error);
       setErrorMessage('An error occurred undeleting the todo.');
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

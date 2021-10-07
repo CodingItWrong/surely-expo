@@ -23,14 +23,15 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   async function handleDeferUntil(date) {
     try {
       setIsLoading(true);
+      setErrorMessage(null);
       const response = await updateAttributes({'deferred-until': date});
       handleResponse(response);
       setIsDeferredUntilModalOpen(false);
       onComplete();
     } catch (error) {
-      console.error(error);
-      setErrorMessage('An error occurred deferring the todo.');
       setIsLoading(false);
+      setErrorMessage('An error occurred deferring the todo.');
+      console.error(error);
     }
   }
 

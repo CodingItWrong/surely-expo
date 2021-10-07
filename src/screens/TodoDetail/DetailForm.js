@@ -52,6 +52,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
     const categoryReference = category ? pick(category, ['type', 'id']) : null;
     const relationships = {category: {data: categoryReference}};
     setIsLoading(true);
+    setErrorMessage(null);
     try {
       await onSave({attributes, relationships});
       // don't need to setIsLoading(false) because form will unmount

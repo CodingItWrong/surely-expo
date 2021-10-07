@@ -62,6 +62,7 @@ export default function CategoryList() {
   }
 
   async function moveUpward(categoryToMove) {
+    setErrorMessage(null);
     const categoriesAfterMove = arrayWithItemMovedUpward(
       categories,
       categoryToMove,
@@ -74,6 +75,7 @@ export default function CategoryList() {
   }
 
   async function moveDownward(categoryToMove) {
+    setErrorMessage(null);
     const categoriesAfterMove = arrayWithItemMovedDownward(
       categories,
       categoryToMove,
