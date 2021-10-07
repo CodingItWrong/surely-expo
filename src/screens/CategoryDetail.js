@@ -60,10 +60,11 @@ export default function CategoryDetail({route}) {
   async function handleDelete() {
     try {
       setIsLoading(true);
-      categoryClient.delete({id});
+      await categoryClient.delete({id});
       goBack();
     } catch (error) {
       setIsLoading(false);
+      setErrorMessage('An error occurred saving the category.');
       console.error(error);
     }
   }
