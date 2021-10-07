@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
+import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
 import sharedStyles from '../../../../sharedStyles';
 import {dayOfWeek, deferDate} from '../../../../utils/time';
@@ -9,6 +10,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const {id} = todo;
   const deferredUntil = todo.attributes['deferred-until'];
@@ -24,15 +26,17 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
       const response = await updateAttributes({'deferred-until': date});
       handleResponse(response);
       setIsDeferredUntilModalOpen(false);
-      setIsLoading(false);
       onComplete();
     } catch (error) {
       console.error(error);
+      setErrorMessage('An error occurred deferring the todo.');
+      setIsLoading(false);
     }
   }
 
   return (
     <>
+      <ErrorMessage>{errorMessage}</ErrorMessage>
       <Button
         testID="cancel-defer-button"
         mode="outlined"
