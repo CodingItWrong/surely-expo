@@ -1,5 +1,4 @@
 import {DrawerContentScrollView} from '@react-navigation/drawer';
-import React from 'react';
 import {Drawer, withTheme} from 'react-native-paper';
 
 const ICON_FOR_ROUTE = {

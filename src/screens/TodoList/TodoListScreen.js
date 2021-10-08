@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';

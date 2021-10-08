@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React from 'react';
 import baseUrl from '../baseUrl';
 import {useToken} from '../data/token';
 import LoginScreen from '../screens/Login';

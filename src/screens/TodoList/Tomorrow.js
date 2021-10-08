@@ -1,7 +1,7 @@
 import {useLinkTo} from '@react-navigation/native';
 import addDays from 'date-fns/addDays';
 import startOfDay from 'date-fns/startOfDay';
-import React, {useCallback} from 'react';
+import {useCallback} from 'react';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';
 import TodoListScreen from './TodoListScreen';

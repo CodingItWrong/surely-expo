@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {TextInput} from 'react-native-paper';
 
 export default function SearchForm({value, onSubmit}) {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Button} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
 import ErrorMessage from '../../../../components/ErrorMessage';

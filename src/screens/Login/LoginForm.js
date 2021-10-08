@@ -1,4 +1,3 @@
-import React from 'react';
 import {Appbar, Button, Text, TextInput} from 'react-native-paper';
 import useLoginForm from '../../auth/useLoginForm';
 import ErrorMessage from '../../components/ErrorMessage';

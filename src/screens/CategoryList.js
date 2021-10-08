@@ -1,6 +1,6 @@
 import {useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
 import {Button, IconButton, List} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';

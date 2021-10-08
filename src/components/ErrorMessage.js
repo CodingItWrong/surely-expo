@@ -1,4 +1,3 @@
-import React from 'react';
 import {Text, withTheme} from 'react-native-paper';
 
 function ErrorMessage({theme, children, style}) {

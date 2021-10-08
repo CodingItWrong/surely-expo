@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Appbar, Button, TextInput, Title} from 'react-native-paper';
 import ErrorMessage from '../../components/ErrorMessage';
 import ScreenBackground from '../../components/ScreenBackground';

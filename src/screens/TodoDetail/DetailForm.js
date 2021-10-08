@@ -1,6 +1,6 @@
 import pick from 'lodash/pick';
 import sortBy from 'lodash/sortBy';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';

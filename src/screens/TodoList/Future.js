@@ -1,5 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
-import React, {useCallback} from 'react';
+import {useCallback} from 'react';
 import {useTodos} from '../../data/todos';
 import {groupByDate} from '../../utils/grouping';
 import TodoListScreen from './TodoListScreen';

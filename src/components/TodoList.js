@@ -1,4 +1,3 @@
-import React from 'react';
 import {SectionList} from 'react-native';
 import {List, withTheme} from 'react-native-paper';
 import ErrorMessage from './ErrorMessage';

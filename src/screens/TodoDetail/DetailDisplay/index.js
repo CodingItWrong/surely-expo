@@ -1,4 +1,3 @@
-import React from 'react';
 import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import {IconButton, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
