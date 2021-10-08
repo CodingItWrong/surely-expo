@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useRef, useState} from 'react';
-import {Platform} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -122,7 +122,11 @@ export default function TodoListScreen({
       )}
       {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
       {Platform.OS === 'web' && (
-        <Button mode="outlined" onPress={reloadFromButton}>
+        <Button
+          mode="outlined"
+          style={styles.reloadButton}
+          onPress={reloadFromButton}
+        >
           Reload
         </Button>
       )}
@@ -131,3 +135,9 @@ export default function TodoListScreen({
     </ScreenBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  reloadButton: {
+    margin: 15,
+  },
+});
