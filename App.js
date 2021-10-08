@@ -11,7 +11,7 @@ export default function App() {
   const theme = useTheme();
   return (
     <PaperProvider theme={theme}>
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
       <SafeAreaProvider>
         <TokenProvider>
           <OAuthLoginContainer>
