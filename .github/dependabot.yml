@@ -11,8 +11,13 @@ updates:
       interval: "daily"
     ignore:
       # the following are locked to Expo and will be updated along with it
+      - dependency-name: "expo"
+      - dependency-name: "expo-secure-store"
+      - dependency-name: "expo-status-bar"
       - dependency-name: "react"
       - dependency-name: "react-dom"
+      - dependency-name: "react-native"
       - dependency-name: "react-native-reanimated"
+      - dependency-name: "react-native-safe-area-context"
       - dependency-name: "react-native-screens"
       - dependency-name: "react-native-web"
