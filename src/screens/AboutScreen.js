@@ -66,6 +66,17 @@ export default function AboutScreen() {
                   Surely Web
                 </Button>
               )}
+              <Button
+                mode="outlined"
+                style={styles.button}
+                onPress={() =>
+                  Linking.openURL(
+                    'https://thenounproject.com/search/?q=checkmark&i=1758124',
+                  )
+                }
+              >
+                Checkmark icon by Scott Dunlap
+              </Button>
             </View>
             <Text style={styles.paragraph}>
               The MIT License (MIT) Copyright
