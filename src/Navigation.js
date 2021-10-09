@@ -5,6 +5,7 @@ import {Dimensions, Platform} from 'react-native';
 import {breakpointLarge} from './breakpoints';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
+import AboutScreen from './screens/AboutScreen';
 import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
 import {createTodoDetail} from './screens/TodoDetail';
@@ -186,6 +187,21 @@ const Categories = () => (
   </CategoryStack.Navigator>
 );
 
+const AboutStack = createNativeStackNavigator();
+const About = () => (
+  <AboutStack.Navigator
+    screenOptions={{
+      header: props => <NavigationBar {...props} />,
+    }}
+  >
+    <AboutStack.Screen
+      name="AboutScreen"
+      component={AboutScreen}
+      options={{title: 'Surely'}}
+    />
+  </AboutStack.Navigator>
+);
+
 export default function Navigation({logOut}) {
   // intentionally avoiding useWindowDimensions as React Nav doesn't handle reactively changing drawerType well
   const {width} = Dimensions.get('window');
@@ -217,6 +233,7 @@ export default function Navigation({logOut}) {
         <Drawer.Screen name="Completed" component={Completed} />
         <Drawer.Screen name="Deleted" component={Deleted} />
         <Drawer.Screen name="Categories" component={Categories} />
+        <Drawer.Screen name="About" component={About} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
