@@ -13,7 +13,7 @@ export default function AboutScreen() {
       <ScrollView contentContainerStyle={sharedStyles.bodyContainer}>
         <SafeAreaView edges={['left', 'right', 'bottom']}>
           <Title style={styles.title}>
-            Surely {Constants.nativeAppVersion} (
+            Surely {Constants.manifest.version} (
             {Constants.platform.ios.buildNumber})
           </Title>
           <View style={styles.buttonContainer}>
