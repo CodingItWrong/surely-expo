@@ -91,7 +91,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
           onPress={() => setIsDeferredUntilModalOpen(true)}
           style={sharedStyles.buttonSpacing}
         >
-          Defer until day: {relativeDate(deferredUntil) ?? 'n/a'}
+          Defer until: {relativeDate(deferredUntil) ?? 'n/a'}
         </Button>
         <DatePickerModal
           visible={isDeferredUntilModalOpen}
