@@ -7590,6 +7590,11 @@ react-native-screens@~3.8.0:
   dependencies:
     warn-once "^0.1.0"
 
+react-native-style-queries@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-style-queries/-/react-native-style-queries-0.0.1.tgz#b16b2e9acb63273b25894e96f55913bb8f795ab0"
+  integrity sha512-vfIN/amZEmQf9hM/gzDtkEAftx8BdfSjWPfweZriwIiVWQxa6WloNZQ7cqarsS29fTeuhwf9uxgVgSRJyr0s3w==
+
 react-native-web@0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.17.1.tgz#90d473c89dd99b88bc9830b2a9fcdd2fc5f04902"
