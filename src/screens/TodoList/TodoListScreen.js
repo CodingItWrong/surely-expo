@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback, useRef, useState} from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -117,21 +117,25 @@ export default function TodoListScreen({
 
   return (
     <ScreenBackground>
-      {onCreateTodo && (
-        <NewTodoForm isCreating={isCreating} onCreate={handleCreate} />
-      )}
-      {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
-      {Platform.OS === 'web' && (
-        <Button
-          mode="outlined"
-          style={styles.reloadButton}
-          onPress={reloadFromButton}
-        >
-          Reload
-        </Button>
-      )}
-      {showLoadingIndicator && <LoadingIndicator />}
-      {contents()}
+      <View style={styles.contentsWrapper}>
+        <View style={styles.todoList}>
+          {onCreateTodo && (
+            <NewTodoForm isCreating={isCreating} onCreate={handleCreate} />
+          )}
+          {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
+          {Platform.OS === 'web' && (
+            <Button
+              mode="outlined"
+              style={styles.reloadButton}
+              onPress={reloadFromButton}
+            >
+              Reload
+            </Button>
+          )}
+          {showLoadingIndicator && <LoadingIndicator />}
+          {contents()}
+        </View>
+      </View>
     </ScreenBackground>
   );
 }
@@ -139,5 +143,14 @@ export default function TodoListScreen({
 const styles = StyleSheet.create({
   reloadButton: {
     margin: 15,
+  },
+  contentsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  todoList: {
+    flex: 1,
+    maxWidth: 600,
   },
 });
