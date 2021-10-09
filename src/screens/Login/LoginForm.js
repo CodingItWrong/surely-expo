@@ -1,9 +1,12 @@
 import {Button, Text, TextInput} from 'react-native-paper';
+import {useStyleQueries} from 'react-native-style-queries';
 import useLoginForm from '../../auth/useLoginForm';
+import ButtonGroup from '../../components/ButtonGroup';
 import ErrorMessage from '../../components/ErrorMessage';
-import sharedStyles from '../../sharedStyles';
+import sharedStyleQueries from '../../sharedStyleQueries';
 
 export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
+  const styles = useStyleQueries(sharedStyleQueries);
   const {username, password, error, handleChange, handleLogIn} =
     useLoginForm(onLogIn);
 
@@ -34,22 +37,24 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
         secureTextEntry
       />
       <ErrorMessage>{error}</ErrorMessage>
-      <Button
-        mode="outlined"
-        testID="sign-up-button"
-        onPress={onSignUp}
-        style={sharedStyles.buttonSpacing}
-      >
-        Sign up
-      </Button>
-      <Button
-        mode="contained"
-        testID="sign-in-button"
-        onPress={handleLogIn}
-        style={sharedStyles.buttonSpacing}
-      >
-        Sign in
-      </Button>
+      <ButtonGroup>
+        <Button
+          mode="outlined"
+          testID="sign-up-button"
+          onPress={onSignUp}
+          style={styles.button}
+        >
+          Sign up
+        </Button>
+        <Button
+          mode="contained"
+          testID="sign-in-button"
+          onPress={handleLogIn}
+          style={styles.button}
+        >
+          Sign in
+        </Button>
+      </ButtonGroup>
     </>
   );
 }

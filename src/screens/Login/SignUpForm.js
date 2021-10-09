@@ -1,10 +1,13 @@
 import {useState} from 'react';
 import {Button, TextInput, Title} from 'react-native-paper';
+import {useStyleQueries} from 'react-native-style-queries';
+import ButtonGroup from '../../components/ButtonGroup';
 import ErrorMessage from '../../components/ErrorMessage';
 import {useUsers} from '../../data/users';
-import sharedStyles from '../../sharedStyles';
+import sharedStyleQueries from '../../sharedStyleQueries';
 
 export default function SignUpForm({onCancel, onSignUpSuccess}) {
+  const styles = useStyleQueries(sharedStyleQueries);
   const userClient = useUsers();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -81,22 +84,24 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
         secureTextEntry
       />
       <ErrorMessage>{error}</ErrorMessage>
-      <Button
-        mode="outlined"
-        testID="cancel-button"
-        onPress={onCancel}
-        style={sharedStyles.buttonSpacing}
-      >
-        Cancel
-      </Button>
-      <Button
-        mode="contained"
-        testID="sign-up-button"
-        onPress={handleSignUp}
-        style={sharedStyles.buttonSpacing}
-      >
-        Sign up
-      </Button>
+      <ButtonGroup>
+        <Button
+          mode="outlined"
+          testID="cancel-button"
+          onPress={onCancel}
+          style={styles.button}
+        >
+          Cancel
+        </Button>
+        <Button
+          mode="contained"
+          testID="sign-up-button"
+          onPress={handleSignUp}
+          style={styles.button}
+        >
+          Sign up
+        </Button>
+      </ButtonGroup>
     </>
   );
 }

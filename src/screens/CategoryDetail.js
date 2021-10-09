@@ -2,15 +2,19 @@ import {useLinkTo} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
+import {useStyleQueries} from 'react-native-style-queries';
+import ButtonGroup from '../components/ButtonGroup';
 import CenterColumn from '../components/CenterColumn';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ScreenBackground from '../components/ScreenBackground';
 import {useCategories} from '../data/categories';
+import sharedStyleQueries from '../sharedStyleQueries';
 import sharedStyles from '../sharedStyles';
 import useIsMounted from '../utils/useIsMounted';
 
 export default function CategoryDetail({route}) {
+  const responsiveStyles = useStyleQueries(sharedStyleQueries);
   const isMounted = useIsMounted();
 
   const [category, setCategory] = useState(null);
@@ -90,36 +94,38 @@ export default function CategoryDetail({route}) {
           style={styles.nameInput}
         />
         <ErrorMessage>{errorMessage}</ErrorMessage>
-        <Button
-          testID="cancel-button"
-          mode="outlined"
-          onPress={goBack}
-          style={sharedStyles.buttonSpacing}
-          disabled={isLoading}
-        >
-          Cancel
-        </Button>
-        {!isNewCategory && (
+        <ButtonGroup>
           <Button
-            testID="delete-button"
+            testID="cancel-button"
             mode="outlined"
-            onPress={handleDelete}
-            style={sharedStyles.buttonSpacing}
+            onPress={goBack}
+            style={responsiveStyles.button}
             disabled={isLoading}
           >
-            Delete
+            Cancel
           </Button>
-        )}
-        <Button
-          testID="save-button"
-          mode="contained"
-          icon="content-save"
-          onPress={handleSave}
-          style={sharedStyles.buttonSpacing}
-          disabled={isLoading}
-        >
-          Save
-        </Button>
+          {!isNewCategory && (
+            <Button
+              testID="delete-button"
+              mode="outlined"
+              onPress={handleDelete}
+              style={responsiveStyles.button}
+              disabled={isLoading}
+            >
+              Delete
+            </Button>
+          )}
+          <Button
+            testID="save-button"
+            mode="contained"
+            icon="content-save"
+            onPress={handleSave}
+            style={responsiveStyles.button}
+            disabled={isLoading}
+          >
+            Save
+          </Button>
+        </ButtonGroup>
       </View>
     );
   }
