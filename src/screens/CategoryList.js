@@ -1,7 +1,7 @@
 import {useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, Platform, View} from 'react-native';
+import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import {Button, IconButton, List} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CenterColumn from '../components/CenterColumn';
@@ -147,22 +147,37 @@ export default function CategoryList() {
   return (
     <ScreenBackground>
       <CenterColumn>
-        {Platform.OS === 'web' && (
-          <Button mode="outlined" onPress={reloadFromButton}>
-            Reload
+        <View style={styles.buttonContainer}>
+          {Platform.OS === 'web' && (
+            <Button
+              mode="outlined"
+              style={styles.reloadButton}
+              onPress={reloadFromButton}
+            >
+              Reload
+            </Button>
+          )}
+          <Button
+            testID="add-button"
+            mode="outlined"
+            icon="plus"
+            onPress={handleAdd}
+          >
+            Add
           </Button>
-        )}
-        <Button
-          testID="add-button"
-          mode="outlined"
-          icon="plus"
-          onPress={handleAdd}
-        >
-          Add
-        </Button>
+        </View>
         {showLoadingIndicator && <LoadingIndicator />}
         {contents()}
       </CenterColumn>
     </ScreenBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    margin: 15,
+  },
+  reloadButton: {
+    marginBottom: 15,
+  },
+});
