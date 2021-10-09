@@ -1,5 +1,6 @@
 import {View} from 'react-native';
 import {screenWidthMin, useStyleQueries} from 'react-native-style-queries';
+import {breakpointMedium} from '../breakpoints';
 
 export default function ButtonGroup({children}) {
   const styles = useStyleQueries(styleQueries);
@@ -11,7 +12,7 @@ const styleQueries = {
     {
       flexDirection: 'column',
     },
-    screenWidthMin(429, {
+    screenWidthMin(breakpointMedium, {
       flexDirection: 'row',
       justifyContent: 'flex-end',
     }),

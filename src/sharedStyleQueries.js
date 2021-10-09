@@ -1,11 +1,12 @@
 import {screenWidthMin} from 'react-native-style-queries';
+import {breakpointMedium} from './breakpoints';
 
 const sharedStyleQueries = {
   button: [
     {
       marginTop: 10,
     },
-    screenWidthMin(429, {
+    screenWidthMin(breakpointMedium, {
       marginLeft: 10,
     }),
   ],
