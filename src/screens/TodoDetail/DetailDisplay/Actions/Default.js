@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import {View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {screenWidthMin, useStyleQueries} from 'react-native-style-queries';
+import ButtonGroup from '../../../../components/ButtonGroup';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
 
@@ -78,7 +78,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   return (
     <>
       <ErrorMessage>{errorMessage}</ErrorMessage>
-      <View style={styles.buttonContainer}>
+      <ButtonGroup>
         {isDeleted ? (
           <Button
             testID="undelete-button"
@@ -134,21 +134,12 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             )}
           </>
         )}
-      </View>
+      </ButtonGroup>
     </>
   );
 }
 
 const styleQueries = {
-  buttonContainer: [
-    {
-      flexDirection: 'column',
-    },
-    screenWidthMin(429, {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-    }),
-  ],
   button: [
     {
       marginTop: 10,
