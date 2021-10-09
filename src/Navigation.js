@@ -197,7 +197,7 @@ const About = () => (
     <AboutStack.Screen
       name="AboutScreen"
       component={AboutScreen}
-      options={{title: 'Surely'}}
+      options={{title: 'About'}}
     />
   </AboutStack.Navigator>
 );
