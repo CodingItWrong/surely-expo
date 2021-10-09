@@ -1,7 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {breakpointLarge} from './breakpoints';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
@@ -189,14 +189,22 @@ const Categories = () => (
 export default function Navigation({logOut}) {
   // intentionally avoiding useWindowDimensions as React Nav doesn't handle reactively changing drawerType well
   const {width} = Dimensions.get('window');
-  const drawerType = width >= breakpointLarge ? 'permanent' : 'slide';
+  function drawerType() {
+    if (width >= breakpointLarge) {
+      return 'permanent';
+    } else if (Platform.OS === 'ios') {
+      return 'slide';
+    } else {
+      return 'front';
+    }
+  }
 
   return (
     <NavigationContainer linking={linking}>
       <Drawer.Navigator
         screenOptions={{
           headerShown: false,
-          drawerType,
+          drawerType: drawerType(),
           drawerStyle: {width: 200},
         }}
         drawerContent={props => (
