@@ -1,5 +1,6 @@
 import {useState} from 'react';
-import {Button, TextInput, Title} from 'react-native-paper';
+import {StyleSheet} from 'react-native';
+import {Button, Text, TextInput, Title} from 'react-native-paper';
 import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../components/ButtonGroup';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -7,7 +8,7 @@ import {useUsers} from '../../data/users';
 import sharedStyleQueries from '../../sharedStyleQueries';
 
 export default function SignUpForm({onCancel, onSignUpSuccess}) {
-  const styles = useStyleQueries(sharedStyleQueries);
+  const responsiveStyles = useStyleQueries(sharedStyleQueries);
   const userClient = useUsers();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -89,7 +90,7 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
           mode="outlined"
           testID="cancel-button"
           onPress={onCancel}
-          style={styles.button}
+          style={responsiveStyles.button}
         >
           Cancel
         </Button>
@@ -97,11 +98,22 @@ export default function SignUpForm({onCancel, onSignUpSuccess}) {
           mode="contained"
           testID="sign-up-button"
           onPress={handleSignUp}
-          style={styles.button}
+          style={responsiveStyles.button}
         >
           Sign up
         </Button>
       </ButtonGroup>
+      <Text style={styles.freeMessage}>
+        Accounts are free for now. If Surely gets popular we may need to make a
+        change then 😃
+      </Text>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  freeMessage: {
+    lineHeight: 25,
+    marginTop: 20,
+  },
+});
