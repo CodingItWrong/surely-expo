@@ -52,3 +52,7 @@ $ expo build:web
 
 - Copy the `web-build` folder to somewhere accessible on the public internet
 - Configure the web server to route all paths that aren't found on disk to `index.html`; that way links to pages handled by React Navigation will all load up the app
+
+## License
+
+MIT
