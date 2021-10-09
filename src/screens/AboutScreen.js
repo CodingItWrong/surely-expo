@@ -20,9 +20,16 @@ export default function AboutScreen() {
             <Button
               mode="outlined"
               style={styles.button}
-              onPress={() => Linking.openURL(SURELY_URL)}
+              onPress={() => Linking.openURL('mailto:support@surelytodo.com')}
             >
-              Surely Web
+              Email Support
+            </Button>
+            <Button
+              mode="outlined"
+              style={styles.button}
+              onPress={() => Share.share({url: SURELY_URL})}
+            >
+              Share Surely
             </Button>
             <Button
               mode="outlined"
@@ -36,16 +43,9 @@ export default function AboutScreen() {
             <Button
               mode="outlined"
               style={styles.button}
-              onPress={() => Linking.openURL('mailto:support@surelytodo.com')}
+              onPress={() => Linking.openURL(SURELY_URL)}
             >
-              Email Support
-            </Button>
-            <Button
-              mode="outlined"
-              style={styles.button}
-              onPress={() => Share.share({url: SURELY_URL})}
-            >
-              Share Surely
+              Surely Web
             </Button>
           </View>
           <Text style={styles.paragraph}>The MIT License (MIT) Copyright</Text>
