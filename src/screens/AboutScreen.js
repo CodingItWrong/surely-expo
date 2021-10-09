@@ -7,14 +7,13 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {Button, Text, Title} from 'react-native-paper';
+import {Button, Divider, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../components/CenterColumn';
 import ScreenBackground from '../components/ScreenBackground';
 import sharedStyles from '../sharedStyles';
 
 const SURELY_URL = 'https://surelytodo.com';
-const IS_IOS = Platform.OS === 'ios';
 const IS_WEB = Platform.OS === 'web';
 
 export default function AboutScreen() {
@@ -31,23 +30,36 @@ export default function AboutScreen() {
             </Title>
             <View style={styles.buttonContainer}>
               <Button
-                mode="outlined"
+                style={styles.button}
+                onPress={() => Linking.openURL('https://codingitwrong.com')}
+              >
+                Made by CodingItWrong
+              </Button>
+              <Button
+                mode="contained"
                 style={styles.button}
                 onPress={() => Linking.openURL('mailto:support@surelytodo.com')}
               >
                 Email Support
               </Button>
-              {IS_IOS && (
+              {!IS_WEB && (
                 <Button
-                  mode="outlined"
+                  mode="contained"
                   style={styles.button}
                   onPress={() => Share.share({url: SURELY_URL})}
                 >
                   Share Surely
                 </Button>
               )}
+              {!IS_WEB && (
+                <Button
+                  style={styles.button}
+                  onPress={() => Linking.openURL(SURELY_URL)}
+                >
+                  Surely Web
+                </Button>
+              )}
               <Button
-                mode="outlined"
                 style={styles.button}
                 onPress={() =>
                   Linking.openURL(
@@ -57,17 +69,7 @@ export default function AboutScreen() {
               >
                 Source Available via GitHub
               </Button>
-              {!IS_WEB && (
-                <Button
-                  mode="outlined"
-                  style={styles.button}
-                  onPress={() => Linking.openURL(SURELY_URL)}
-                >
-                  Surely Web
-                </Button>
-              )}
               <Button
-                mode="outlined"
                 style={styles.button}
                 onPress={() =>
                   Linking.openURL(
@@ -78,6 +80,13 @@ export default function AboutScreen() {
                 Checkmark icon by Scott Dunlap
               </Button>
             </View>
+            <Text>
+              Special thanks to the creators of the following open source
+              software that made this app possible: Babel, Cypress, Doorkeeper,
+              Expo, JSONAPI::Resources, Postgres, React Native Paper, React
+              Native Web, React Navigation, RSpec, Ruby.
+            </Text>
+            <Divider style={styles.divider} />
             <Text style={styles.paragraph}>
               The MIT License (MIT) Copyright
             </Text>
@@ -124,5 +133,8 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     marginBottom: 10,
+  },
+  divider: {
+    marginVertical: 20,
   },
 });
