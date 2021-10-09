@@ -1,6 +1,10 @@
+import {Dimensions} from 'react-native';
 import {Appbar} from 'react-native-paper';
+import {breakpointLarge} from '../breakpoints';
 
 export default function CustomNavigationBar({navigation, options, back}) {
+  const {width} = Dimensions.get('window');
+  const showDrawerToggle = width < breakpointLarge;
   return (
     <Appbar.Header>
       {back ? (
@@ -11,11 +15,13 @@ export default function CustomNavigationBar({navigation, options, back}) {
         />
       ) : null}
       <Appbar.Content title={options.title} />
-      <Appbar.Action
-        testID="toggle-navigation-button"
-        icon="menu"
-        onPress={navigation.toggleDrawer}
-      />
+      {showDrawerToggle && (
+        <Appbar.Action
+          testID="toggle-navigation-button"
+          icon="menu"
+          onPress={navigation.toggleDrawer}
+        />
+      )}
     </Appbar.Header>
   );
 }

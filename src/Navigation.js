@@ -1,6 +1,8 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Dimensions} from 'react-native';
+import {breakpointLarge} from './breakpoints';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
 import CategoryDetail from './screens/CategoryDetail';
@@ -184,22 +186,30 @@ const Categories = () => (
   </CategoryStack.Navigator>
 );
 
-const Navigation = ({logOut}) => (
-  <NavigationContainer linking={linking}>
-    <Drawer.Navigator
-      screenOptions={{headerShown: false}}
-      drawerContent={props => (
-        <CustomNavigationDrawer {...props} logOut={logOut} />
-      )}
-    >
-      <Drawer.Screen name="Available" component={Available} />
-      <Drawer.Screen name="Tomorrow" component={Tomorrow} />
-      <Drawer.Screen name="Future" component={Future} />
-      <Drawer.Screen name="Completed" component={Completed} />
-      <Drawer.Screen name="Deleted" component={Deleted} />
-      <Drawer.Screen name="Categories" component={Categories} />
-    </Drawer.Navigator>
-  </NavigationContainer>
-);
+export default function Navigation({logOut}) {
+  // intentionally avoiding useWindowDimensions as React Nav doesn't handle reactively changing drawerType well
+  const {width} = Dimensions.get('window');
+  const drawerType = width >= breakpointLarge ? 'permanent' : 'slide';
 
-export default Navigation;
+  return (
+    <NavigationContainer linking={linking}>
+      <Drawer.Navigator
+        screenOptions={{
+          headerShown: false,
+          drawerType,
+          drawerStyle: {width: 200},
+        }}
+        drawerContent={props => (
+          <CustomNavigationDrawer {...props} logOut={logOut} />
+        )}
+      >
+        <Drawer.Screen name="Available" component={Available} />
+        <Drawer.Screen name="Tomorrow" component={Tomorrow} />
+        <Drawer.Screen name="Future" component={Future} />
+        <Drawer.Screen name="Completed" component={Completed} />
+        <Drawer.Screen name="Deleted" component={Deleted} />
+        <Drawer.Screen name="Categories" component={Categories} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
