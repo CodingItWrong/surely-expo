@@ -1,4 +1,5 @@
-import {Button, Text, TextInput} from 'react-native-paper';
+import {StyleSheet} from 'react-native';
+import {Button, Text, TextInput, Title} from 'react-native-paper';
 import {useStyleQueries} from 'react-native-style-queries';
 import useLoginForm from '../../auth/useLoginForm';
 import ButtonGroup from '../../components/ButtonGroup';
@@ -6,12 +7,15 @@ import ErrorMessage from '../../components/ErrorMessage';
 import sharedStyleQueries from '../../sharedStyleQueries';
 
 export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
-  const styles = useStyleQueries(sharedStyleQueries);
+  const responsiveStyles = useStyleQueries(sharedStyleQueries);
   const {username, password, error, handleChange, handleLogIn} =
     useLoginForm(onLogIn);
 
   return (
     <>
+      <Title style={styles.tagline}>
+        A focused todo app giving you only what you need to get your todos done.
+      </Title>
       {showSignedUpMessage && (
         <Text>
           Sign up successful. Log in with the email and password you used to
@@ -42,7 +46,7 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
           mode="outlined"
           testID="sign-up-button"
           onPress={onSignUp}
-          style={styles.button}
+          style={responsiveStyles.button}
         >
           Sign up
         </Button>
@@ -50,7 +54,7 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
           mode="contained"
           testID="sign-in-button"
           onPress={handleLogIn}
-          style={styles.button}
+          style={responsiveStyles.button}
         >
           Sign in
         </Button>
@@ -58,3 +62,10 @@ export default function LoginForm({showSignedUpMessage, onLogIn, onSignUp}) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  tagline: {
+    textAlign: 'center',
+    marginTop: 20,
+  },
+});
