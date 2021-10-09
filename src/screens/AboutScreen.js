@@ -81,7 +81,7 @@ export default function AboutScreen() {
             <Text style={styles.paragraph}>
               The MIT License (MIT) Copyright
             </Text>
-            <Text style={styles.paragraph}>© 2021 Josh Justice</Text>
+            <Text style={styles.paragraph}>© 2021 NeedBee, LLC</Text>
             <Text style={styles.paragraph}>
               Permission is hereby granted, free of charge, to any person
               obtaining a copy of this software and associated documentation
