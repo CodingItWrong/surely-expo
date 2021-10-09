@@ -1,12 +1,13 @@
 import {useState} from 'react';
 import {Button} from 'react-native-paper';
-import {screenWidthMin, useStyleQueries} from 'react-native-style-queries';
+import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../../../components/ButtonGroup';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
+import sharedStyleQueries from '../../../../sharedStyleQueries';
 
 export default function Default({todo, onUpdate, onGoBack, onDefer}) {
-  const styles = useStyleQueries(styleQueries);
+  const styles = useStyleQueries(sharedStyleQueries);
   const {id} = todo;
   const todoClient = useTodos();
   const isCompleted = !!todo?.attributes['completed-at'];
@@ -138,14 +139,3 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
     </>
   );
 }
-
-const styleQueries = {
-  button: [
-    {
-      marginTop: 10,
-    },
-    screenWidthMin(429, {
-      marginLeft: 10,
-    }),
-  ],
-};
