@@ -36,7 +36,6 @@ describe('sign-in', () => {
 
     cy.visit('/');
 
-    cy.getTestId('toggle-navigation-button').click();
     cy.getTestId('sign-out-button').click();
 
     cy.getTestId('email-field').should('exist');
