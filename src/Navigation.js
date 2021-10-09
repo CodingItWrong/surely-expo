@@ -60,6 +60,11 @@ const linking = {
           CategoryDetail: '/categories/:id',
         },
       },
+      About: {
+        screens: {
+          AboutScreen: '/about',
+        },
+      },
     },
   },
 };
