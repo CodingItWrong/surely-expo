@@ -1,8 +1,8 @@
 import {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
-import sharedStyles from '../../../../sharedStyles';
 
 export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   const {id} = todo;
@@ -76,61 +76,73 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
   return (
     <>
       <ErrorMessage>{errorMessage}</ErrorMessage>
-      {isDeleted ? (
-        <Button
-          testID="undelete-button"
-          mode="outlined"
-          onPress={handleUndelete}
-          style={sharedStyles.buttonSpacing}
-          disabled={isLoading}
-        >
-          Undelete
-        </Button>
-      ) : (
-        <>
+      <View style={styles.buttonContainer}>
+        {isDeleted ? (
           <Button
-            testID="delete-button"
+            testID="undelete-button"
             mode="outlined"
-            onPress={handleDelete}
-            style={sharedStyles.buttonSpacing}
+            onPress={handleUndelete}
+            style={styles.button}
             disabled={isLoading}
           >
-            Delete
+            Undelete
           </Button>
-          <Button
-            testID="defer-button"
-            mode="outlined"
-            onPress={onDefer}
-            style={sharedStyles.buttonSpacing}
-            disabled={isLoading}
-          >
-            Defer
-          </Button>
-          {isCompleted ? (
+        ) : (
+          <>
             <Button
-              testID="uncomplete-button"
-              mode="contained"
-              icon="checkbox-marked"
-              onPress={handleUncomplete}
-              style={sharedStyles.buttonSpacing}
+              testID="delete-button"
+              mode="outlined"
+              onPress={handleDelete}
+              style={styles.button}
               disabled={isLoading}
             >
-              Uncomplete
+              Delete
             </Button>
-          ) : (
             <Button
-              testID="complete-button"
-              mode="contained"
-              icon="checkbox-marked"
-              onPress={handleComplete}
-              style={sharedStyles.buttonSpacing}
+              testID="defer-button"
+              mode="outlined"
+              onPress={onDefer}
+              style={styles.button}
               disabled={isLoading}
             >
-              Complete
+              Defer
             </Button>
-          )}
-        </>
-      )}
+            {isCompleted ? (
+              <Button
+                testID="uncomplete-button"
+                mode="contained"
+                icon="checkbox-marked"
+                onPress={handleUncomplete}
+                style={styles.button}
+                disabled={isLoading}
+              >
+                Uncomplete
+              </Button>
+            ) : (
+              <Button
+                testID="complete-button"
+                mode="contained"
+                icon="checkbox-marked"
+                onPress={handleComplete}
+                style={styles.button}
+                disabled={isLoading}
+              >
+                Complete
+              </Button>
+            )}
+          </>
+        )}
+      </View>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginLeft: 10,
+  },
+});
