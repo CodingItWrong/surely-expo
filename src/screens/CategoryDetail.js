@@ -2,6 +2,7 @@ import {useLinkTo} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
+import CenterColumn from '../components/CenterColumn';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ScreenBackground from '../components/ScreenBackground';
@@ -123,7 +124,11 @@ export default function CategoryDetail({route}) {
     );
   }
 
-  return <ScreenBackground>{contents()}</ScreenBackground>;
+  return (
+    <ScreenBackground>
+      <CenterColumn>{contents()}</CenterColumn>
+    </ScreenBackground>
+  );
 }
 
 const styles = StyleSheet.create({

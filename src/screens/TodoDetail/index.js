@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {Button} from 'react-native-paper';
+import CenterColumn from '../../components/CenterColumn';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ScreenBackground from '../../components/ScreenBackground';
@@ -112,7 +113,11 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
     }
   }
 
-  return <ScreenBackground>{contents()}</ScreenBackground>;
+  return (
+    <ScreenBackground>
+      <CenterColumn>{contents()}</CenterColumn>
+    </ScreenBackground>
+  );
 }
 
 export const createTodoDetail = parentRouteName => props =>

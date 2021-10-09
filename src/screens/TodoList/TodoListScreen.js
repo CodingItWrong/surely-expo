@@ -1,8 +1,9 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback, useRef, useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CenterColumn from '../../components/CenterColumn';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import NewTodoForm from '../../components/NewTodoForm';
 import PaginationControls from '../../components/PaginationControls';
@@ -117,25 +118,23 @@ export default function TodoListScreen({
 
   return (
     <ScreenBackground>
-      <View style={styles.contentsWrapper}>
-        <View style={styles.todoList}>
-          {onCreateTodo && (
-            <NewTodoForm isCreating={isCreating} onCreate={handleCreate} />
-          )}
-          {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
-          {Platform.OS === 'web' && (
-            <Button
-              mode="outlined"
-              style={styles.reloadButton}
-              onPress={reloadFromButton}
-            >
-              Reload
-            </Button>
-          )}
-          {showLoadingIndicator && <LoadingIndicator />}
-          {contents()}
-        </View>
-      </View>
+      <CenterColumn>
+        {onCreateTodo && (
+          <NewTodoForm isCreating={isCreating} onCreate={handleCreate} />
+        )}
+        {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
+        {Platform.OS === 'web' && (
+          <Button
+            mode="outlined"
+            style={styles.reloadButton}
+            onPress={reloadFromButton}
+          >
+            Reload
+          </Button>
+        )}
+        {showLoadingIndicator && <LoadingIndicator />}
+        {contents()}
+      </CenterColumn>
     </ScreenBackground>
   );
 }
@@ -143,14 +142,5 @@ export default function TodoListScreen({
 const styles = StyleSheet.create({
   reloadButton: {
     margin: 15,
-  },
-  contentsWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  todoList: {
-    flex: 1,
-    maxWidth: 600,
   },
 });

@@ -4,6 +4,7 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, Platform, View} from 'react-native';
 import {Button, IconButton, List} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CenterColumn from '../components/CenterColumn';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import NoTodosMessage from '../components/NoTodosMessage';
@@ -145,21 +146,23 @@ export default function CategoryList() {
 
   return (
     <ScreenBackground>
-      {Platform.OS === 'web' && (
-        <Button mode="outlined" onPress={reloadFromButton}>
-          Reload
+      <CenterColumn>
+        {Platform.OS === 'web' && (
+          <Button mode="outlined" onPress={reloadFromButton}>
+            Reload
+          </Button>
+        )}
+        <Button
+          testID="add-button"
+          mode="outlined"
+          icon="plus"
+          onPress={handleAdd}
+        >
+          Add
         </Button>
-      )}
-      <Button
-        testID="add-button"
-        mode="outlined"
-        icon="plus"
-        onPress={handleAdd}
-      >
-        Add
-      </Button>
-      {showLoadingIndicator && <LoadingIndicator />}
-      {contents()}
+        {showLoadingIndicator && <LoadingIndicator />}
+        {contents()}
+      </CenterColumn>
     </ScreenBackground>
   );
 }
