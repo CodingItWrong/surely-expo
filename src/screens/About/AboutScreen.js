@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import {Button, Divider, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import CenterColumn from '../components/CenterColumn';
-import ScreenBackground from '../components/ScreenBackground';
-import sharedStyles from '../sharedStyles';
+import CenterColumn from '../../components/CenterColumn';
+import ScreenBackground from '../../components/ScreenBackground';
+import sharedStyles from '../../sharedStyles';
 
 const SURELY_URL = 'https://surelytodo.com';
 const IS_WEB = Platform.OS === 'web';

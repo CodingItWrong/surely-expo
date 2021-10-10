@@ -6,7 +6,7 @@ import {breakpointLarge} from './breakpoints';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
 import {useToken} from './data/token';
-import AboutScreen from './screens/AboutScreen';
+import AboutScreen from './screens/About/AboutScreen';
 import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
 import LoginForm from './screens/Login/LoginForm';
