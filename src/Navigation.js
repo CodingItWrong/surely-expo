@@ -7,6 +7,7 @@ import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
 import {useToken} from './data/token';
 import AboutScreen from './screens/About/AboutScreen';
+import PrivacyScreen from './screens/About/PrivacyScreen';
 import SupportScreen from './screens/About/SupportScreen';
 import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
@@ -69,6 +70,7 @@ const linking = {
         screens: {
           AboutScreen: '/about',
           SupportScreen: '/about/support',
+          PrivacyScreen: '/about/privacy',
         },
       },
       'Sign in': {
@@ -254,6 +256,11 @@ const About = () => (
       name="SupportScreen"
       component={SupportScreen}
       options={{title: 'Support'}}
+    />
+    <AboutStack.Screen
+      name="PrivacyScreen"
+      component={PrivacyScreen}
+      options={{title: 'Privacy Policy'}}
     />
   </AboutStack.Navigator>
 );

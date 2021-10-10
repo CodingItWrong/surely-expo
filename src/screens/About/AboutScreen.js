@@ -63,6 +63,12 @@ export default function AboutScreen() {
               )}
               <Button
                 style={styles.button}
+                onPress={() => linkTo('/about/privacy')}
+              >
+                Privacy Policy
+              </Button>
+              <Button
+                style={styles.button}
                 onPress={() =>
                   Linking.openURL(
                     'https://github.com/codingitwrong/surely-expo',
