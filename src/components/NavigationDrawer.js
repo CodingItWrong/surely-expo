@@ -1,5 +1,6 @@
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {Drawer, withTheme} from 'react-native-paper';
+import {useToken} from '../data/token';
 
 const ICON_FOR_ROUTE = {
   Available: 'clock-outline',
@@ -10,8 +11,9 @@ const ICON_FOR_ROUTE = {
   Categories: 'tag',
 };
 
-function CustomNavigationDrawer({theme, logOut, ...navProps}) {
+function CustomNavigationDrawer({theme, ...navProps}) {
   const {state, navigation} = navProps;
+  const {clearToken} = useToken();
 
   const isSelected = index => index === state.index;
 
@@ -31,7 +33,11 @@ function CustomNavigationDrawer({theme, logOut, ...navProps}) {
           onPress={() => navigation.navigate(route.name)}
         />
       ))}
-      <Drawer.Item testID="sign-out-button" label="Sign out" onPress={logOut} />
+      <Drawer.Item
+        testID="sign-out-button"
+        label="Sign out"
+        onPress={clearToken}
+      />
     </DrawerContentScrollView>
   );
 }

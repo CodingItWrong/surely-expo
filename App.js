@@ -16,9 +16,7 @@ export default function App() {
       <StatusBar style="auto" />
       <SafeAreaProvider>
         <TokenProvider>
-          <OAuthLoginContainer>
-            {({logOut}) => <Navigation logOut={logOut} />}
-          </OAuthLoginContainer>
+          <OAuthLoginContainer>{() => <Navigation />}</OAuthLoginContainer>
         </TokenProvider>
       </SafeAreaProvider>
     </PaperProvider>

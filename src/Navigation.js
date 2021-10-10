@@ -207,7 +207,7 @@ const About = () => (
   </AboutStack.Navigator>
 );
 
-export default function Navigation({logOut}) {
+export default function Navigation() {
   // intentionally avoiding useWindowDimensions as React Nav doesn't handle reactively changing drawerType well
   const {width} = Dimensions.get('window');
   function drawerType() {
@@ -228,9 +228,7 @@ export default function Navigation({logOut}) {
           drawerType: drawerType(),
           drawerStyle: {width: 200},
         }}
-        drawerContent={props => (
-          <CustomNavigationDrawer {...props} logOut={logOut} />
-        )}
+        drawerContent={props => <CustomNavigationDrawer {...props} />}
       >
         <Drawer.Screen name="Available" component={Available} />
         <Drawer.Screen name="Tomorrow" component={Tomorrow} />
