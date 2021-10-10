@@ -7,6 +7,7 @@ import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
 import {useToken} from './data/token';
 import AboutScreen from './screens/About/AboutScreen';
+import SupportScreen from './screens/About/SupportScreen';
 import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
 import LoginForm from './screens/Login/LoginForm';
@@ -64,8 +65,10 @@ const linking = {
         },
       },
       About: {
+        initialRouteName: 'AboutScreen',
         screens: {
           AboutScreen: '/about',
+          SupportScreen: '/about/support',
         },
       },
       'Sign in': {
@@ -246,6 +249,11 @@ const About = () => (
       name="AboutScreen"
       component={AboutScreen}
       options={{title: 'About'}}
+    />
+    <AboutStack.Screen
+      name="SupportScreen"
+      component={SupportScreen}
+      options={{title: 'Support'}}
     />
   </AboutStack.Navigator>
 );

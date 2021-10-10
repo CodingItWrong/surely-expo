@@ -1,3 +1,4 @@
+import {useLinkTo} from '@react-navigation/native';
 import Constants from 'expo-constants';
 import {
   Linking,
@@ -17,6 +18,7 @@ const SURELY_URL = 'https://surelytodo.com';
 const IS_WEB = Platform.OS === 'web';
 
 export default function AboutScreen() {
+  const linkTo = useLinkTo();
   return (
     <ScreenBackground>
       <ScrollView contentContainerStyle={sharedStyles.bodyContainer}>
@@ -38,9 +40,9 @@ export default function AboutScreen() {
               <Button
                 mode="contained"
                 style={styles.button}
-                onPress={() => Linking.openURL('mailto:support@surelytodo.com')}
+                onPress={() => linkTo('/about/support')}
               >
-                Email Support
+                Support
               </Button>
               {!IS_WEB && (
                 <Button
