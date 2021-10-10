@@ -1,9 +1,10 @@
+import AppLoading from 'expo-app-loading';
 import {useToken} from '../data/token';
 
 export default function TokenLoadBuffer({children}) {
   const {isTokenLoaded} = useToken();
   if (!isTokenLoaded) {
-    return null;
+    return <AppLoading />;
   } else {
     return children;
   }
