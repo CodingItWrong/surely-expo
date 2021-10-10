@@ -1,5 +1,37 @@
 describe('navigation', () => {
-  describe('desktop', () => {
+  describe('signed out', () => {
+    beforeEach(() => {
+      cy.visit('/');
+    });
+
+    it('starts on the sign in page', () => {
+      cy.url().should('include', '/signin');
+    });
+
+    it('allows navigating to the sign up page', () => {
+      cy.getTestId('sign up-nav-button').click();
+      cy.url().should('include', '/signup');
+    });
+
+    it('allows navigating to the about page', () => {
+      cy.getTestId('about-nav-button').click();
+      cy.url().should('include', '/about');
+    });
+
+    it('allows navigating to the support page', () => {
+      cy.getTestId('about-nav-button').click();
+      cy.getTestId('support-button').click();
+      cy.url().should('include', '/about/support');
+    });
+
+    it('allows navigating to the privacy page', () => {
+      cy.getTestId('about-nav-button').click();
+      cy.getTestId('privacy-button').click();
+      cy.url().should('include', '/about/privacy');
+    });
+  });
+
+  describe('signed in', () => {
     beforeEach(() => {
       cy.signIn();
 
@@ -12,29 +44,38 @@ describe('navigation', () => {
       cy.visit('/');
     });
 
-    function testNavigationButton(status) {
+    it('defaults to the available page', () => {
+      cy.url().should('include', '/todos/available');
+    });
+
+    it('allows navigating to the about page', () => {
+      cy.getTestId('about-nav-button').click();
+      cy.url().should('include', '/about');
+    });
+
+    function testTodoNavigationButton(status) {
       cy.getTestId(`${status}-nav-button`).click();
       cy.url().should('include', `/todos/${status}`);
     }
 
     it('allows navigating to available', () => {
-      testNavigationButton('available');
+      testTodoNavigationButton('available');
     });
 
     it('allows navigating to tomorrow', () => {
-      testNavigationButton('tomorrow');
+      testTodoNavigationButton('tomorrow');
     });
 
     it('allows navigating to future', () => {
-      testNavigationButton('future');
+      testTodoNavigationButton('future');
     });
 
     it('allows navigating to completed', () => {
-      testNavigationButton('completed');
+      testTodoNavigationButton('completed');
     });
 
     it('allows navigating to deleted', () => {
-      testNavigationButton('deleted');
+      testTodoNavigationButton('deleted');
     });
   });
 
@@ -53,30 +94,13 @@ describe('navigation', () => {
       cy.visit('/');
     });
 
-    function testNavigationButton(status) {
+    it('does not show the navigation by default', () => {
+      cy.getTestId('available-nav-button').should('not.be.visible');
+    });
+
+    it('shows the navigation when you toggle it', () => {
       cy.getTestId('toggle-navigation-button').click();
-      cy.getTestId(`${status}-nav-button`).click();
-      cy.url().should('include', `/todos/${status}`);
-    }
-
-    it('allows navigating to available', () => {
-      testNavigationButton('available');
-    });
-
-    it('allows navigating to tomorrow', () => {
-      testNavigationButton('tomorrow');
-    });
-
-    it('allows navigating to future', () => {
-      testNavigationButton('future');
-    });
-
-    it('allows navigating to completed', () => {
-      testNavigationButton('completed');
-    });
-
-    it('allows navigating to deleted', () => {
-      testNavigationButton('deleted');
+      cy.getTestId('available-nav-button').should('be.visible');
     });
   });
 });

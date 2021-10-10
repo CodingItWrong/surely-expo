@@ -38,6 +38,7 @@ export default function AboutScreen() {
                 Made by CodingItWrong
               </Button>
               <Button
+                testID="support-button"
                 mode="contained"
                 style={styles.button}
                 onPress={() => linkTo('/about/support')}
@@ -62,6 +63,7 @@ export default function AboutScreen() {
                 </Button>
               )}
               <Button
+                testID="privacy-button"
                 style={styles.button}
                 onPress={() => linkTo('/about/privacy')}
               >
