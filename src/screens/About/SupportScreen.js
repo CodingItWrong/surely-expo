@@ -1,8 +1,9 @@
-import {Linking, ScrollView, StyleSheet, View} from 'react-native';
+import {Linking, ScrollView, StyleSheet} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
 import ScreenBackground from '../../components/ScreenBackground';
+import VerticalButtonGroup from '../../components/VerticalButtonGroup';
 import sharedStyles from '../../sharedStyles';
 
 export default function SupportScreen() {
@@ -12,7 +13,7 @@ export default function SupportScreen() {
         <SafeAreaView edges={['left', 'right', 'bottom']}>
           <CenterColumn>
             <Text>You have three options for getting support with Surely:</Text>
-            <View style={styles.buttonContainer}>
+            <VerticalButtonGroup>
               <Button
                 testID="chat-button"
                 mode="contained"
@@ -43,7 +44,7 @@ export default function SupportScreen() {
               >
                 Email Support
               </Button>
-            </View>
+            </VerticalButtonGroup>
           </CenterColumn>
         </SafeAreaView>
       </ScrollView>
@@ -52,9 +53,6 @@ export default function SupportScreen() {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    marginVertical: 10,
-  },
   button: {
     marginBottom: 10,
   },

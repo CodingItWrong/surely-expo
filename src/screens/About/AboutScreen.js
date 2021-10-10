@@ -1,17 +1,11 @@
 import {useLinkTo} from '@react-navigation/native';
 import Constants from 'expo-constants';
-import {
-  Linking,
-  Platform,
-  ScrollView,
-  Share,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {Linking, Platform, ScrollView, Share, StyleSheet} from 'react-native';
 import {Button, Divider, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
 import ScreenBackground from '../../components/ScreenBackground';
+import VerticalButtonGroup from '../../components/VerticalButtonGroup';
 import sharedStyles from '../../sharedStyles';
 
 const SURELY_URL = 'https://surelytodo.com';
@@ -30,7 +24,7 @@ export default function AboutScreen() {
                 ? `(${Constants.platform.ios.buildNumber})`
                 : ''}
             </Title>
-            <View style={styles.buttonContainer}>
+            <VerticalButtonGroup>
               <Button
                 style={styles.button}
                 onPress={() => Linking.openURL('https://codingitwrong.com')}
@@ -89,7 +83,7 @@ export default function AboutScreen() {
               >
                 Checkmark icon by Scott Dunlap
               </Button>
-            </View>
+            </VerticalButtonGroup>
             <Text>
               Special thanks to the creators of the following open source
               software that made this app possible: Babel, Cypress, Doorkeeper,
@@ -134,9 +128,6 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
-  },
-  buttonContainer: {
-    marginVertical: 10,
   },
   button: {
     marginBottom: 10,
