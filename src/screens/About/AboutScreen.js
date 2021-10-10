@@ -10,6 +10,7 @@ import sharedStyles from '../../sharedStyles';
 
 const SURELY_URL = 'https://surelytodo.com';
 const IS_WEB = Platform.OS === 'web';
+const IS_SHARE_SUPPORTED = !IS_WEB || Boolean(navigator.share);
 
 export default function AboutScreen() {
   const linkTo = useLinkTo();
@@ -39,7 +40,7 @@ export default function AboutScreen() {
               >
                 Support
               </Button>
-              {!IS_WEB && (
+              {IS_SHARE_SUPPORTED && (
                 <Button
                   mode="contained"
                   style={styles.button}
