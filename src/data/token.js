@@ -64,5 +64,7 @@ export function useToken() {
     setTokenInternal(null);
   }
 
-  return {isTokenLoaded, token, setToken, clearToken};
+  const isLoggedIn = isTokenLoaded && token !== null;
+
+  return {isTokenLoaded, token, isLoggedIn, setToken, clearToken};
 }

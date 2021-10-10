@@ -5,9 +5,12 @@ import {Dimensions, Platform} from 'react-native';
 import {breakpointLarge} from './breakpoints';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
+import {useToken} from './data/token';
 import AboutScreen from './screens/AboutScreen';
 import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
+import LoginForm from './screens/Login/LoginForm';
+import SignUpForm from './screens/Login/SignUpForm';
 import {createTodoDetail} from './screens/TodoDetail';
 import AvailableTodos from './screens/TodoList/Available';
 import CompletedTodos from './screens/TodoList/Completed';
@@ -63,6 +66,16 @@ const linking = {
       About: {
         screens: {
           AboutScreen: '/about',
+        },
+      },
+      'Sign in': {
+        screens: {
+          SignInScreen: '/signin',
+        },
+      },
+      'Sign up': {
+        screens: {
+          SignUpScreen: '/signup',
         },
       },
     },
@@ -192,6 +205,36 @@ const Categories = () => (
   </CategoryStack.Navigator>
 );
 
+const SignInStack = createNativeStackNavigator();
+const SignIn = () => (
+  <SignInStack.Navigator
+    screenOptions={{
+      header: props => <NavigationBar {...props} />,
+    }}
+  >
+    <SignInStack.Screen
+      name="SignInScreen"
+      component={LoginForm}
+      options={{title: 'Sign in'}}
+    />
+  </SignInStack.Navigator>
+);
+
+const SignUpStack = createNativeStackNavigator();
+const SignUp = () => (
+  <SignUpStack.Navigator
+    screenOptions={{
+      header: props => <NavigationBar {...props} />,
+    }}
+  >
+    <SignUpStack.Screen
+      name="SignUpScreen"
+      component={SignUpForm}
+      options={{title: 'Sign up'}}
+    />
+  </SignUpStack.Navigator>
+);
+
 const AboutStack = createNativeStackNavigator();
 const About = () => (
   <AboutStack.Navigator
@@ -208,6 +251,8 @@ const About = () => (
 );
 
 export default function Navigation() {
+  const {isLoggedIn} = useToken();
+
   // intentionally avoiding useWindowDimensions as React Nav doesn't handle reactively changing drawerType well
   const {width} = Dimensions.get('window');
   function drawerType() {
@@ -230,12 +275,21 @@ export default function Navigation() {
         }}
         drawerContent={props => <CustomNavigationDrawer {...props} />}
       >
-        <Drawer.Screen name="Available" component={Available} />
-        <Drawer.Screen name="Tomorrow" component={Tomorrow} />
-        <Drawer.Screen name="Future" component={Future} />
-        <Drawer.Screen name="Completed" component={Completed} />
-        <Drawer.Screen name="Deleted" component={Deleted} />
-        <Drawer.Screen name="Categories" component={Categories} />
+        {isLoggedIn ? (
+          <>
+            <Drawer.Screen name="Available" component={Available} />
+            <Drawer.Screen name="Tomorrow" component={Tomorrow} />
+            <Drawer.Screen name="Future" component={Future} />
+            <Drawer.Screen name="Completed" component={Completed} />
+            <Drawer.Screen name="Deleted" component={Deleted} />
+            <Drawer.Screen name="Categories" component={Categories} />
+          </>
+        ) : (
+          <>
+            <Drawer.Screen name="Sign in" component={SignIn} />
+            <Drawer.Screen name="Sign up" component={SignUp} />
+          </>
+        )}
         <Drawer.Screen name="About" component={About} />
       </Drawer.Navigator>
     </NavigationContainer>

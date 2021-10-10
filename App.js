@@ -5,9 +5,10 @@ import React from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Navigation from './src/Navigation';
-import OAuthLoginContainer from './src/auth/OAuthLoginContainer';
+import TokenLoadBuffer from './src/components/TokenLoadBuffer';
 import {TokenProvider} from './src/data/token';
 import useTheme from './src/useTheme';
+// TODO: implement delay after loading token in a simpler way
 
 export default function App() {
   const theme = useTheme();
@@ -16,7 +17,7 @@ export default function App() {
       <StatusBar style="auto" />
       <SafeAreaProvider>
         <TokenProvider>
-          <OAuthLoginContainer>{() => <Navigation />}</OAuthLoginContainer>
+          <TokenLoadBuffer>{() => <Navigation />}</TokenLoadBuffer>
         </TokenProvider>
       </SafeAreaProvider>
     </PaperProvider>

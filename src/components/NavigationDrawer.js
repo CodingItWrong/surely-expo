@@ -21,6 +21,11 @@ function CustomNavigationDrawer({theme, ...navProps}) {
     backgroundColor: theme.colors.background,
   };
 
+  async function signOut() {
+    await clearToken();
+    navigation.navigate('Sign in');
+  }
+
   return (
     <DrawerContentScrollView style={scrollViewStyle} {...navProps}>
       {state.routes.map((route, index) => (
@@ -36,7 +41,7 @@ function CustomNavigationDrawer({theme, ...navProps}) {
       <Drawer.Item
         testID="sign-out-button"
         label="Sign out"
-        onPress={clearToken}
+        onPress={signOut}
       />
     </DrawerContentScrollView>
   );
