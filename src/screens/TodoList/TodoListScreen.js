@@ -110,6 +110,7 @@ export default function TodoListScreen({
           onPressTodo={onPressTodo}
           onRefresh={reloadFromPull}
           refreshing={isRefreshing}
+          isInitialLoad={showLoadingIndicator}
           contentContainerStyle={{paddingBottom: insets.bottom}}
         />
       </>

@@ -12,6 +12,7 @@ function TodoList({
   onPressTodo,
   onRefresh,
   refreshing,
+  isInitialLoad,
   contentContainerStyle,
   theme,
 }) {
@@ -22,7 +23,7 @@ function TodoList({
   function listHeader() {
     if (errorMessage) {
       return <ErrorMessage>{errorMessage}</ErrorMessage>;
-    } else if (todoSections.length === 0) {
+    } else if (todoSections.length === 0 && !isInitialLoad) {
       return <NoTodosMessage>{noTodosMessage}</NoTodosMessage>;
     } else {
       return null;
