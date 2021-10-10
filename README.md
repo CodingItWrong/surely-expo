@@ -4,6 +4,14 @@ Official client for the Surely todo app. An Expo React Native app that builds to
 
 Backend is <https://api.surelytodo.com>. If you'd like to build the client yourself, you can still use the same backend, or you can set up your own installation of [surely-api](https://github.com/CodingItWrong/surely-api) to point to.
 
+## Support
+
+You have three options for getting support with Surely:
+
+- [Chat with the Surely community on Gitter](https://gitter.im/surelytodo/community)
+- [Open a GitHub Issue on this repo](https://github.com/CodingItWrong/surely-expo/issues)
+- Send a support email to support at surelytodo dot com
+
 ## Requirements
 
 - [Yarn](https://yarnpkg.com/en/docs/install)
