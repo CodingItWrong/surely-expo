@@ -2,6 +2,8 @@
 
 A client for the Surely todo app written in Expo, targeting iOS and web.
 
+Backend is <https://api.surelytodo.com>. If you'd like to build the client yourself, you can still use the same backend, or you can set up your own installation of [surely-api](https://github.com/CodingItWrong/surely-api) to point to.
+
 ## Requirements
 
 - [Yarn](https://yarnpkg.com/en/docs/install)
