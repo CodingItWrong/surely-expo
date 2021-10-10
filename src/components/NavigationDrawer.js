@@ -13,7 +13,7 @@ const ICON_FOR_ROUTE = {
 
 function CustomNavigationDrawer({theme, ...navProps}) {
   const {state, navigation} = navProps;
-  const {clearToken} = useToken();
+  const {isLoggedIn, clearToken} = useToken();
 
   const isSelected = index => index === state.index;
 
@@ -38,11 +38,13 @@ function CustomNavigationDrawer({theme, ...navProps}) {
           onPress={() => navigation.navigate(route.name)}
         />
       ))}
-      <Drawer.Item
-        testID="sign-out-button"
-        label="Sign out"
-        onPress={signOut}
-      />
+      {isLoggedIn && (
+        <Drawer.Item
+          testID="sign-out-button"
+          label="Sign out"
+          onPress={signOut}
+        />
+      )}
     </DrawerContentScrollView>
   );
 }
