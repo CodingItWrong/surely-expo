@@ -35,6 +35,12 @@ $ yarn lint
 $ yarn test
 ```
 
+### End-to-End Tests (web)
+
+- `yarn start`
+- Click "Run in web browser"
+- In another terminal, `yarn cypress`
+
 ## Release
 
 ### iOS
