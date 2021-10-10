@@ -5,6 +5,6 @@ export default function TokenLoadBuffer({children}) {
   if (!isTokenLoaded) {
     return null;
   } else {
-    return children();
+    return children;
   }
 }

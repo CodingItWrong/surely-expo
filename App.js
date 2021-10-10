@@ -17,7 +17,9 @@ export default function App() {
       <StatusBar style="auto" />
       <SafeAreaProvider>
         <TokenProvider>
-          <TokenLoadBuffer>{() => <Navigation />}</TokenLoadBuffer>
+          <TokenLoadBuffer>
+            <Navigation />
+          </TokenLoadBuffer>
         </TokenProvider>
       </SafeAreaProvider>
     </PaperProvider>
