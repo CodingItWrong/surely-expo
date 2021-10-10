@@ -1,5 +1,5 @@
-import {ScrollView, StyleSheet} from 'react-native';
-import {Text} from 'react-native-paper';
+import {Linking, ScrollView, StyleSheet} from 'react-native';
+import {Button, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
 import ScreenBackground from '../../components/ScreenBackground';
@@ -27,6 +27,18 @@ export default function PrivacyScreen() {
               to collect minimal data and store it for a minimal time, and I'll
               report the details here.
             </Text>
+            <Text style={styles.paragraph}>
+              The Surely app and backend are both open source, so if you'd like
+              to be safer, you can build one or both of them yourself:
+            </Text>
+            <Button
+              style={styles.button}
+              onPress={() =>
+                Linking.openURL('https://github.com/codingitwrong/surely-expo')
+              }
+            >
+              Source Available via GitHub
+            </Button>
           </CenterColumn>
         </SafeAreaView>
       </ScrollView>
