@@ -18,8 +18,8 @@ export default function PrivacyScreen() {
             </Text>
             <Text style={styles.paragraph}>
               The only data Surely collects is the data you save into the app,
-              for the purposes of letting you use the app. I don't use any
-              analytics, tracking, or data brokering of any kind.
+              for the purposes of letting you use the app. Surely doesn't use
+              any analytics, tracking, or data brokering of any kind.
             </Text>
             <Text style={styles.paragraph}>
               If users start experiencing crashes I may add a crash reporting

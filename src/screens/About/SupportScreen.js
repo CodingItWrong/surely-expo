@@ -14,6 +14,7 @@ export default function SupportScreen() {
             <Text>You have three options for getting support with Surely:</Text>
             <View style={styles.buttonContainer}>
               <Button
+                testID="chat-button"
                 mode="contained"
                 style={styles.button}
                 onPress={() =>
@@ -23,6 +24,7 @@ export default function SupportScreen() {
                 Chat With the Surely Community
               </Button>
               <Button
+                testID="issues-button"
                 mode="contained"
                 style={styles.button}
                 onPress={() =>
@@ -34,6 +36,7 @@ export default function SupportScreen() {
                 Open a GitHub Issue
               </Button>
               <Button
+                testID="email-button"
                 mode="contained"
                 style={styles.button}
                 onPress={() => Linking.openURL('mailto:support@surelytodo.com')}
