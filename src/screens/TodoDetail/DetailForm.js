@@ -5,6 +5,7 @@ import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
+import ButtonGroup from '../../components/ButtonGroup';
 import ErrorMessage from '../../components/ErrorMessage';
 import PaperDropdown from '../../components/PaperDropdown';
 import {useCategories} from '../../data/categories';
@@ -110,25 +111,27 @@ export default function DetailForm({todo, onSave, onCancel}) {
           style={styles.notesInput}
         />
         <ErrorMessage>{errorMessage}</ErrorMessage>
-        <Button
-          testID="cancel-button"
-          mode="outlined"
-          onPress={onCancel}
-          style={sharedStyles.buttonSpacing}
-          disabled={isLoading}
-        >
-          Cancel
-        </Button>
-        <Button
-          testID="save-button"
-          mode="contained"
-          icon="content-save"
-          onPress={handlePressSave}
-          style={sharedStyles.buttonSpacing}
-          disabled={isLoading}
-        >
-          Save
-        </Button>
+        <ButtonGroup>
+          <Button
+            testID="cancel-button"
+            mode="outlined"
+            onPress={onCancel}
+            style={sharedStyles.buttonSpacing}
+            disabled={isLoading}
+          >
+            Cancel
+          </Button>
+          <Button
+            testID="save-button"
+            mode="contained"
+            icon="content-save"
+            onPress={handlePressSave}
+            style={sharedStyles.buttonSpacing}
+            disabled={isLoading}
+          >
+            Save
+          </Button>
+        </ButtonGroup>
       </View>
     </KeyboardAwareScrollView>
   );
