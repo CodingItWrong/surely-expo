@@ -5,14 +5,17 @@ import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
+import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../components/ButtonGroup';
 import ErrorMessage from '../../components/ErrorMessage';
 import PaperDropdown from '../../components/PaperDropdown';
 import {useCategories} from '../../data/categories';
+import sharedStyleQueries from '../../sharedStyleQueries';
 import sharedStyles from '../../sharedStyles';
 import {relativeDate} from '../../utils/time';
 
 export default function DetailForm({todo, onSave, onCancel}) {
+  const responsiveStyles = useStyleQueries(sharedStyleQueries);
   const categoryClient = useCategories();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState(todo.attributes.name ?? '');
@@ -116,7 +119,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
             testID="cancel-button"
             mode="outlined"
             onPress={onCancel}
-            style={sharedStyles.buttonSpacing}
+            style={responsiveStyles.button}
             disabled={isLoading}
           >
             Cancel
@@ -126,7 +129,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
             mode="contained"
             icon="content-save"
             onPress={handlePressSave}
-            style={sharedStyles.buttonSpacing}
+            style={responsiveStyles.button}
             disabled={isLoading}
           >
             Save
