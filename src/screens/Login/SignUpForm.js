@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../components/ButtonGroup';
+import CenterColumn from '../../components/CenterColumn';
 import ErrorMessage from '../../components/ErrorMessage';
 import ScreenBackground from '../../components/ScreenBackground';
 import {useUsers} from '../../data/users';
@@ -147,7 +148,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
 
   return (
     <ScreenBackground style={sharedStyles.bodyPadding}>
-      {contents()}
+      <CenterColumn>{contents()}</CenterColumn>
     </ScreenBackground>
   );
 }
