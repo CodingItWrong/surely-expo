@@ -1,6 +1,6 @@
-import {useLinkTo} from '@react-navigation/native';
+import {useFocusEffect, useLinkTo} from '@react-navigation/native';
 import sortBy from 'lodash/sortBy';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import {FlatList, Platform, StyleSheet, View} from 'react-native';
 import {Button, IconButton, List} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -42,11 +42,13 @@ export default function CategoryList() {
     }
   }, [categoryClient]);
 
-  useEffect(() => {
-    loadFromServer().then(() => {
-      setShowLoadingIndicator(false);
-    });
-  }, [loadFromServer]);
+  useFocusEffect(
+    useCallback(() => {
+      loadFromServer().then(() => {
+        setShowLoadingIndicator(false);
+      });
+    }, [loadFromServer]),
+  );
 
   async function reloadFromPull() {
     setIsRefreshing(true);
