@@ -93,7 +93,7 @@ export default function TodoListScreen({
     const message = searchText ? noSearchResultsMessage : noTodosMessage;
     return (
       <>
-        {paginate && (
+        {paginate && todoSections.length > 0 && (
           <PaginationControls
             pageNumber={pageNumber}
             maxPageNumber={maxPageNumber}
