@@ -8,7 +8,7 @@ import sharedStyles from '../../sharedStyles';
 export default function PrivacyScreen() {
   return (
     <ScreenBackground>
-      <ScrollView contentContainerStyle={sharedStyles.bodyContainer}>
+      <ScrollView contentContainerStyle={sharedStyles.bodyPadding}>
         <SafeAreaView edges={['left', 'right', 'bottom']}>
           <CenterColumn>
             <Text style={styles.paragraph}>

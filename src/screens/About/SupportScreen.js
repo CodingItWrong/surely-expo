@@ -9,7 +9,7 @@ import sharedStyles from '../../sharedStyles';
 export default function SupportScreen() {
   return (
     <ScreenBackground>
-      <ScrollView contentContainerStyle={sharedStyles.bodyContainer}>
+      <ScrollView contentContainerStyle={sharedStyles.bodyPadding}>
         <SafeAreaView edges={['left', 'right', 'bottom']}>
           <CenterColumn>
             <Text>You have three options for getting support with Surely:</Text>
