@@ -9,6 +9,7 @@ import {useToken} from './data/token';
 import AboutScreen from './screens/About/AboutScreen';
 import PrivacyScreen from './screens/About/PrivacyScreen';
 import SupportScreen from './screens/About/SupportScreen';
+import ThanksScreen from './screens/About/ThanksScreen';
 import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
 import LoginForm from './screens/Login/LoginForm';
@@ -71,6 +72,7 @@ const linking = {
           AboutScreen: '/about',
           SupportScreen: '/about/support',
           PrivacyScreen: '/about/privacy',
+          ThanksScreen: '/about/say-thanks',
         },
       },
       'Sign in': {
@@ -261,6 +263,11 @@ const About = () => (
       name="PrivacyScreen"
       component={PrivacyScreen}
       options={{title: 'Privacy Policy'}}
+    />
+    <AboutStack.Screen
+      name="ThanksScreen"
+      component={ThanksScreen}
+      options={{title: 'Ways to Say Thanks'}}
     />
   </AboutStack.Navigator>
 );

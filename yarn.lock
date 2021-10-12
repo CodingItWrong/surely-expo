@@ -4121,6 +4121,16 @@ expo-keep-awake@~10.0.0:
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.0.tgz#275a3e02f99bc0429790047add126c1dcce60d63"
   integrity sha512-x5zRTjIvSry/EISKvjWpnLERGZj5maCwEouOfiDk0JPa0UTg/zFkT7pmiadAfHT95XUgjjb2DOku+wj6J7el7Q==
 
+expo-linking@~2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-2.4.1.tgz#f8eda31308b6fcf2430ad1201f9c6e1e35bca0b5"
+  integrity sha512-2ZMtv69CIktLvt/qpdgcb/ircouA6dm55u7a0iD6FQK+Mnqk+L5Br7UGucGMT2ulJXtIU5B4RI6N26sGACrZXQ==
+  dependencies:
+    expo-constants "~12.1.0"
+    invariant "^2.2.4"
+    qs "^6.5.0"
+    url-parse "^1.4.4"
+
 expo-modules-autolinking@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.3.2.tgz#1c4d9472854765e0fe5a7c85b1482c19955cbf00"
@@ -4160,6 +4170,13 @@ expo-status-bar@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.1.0.tgz#b1015a69c8563b7cadcb5b6c726227397610725d"
   integrity sha512-XgAbGfDV/Q6br2h4yzQwcZRYi37bZ/nvc06vvaJ7i7w9tRxb05OJmXBxl7ywkKlFCMcN6q3Miaf2wnzEgMwJoQ==
+
+expo-store-review@~5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.0.1.tgz#caf95add71db54ee176bea26b4b9f9fd7953bbd4"
+  integrity sha512-v5NObHYSmz+le22gGf7BjOdnVL7u+rfuxbM9ety7WLZWg0KI5kR3I1iUtRC0P2PmH7jVUE6VU/8awZXCdo0gKw==
+  dependencies:
+    expo-modules-core "~0.4.2"
 
 expo@^43.0.0-beta.3:
   version "43.0.0-beta.3"
@@ -7601,6 +7618,13 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+qs@^6.5.0:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
+  integrity sha512-M528Hph6wsSVOBiYUnGf+K/7w0hNshs/duGsNXPUCLH5XAqjEtiPGwNONLV0tBH8NoGb0mvD5JubnUTrujKDTg==
+  dependencies:
+    side-channel "^1.0.4"
 
 qs@~6.5.2:
   version "6.5.2"

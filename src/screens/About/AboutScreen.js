@@ -1,6 +1,6 @@
 import {useLinkTo} from '@react-navigation/native';
 import Constants from 'expo-constants';
-import {Linking, Platform, ScrollView, Share, StyleSheet} from 'react-native';
+import {Linking, Platform, ScrollView, StyleSheet} from 'react-native';
 import {Button, Divider, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
@@ -10,7 +10,6 @@ import sharedStyles from '../../sharedStyles';
 
 const SURELY_URL = 'https://surelytodo.com';
 const IS_WEB = Platform.OS === 'web';
-const IS_SHARE_SUPPORTED = !IS_WEB || Boolean(navigator.share);
 
 export default function AboutScreen() {
   const linkTo = useLinkTo();
@@ -38,17 +37,16 @@ export default function AboutScreen() {
                 style={styles.button}
                 onPress={() => linkTo('/about/support')}
               >
-                Support
+                Get Support
               </Button>
-              {IS_SHARE_SUPPORTED && (
-                <Button
-                  mode="contained"
-                  style={styles.button}
-                  onPress={() => Share.share({url: SURELY_URL})}
-                >
-                  Share Surely
-                </Button>
-              )}
+              <Button
+                testID="thanks-button"
+                mode="contained"
+                style={styles.button}
+                onPress={() => linkTo('/about/say-thanks')}
+              >
+                Ways to Say Thanks
+              </Button>
               {!IS_WEB && (
                 <Button
                   style={styles.button}
