@@ -16,6 +16,6 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    maxWidth: 634, // 834 max portrait width for sub-12.9 ipads - 200 for sidebar
+    maxWidth: 640, // fits sub-12.9 ipad portrait and half high-res 13" screen
   },
 });
