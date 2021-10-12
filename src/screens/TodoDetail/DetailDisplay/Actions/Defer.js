@@ -1,8 +1,9 @@
 import {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {DatePickerModal} from 'react-native-paper-dates';
+import {breakpointMedium} from '../../../../breakpoints';
 import ErrorMessage from '../../../../components/ErrorMessage';
-import VerticalButtonGroup from '../../../../components/VerticalButtonGroup';
 import {useTodos} from '../../../../data/todos';
 import sharedStyles from '../../../../sharedStyles';
 import {dayOfWeek, deferDate} from '../../../../utils/time';
@@ -39,57 +40,59 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   return (
     <>
       <ErrorMessage>{errorMessage}</ErrorMessage>
-      <VerticalButtonGroup>
-        <Button
-          testID="cancel-defer-button"
-          mode="outlined"
-          onPress={onCancel}
-          style={sharedStyles.buttonSpacing}
-          disabled={isLoading}
-        >
-          Cancel
-        </Button>
-        <DeferButton
-          testID="defer-1-day-button"
-          todo={todo}
-          numDays={1}
-          label="1 Day"
-          onDefer={handleDeferUntil}
-          disabled={isLoading}
-        />
-        <DeferButton
-          testID="defer-2-days-button"
-          todo={todo}
-          numDays={2}
-          label="2 Days"
-          onDefer={handleDeferUntil}
-          disabled={isLoading}
-        />
-        <DeferButton
-          testID="defer-3-days-button"
-          todo={todo}
-          numDays={3}
-          label="3 Days"
-          onDefer={handleDeferUntil}
-          disabled={isLoading}
-        />
-        <DeferButton
-          testID="defer-1-week-button"
-          todo={todo}
-          numDays={7}
-          label="1 Week"
-          onDefer={handleDeferUntil}
-          disabled={isLoading}
-        />
-        <Button
-          mode="outlined"
-          onPress={() => setIsDeferredUntilModalOpen(true)}
-          style={sharedStyles.buttonSpacing}
-          disabled={isLoading}
-        >
-          Pick Date
-        </Button>
-      </VerticalButtonGroup>
+      <View style={styles.buttonColumnWrapper}>
+        <View style={styles.buttonColumn}>
+          <Button
+            testID="cancel-defer-button"
+            mode="outlined"
+            onPress={onCancel}
+            style={sharedStyles.buttonSpacing}
+            disabled={isLoading}
+          >
+            Cancel
+          </Button>
+          <DeferButton
+            testID="defer-1-day-button"
+            todo={todo}
+            numDays={1}
+            label="1 Day"
+            onDefer={handleDeferUntil}
+            disabled={isLoading}
+          />
+          <DeferButton
+            testID="defer-2-days-button"
+            todo={todo}
+            numDays={2}
+            label="2 Days"
+            onDefer={handleDeferUntil}
+            disabled={isLoading}
+          />
+          <DeferButton
+            testID="defer-3-days-button"
+            todo={todo}
+            numDays={3}
+            label="3 Days"
+            onDefer={handleDeferUntil}
+            disabled={isLoading}
+          />
+          <DeferButton
+            testID="defer-1-week-button"
+            todo={todo}
+            numDays={7}
+            label="1 Week"
+            onDefer={handleDeferUntil}
+            disabled={isLoading}
+          />
+          <Button
+            mode="outlined"
+            onPress={() => setIsDeferredUntilModalOpen(true)}
+            style={sharedStyles.buttonSpacing}
+            disabled={isLoading}
+          >
+            Pick Date
+          </Button>
+        </View>
+      </View>
       <DatePickerModal
         visible={isDeferredUntilModalOpen}
         mode="single"
@@ -119,3 +122,14 @@ function DeferButton({testID, todo, numDays, label, onDefer, disabled}) {
     </Button>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonColumnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonColumn: {
+    flex: 1,
+    maxWidth: breakpointMedium,
+  },
+});
