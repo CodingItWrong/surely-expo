@@ -17,7 +17,7 @@ export default function DetailDisplay({
       edges={['left', 'right', 'bottom']}
       style={styles.safeAreaView}
     >
-      <ScrollView contentContainerStyle={sharedStyles.bodyContainer}>
+      <ScrollView contentContainerStyle={sharedStyles.bodyPadding}>
         <View style={styles.titleRow}>
           <Pressable onPress={onEdit} style={styles.title}>
             <Title>{todo.attributes.name}</Title>

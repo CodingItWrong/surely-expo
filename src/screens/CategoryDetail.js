@@ -83,7 +83,7 @@ export default function CategoryDetail({route}) {
     }
 
     return (
-      <View style={sharedStyles.bodyContainer}>
+      <View style={sharedStyles.bodyPadding}>
         <TextInput
           testID="name-field"
           label="Category name"

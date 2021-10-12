@@ -69,7 +69,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
 
   return (
     <KeyboardAwareScrollView>
-      <View style={sharedStyles.bodyContainer}>
+      <View style={sharedStyles.bodyPadding}>
         <TextInput
           testID="name-field"
           label="Todo name"

@@ -79,7 +79,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   function contents() {
     if (errorMessage) {
       return (
-        <View style={sharedStyles.bodyContainer}>
+        <View style={sharedStyles.bodyPadding}>
           <ErrorMessage>{errorMessage}</ErrorMessage>
           <Button testID="retry-button" mode="contained" onPress={loadTodo}>
             Retry
