@@ -5,10 +5,10 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
 import ScreenBackground from '../../components/ScreenBackground';
 import VerticalButtonGroup from '../../components/VerticalButtonGroup';
+import {APP_STORE_URL} from '../../constants';
 import sharedStyles from '../../sharedStyles';
 
 const SURELY_URL = 'https://surelytodo.com';
-const SURELY_STORE_URL = 'https://apps.apple.com/us/app/surely/id1586633713';
 const IS_WEB = Platform.OS === 'web';
 const IS_SHARE_SUPPORTED = !IS_WEB || Boolean(navigator.share);
 
@@ -25,7 +25,7 @@ export default function ThanksScreen() {
     if (await StoreReview.hasAction()) {
       StoreReview.requestReview();
     } else {
-      Linking.openURL(SURELY_STORE_URL);
+      Linking.openURL(APP_STORE_URL);
     }
   }
 

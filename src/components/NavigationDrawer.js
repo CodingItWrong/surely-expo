@@ -1,6 +1,8 @@
 import {DrawerContentScrollView} from '@react-navigation/drawer';
+import {Platform, StyleSheet, View} from 'react-native';
 import {Drawer, withTheme} from 'react-native-paper';
 import {useToken} from '../data/token';
+import DownloadOnTheAppStoreButton from './DownloadOnTheAppStoreButton';
 
 const ICON_FOR_ROUTE = {
   Available: 'clock-outline',
@@ -10,6 +12,8 @@ const ICON_FOR_ROUTE = {
   Deleted: 'delete',
   Categories: 'tag',
 };
+
+const IS_WEB = Platform.OS === 'web';
 
 function CustomNavigationDrawer({theme, ...navProps}) {
   const {state, navigation} = navProps;
@@ -45,8 +49,21 @@ function CustomNavigationDrawer({theme, ...navProps}) {
           onPress={signOut}
         />
       )}
+      {IS_WEB && (
+        <View style={styles.appStoreButtonContainer}>
+          <DownloadOnTheAppStoreButton />
+        </View>
+      )}
     </DrawerContentScrollView>
   );
 }
 
 export default withTheme(CustomNavigationDrawer);
+
+const styles = StyleSheet.create({
+  appStoreButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+});
