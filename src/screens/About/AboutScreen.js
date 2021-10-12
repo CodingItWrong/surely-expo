@@ -16,7 +16,7 @@ export default function AboutScreen() {
   const linkTo = useLinkTo();
   return (
     <ScreenBackground>
-      <ScrollView contentContainerStyle={sharedStyles.bodyContainer}>
+      <ScrollView contentContainerStyle={sharedStyles.bodyPadding}>
         <SafeAreaView edges={['left', 'right', 'bottom']}>
           <CenterColumn>
             <Title style={styles.title}>
