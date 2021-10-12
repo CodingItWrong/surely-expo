@@ -45,21 +45,23 @@ export default function ThanksScreen() {
                 style={styles.button}
                 onPress={handleShare}
               >
-                Share Surely on Social Media
+                Share with Friends
               </Button>
-              <Button
-                mode="contained"
-                style={styles.button}
-                onPress={handleReview}
-              >
-                Rate or Review on the App Store
-              </Button>
+              {!IS_WEB && (
+                <Button
+                  mode="contained"
+                  style={styles.button}
+                  onPress={handleReview}
+                >
+                  Rate or Review the App
+                </Button>
+              )}
               <Button
                 mode="contained"
                 style={styles.button}
                 onPress={() => Linking.openURL('https://codingitwrong.com')}
               >
-                Follow my Blog, Videos, or Social Media
+                Follow Me
               </Button>
             </VerticalButtonGroup>
           </CenterColumn>
