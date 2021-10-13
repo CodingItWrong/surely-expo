@@ -22,6 +22,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Unit Tests
         run: yarn test --watchAll=false
+      - name: ESLint
+        run: yarn lint
       - name: Install Expo CLI
         run: yarn global add expo-cli
       - name: Install Sharp CLI
