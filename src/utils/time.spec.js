@@ -16,12 +16,14 @@ describe('time utilities', () => {
     });
 
     // TODO: handle time zone difference on CI
-    it.skip('handles ISO date strings including time zone adjustment', () => {
+    /*
+    it('handles ISO date strings including time zone adjustment', () => {
       const dateString = '2021-01-10T18:14:00.000Z';
       const result = relativeDatetime(dateString, {now});
 
       expect(result).toEqual('today at 1:14 PM');
     });
+    */
 
     it('displays yesterday as "yesterday"', () => {
       const date = new Date(2021, 0, 9, 13, 14);

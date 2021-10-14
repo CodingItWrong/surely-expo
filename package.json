@@ -8,7 +8,7 @@
     "eject": "expo eject",
     "test": "jest src --watchAll",
     "cypress": "cypress open",
-    "lint": "eslint \"**/*.js\"",
+    "lint": "eslint cypress src \"*.js\"",
     "build:web": "expo build:web"
   },
   "dependencies": {
