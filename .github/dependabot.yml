@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     ignore:
       # the following are locked to Expo and will be updated along with it
       - dependency-name: "expo"
