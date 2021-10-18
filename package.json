@@ -24,7 +24,7 @@
     "expo-linking": "~2.4.1",
     "expo-secure-store": "~11.0.1",
     "expo-status-bar": "~1.1.0",
-    "expo-store-review": "~5.0.1",
+    "expo-store-review": "~5.0.2",
     "lodash": "^4.17.21",
     "react": "17.0.1",
     "react-dom": "17.0.1",
