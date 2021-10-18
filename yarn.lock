@@ -4167,10 +4167,10 @@ expo-modules-autolinking@~0.3.2:
     find-up "~5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@~0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.2.tgz#21be0246817609da6d77f8cc58bcad473f3f35a8"
-  integrity sha512-s4vgLCs3ce2NGgGekNb83O1c/+nh5jLm9n68CgkRI+11Nlq4SerYhJAiJnQxK+VhTZQVQKDkNhydRxFJfzVIgA==
+expo-modules-core@~0.4.2, expo-modules-core@~0.4.3:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.4.tgz#0b6fe50495789f07742a601d5cfd7806dc786060"
+  integrity sha512-/pvI235uApWp156SP8Ve4a/adz2zx/41hppa0Q/XpRe9WPqHoOilOsgcqXuzjZhwyQwzeyBIPEYuqBMO+Vn41g==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
@@ -4196,12 +4196,12 @@ expo-status-bar@~1.1.0:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.1.0.tgz#b1015a69c8563b7cadcb5b6c726227397610725d"
   integrity sha512-XgAbGfDV/Q6br2h4yzQwcZRYi37bZ/nvc06vvaJ7i7w9tRxb05OJmXBxl7ywkKlFCMcN6q3Miaf2wnzEgMwJoQ==
 
-expo-store-review@~5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.0.1.tgz#caf95add71db54ee176bea26b4b9f9fd7953bbd4"
-  integrity sha512-v5NObHYSmz+le22gGf7BjOdnVL7u+rfuxbM9ety7WLZWg0KI5kR3I1iUtRC0P2PmH7jVUE6VU/8awZXCdo0gKw==
+expo-store-review@~5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.0.2.tgz#c5241a88283cacba642bc05c24df90ef27150d53"
+  integrity sha512-G1xrfknk8LOYZgtiLGA1Jd6Hhbhrxnw3du/+mLYoC8vWtj3D5uCpSlqHW2pv0xvNuX3n+ceadHFD0fhRfA4T5A==
   dependencies:
-    expo-modules-core "~0.4.2"
+    expo-modules-core "~0.4.3"
 
 expo@^43.0.0-beta.3:
   version "43.0.0-beta.3"
