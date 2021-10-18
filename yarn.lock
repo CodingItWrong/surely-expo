@@ -4085,12 +4085,12 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-expo-app-loading@1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/expo-app-loading/-/expo-app-loading-1.1.4.tgz#4e7b9c5c0600d968ce61a0465e48a8138e6b94d3"
-  integrity sha512-juKf1NZknMIYVYjtarOQCAvGK5OCCmAfsmp3PtaCXJ1ri9VLtIksklTzgSEMPRkCbIyNWigsAnbLu1UPT3Oosg==
+expo-app-loading@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/expo-app-loading/-/expo-app-loading-1.2.0.tgz#7c6352163b53ecec529a663573fdc371d98c2908"
+  integrity sha512-cQs5DkBBd8yiA5iZGV1AilRcjzgB/UXdOrtYWwVRpPTCmZzxk4sveYon72VNgAGtEu+fdNlmrbrBWTzd8GBGKQ==
   dependencies:
-    expo-splash-screen "~0.13.1"
+    expo-splash-screen "~0.13.2"
 
 expo-application@~4.0.0:
   version "4.0.0"
@@ -4167,7 +4167,7 @@ expo-modules-autolinking@~0.3.2:
     find-up "~5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@~0.4.2, expo-modules-core@~0.4.3:
+expo-modules-core@~0.4.2, expo-modules-core@~0.4.3, expo-modules-core@~0.4.4:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.4.tgz#0b6fe50495789f07742a601d5cfd7806dc786060"
   integrity sha512-/pvI235uApWp156SP8Ve4a/adz2zx/41hppa0Q/XpRe9WPqHoOilOsgcqXuzjZhwyQwzeyBIPEYuqBMO+Vn41g==
@@ -4182,14 +4182,14 @@ expo-secure-store@~11.0.1:
   dependencies:
     expo-modules-core "~0.4.2"
 
-expo-splash-screen@~0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.13.1.tgz#169e5cbd3ddbc964878623387e1edea98b0b95a7"
-  integrity sha512-RpxSLI6U0WVb1JYe2EHBcBRmczHsWBEzvZWDPRY484KXkKQcljUcAwUynsWfEcQEKUG7gG3sQtveIJVjfa7FzA==
+expo-splash-screen@~0.13.2:
+  version "0.13.3"
+  resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.13.3.tgz#9dea843f480e2bb2c4ba6029d7a7c529c209d19e"
+  integrity sha512-dT9j5RTzKHEIftQdRbSYjc66WFqBjqDCdCCJUPfWvOmB3TqXcWbUz1DdlfvZ3IkV5ENRhUOMAKrKC0Byx8PuZg==
   dependencies:
     "@expo/configure-splash-screen" "^0.6.0"
     "@expo/prebuild-config" "^3.0.0"
-    expo-modules-core "~0.4.2"
+    expo-modules-core "~0.4.4"
 
 expo-status-bar@~1.1.0:
   version "1.1.0"
