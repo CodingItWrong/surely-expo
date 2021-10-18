@@ -4146,12 +4146,12 @@ expo-keep-awake@~10.0.0:
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.0.tgz#275a3e02f99bc0429790047add126c1dcce60d63"
   integrity sha512-x5zRTjIvSry/EISKvjWpnLERGZj5maCwEouOfiDk0JPa0UTg/zFkT7pmiadAfHT95XUgjjb2DOku+wj6J7el7Q==
 
-expo-linking@~2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-2.4.1.tgz#f8eda31308b6fcf2430ad1201f9c6e1e35bca0b5"
-  integrity sha512-2ZMtv69CIktLvt/qpdgcb/ircouA6dm55u7a0iD6FQK+Mnqk+L5Br7UGucGMT2ulJXtIU5B4RI6N26sGACrZXQ==
+expo-linking@~2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-2.4.2.tgz#b042f196c9a21ee0de25ca98763592d45524b6f2"
+  integrity sha512-uwUaC0npP2jQCyFD7+KfJqT+tde/WDcj56lkhd9hewnPGaYsd98pNStT74ZbMD9ewz/0WW+kjevyfmgLSe58UQ==
   dependencies:
-    expo-constants "~12.1.0"
+    expo-constants "~12.1.1"
     invariant "^2.2.4"
     qs "^6.5.0"
     url-parse "^1.4.4"
