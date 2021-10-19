@@ -4167,7 +4167,7 @@ expo-modules-autolinking@~0.3.2:
     find-up "~5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@~0.4.2, expo-modules-core@~0.4.3, expo-modules-core@~0.4.4:
+expo-modules-core@~0.4.3, expo-modules-core@~0.4.4:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.4.tgz#0b6fe50495789f07742a601d5cfd7806dc786060"
   integrity sha512-/pvI235uApWp156SP8Ve4a/adz2zx/41hppa0Q/XpRe9WPqHoOilOsgcqXuzjZhwyQwzeyBIPEYuqBMO+Vn41g==
@@ -4175,12 +4175,12 @@ expo-modules-core@~0.4.2, expo-modules-core@~0.4.3, expo-modules-core@~0.4.4:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
-expo-secure-store@~11.0.1:
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-11.0.1.tgz#4b8cd94e13c84e50a528b17498da2e4f128c2edc"
-  integrity sha512-+1l0UaFSZy6d3wqOyjHcB4cnO1fdUx5mD/ak2SUcxs+sjzxcy9Zo76UYfK+ZqJlWjTtBF7iMlFGrry8i9+K8NQ==
+expo-secure-store@~11.0.2:
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-11.0.2.tgz#9d18104283d78349216acc0fd9745ad6db65af8b"
+  integrity sha512-CF7xrQMltjDicd5oHWapiDu4REuJG9TgokRku8cLE+9CWYzIIFnwC5/9nOfeMpkivuEleDL+PG1xXoPoVOS5zg==
   dependencies:
-    expo-modules-core "~0.4.2"
+    expo-modules-core "~0.4.3"
 
 expo-splash-screen@~0.13.2:
   version "0.13.3"
