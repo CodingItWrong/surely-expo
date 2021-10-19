@@ -43,7 +43,7 @@
     "@babel/core": "^7.12.9",
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^4.0.2",
-    "@testing-library/react-native": "^7.2.0",
+    "@testing-library/react-native": "^8.0.0",
     "babel-jest": "^27.3.0",
     "cypress": "^8.6.0",
     "eslint": "^7.32.0",
