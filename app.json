@@ -31,7 +31,7 @@
       "themeColor": "#4caf50",
       "favicon": "./assets/favicon.png"
     },
-    "description": "Native and web client for surelytodo.com todo list app",
+    "description": "A focused todo app giving you only what you need to get your todos done.",
     "githubUrl": "https://github.com/CodingItWrong/surely-expo/"
   }
 }
