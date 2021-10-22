@@ -1446,7 +1446,7 @@
     slash "^3.0.0"
     strip-ansi "^6.0.0"
 
-"@jest/create-cache-key-function@^26.5.0":
+"@jest/create-cache-key-function@^26.5.0", "@jest/create-cache-key-function@^26.6.2":
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-26.6.2.tgz#04cf439207a4fd12418d8aee551cddc86f9ac5f5"
   integrity sha512-LgEuqU1f/7WEIPYqwLPIvvHuc1sB6gMVbT6zWhin3txYUNYK/kGQrC1F2WR4gR34YlI9bBtViTm5z98RqVZAaw==
@@ -4085,12 +4085,12 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-expo-app-loading@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/expo-app-loading/-/expo-app-loading-1.2.0.tgz#7c6352163b53ecec529a663573fdc371d98c2908"
-  integrity sha512-cQs5DkBBd8yiA5iZGV1AilRcjzgB/UXdOrtYWwVRpPTCmZzxk4sveYon72VNgAGtEu+fdNlmrbrBWTzd8GBGKQ==
+expo-app-loading@~1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/expo-app-loading/-/expo-app-loading-1.2.1.tgz#d097abcbb3bb7cae0646f29560a431c9bff95169"
+  integrity sha512-ROQoPdwQOU2PjskmUMzJ5rq3gUkEF3V/ACM7Z6X2y7spsj5xqp/YSTLzEOlGL69DNYn5A3znvN5LUZ3e1gsnXg==
   dependencies:
-    expo-splash-screen "~0.13.2"
+    expo-splash-screen "~0.13.3"
 
 expo-application@~4.0.0:
   version "4.0.0"
@@ -4115,6 +4115,15 @@ expo-constants@~12.1.1:
   dependencies:
     "@expo/config" "^5.0.9"
     expo-modules-core "~0.4.3"
+    uuid "^3.3.2"
+
+expo-constants@~12.1.2:
+  version "12.1.2"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-12.1.2.tgz#b466e82f22653ef725d76fc22aa2e4aa6a17e0d7"
+  integrity sha512-fhSAOOpJJczqa1afKaCPyXmlKHotNqXApZax9AvrSmjmDtr+JWp9x+WGf8nyghgl0PTH7yeR2Rm4CXp8f+m2oA==
+  dependencies:
+    "@expo/config" "^5.0.9"
+    expo-modules-core "~0.4.4"
     uuid "^3.3.2"
 
 expo-error-recovery@~3.0.2:
@@ -4175,14 +4184,14 @@ expo-modules-core@~0.4.3, expo-modules-core@~0.4.4:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
-expo-secure-store@~11.0.2:
-  version "11.0.2"
-  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-11.0.2.tgz#9d18104283d78349216acc0fd9745ad6db65af8b"
-  integrity sha512-CF7xrQMltjDicd5oHWapiDu4REuJG9TgokRku8cLE+9CWYzIIFnwC5/9nOfeMpkivuEleDL+PG1xXoPoVOS5zg==
+expo-secure-store@~11.0.3:
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-11.0.3.tgz#b71c7837925ac7811ed4d25dfb6a61dbdb2eb3b9"
+  integrity sha512-/YJV+kUWdDFYzwNibJx/noLGFG/0nN7TjoF67lpLBxd+X3KwbwrSJo6jy2LBZT49qBlptx4dPFLCjtnx6uaUiw==
   dependencies:
-    expo-modules-core "~0.4.3"
+    expo-modules-core "~0.4.4"
 
-expo-splash-screen@~0.13.2:
+expo-splash-screen@~0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.13.3.tgz#9dea843f480e2bb2c4ba6029d7a7c529c209d19e"
   integrity sha512-dT9j5RTzKHEIftQdRbSYjc66WFqBjqDCdCCJUPfWvOmB3TqXcWbUz1DdlfvZ3IkV5ENRhUOMAKrKC0Byx8PuZg==
@@ -4196,12 +4205,12 @@ expo-status-bar@~1.1.0:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.1.0.tgz#b1015a69c8563b7cadcb5b6c726227397610725d"
   integrity sha512-XgAbGfDV/Q6br2h4yzQwcZRYi37bZ/nvc06vvaJ7i7w9tRxb05OJmXBxl7ywkKlFCMcN6q3Miaf2wnzEgMwJoQ==
 
-expo-store-review@~5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.0.2.tgz#c5241a88283cacba642bc05c24df90ef27150d53"
-  integrity sha512-G1xrfknk8LOYZgtiLGA1Jd6Hhbhrxnw3du/+mLYoC8vWtj3D5uCpSlqHW2pv0xvNuX3n+ceadHFD0fhRfA4T5A==
+expo-store-review@~5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.0.3.tgz#380bc6d220137d17024b0489072af48c2a05806c"
+  integrity sha512-/ixcIrB+qgNbZJhgs0Q3axi81Glh1YBev8cHYGl7VtoKp0lRZvY55qr/9kZxmlTnm3DgHdMSiy+BIt4OGXilHw==
   dependencies:
-    expo-modules-core "~0.4.3"
+    expo-modules-core "~0.4.4"
 
 expo@^43.0.0-beta.4:
   version "43.0.0-beta.4"
@@ -5509,12 +5518,13 @@ jest-environment-node@^26.6.2:
     jest-mock "^26.6.2"
     jest-util "^26.6.2"
 
-jest-expo@^43.0.0-beta:
-  version "43.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-43.0.0-beta.1.tgz#07feb68e6161a1babbf053e150b5afa989b7a118"
-  integrity sha512-u10xWDaLgUDbkA5vFW0gU0MrOArX3J/YW15hU+jtTXNcKjFQWVGEmIpnUX10qOYLl064QjRuefeKEePLIsm8tQ==
+jest-expo@^43.0.0:
+  version "43.0.1"
+  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-43.0.1.tgz#98cd432e087338f21a73100da3e60130904616f6"
+  integrity sha512-wB6Cv7e8NO7cYDIdUMT2fP0NEnY4/Uu6Ern/j8OXTMhwkMFVZl7qf7CesEopNz4MqUweBWyi+zkt0cxwCEaC/A==
   dependencies:
     "@expo/config" "^5.0.9"
+    "@jest/create-cache-key-function" "^26.6.2"
     babel-jest "^26.6.3"
     find-up "^5.0.0"
     jest "^26.6.3"
