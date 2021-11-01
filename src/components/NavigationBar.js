@@ -18,6 +18,7 @@ export default function CustomNavigationBar({navigation, options, back}) {
       {showDrawerToggle && (
         <Appbar.Action
           testID="toggle-navigation-button"
+          accessibilityLabel="Menu"
           icon="menu"
           onPress={navigation.toggleDrawer}
         />

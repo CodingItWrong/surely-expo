@@ -87,6 +87,7 @@ export default function CategoryDetail({route}) {
         <TextInput
           testID="name-field"
           label="Category name"
+          accessibilityLabel="Category name"
           value={name}
           onChangeText={setName}
           mode="outlined"
@@ -101,6 +102,7 @@ export default function CategoryDetail({route}) {
             onPress={goBack}
             style={responsiveStyles.button}
             disabled={isLoading}
+            accessibilityLabel="Cancel"
           >
             Cancel
           </Button>
@@ -111,6 +113,7 @@ export default function CategoryDetail({route}) {
               onPress={handleDelete}
               style={responsiveStyles.button}
               disabled={isLoading}
+              accessibilityLabel="Delete"
             >
               Delete
             </Button>
@@ -122,6 +125,7 @@ export default function CategoryDetail({route}) {
             onPress={handleSave}
             style={responsiveStyles.button}
             disabled={isLoading}
+            accessibilityLabel="Save"
           >
             Save
           </Button>

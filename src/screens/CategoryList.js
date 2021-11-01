@@ -164,6 +164,7 @@ export default function CategoryList() {
             mode="outlined"
             icon="plus"
             onPress={handleAdd}
+            accessibilityLabel="Add"
           >
             Add
           </Button>

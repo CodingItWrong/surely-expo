@@ -48,6 +48,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
             onPress={onCancel}
             style={sharedStyles.buttonSpacing}
             disabled={isLoading}
+            accessibilityLabel="Cancel"
           >
             Cancel
           </Button>
@@ -88,6 +89,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
             onPress={() => setIsDeferredUntilModalOpen(true)}
             style={sharedStyles.buttonSpacing}
             disabled={isLoading}
+            accessibilityLabel="Pick Date"
           >
             Pick Date
           </Button>
@@ -117,6 +119,7 @@ function DeferButton({testID, todo, numDays, label, onDefer, disabled}) {
       onPress={() => onDefer(date)}
       style={sharedStyles.buttonSpacing}
       disabled={disabled}
+      accessibilityLabel={label}
     >
       {label} - {dayOfWeek(date)}
     </Button>

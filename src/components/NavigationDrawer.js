@@ -37,6 +37,7 @@ function CustomNavigationDrawer({theme, ...navProps}) {
           testID={`${route.name.toLowerCase()}-nav-button`}
           key={route.key}
           label={route.name}
+          accessibilityLabel={route.name}
           icon={ICON_FOR_ROUTE[route.name]}
           active={isSelected(index)}
           onPress={() => navigation.navigate(route.name)}

@@ -87,6 +87,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             onPress={handleUndelete}
             style={styles.button}
             disabled={isLoading}
+            accessibilityLabel="Undelete"
           >
             Undelete
           </Button>
@@ -98,6 +99,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               onPress={handleDelete}
               style={styles.button}
               disabled={isLoading}
+              accessibilityLabel="Delete"
             >
               Delete
             </Button>
@@ -107,6 +109,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
               onPress={onDefer}
               style={styles.button}
               disabled={isLoading}
+              accessibilityLabel="Defer"
             >
               Defer
             </Button>
@@ -118,6 +121,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
                 onPress={handleUncomplete}
                 style={styles.button}
                 disabled={isLoading}
+                accessibilityLabel="Uncomplete"
               >
                 Uncomplete
               </Button>
@@ -129,6 +133,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
                 onPress={handleComplete}
                 style={styles.button}
                 disabled={isLoading}
+                accessibilityLabel="Complete"
               >
                 Complete
               </Button>
