@@ -89,6 +89,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
           <TextInput
             testID="email-field"
             label="Email"
+            accessibilityLabel="Email"
             value={email}
             onChangeText={setEmail}
             onSubmitEditing={handleSignUp}
@@ -99,6 +100,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
           <TextInput
             testID="password-field"
             label="Password"
+            accessibilityLabel="Password"
             value={password}
             onChangeText={setPassword}
             onSubmitEditing={handleSignUp}
@@ -107,6 +109,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
           <TextInput
             testID="password-confirmation-field"
             label="Confirm password"
+            accessibilityLabel="Confirm password"
             value={passwordConfirmation}
             onChangeText={setPasswordConfirmation}
             onSubmitEditing={handleSignUp}
@@ -125,6 +128,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
               testID="cancel-button"
               onPress={() => navigation.navigate('Sign in')}
               style={responsiveStyles.button}
+              accessibilityLabel="Cancel"
             >
               Cancel
             </Button>
@@ -133,6 +137,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
               testID="submit-sign-up-button"
               onPress={handleSignUp}
               style={responsiveStyles.button}
+              accessibilityLabel="Sign up"
             >
               Sign up
             </Button>

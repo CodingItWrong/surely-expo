@@ -37,6 +37,7 @@ export default function LoginForm({navigation}) {
         <TextInput
           testID="email-field"
           label="Email"
+          accessibilityLabel="Email"
           value={username}
           onChangeText={handleChange('username')}
           onSubmitEditing={handleLogIn}
@@ -47,6 +48,7 @@ export default function LoginForm({navigation}) {
         <TextInput
           testID="password-field"
           label="Password"
+          accessibilityLabel="Password"
           value={password}
           onChangeText={handleChange('password')}
           onSubmitEditing={handleLogIn}
@@ -59,6 +61,7 @@ export default function LoginForm({navigation}) {
             testID="sign-up-button"
             onPress={() => navigation.navigate('Sign up')}
             style={responsiveStyles.button}
+            accessibilityLabel="Sign up"
           >
             Sign up
           </Button>
@@ -67,6 +70,7 @@ export default function LoginForm({navigation}) {
             testID="sign-in-button"
             onPress={handleLogIn}
             style={responsiveStyles.button}
+            accessibilityLabel="Sign in"
           >
             Sign in
           </Button>

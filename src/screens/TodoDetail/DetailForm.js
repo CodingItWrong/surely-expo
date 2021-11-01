@@ -73,6 +73,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         <TextInput
           testID="name-field"
           label="Todo name"
+          accessibilityLabel="Todo name"
           value={name}
           onChangeText={setName}
           mode="outlined"
@@ -108,6 +109,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         <TextInput
           testID="notes-field"
           label="Notes"
+          accessibilityLabel="Notes"
           value={notes}
           onChangeText={setNotes}
           multiline
@@ -122,6 +124,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
             onPress={onCancel}
             style={responsiveStyles.button}
             disabled={isLoading}
+            accessibilityLabel="Cancel"
           >
             Cancel
           </Button>
@@ -132,6 +135,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
             onPress={handlePressSave}
             style={responsiveStyles.button}
             disabled={isLoading}
+            accessibilityLabel="Save"
           >
             Save
           </Button>
