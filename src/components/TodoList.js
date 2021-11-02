@@ -2,6 +2,7 @@ import {SectionList} from 'react-native';
 import {List, withTheme} from 'react-native-paper';
 import ErrorMessage from './ErrorMessage';
 import NoTodosMessage from './NoTodosMessage';
+import TodoListItem from './TodoListItem';
 
 function TodoList({
   testID,
@@ -46,10 +47,9 @@ function TodoList({
         </List.Subheader>
       )}
       renderItem={({item: todo}) => (
-        <List.Item
+        <TodoListItem
           key={todo.id}
-          title={todo.attributes.name}
-          titleNumberOfLines={4}
+          todo={todo}
           onPress={() => onPressTodo(todo)}
         />
       )}
