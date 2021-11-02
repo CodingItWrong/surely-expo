@@ -123,6 +123,8 @@ export default function CategoryList() {
               <List.Item
                 key={category.id}
                 title={category.attributes.name}
+                accessibilityRole="button"
+                accessibilityLabel={category.attributes.name}
                 onPress={() => onPressCategory(category)}
                 right={() => (
                   <>
