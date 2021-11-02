@@ -1,3 +1,4 @@
+import startOfDay from 'date-fns/startOfDay';
 import pick from 'lodash/pick';
 import sortBy from 'lodash/sortBy';
 import {useEffect, useState} from 'react';
@@ -42,9 +43,10 @@ export default function DetailForm({todo, onSave, onCancel}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
     useState(false);
 
-  function handleChangeDeferredUntil({date}) {
-    if (date) {
-      setDeferredUntil(date.toISOString());
+  function handleChangeDeferredUntil({date: dayEnd}) {
+    if (dayEnd) {
+      const dayStart = startOfDay(dayEnd);
+      setDeferredUntil(dayStart);
     } else {
       setDeferredUntil(null);
     }
