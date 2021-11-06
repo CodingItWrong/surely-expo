@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "react-native-paper-dates": {
+      "signature": "f171ac7be855036a085f040dea98d258",
+      "file": true,
+      "replaced": "^0.6.0"
+    }
+  }
+}

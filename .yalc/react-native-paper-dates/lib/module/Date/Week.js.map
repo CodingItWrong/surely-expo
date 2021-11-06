@@ -1,0 +1,1 @@
+{"version":3,"sources":["Week.tsx"],"names":["Week"],"mappings":"AAAA,eAAe,SAASA,IAAT,GAAgB;AAC7B,SAAO,IAAP;AACD","sourcesContent":["export default function Week() {\n  return null\n}\n"]}
