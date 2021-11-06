@@ -9,7 +9,7 @@
     "test": "jest src --watchAll",
     "cypress": "cypress open",
     "lint": "eslint cypress src \"*.js\"",
-    "build:web": "expo build:web"
+    "build:web": "npm install -g expo-cli && expo build:web"
   },
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
