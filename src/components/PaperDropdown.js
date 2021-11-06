@@ -27,6 +27,7 @@ export default function PaperDropdown({
         <Button
           testID={testID}
           mode="outlined"
+          accessibilityLabel={fieldLabel}
           style={style}
           onPress={() => setIsMenuShown(true)}
         >
@@ -43,6 +44,7 @@ export default function PaperDropdown({
         <Menu.Item
           key={keyExtractor(option)}
           title={labelExtractor(option)}
+          accessibilityLabel={labelExtractor(option)}
           onPress={() => handleChoose(option)}
         />
       ))}
