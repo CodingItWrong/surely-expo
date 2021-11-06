@@ -3234,7 +3234,7 @@ color-string@^1.5.3, color-string@^1.6.0:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
 
-color@^3.1.2, color@^3.1.3:
+color@^3.1.2, color@^3.1.3, color@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/color/-/color-3.2.1.tgz#3544dc198caf4490c3ecc9a790b54fe9ff45e164"
   integrity sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==
@@ -7843,12 +7843,12 @@ react-native-keyboard-aware-scroll-view@^0.9.4:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-react-native-paper-dates@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.5.1.tgz#4f3763b03e7fff20d1755990591991f3be5c1e1b"
-  integrity sha512-gf2rAoi7A6s+LeQ+xj3ll78Vwy9+r9R8RKPm0rh3k7kLN64dWSYg7vCIjjNNlGf9h+o+yrLDdhi9eS8i1sQAUg==
+react-native-paper-dates@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.6.0.tgz#956d25ae390b52d43f04eb25c9731f6c8ff98d2b"
+  integrity sha512-JIYj+V5Xohx3kpw5nEJH6AyxQdMtfCgGu++6EJ80qsiViWuzYxN9D+y+nmp4h2sWc+Msjh2czek2iif7TGab/g==
   dependencies:
-    color "^3.1.3"
+    color "^3.2.1"
 
 react-native-paper@^4.9.2:
   version "4.9.2"
