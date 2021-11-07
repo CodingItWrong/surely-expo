@@ -38,6 +38,8 @@ export default function PaperDropdown({
       <Menu.Item
         key="paper-dropdown-empty-item"
         title={emptyLabel}
+        accessibilityLabel={emptyLabel}
+        accessibilityRole="button"
         onPress={() => handleChoose(null)}
       />
       {options.map(option => (
