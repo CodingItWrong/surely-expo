@@ -45,6 +45,7 @@ export default function PaperDropdown({
           key={keyExtractor(option)}
           title={labelExtractor(option)}
           accessibilityLabel={labelExtractor(option)}
+          accessibilityRole="button"
           onPress={() => handleChoose(option)}
         />
       ))}
