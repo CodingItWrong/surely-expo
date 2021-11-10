@@ -12,9 +12,7 @@ var _exportNames = {
   DatePickerInput: true,
   registerTranslation: true,
   getTranslation: true,
-  nl: true,
   en: true,
-  pl: true,
   enGB: true
 };
 Object.defineProperty(exports, "Calendar", {
@@ -71,18 +69,6 @@ Object.defineProperty(exports, "getTranslation", {
     return _utils.getTranslation;
   }
 });
-Object.defineProperty(exports, "nl", {
-  enumerable: true,
-  get: function () {
-    return _nl.default;
-  }
-});
-Object.defineProperty(exports, "pl", {
-  enumerable: true,
-  get: function () {
-    return _pl.default;
-  }
-});
 Object.defineProperty(exports, "registerTranslation", {
   enumerable: true,
   get: function () {
@@ -116,11 +102,7 @@ var _DatePickerInput = _interopRequireDefault(require("./Date/DatePickerInput"))
 
 var _utils = require("./translations/utils");
 
-var _nl = _interopRequireDefault(require("./translations/nl"));
-
 var _en = _interopRequireDefault(require("./translations/en"));
-
-var _pl = _interopRequireDefault(require("./translations/pl"));
 
 var _enGB = _interopRequireDefault(require("./translations/enGB"));
 

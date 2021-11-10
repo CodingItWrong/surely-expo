@@ -34,7 +34,7 @@ function DatePickerModalHeader(props) {
     style: styles.appbarHeader
   }, /*#__PURE__*/React.createElement(_reactNativePaper.Appbar.Action, {
     icon: "close",
-    accessibilityLabel: "Close",
+    accessibilityLabel: (0, _utils2.getTranslation)(locale, 'close'),
     onPress: props.onDismiss,
     color: color,
     testID: "react-native-paper-dates-close" // RN types bug

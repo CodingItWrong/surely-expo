@@ -77,7 +77,7 @@ function DatePickerModalContentHeader(props) {
     style: styles.fill
   }), allowEditing ? /*#__PURE__*/React.createElement(_reactNativePaper.IconButton, {
     icon: collapsed ? 'pencil' : 'calendar',
-    accessibilityLabel: collapsed ? 'Type in date' : 'Pick date from calendar',
+    accessibilityLabel: collapsed ? (0, _utils2.getTranslation)(props.locale, 'typeInDate') : (0, _utils2.getTranslation)(props.locale, 'pickDateFromCalendar'),
     color: color,
     onPress: onToggle // RN types bug
     ,

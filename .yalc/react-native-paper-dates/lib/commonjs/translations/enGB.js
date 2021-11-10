@@ -13,7 +13,12 @@ const enGB = {
   mustBeHigherThan: 'Must be later then',
   mustBeLowerThan: 'Must be earlier then',
   mustBeBetween: 'Must be between',
-  dateIsDisabled: 'Day is not allowed'
+  dateIsDisabled: 'Day is not allowed',
+  previous: 'Previous',
+  next: 'Next',
+  typeInDate: 'Type in date',
+  pickDateFromCalendar: 'Pick date from calendar',
+  close: 'Close'
 };
 var _default = enGB;
 exports.default = _default;

@@ -7,7 +7,12 @@ const en = {
   mustBeHigherThan: 'Must be later then',
   mustBeLowerThan: 'Must be earlier then',
   mustBeBetween: 'Must be between',
-  dateIsDisabled: 'Day is not allowed'
+  dateIsDisabled: 'Day is not allowed',
+  previous: 'Previous',
+  next: 'Next',
+  typeInDate: 'Type in date',
+  pickDateFromCalendar: 'Pick date from calendar',
+  close: 'Close'
 };
 export default en;
 //# sourceMappingURL=en.js.map

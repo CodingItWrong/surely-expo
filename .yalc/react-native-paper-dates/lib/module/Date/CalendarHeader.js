@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { IconButton, useTheme } from 'react-native-paper';
 import DayNames, { dayNamesHeight } from './DayNames';
+import { getTranslation } from '../translations/utils';
 const buttonContainerHeight = 56;
 const buttonContainerMarginTop = 4;
 const buttonContainerMarginBottom = 8;
@@ -38,7 +39,7 @@ function CalendarHeader(_ref) {
     }]
   }, /*#__PURE__*/React.createElement(IconButton, {
     icon: "chevron-left",
-    accessibilityLabel: "Previous",
+    accessibilityLabel: getTranslation(locale, 'previous'),
     onPress: onPrev // RN types bug
     ,
     hasTVPreferredFocus: undefined,
@@ -49,7 +50,7 @@ function CalendarHeader(_ref) {
     }]
   }, /*#__PURE__*/React.createElement(IconButton, {
     icon: "chevron-right",
-    accessibilityLabel: "Next",
+    accessibilityLabel: getTranslation(locale, 'next'),
     onPress: onNext // RN types bug
     ,
     hasTVPreferredFocus: undefined,

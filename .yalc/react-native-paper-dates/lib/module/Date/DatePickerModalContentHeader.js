@@ -56,7 +56,7 @@ export default function DatePickerModalContentHeader(props) {
     style: styles.fill
   }), allowEditing ? /*#__PURE__*/React.createElement(IconButton, {
     icon: collapsed ? 'pencil' : 'calendar',
-    accessibilityLabel: collapsed ? 'Type in date' : 'Pick date from calendar',
+    accessibilityLabel: collapsed ? getTranslation(props.locale, 'typeInDate') : getTranslation(props.locale, 'pickDateFromCalendar'),
     color: color,
     onPress: onToggle // RN types bug
     ,
