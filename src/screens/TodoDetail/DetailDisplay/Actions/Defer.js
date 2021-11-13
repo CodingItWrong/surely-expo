@@ -1,7 +1,7 @@
-import {DatePickerModal} from '@codingitwrong/react-native-paper-dates';
 import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
+import {DatePickerModal} from 'react-native-paper-dates';
 import {breakpointMedium} from '../../../../breakpoints';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';

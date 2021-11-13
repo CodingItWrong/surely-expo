@@ -1,4 +1,3 @@
-import {DatePickerModal} from '@codingitwrong/react-native-paper-dates';
 import startOfDay from 'date-fns/startOfDay';
 import pick from 'lodash/pick';
 import sortBy from 'lodash/sortBy';
@@ -6,6 +5,7 @@ import {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
+import {DatePickerModal} from 'react-native-paper-dates';
 import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../components/ButtonGroup';
 import ErrorMessage from '../../components/ErrorMessage';

@@ -1186,13 +1186,6 @@
   resolved "https://registry.yarnpkg.com/@codingitwrong/jsonapi-client/-/jsonapi-client-0.0.11.tgz#94672fb42cb8fe15a1681f997565e59c0aebe256"
   integrity sha512-0me56BMAj8KaCAK838AsBu7fXmytvbnFE1BbW8c1DlbNTcqrSd/yD3vWyuf4LLGFCdDHmVRWWRBclWeJh5+yjg==
 
-"@codingitwrong/react-native-paper-dates@^0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@codingitwrong/react-native-paper-dates/-/react-native-paper-dates-0.6.2.tgz#1dcdab31492afa5e34b207cf11b2f9727353c424"
-  integrity sha512-UfBpw0OMSkDus7J4zgPe/Ck0fa4T9TCDWVY6PFeZKbhCrLngkKySVnICcLutaYbk/bWCXCE0Z+1wcpmYueEatQ==
-  dependencies:
-    color "^3.2.1"
-
 "@codingitwrong/react-native-paper@4.10.2":
   version "4.10.2"
   resolved "https://registry.yarnpkg.com/@codingitwrong/react-native-paper/-/react-native-paper-4.10.2.tgz#e05de445a761cd45b3d93b4a7c6a2a3551db6575"
@@ -7852,6 +7845,13 @@ react-native-keyboard-aware-scroll-view@^0.9.5:
   dependencies:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
+
+react-native-paper-dates@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.7.0.tgz#b208c884ed2b1b039331160a082eba8e05cb6d55"
+  integrity sha512-w6y6YY0b/+HukooX3WC0HmV3gDNaP3trPghcyrF2O9GZAHNinI6SMT4AhOupID4XXK5+GD0qib48G0PE0s+myw==
+  dependencies:
+    color "^3.2.1"
 
 react-native-paper@4.10.0:
   version "4.10.0"
