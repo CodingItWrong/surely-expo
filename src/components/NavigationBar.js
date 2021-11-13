@@ -1,10 +1,23 @@
-import {Dimensions} from 'react-native';
+import {useEffect, useState} from 'react';
 import {Appbar} from 'react-native-paper';
-import {breakpointLarge} from '../breakpoints';
+import {large, useBreakpoint} from '../breakpoints';
+
+const showDrawerToggleForBreakpoint = breakpoint => breakpoint !== large;
 
 export default function CustomNavigationBar({navigation, options, back}) {
-  const {width} = Dimensions.get('window');
-  const showDrawerToggle = width < breakpointLarge;
+  const breakpoint = useBreakpoint();
+  const [showDrawerToggle, setShowDrawerToggle] = useState(
+    showDrawerToggleForBreakpoint(breakpoint),
+  );
+
+  useEffect(() => {
+    setShowDrawerToggle(showDrawerToggleForBreakpoint(breakpoint));
+    if (breakpoint === large) {
+      // to avoid visual issues when drawerType === 'permanent'
+      navigation.closeDrawer();
+    }
+  }, [breakpoint, navigation]);
+
   return (
     <Appbar.Header>
       {back ? (

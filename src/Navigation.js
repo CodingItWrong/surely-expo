@@ -1,8 +1,8 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Dimensions, Platform} from 'react-native';
-import {breakpointLarge} from './breakpoints';
+import {useEffect, useState} from 'react';
+import {large, useBreakpoint} from './breakpoints';
 import NavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
 import {useToken} from './data/token';
@@ -272,27 +272,29 @@ const About = () => (
   </AboutStack.Navigator>
 );
 
+const drawerTypeForBreakpoint = breakpoint =>
+  breakpoint === large ? 'permanent' : 'back';
+
 export default function Navigation() {
   const {isLoggedIn} = useToken();
+  const breakpoint = useBreakpoint();
+  const [drawerType, setDrawerType] = useState(
+    drawerTypeForBreakpoint(breakpoint),
+  );
 
-  // intentionally avoiding useWindowDimensions as React Nav doesn't handle reactively changing drawerType well
-  const {width} = Dimensions.get('window');
-  function drawerType() {
-    if (width >= breakpointLarge) {
-      return 'permanent';
-    } else if (Platform.OS === 'ios') {
-      return 'slide';
-    } else {
-      return 'front';
-    }
-  }
+  useEffect(() => {
+    // delay to allow navigation.closeDrawer() in NavigationBar to complete first
+    setTimeout(() => {
+      setDrawerType(drawerTypeForBreakpoint(breakpoint));
+    }, 500);
+  }, [breakpoint]);
 
   return (
     <NavigationContainer linking={linking}>
       <Drawer.Navigator
         screenOptions={{
           headerShown: false,
-          drawerType: drawerType(),
+          drawerType,
           drawerStyle: {width: 200},
         }}
         drawerContent={props => <CustomNavigationDrawer {...props} />}
