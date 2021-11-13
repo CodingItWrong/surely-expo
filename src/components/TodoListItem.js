@@ -1,4 +1,4 @@
-import {List} from '@codingitwrong/react-native-paper';
+import {List} from 'react-native-paper';
 
 export default function TodoListItem({todo, onPress}) {
   return (

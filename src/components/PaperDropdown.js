@@ -1,5 +1,5 @@
-import {Button, Menu} from '@codingitwrong/react-native-paper';
 import {useState} from 'react';
+import {Button, Menu} from 'react-native-paper';
 
 export default function PaperDropdown({
   fieldLabel,

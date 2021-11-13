@@ -1,6 +1,6 @@
-import {TextInput} from '@codingitwrong/react-native-paper';
 import {useState} from 'react';
 import {Keyboard} from 'react-native';
+import {TextInput} from 'react-native-paper';
 
 export default function NewTodoForm({isCreating, onCreate}) {
   const [name, setName] = useState('');

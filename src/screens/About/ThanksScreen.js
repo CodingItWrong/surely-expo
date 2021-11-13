@@ -1,6 +1,6 @@
-import {Button, Text} from '@codingitwrong/react-native-paper';
 import * as StoreReview from 'expo-store-review';
 import {Linking, Platform, ScrollView, Share, StyleSheet} from 'react-native';
+import {Button, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
 import ScreenBackground from '../../components/ScreenBackground';

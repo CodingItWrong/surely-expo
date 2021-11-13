@@ -1,6 +1,6 @@
-import {Button, Text, TextInput} from '@codingitwrong/react-native-paper';
 import {useState} from 'react';
 import {StyleSheet} from 'react-native';
+import {Button, Text, TextInput} from 'react-native-paper';
 import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../components/ButtonGroup';
 import CenterColumn from '../../components/CenterColumn';

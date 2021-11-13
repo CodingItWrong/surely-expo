@@ -1,5 +1,5 @@
-import {TextInput} from '@codingitwrong/react-native-paper';
 import {useState} from 'react';
+import {TextInput} from 'react-native-paper';
 
 export default function SearchForm({value, onSubmit}) {
   const [searchText, setSearchText] = useState(value);

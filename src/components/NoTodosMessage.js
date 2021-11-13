@@ -1,5 +1,5 @@
-import {Text} from '@codingitwrong/react-native-paper';
 import {StyleSheet} from 'react-native';
+import {Text} from 'react-native-paper';
 
 export default function NoTodosMessage({children}) {
   return <Text style={styles.message}>{children}</Text>;

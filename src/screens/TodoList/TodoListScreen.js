@@ -1,7 +1,7 @@
-import {Button} from '@codingitwrong/react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback, useRef, useState} from 'react';
 import {Platform, StyleSheet} from 'react-native';
+import {Button} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
 import LoadingIndicator from '../../components/LoadingIndicator';

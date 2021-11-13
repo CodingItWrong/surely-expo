@@ -1,6 +1,6 @@
-import {Button, TextInput, Title} from '@codingitwrong/react-native-paper';
 import axios from 'axios';
 import {StyleSheet} from 'react-native';
+import {Button, TextInput, Title} from 'react-native-paper';
 import {useStyleQueries} from 'react-native-style-queries';
 import oauthLogin from '../../auth/oauthLogin';
 import useLoginForm from '../../auth/useLoginForm';

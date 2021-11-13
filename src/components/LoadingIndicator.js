@@ -1,5 +1,5 @@
-import {ActivityIndicator} from '@codingitwrong/react-native-paper';
 import {StyleSheet} from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
 
 export default function LoadingIndicator() {
   return (
