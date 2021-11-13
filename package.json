@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
-    "@codingitwrong/react-native-paper": "^4.10.2",
+    "@codingitwrong/react-native-paper": "4.10.2",
     "@codingitwrong/react-native-paper-dates": "^0.6.2",
     "@react-navigation/drawer": "^6.1.7",
     "@react-navigation/native": "^6.0.5",
@@ -34,7 +34,7 @@
     "react-native": "0.64.3",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
-    "react-native-paper": "^4.10.0",
+    "react-native-paper": "4.10.0",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
