@@ -5,7 +5,7 @@ function getBaseUrl() {
     if (Platform.OS === 'android') {
       return 'http://10.0.2.2:3000';
     } else {
-      return 'http://10.0.1.5:3000';
+      return 'http://localhost:3000';
     }
   } else {
     return 'https://api.surelytodo.com';
