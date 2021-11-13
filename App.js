@@ -1,3 +1,4 @@
+import {Provider as PaperForkProvider} from '@codingitwrong/react-native-paper';
 import {en, registerTranslation} from '@codingitwrong/react-native-paper-dates';
 import {StatusBar} from 'expo-status-bar';
 // for some reason PaperProvider errors without the React import
@@ -18,14 +19,16 @@ export default function App() {
   const theme = useTheme();
   return (
     <PaperProvider theme={theme}>
-      <StatusBar style="auto" />
-      <SafeAreaProvider>
-        <TokenProvider>
-          <TokenLoadBuffer>
-            <Navigation />
-          </TokenLoadBuffer>
-        </TokenProvider>
-      </SafeAreaProvider>
+      <PaperForkProvider theme={theme}>
+        <StatusBar style="auto" />
+        <SafeAreaProvider>
+          <TokenProvider>
+            <TokenLoadBuffer>
+              <Navigation />
+            </TokenLoadBuffer>
+          </TokenProvider>
+        </SafeAreaProvider>
+      </PaperForkProvider>
     </PaperProvider>
   );
 }
