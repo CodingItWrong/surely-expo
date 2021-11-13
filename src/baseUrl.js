@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
 function getBaseUrl() {
   if (__DEV__) {

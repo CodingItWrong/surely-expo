@@ -5,11 +5,6 @@
       "signature": "c75db4e4c3a32ed05a60bd26aca11bf6",
       "file": true,
       "replaced": "^0.6.0"
-    },
-    "react-native-paper": {
-      "signature": "4f9737c1175543aa08921e05a6150bd1",
-      "file": true,
-      "replaced": "^4.9.2"
     }
   }
 }

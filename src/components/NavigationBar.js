@@ -1,5 +1,5 @@
+import {Appbar} from '@codingitwrong/react-native-paper';
 import {Dimensions} from 'react-native';
-import {Appbar} from 'react-native-paper';
 import {breakpointLarge} from '../breakpoints';
 
 export default function CustomNavigationBar({navigation, options, back}) {

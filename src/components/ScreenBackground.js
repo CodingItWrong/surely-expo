@@ -1,5 +1,5 @@
+import {withTheme} from '@codingitwrong/react-native-paper';
 import {View} from 'react-native';
-import {withTheme} from 'react-native-paper';
 
 function ScreenBackground({theme, style, children}) {
   const baseStyle = {flex: 1, backgroundColor: theme.colors.background};

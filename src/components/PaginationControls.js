@@ -1,5 +1,5 @@
+import {IconButton, Text} from '@codingitwrong/react-native-paper';
 import {StyleSheet, View} from 'react-native';
-import {IconButton, Text} from 'react-native-paper';
 
 export default function PaginationControls({
   pageNumber,

@@ -1,4 +1,4 @@
-import {Text, withTheme} from 'react-native-paper';
+import {Text, withTheme} from '@codingitwrong/react-native-paper';
 
 function ErrorMessage({theme, children, style}) {
   const errorMessageStyle = {

@@ -1,7 +1,7 @@
+import {Button, Divider, Text, Title} from '@codingitwrong/react-native-paper';
 import {useLinkTo} from '@react-navigation/native';
 import Constants from 'expo-constants';
 import {Linking, Platform, ScrollView, StyleSheet} from 'react-native';
-import {Button, Divider, Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CenterColumn from '../../components/CenterColumn';
 import ScreenBackground from '../../components/ScreenBackground';

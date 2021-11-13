@@ -1,6 +1,6 @@
+import {Drawer, withTheme} from '@codingitwrong/react-native-paper';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {Platform, StyleSheet, View} from 'react-native';
-import {Drawer, withTheme} from 'react-native-paper';
 import {useToken} from '../data/token';
 import DownloadOnTheAppStoreButton from './DownloadOnTheAppStoreButton';
 

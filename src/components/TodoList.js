@@ -1,5 +1,5 @@
+import {List, withTheme} from '@codingitwrong/react-native-paper';
 import {SectionList} from 'react-native';
-import {List, withTheme} from 'react-native-paper';
 import ErrorMessage from './ErrorMessage';
 import NoTodosMessage from './NoTodosMessage';
 import TodoListItem from './TodoListItem';

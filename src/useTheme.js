@@ -1,5 +1,5 @@
+import {DarkTheme, DefaultTheme} from '@codingitwrong/react-native-paper';
 import {useColorScheme} from 'react-native';
-import {DarkTheme, DefaultTheme} from 'react-native-paper';
 
 const SURELY_GREEN = '#4caf50';
 
