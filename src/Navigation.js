@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useEffect, useState} from 'react';
 import {large, useBreakpoint} from './breakpoints';
-import NavigationBar from './components/NavigationBar';
+import CustomNavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
 import {useToken} from './data/token';
 import AboutScreen from './screens/About/AboutScreen';
@@ -116,7 +116,7 @@ const TomorrowStack = createNativeStackNavigator();
 const Tomorrow = () => (
   <TomorrowStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <TomorrowStack.Screen
@@ -136,7 +136,7 @@ const FutureStack = createNativeStackNavigator();
 const Future = () => (
   <FutureStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <FutureStack.Screen
@@ -156,7 +156,7 @@ const CompletedStack = createNativeStackNavigator();
 const Completed = () => (
   <CompletedStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <CompletedStack.Screen
@@ -176,7 +176,7 @@ const DeletedStack = createNativeStackNavigator();
 const Deleted = () => (
   <DeletedStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <DeletedStack.Screen
@@ -196,7 +196,7 @@ const CategoryStack = createNativeStackNavigator();
 const Categories = () => (
   <CategoryStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <CategoryStack.Screen
@@ -216,7 +216,7 @@ const SignInStack = createNativeStackNavigator();
 const SignIn = () => (
   <SignInStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <SignInStack.Screen
@@ -231,7 +231,7 @@ const SignUpStack = createNativeStackNavigator();
 const SignUp = () => (
   <SignUpStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <SignUpStack.Screen
@@ -246,7 +246,7 @@ const AboutStack = createNativeStackNavigator();
 const About = () => (
   <AboutStack.Navigator
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <AboutStack.Screen
