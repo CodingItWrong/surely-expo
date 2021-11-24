@@ -55,16 +55,14 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
     }
   }, [isMounted, loadTodo]);
 
-  const updateTodo = ({attributes, relationships}) =>
-    todoClient.update({
-      id,
-      attributes,
-      relationships,
-      options: {include: 'category'},
-    });
-
   const handleSave = ({attributes, relationships}) =>
-    updateTodo({attributes, relationships})
+    todoClient
+      .update({
+        id,
+        attributes,
+        relationships,
+        options: {include: 'category'},
+      })
       .then(storeResponse)
       .then(() => {
         if (isMounted.current) {
