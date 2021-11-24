@@ -21,9 +21,7 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
-  const {
-    params: {id},
-  } = route;
+  const {id} = route.params;
 
   const storeResponse = useCallback(
     response => {
