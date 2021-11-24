@@ -89,6 +89,11 @@ export default function TodoListScreen({
     return loadFromServer();
   }
 
+  function handleSearch(newSearchText) {
+    setSearchText(newSearchText);
+    setPageNumber(1);
+  }
+
   function contents() {
     const message = searchText ? noSearchResultsMessage : noTodosMessage;
     return (
@@ -123,7 +128,7 @@ export default function TodoListScreen({
         {onCreateTodo && (
           <NewTodoForm isCreating={isCreating} onCreate={handleCreate} />
         )}
-        {search && <SearchForm value={searchText} onSubmit={setSearchText} />}
+        {search && <SearchForm value={searchText} onSubmit={handleSearch} />}
         {Platform.OS === 'web' && (
           <Button
             mode="outlined"
