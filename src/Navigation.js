@@ -96,7 +96,7 @@ const Available = () => (
   <AvailableStack.Navigator
     initialRouteName="AvailableTodos"
     screenOptions={{
-      header: props => <NavigationBar {...props} />,
+      header: props => <CustomNavigationBar {...props} />,
     }}
   >
     <AvailableStack.Screen
