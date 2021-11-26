@@ -1,7 +1,8 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useEffect, useState} from 'react';
+import throttle from 'lodash/throttle';
+import {useEffect, useRef, useState} from 'react';
 import {large, useBreakpoint} from './breakpoints';
 import CustomNavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
@@ -275,47 +276,84 @@ const About = () => (
 const drawerTypeForBreakpoint = breakpoint =>
   breakpoint === large ? 'permanent' : 'back';
 
-export default function Navigation() {
-  const {isLoggedIn} = useToken();
+const MAX_CHANGES_PER_INTERVAL = 50; // half of Safari limit of 100
+const INTERVAL_LENGTH_IN_SECONDS = 60; // twice Safari limit of 30
+
+const resetCountAfterInterval = throttle(changeCount => {
+  console.log('resetting history API limit');
+  changeCount.current = 0;
+}, INTERVAL_LENGTH_IN_SECONDS * 1000);
+
+// Calling useBreakpoint() in the parent causes too many rerenders due
+// to useWindowDimensions(). So we wrap it in a child component, so the
+// child can rerender without the parent doing so.
+function BreakpointDetector({onChange}) {
+  const changeCount = useRef(0);
   const breakpoint = useBreakpoint();
-  const [drawerType, setDrawerType] = useState(
-    drawerTypeForBreakpoint(breakpoint),
-  );
 
   useEffect(() => {
+    if (changeCount.current < MAX_CHANGES_PER_INTERVAL) {
+      changeCount.current += 1;
+      onChange(breakpoint);
+      resetCountAfterInterval(changeCount);
+    } else {
+      console.log(
+        'prevented navigation rerender until history API limit refreshes',
+      );
+    }
+  }, [breakpoint, onChange]);
+
+  return null;
+}
+
+export default function Navigation() {
+  const {isLoggedIn} = useToken();
+  const [drawerType, setDrawerType] = useState(
+    drawerTypeForBreakpoint('medium'),
+  );
+
+  function handleChangeBreakpoint(breakpoint) {
     // delay to allow navigation.closeDrawer() in NavigationBar to complete first
     setTimeout(() => {
+      console.log('breakpoint changed to ', breakpoint);
       setDrawerType(drawerTypeForBreakpoint(breakpoint));
     }, 500);
-  }, [breakpoint]);
+  }
 
+  // IMPORTANT: NavigationContainer must not rerender too often because
+  // it calls the history API, and Safari and Firefox place limits on
+  // the frequency of history API calls. (Safari: 100 times in 30
+  // seconds).
   return (
-    <NavigationContainer linking={linking}>
-      <Drawer.Navigator
-        screenOptions={{
-          headerShown: false,
-          drawerType,
-          drawerStyle: {width: 200},
-        }}
-        drawerContent={props => <CustomNavigationDrawer {...props} />}
-      >
-        {isLoggedIn ? (
-          <>
-            <Drawer.Screen name="Available" component={Available} />
-            <Drawer.Screen name="Tomorrow" component={Tomorrow} />
-            <Drawer.Screen name="Future" component={Future} />
-            <Drawer.Screen name="Completed" component={Completed} />
-            <Drawer.Screen name="Deleted" component={Deleted} />
-            <Drawer.Screen name="Categories" component={Categories} />
-          </>
-        ) : (
-          <>
-            <Drawer.Screen name="Sign in" component={SignIn} />
-            <Drawer.Screen name="Sign up" component={SignUp} />
-          </>
-        )}
-        <Drawer.Screen name="About" component={About} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <>
+      <BreakpointDetector onChange={handleChangeBreakpoint} />
+      <NavigationContainer linking={linking}>
+        <Drawer.Navigator
+          screenOptions={{
+            headerShown: false,
+            drawerType,
+            drawerStyle: {width: 200},
+          }}
+          drawerContent={props => <CustomNavigationDrawer {...props} />}
+        >
+          {isLoggedIn ? (
+            <>
+              <Drawer.Screen name="Available" component={Available} />
+              <Drawer.Screen name="Tomorrow" component={Tomorrow} />
+              <Drawer.Screen name="Future" component={Future} />
+              <Drawer.Screen name="Completed" component={Completed} />
+              <Drawer.Screen name="Deleted" component={Deleted} />
+              <Drawer.Screen name="Categories" component={Categories} />
+            </>
+          ) : (
+            <>
+              <Drawer.Screen name="Sign in" component={SignIn} />
+              <Drawer.Screen name="Sign up" component={SignUp} />
+            </>
+          )}
+          <Drawer.Screen name="About" component={About} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
