@@ -1,7 +1,11 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  DrawerActions,
+  NavigationContainer,
+  useNavigation,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {large, useBreakpoint} from './breakpoints';
 import CustomNavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
@@ -20,7 +24,6 @@ import CompletedTodos from './screens/TodoList/Completed';
 import DeletedTodos from './screens/TodoList/Deleted';
 import FutureTodos from './screens/TodoList/Future';
 import TomorrowTodos from './screens/TodoList/Tomorrow';
-import useRateLimit from './utils/useRateLimit';
 
 const linking = {
   config: {
@@ -273,77 +276,63 @@ const About = () => (
   </AboutStack.Navigator>
 );
 
-const drawerTypeForBreakpoint = breakpoint =>
+const getDrawerTypeForBreakpoint = breakpoint =>
   breakpoint === large ? 'permanent' : 'back';
 
-const MAX_HISTORY_API_CALLS_PER_INTERVAL = 50; // half of Safari limit of 100
-const HISTORY_API_INTERVAL_IN_SECONDS = 60; // twice Safari limit of 30
-
-// Calling useBreakpoint() in the parent causes too many rerenders due
-// to useWindowDimensions(). So we wrap it in a child component, so the
-// child can rerender without the parent doing so.
-function BreakpointDetector({onChange}) {
-  const rateLimitedOnChange = useRateLimit({
-    intervalInMs: HISTORY_API_INTERVAL_IN_SECONDS * 1000,
-    maxCallsPerInterval: MAX_HISTORY_API_CALLS_PER_INTERVAL,
-    callback: onChange,
-  });
+function NavigationContents() {
+  const {isLoggedIn} = useToken();
+  const navigation = useNavigation();
   const breakpoint = useBreakpoint();
+  const drawerTypeForBreakpoint = getDrawerTypeForBreakpoint(breakpoint);
+  const [drawerType, setDrawerType] = useState(drawerTypeForBreakpoint);
 
   useEffect(() => {
-    rateLimitedOnChange(breakpoint);
-  }, [breakpoint, rateLimitedOnChange]);
-
-  return null;
-}
-
-export default function Navigation() {
-  const {isLoggedIn} = useToken();
-  const [drawerType, setDrawerType] = useState(
-    drawerTypeForBreakpoint('medium'),
-  );
-
-  const handleChangeBreakpoint = useCallback(breakpoint => {
-    // delay to allow navigation.closeDrawer() in NavigationBar to complete first
+    navigation.dispatch(DrawerActions.closeDrawer());
     setTimeout(() => {
-      setDrawerType(drawerTypeForBreakpoint(breakpoint));
+      setDrawerType(drawerTypeForBreakpoint);
     }, 500);
-  }, []);
+  }, [drawerTypeForBreakpoint, navigation]);
 
   // IMPORTANT: NavigationContainer must not rerender too often because
   // it calls the history API, and Safari and Firefox place limits on
   // the frequency of history API calls. (Safari: 100 times in 30
   // seconds).
   return (
-    <>
-      <BreakpointDetector onChange={handleChangeBreakpoint} />
-      <NavigationContainer linking={linking}>
-        <Drawer.Navigator
-          screenOptions={{
-            headerShown: false,
-            drawerType,
-            drawerStyle: {width: 200},
-          }}
-          drawerContent={props => <CustomNavigationDrawer {...props} />}
-        >
-          {isLoggedIn ? (
-            <>
-              <Drawer.Screen name="Available" component={Available} />
-              <Drawer.Screen name="Tomorrow" component={Tomorrow} />
-              <Drawer.Screen name="Future" component={Future} />
-              <Drawer.Screen name="Completed" component={Completed} />
-              <Drawer.Screen name="Deleted" component={Deleted} />
-              <Drawer.Screen name="Categories" component={Categories} />
-            </>
-          ) : (
-            <>
-              <Drawer.Screen name="Sign in" component={SignIn} />
-              <Drawer.Screen name="Sign up" component={SignUp} />
-            </>
-          )}
-          <Drawer.Screen name="About" component={About} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </>
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+        drawerType,
+        drawerStyle: {width: 200},
+      }}
+      drawerContent={props => <CustomNavigationDrawer {...props} />}
+    >
+      {isLoggedIn ? (
+        <>
+          <Drawer.Screen name="Available" component={Available} />
+          <Drawer.Screen name="Tomorrow" component={Tomorrow} />
+          <Drawer.Screen name="Future" component={Future} />
+          <Drawer.Screen name="Completed" component={Completed} />
+          <Drawer.Screen name="Deleted" component={Deleted} />
+          <Drawer.Screen name="Categories" component={Categories} />
+        </>
+      ) : (
+        <>
+          <Drawer.Screen name="Sign in" component={SignIn} />
+          <Drawer.Screen name="Sign up" component={SignUp} />
+        </>
+      )}
+      <Drawer.Screen name="About" component={About} />
+    </Drawer.Navigator>
+  );
+}
+
+export default function Navigation() {
+  // IMPORTANT: NavigationContainer needs to not rerender too often or
+  // else Safari and Firefox error on too many history API calls. Put
+  // any hooks in NavigationContents so this parent doesn't rerender.
+  return (
+    <NavigationContainer linking={linking}>
+      <NavigationContents />
+    </NavigationContainer>
   );
 }
