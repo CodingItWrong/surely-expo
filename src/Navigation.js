@@ -306,9 +306,7 @@ export default function Navigation() {
   const handleChangeBreakpoint = useCallback(breakpoint => {
     // delay to allow navigation.closeDrawer() in NavigationBar to complete first
     setTimeout(() => {
-      const newDrawerType = drawerTypeForBreakpoint(breakpoint);
-      console.log('drawer type changed to ', newDrawerType);
-      setDrawerType(newDrawerType);
+      setDrawerType(drawerTypeForBreakpoint(breakpoint));
     }, 500);
   }, []);
 
