@@ -1,8 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import throttle from 'lodash/throttle';
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {large, useBreakpoint} from './breakpoints';
 import CustomNavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
@@ -21,6 +20,7 @@ import CompletedTodos from './screens/TodoList/Completed';
 import DeletedTodos from './screens/TodoList/Deleted';
 import FutureTodos from './screens/TodoList/Future';
 import TomorrowTodos from './screens/TodoList/Tomorrow';
+import useRateLimit from './utils/useRateLimit';
 
 const linking = {
   config: {
@@ -276,32 +276,23 @@ const About = () => (
 const drawerTypeForBreakpoint = breakpoint =>
   breakpoint === large ? 'permanent' : 'back';
 
-const MAX_CHANGES_PER_INTERVAL = 50; // half of Safari limit of 100
-const INTERVAL_LENGTH_IN_SECONDS = 60; // twice Safari limit of 30
-
-const resetCountAfterInterval = throttle(changeCount => {
-  console.log('resetting history API limit');
-  changeCount.current = 0;
-}, INTERVAL_LENGTH_IN_SECONDS * 1000);
+const MAX_HISTORY_API_CALLS_PER_INTERVAL = 50; // half of Safari limit of 100
+const HISTORY_API_INTERVAL_IN_SECONDS = 60; // twice Safari limit of 30
 
 // Calling useBreakpoint() in the parent causes too many rerenders due
 // to useWindowDimensions(). So we wrap it in a child component, so the
 // child can rerender without the parent doing so.
 function BreakpointDetector({onChange}) {
-  const changeCount = useRef(0);
+  const rateLimitedOnChange = useRateLimit({
+    intervalInMs: HISTORY_API_INTERVAL_IN_SECONDS * 1000,
+    maxCallsPerInterval: MAX_HISTORY_API_CALLS_PER_INTERVAL,
+    callback: onChange,
+  });
   const breakpoint = useBreakpoint();
 
   useEffect(() => {
-    if (changeCount.current < MAX_CHANGES_PER_INTERVAL) {
-      changeCount.current += 1;
-      onChange(breakpoint);
-      resetCountAfterInterval(changeCount);
-    } else {
-      console.log(
-        'prevented navigation rerender until history API limit refreshes',
-      );
-    }
-  }, [breakpoint, onChange]);
+    rateLimitedOnChange(breakpoint);
+  }, [breakpoint, rateLimitedOnChange]);
 
   return null;
 }
@@ -312,13 +303,14 @@ export default function Navigation() {
     drawerTypeForBreakpoint('medium'),
   );
 
-  function handleChangeBreakpoint(breakpoint) {
+  const handleChangeBreakpoint = useCallback(breakpoint => {
     // delay to allow navigation.closeDrawer() in NavigationBar to complete first
     setTimeout(() => {
-      console.log('breakpoint changed to ', breakpoint);
-      setDrawerType(drawerTypeForBreakpoint(breakpoint));
+      const newDrawerType = drawerTypeForBreakpoint(breakpoint);
+      console.log('drawer type changed to ', newDrawerType);
+      setDrawerType(newDrawerType);
     }, 500);
-  }
+  }, []);
 
   // IMPORTANT: NavigationContainer must not rerender too often because
   // it calls the history API, and Safari and Firefox place limits on
