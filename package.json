@@ -9,7 +9,8 @@
     "test": "jest src --watchAll",
     "cypress": "cypress open",
     "lint": "eslint cypress src \"*.js\"",
-    "deploy": "expo build:web && cp _redirects web-build && netlify deploy --prod"
+    "deploy": "expo build:web && cp _redirects web-build && netlify deploy --prod",
+    "build:ios": "eas build --platform ios --local"
   },
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
