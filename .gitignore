@@ -14,3 +14,6 @@ web-build/
 
 # Local Netlify folder
 .netlify
+
+# EAS local builds
+build-*.ipa
