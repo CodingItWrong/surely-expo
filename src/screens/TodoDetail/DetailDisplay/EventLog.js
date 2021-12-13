@@ -24,7 +24,7 @@ export default function EventLog({style, todo}) {
   }
   if (isDeferred) {
     entries.push(
-      `Deferred until ${relativeDate(todo.attributes['deferred-until'])}`,
+      `Deferred until ${relativeDatetime(todo.attributes['deferred-until'])}`,
     );
   }
   entries.push(`Created ${relativeDate(todo.attributes['created-at'])}`);
