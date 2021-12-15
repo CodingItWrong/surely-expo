@@ -1341,15 +1341,6 @@
   resolved "https://registry.yarnpkg.com/@codingitwrong/jsonapi-client/-/jsonapi-client-0.0.11.tgz#94672fb42cb8fe15a1681f997565e59c0aebe256"
   integrity sha512-0me56BMAj8KaCAK838AsBu7fXmytvbnFE1BbW8c1DlbNTcqrSd/yD3vWyuf4LLGFCdDHmVRWWRBclWeJh5+yjg==
 
-"@codingitwrong/react-native-paper@4.10.2":
-  version "4.10.2"
-  resolved "https://registry.yarnpkg.com/@codingitwrong/react-native-paper/-/react-native-paper-4.10.2.tgz#e05de445a761cd45b3d93b4a7c6a2a3551db6575"
-  integrity sha512-1Jmr6CVa59T6kfsf6jJ+h78ll7MuLQC+oSnkD9i/1kfi4Rbhukg7wDLEzurjmHj20Khl1ktaqTv6xCpYkTkxUQ==
-  dependencies:
-    "@callstack/react-theme-provider" "^3.0.7"
-    color "^3.1.2"
-    react-native-iphone-x-helper "^1.3.1"
-
 "@cypress/request@^2.88.10":
   version "2.88.10"
   resolved "https://registry.yarnpkg.com/@cypress/request/-/request-2.88.10.tgz#b66d76b07f860d3a4b8d7a0604d020c662752cce"
