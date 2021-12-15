@@ -1,4 +1,3 @@
-import {Provider as PaperForkProvider} from '@codingitwrong/react-native-paper';
 import {StatusBar} from 'expo-status-bar';
 // for some reason PaperProvider errors without the React import
 // eslint-disable-next-line no-unused-vars
@@ -19,16 +18,14 @@ export default function App() {
   const theme = useTheme();
   return (
     <PaperProvider theme={theme}>
-      <PaperForkProvider theme={theme}>
-        <StatusBar style="auto" />
-        <SafeAreaProvider>
-          <TokenProvider>
-            <TokenLoadBuffer>
-              <Navigation />
-            </TokenLoadBuffer>
-          </TokenProvider>
-        </SafeAreaProvider>
-      </PaperForkProvider>
+      <StatusBar style="auto" />
+      <SafeAreaProvider>
+        <TokenProvider>
+          <TokenLoadBuffer>
+            <Navigation />
+          </TokenLoadBuffer>
+        </TokenProvider>
+      </SafeAreaProvider>
     </PaperProvider>
   );
 }

@@ -1,6 +1,5 @@
-import {Menu} from '@codingitwrong/react-native-paper';
 import {useState} from 'react';
-import {Button} from 'react-native-paper';
+import {Button, Menu} from 'react-native-paper';
 
 export default function PaperDropdown({
   fieldLabel,
@@ -39,7 +38,6 @@ export default function PaperDropdown({
       <Menu.Item
         key="paper-dropdown-empty-item"
         title={emptyLabel}
-        accessibilityLabel={emptyLabel}
         accessibilityRole="button"
         onPress={() => handleChoose(null)}
       />
@@ -47,7 +45,6 @@ export default function PaperDropdown({
         <Menu.Item
           key={keyExtractor(option)}
           title={labelExtractor(option)}
-          accessibilityLabel={labelExtractor(option)}
           accessibilityRole="button"
           onPress={() => handleChoose(option)}
         />
