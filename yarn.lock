@@ -8048,10 +8048,10 @@ react-native-screens@^3.4.0, react-native-screens@~3.10.1:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
-react-native-style-queries@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-style-queries/-/react-native-style-queries-0.0.1.tgz#b16b2e9acb63273b25894e96f55913bb8f795ab0"
-  integrity sha512-vfIN/amZEmQf9hM/gzDtkEAftx8BdfSjWPfweZriwIiVWQxa6WloNZQ7cqarsS29fTeuhwf9uxgVgSRJyr0s3w==
+react-native-style-queries@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-style-queries/-/react-native-style-queries-0.1.0.tgz#76298272e08e40eb908c7b1f1270ac698859996e"
+  integrity sha512-uRfckLAQoYs+lde7moVzUmULyzMKFfAY+Njul5qd+aTt15LbwxHpwj/8QeBUCRSqIXTelnO/RYnKYisY+lyFzQ==
 
 react-native-web@0.17.1:
   version "0.17.1"
