@@ -1,13 +1,12 @@
-import startOfDay from 'date-fns/startOfDay';
 import pick from 'lodash/pick';
 import sortBy from 'lodash/sortBy';
 import {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
-import {DatePickerModal} from 'react-native-paper-dates';
 import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../components/ButtonGroup';
+import DatePickerModal from '../../components/DatePickerModal';
 import ErrorMessage from '../../components/ErrorMessage';
 import PaperDropdown from '../../components/PaperDropdown';
 import {useCategories} from '../../data/categories';
@@ -43,13 +42,8 @@ export default function DetailForm({todo, onSave, onCancel}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
     useState(false);
 
-  function handleChangeDeferredUntil({date: dayEnd}) {
-    if (dayEnd) {
-      const dayStart = startOfDay(dayEnd);
-      setDeferredUntil(dayStart);
-    } else {
-      setDeferredUntil(null);
-    }
+  function handleChangeDeferredUntil(dayEnd) {
+    setDeferredUntil(dayEnd);
     setIsDeferredUntilModalOpen(false);
   }
 
