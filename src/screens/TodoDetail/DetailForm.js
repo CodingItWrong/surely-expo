@@ -97,8 +97,6 @@ export default function DetailForm({todo, onSave, onCancel}) {
         </Button>
         <DatePickerModal
           visible={isDeferredUntilModalOpen}
-          locale="en"
-          mode="single"
           date={deferredUntil ? new Date(deferredUntil) : null}
           onConfirm={handleChangeDeferredUntil}
           onDismiss={() => setIsDeferredUntilModalOpen(false)}
