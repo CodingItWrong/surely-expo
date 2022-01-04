@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
-import {DatePickerModal} from 'react-native-paper-dates';
 import {breakpointMedium} from '../../../../breakpoints';
+import DatePickerModal from '../../../../components/DatePickerModal';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
 import sharedStyles from '../../../../sharedStyles';
@@ -100,7 +100,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
         mode="single"
         saveLabel="Defer"
         date={deferredUntil ? new Date(deferredUntil) : null}
-        onConfirm={({date}) => handleDeferUntil(date)}
+        onConfirm={dayEnd => handleDeferUntil(dayEnd)}
         onDismiss={() => setIsDeferredUntilModalOpen(false)}
       />
     </>
