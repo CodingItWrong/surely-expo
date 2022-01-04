@@ -12,18 +12,8 @@ export default function SupportScreen() {
       <ScrollView contentContainerStyle={sharedStyles.bodyPadding}>
         <SafeAreaView edges={['left', 'right', 'bottom']}>
           <CenterColumn>
-            <Text>You have three options for getting support with Surely:</Text>
+            <Text>You have two options for getting support with Surely:</Text>
             <VerticalButtonGroup>
-              <Button
-                testID="chat-button"
-                mode="contained"
-                style={styles.button}
-                onPress={() =>
-                  Linking.openURL('https://gitter.im/surelytodo/community')
-                }
-              >
-                Chat With the Surely Community
-              </Button>
               <Button
                 testID="issues-button"
                 mode="contained"
