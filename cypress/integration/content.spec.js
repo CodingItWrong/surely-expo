@@ -7,7 +7,6 @@ describe('content', () => {
   it('provides a support page', () => {
     cy.visit('/about/support');
 
-    cy.getTestId('chat-button').should('be.visible');
     cy.getTestId('issues-button').should('be.visible');
     cy.getTestId('email-button').should('be.visible');
 
