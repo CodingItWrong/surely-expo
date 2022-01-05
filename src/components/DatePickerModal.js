@@ -4,6 +4,7 @@ import {DatePickerModal} from 'react-native-paper-dates';
 export default function MyDatePickerModal({
   visible,
   date,
+  saveLabel,
   onConfirm,
   onDismiss,
 }) {
@@ -21,7 +22,7 @@ export default function MyDatePickerModal({
       visible={visible}
       locale="en"
       mode="single"
-      saveLabel="Defer"
+      saveLabel={saveLabel}
       date={date}
       onConfirm={handleConfirm}
       onDismiss={onDismiss}

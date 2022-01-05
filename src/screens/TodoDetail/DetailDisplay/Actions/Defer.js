@@ -98,6 +98,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
       <DatePickerModal
         visible={isDeferredUntilModalOpen}
         date={deferredUntil ? new Date(deferredUntil) : null}
+        saveLabel="Defer"
         onConfirm={dayEnd => handleDeferUntil(dayEnd)}
         onDismiss={() => setIsDeferredUntilModalOpen(false)}
       />
