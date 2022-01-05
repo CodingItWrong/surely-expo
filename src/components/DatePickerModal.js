@@ -16,11 +16,13 @@ export default function MyDatePickerModal({
     }
   }
 
+  // TODO: saveLabel doesn't seem to take effect
   return (
     <DatePickerModal
       visible={visible}
       locale="en"
       mode="single"
+      saveLabel="Defer"
       date={date}
       onConfirm={handleConfirm}
       onDismiss={onDismiss}
