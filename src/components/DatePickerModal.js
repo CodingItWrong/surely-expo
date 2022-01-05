@@ -16,7 +16,6 @@ export default function MyDatePickerModal({
     }
   }
 
-  // TODO: saveLabel doesn't seem to take effect
   return (
     <DatePickerModal
       visible={visible}
