@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
-    "@react-navigation/drawer": "^6.1.7",
+    "@react-navigation/drawer": "^6.2.0",
     "@react-navigation/native": "^6.0.5",
     "@react-navigation/native-stack": "^6.3.0",
     "axios": "^0.25.0",
