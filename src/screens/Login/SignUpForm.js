@@ -1,3 +1,4 @@
+import {useLinkTo} from '@react-navigation/native';
 import {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
@@ -10,7 +11,7 @@ import {useUsers} from '../../data/users';
 import sharedStyleQueries from '../../sharedStyleQueries';
 import sharedStyles from '../../sharedStyles';
 
-export default function SignUpForm({navigation, onSignUpSuccess}) {
+export default function SignUpForm({onSignUpSuccess}) {
   const responsiveStyles = useStyleQueries(sharedStyleQueries);
   const userClient = useUsers();
   const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const linkTo = useLinkTo();
 
   function validate() {
     if (!email) {
@@ -75,7 +77,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
             <Button
               mode="contained"
               testID="go-to-sign-in-button"
-              onPress={() => navigation.navigate('Sign in')}
+              onPress={() => linkTo('/signin')}
               style={responsiveStyles.button}
             >
               Go to sign in
@@ -120,7 +122,7 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
             <Button
               mode="outlined"
               testID="cancel-button"
-              onPress={() => navigation.navigate('Sign in')}
+              onPress={() => linkTo('/signin')}
               style={responsiveStyles.button}
               accessibilityLabel="Cancel"
             >
