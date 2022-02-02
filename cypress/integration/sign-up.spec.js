@@ -6,25 +6,6 @@ describe('sign-up', () => {
     cy.visit('/signup');
   });
 
-  it('allows signing up', () => {
-    cy.intercept('POST', 'http://localhost:3000/users?', {}).as('signup');
-
-    cy.getTestId('email-field').type(email);
-    cy.getTestId('password-field').type(password);
-    cy.getTestId('password-confirmation-field').type(password);
-    cy.getTestId('submit-sign-up-button').click();
-
-    cy.wait('@signup').then(({request}) => {
-      const {attributes} = request.body.data;
-      assert.equal(attributes.email, email);
-      assert.equal(attributes.password, password);
-    });
-
-    cy.contains('Sign up successful');
-    cy.getTestId('go-to-sign-in-button').click();
-    cy.url().should('match', /\/signin$/);
-  });
-
   it('validates sign up form data', () => {
     cy.getTestId('submit-sign-up-button').click();
     cy.contains('Email is required.').should('exist');

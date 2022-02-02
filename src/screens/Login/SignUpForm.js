@@ -69,7 +69,7 @@ export default function SignUpForm({onSignUpSuccess}) {
     if (success) {
       return (
         <>
-          <Text>
+          <Text testID="sign-up-successful-message">
             Sign up successful. Sign in with the email and password you used to
             sign up.
           </Text>
