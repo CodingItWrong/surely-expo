@@ -108,12 +108,13 @@ describe('CategoryDetail', () => {
 
       const client = {
         get: () => Promise.resolve({data: {data: category}}),
+        patch: jest.fn(),
         delete: jest.fn().mockResolvedValue(),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
       if (response) {
-        client.post.mockResolvedValue(response);
+        client.patch.mockResolvedValue(response);
       }
 
       const route = {params: {id: category.id}};
@@ -125,6 +126,34 @@ describe('CategoryDetail', () => {
 
       return {getByTestId, client, linkTo};
     }
+
+    it('allows editing the category', async () => {
+      const updatedName = 'Updated Name';
+      const request = [
+        'categories/cat1?',
+        {
+          data: {
+            type: 'categories',
+            id: category.id,
+            attributes: {name: updatedName},
+          },
+        },
+        {headers: {'Content-Type': 'application/vnd.api+json'}},
+      ];
+      const response = {data: category};
+
+      const {getByTestId, linkTo, client} = setUp({response});
+
+      await waitFor(() => getByTestId('delete-button'));
+
+      fireEvent.changeText(getByTestId('name-field'), updatedName);
+      fireEvent.press(getByTestId('save-button'));
+
+      await waitFor(() => {
+        expect(linkTo).toHaveBeenCalledWith('/categories');
+        expect(client.patch).toHaveBeenCalledWith(...request);
+      });
+    });
 
     it('allows deleting the category', async () => {
       const {getByTestId, linkTo, client} = setUp();

@@ -28,23 +28,6 @@ describe('category detail', () => {
     cy.contains('An error occurred deleting the category').should('be.visible');
   });
 
-  it('allows editing the category', () => {
-    cy.intercept('PATCH', `http://localhost:3000/categories/${categoryId}?`, {
-      fixture: 'category.json',
-    }).as('update');
-
-    const name = 'Updated Name';
-
-    cy.getTestId('name-field').clear().type(name);
-    cy.getTestId('save-button').click();
-
-    cy.wait('@update').then(({request}) => {
-      assert.equal(request.body.data.attributes.name, name);
-    });
-
-    cy.url().should('include', '/categories');
-  });
-
   it('shows a message upon error saving edits to the category', () => {
     cy.intercept('PATCH', `http://localhost:3000/categories/${categoryId}?`, {
       statusCode: 500,
