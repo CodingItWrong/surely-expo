@@ -6,11 +6,6 @@ describe('sign-up', () => {
     cy.visit('/signup');
   });
 
-  it('allows cancelling sign up', () => {
-    cy.getTestId('cancel-button').click();
-    cy.getTestId('sign-up-button').should('exist');
-  });
-
   it('allows signing up', () => {
     cy.intercept('POST', 'http://localhost:3000/users?', {}).as('signup');
 
