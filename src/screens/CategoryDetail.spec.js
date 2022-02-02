@@ -14,8 +14,9 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('CategoryDetail', () => {
+  const name = 'New Category';
+
   it('allows creating the category', async () => {
-    const name = 'New Category';
     const linkTo = jest.fn();
     useLinkTo.mockReturnValue(linkTo);
 
@@ -64,6 +65,31 @@ describe('CategoryDetail', () => {
     await waitFor(() => {
       expect(client.post).toHaveBeenCalledWith(...request);
       expect(linkTo).toHaveBeenCalledWith('/categories');
+    });
+  });
+
+  it('allows cancelling creation', async () => {
+    const linkTo = jest.fn();
+    useLinkTo.mockReturnValue(linkTo);
+
+    const client = {
+      post: jest.fn().mockResolvedValue({}),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    const route = {params: {id: 'new'}};
+    const {getByTestId} = render(
+      <TokenProvider loadToken={false}>
+        <CategoryDetail route={route} />
+      </TokenProvider>,
+    );
+
+    fireEvent.changeText(getByTestId('name-field'), name);
+    fireEvent.press(getByTestId('cancel-button'));
+
+    await waitFor(() => {
+      expect(linkTo).toHaveBeenCalledWith('/categories');
+      expect(client.post).not.toHaveBeenCalled();
     });
   });
 });
