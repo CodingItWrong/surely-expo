@@ -15,11 +15,6 @@ describe('category detail', () => {
     cy.contains('Category C');
   });
 
-  it('allows going back to the category list', () => {
-    cy.getTestId('back-button').click();
-    cy.url().should('match', /\/categories$/);
-  });
-
   it('shows a message upon error deleting the category', () => {
     cy.intercept('DELETE', `http://localhost:3000/categories/${categoryId}`, {
       statusCode: 500,
