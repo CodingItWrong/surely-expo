@@ -20,20 +20,6 @@ describe('category detail', () => {
     cy.url().should('match', /\/categories$/);
   });
 
-  it('allows deleting the category', () => {
-    cy.intercept(
-      'DELETE',
-      `http://localhost:3000/categories/${categoryId}`,
-      {},
-    ).as('delete');
-
-    cy.getTestId('delete-button').click();
-
-    cy.wait('@delete');
-
-    cy.url().should('include', '/categories');
-  });
-
   it('shows a message upon error deleting the category', () => {
     cy.intercept('DELETE', `http://localhost:3000/categories/${categoryId}`, {
       statusCode: 500,

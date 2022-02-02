@@ -91,4 +91,52 @@ describe('CategoryDetail', () => {
       });
     });
   });
+
+  describe('for an existing category', () => {
+    const category = {
+      id: 'cat1',
+      type: 'categories',
+      attributes: {
+        name: 'Category C',
+        'sort-order': 3,
+      },
+    };
+
+    function setUp({response} = {}) {
+      const linkTo = jest.fn();
+      useLinkTo.mockReturnValue(linkTo);
+
+      const client = {
+        get: () => Promise.resolve({data: {data: category}}),
+        delete: jest.fn().mockResolvedValue(),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      if (response) {
+        client.post.mockResolvedValue(response);
+      }
+
+      const route = {params: {id: category.id}};
+      const {getByTestId} = render(
+        <TokenProvider loadToken={false}>
+          <CategoryDetail route={route} />
+        </TokenProvider>,
+      );
+
+      return {getByTestId, client, linkTo};
+    }
+
+    it('allows deleting the category', async () => {
+      const {getByTestId, linkTo, client} = setUp();
+
+      await waitFor(() => getByTestId('delete-button'));
+
+      fireEvent.press(getByTestId('delete-button'));
+
+      await waitFor(() => {
+        expect(linkTo).toHaveBeenCalledWith('/categories');
+        expect(client.delete).toHaveBeenCalledWith('categories/cat1');
+      });
+    });
+  });
 });
