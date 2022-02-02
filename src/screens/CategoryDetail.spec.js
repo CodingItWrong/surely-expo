@@ -16,10 +16,30 @@ jest.mock('@react-navigation/native', () => ({
 describe('CategoryDetail', () => {
   const name = 'New Category';
 
-  it('allows creating the category', async () => {
+  function setUp({response} = {}) {
     const linkTo = jest.fn();
     useLinkTo.mockReturnValue(linkTo);
 
+    const client = {
+      post: jest.fn(),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    if (response) {
+      client.post.mockResolvedValue(response);
+    }
+
+    const route = {params: {id: 'new'}};
+    const {getByTestId} = render(
+      <TokenProvider loadToken={false}>
+        <CategoryDetail route={route} />
+      </TokenProvider>,
+    );
+
+    return {getByTestId, client, linkTo};
+  }
+
+  it('allows creating the category', async () => {
     const request = [
       'categories?',
       {data: {attributes: {name: 'New Category'}, type: 'categories'}},
@@ -47,17 +67,7 @@ describe('CategoryDetail', () => {
       },
     };
 
-    const client = {
-      post: jest.fn().mockResolvedValue(response),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
-
-    const route = {params: {id: 'new'}};
-    const {getByTestId} = render(
-      <TokenProvider loadToken={false}>
-        <CategoryDetail route={route} />
-      </TokenProvider>,
-    );
+    const {getByTestId, client, linkTo} = setUp({response});
 
     fireEvent.changeText(getByTestId('name-field'), name);
     fireEvent.press(getByTestId('save-button'));
@@ -69,20 +79,7 @@ describe('CategoryDetail', () => {
   });
 
   it('allows cancelling creation', async () => {
-    const linkTo = jest.fn();
-    useLinkTo.mockReturnValue(linkTo);
-
-    const client = {
-      post: jest.fn().mockResolvedValue({}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
-
-    const route = {params: {id: 'new'}};
-    const {getByTestId} = render(
-      <TokenProvider loadToken={false}>
-        <CategoryDetail route={route} />
-      </TokenProvider>,
-    );
+    const {getByTestId, client, linkTo} = setUp();
 
     fireEvent.changeText(getByTestId('name-field'), name);
     fireEvent.press(getByTestId('cancel-button'));
