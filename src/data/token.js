@@ -11,8 +11,8 @@ const ACCESS_TOKEN_KEY = 'SURELY_ACCESS_TOKEN';
 
 const TokenContext = createContext(null);
 
-export function TokenProvider({children}) {
-  const [isTokenLoaded, setIsTokenLoaded] = useState(false);
+export function TokenProvider({children, loadToken = true}) {
+  const [isTokenLoaded, setIsTokenLoaded] = useState(!loadToken);
   const [token, setToken] = useState(null);
 
   return (
