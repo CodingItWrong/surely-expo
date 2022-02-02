@@ -14,10 +14,29 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('SignUpForm', () => {
-  it('allows signing up', async () => {
+  function setUp({response} = {}) {
     const linkTo = jest.fn();
     useLinkTo.mockReturnValue(linkTo);
 
+    const client = {
+      post: jest.fn(),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    if (response) {
+      client.post.mockResolvedValue(response);
+    }
+
+    const {getByTestId, queryByTestId} = render(
+      <TokenProvider loadToken={false}>
+        <SignUpForm />
+      </TokenProvider>,
+    );
+
+    return {getByTestId, queryByTestId, client, linkTo};
+  }
+
+  it('allows signing up', async () => {
     const email = 'example@example.com';
     const password = 'password';
 
@@ -28,18 +47,7 @@ describe('SignUpForm', () => {
     ];
     const response = {data: {}};
 
-    const client = {
-      post: jest.fn(),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
-
-    client.post.mockResolvedValue(response);
-
-    const {getByTestId, queryByTestId} = render(
-      <TokenProvider loadToken={false}>
-        <SignUpForm />
-      </TokenProvider>,
-    );
+    const {getByTestId, queryByTestId, client, linkTo} = setUp({response});
 
     fireEvent.changeText(getByTestId('email-field'), email);
     fireEvent.changeText(getByTestId('password-field'), password);
@@ -57,14 +65,7 @@ describe('SignUpForm', () => {
   });
 
   it('allows cancelling signup', async () => {
-    const linkTo = jest.fn();
-    useLinkTo.mockReturnValue(linkTo);
-
-    const {getByTestId} = render(
-      <TokenProvider loadToken={false}>
-        <SignUpForm />
-      </TokenProvider>,
-    );
+    const {getByTestId, client, linkTo} = setUp();
 
     fireEvent.press(getByTestId('cancel-button'));
 
