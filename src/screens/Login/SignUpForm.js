@@ -116,12 +116,6 @@ export default function SignUpForm({navigation, onSignUpSuccess}) {
             secureTextEntry
           />
           <ErrorMessage>{error}</ErrorMessage>
-          {success && (
-            <Text>
-              Sign up successful. Log in with the email and password you used to
-              sign up.
-            </Text>
-          )}
           <ButtonGroup>
             <Button
               mode="outlined"
