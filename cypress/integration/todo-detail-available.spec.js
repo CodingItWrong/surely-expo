@@ -48,11 +48,6 @@ describe('todo detail - available', () => {
       cy.contains('Created 08/27/2021');
     });
 
-    it('allows going back to available todos', () => {
-      cy.getTestId('back-button').click();
-      cy.url().should('match', /\/todos\/available$/);
-    });
-
     it('allows completing the todo', () => {
       cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
         fixture: 'todo/available.json',
