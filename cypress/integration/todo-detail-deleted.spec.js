@@ -23,22 +23,6 @@ describe('todo detail - completed', () => {
     cy.url().should('match', /\/todos\/deleted/);
   });
 
-  it('allows undeleting the todo', () => {
-    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-      fixture: 'todo/available.json',
-    }).as('update');
-    cy.intercept('GET', 'http://localhost:3000/todos?*', {});
-
-    cy.getTestId('undelete-button').click();
-
-    cy.wait('@update').then(({request}) => {
-      assert.isNull(request.body.data.attributes['deleted-at']);
-      assert.isNull(request.body.data.attributes['completed-at']);
-    });
-
-    cy.url().should('include', '/todos/deleted');
-  });
-
   it('shows a message when there is an error undeleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       statusCode: 500,
