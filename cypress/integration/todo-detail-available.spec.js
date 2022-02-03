@@ -48,21 +48,6 @@ describe('todo detail - available', () => {
       cy.contains('Created 08/27/2021');
     });
 
-    it('allows completing the todo', () => {
-      cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-        fixture: 'todo/available.json',
-      }).as('update');
-      cy.intercept('GET', 'http://localhost:3000/todos?*', {});
-
-      cy.getTestId('complete-button').click();
-
-      cy.wait('@update').then(({request}) => {
-        assert.isNotNull(request.body.data.attributes['completed-at']);
-      });
-
-      cy.url().should('include', '/todos/available');
-    });
-
     it('shows a message when there is an error completing the todo', () => {
       cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
         statusCode: 500,
