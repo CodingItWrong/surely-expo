@@ -22,21 +22,6 @@ describe('todo detail - completed', () => {
     cy.url().should('match', /\/todos\/completed/);
   });
 
-  it('allows uncompleting the todo', () => {
-    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-      fixture: 'todo/available.json',
-    }).as('update');
-    cy.intercept('GET', 'http://localhost:3000/todos?*', {});
-
-    cy.getTestId('uncomplete-button').click();
-
-    cy.wait('@update').then(({request}) => {
-      assert.isNull(request.body.data.attributes['completed-at']);
-    });
-
-    cy.url().should('include', '/todos/completed');
-  });
-
   it('shows a message when there is an error uncompleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       statusCode: 500,

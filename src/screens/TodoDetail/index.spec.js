@@ -90,7 +90,7 @@ describe('TodoDetail', () => {
     });
   });
 
-  describe('when the todo is successfully loaded', () => {
+  describe('when the todo is available', () => {
     const todo = {
       id: 'abc123',
       type: 'todos',
@@ -184,6 +184,68 @@ describe('TodoDetail', () => {
               type: 'todos',
               id: todo.id,
               attributes: {'deleted-at': expect.any(Date)},
+            },
+          },
+          {headers: {'Content-Type': 'application/vnd.api+json'}},
+        );
+      });
+    });
+  });
+
+  describe('when the todo is completed', () => {
+    const todo = {
+      id: 'abc123',
+      type: 'todos',
+      attributes: {
+        name: 'My Available Todo',
+        notes: 'Notes for the todo',
+        'created-at': '2021-08-27T23:54:49.483Z',
+        'updated-at': '2021-08-27T23:54:49.483Z',
+        'deleted-at': null,
+        'completed-at': '2021-08-27T23:54:49.483Z',
+        'deferred-at': null,
+        'deferred-until': null,
+      },
+      relationships: {
+        category: {
+          data: null,
+        },
+      },
+    };
+
+    it.only('allows uncompleting the todo', async () => {
+      const client = {
+        get: jest.fn().mockResolvedValue({
+          data: {data: todo},
+        }),
+        patch: jest.fn().mockResolvedValue({data: {data: {}}}), // TODO: could test rejected
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const navigation = {
+        navigate: jest.fn(),
+      };
+
+      const route = {params: {id: todo.id}};
+      const {getByTestId} = render(
+        <TokenProvider loadToken={false}>
+          <AvailableTodoDetail route={route} navigation={navigation} />
+        </TokenProvider>,
+      );
+
+      await waitFor(() => getByTestId('uncomplete-button'));
+
+      fireEvent.press(getByTestId('uncomplete-button'));
+
+      await waitFor(() => {
+        expect(navigation.navigate).not.toHaveBeenCalled();
+        expect(client.patch).toHaveBeenCalledWith(
+          `todos/${todo.id}?`,
+          {
+            data: {
+              type: 'todos',
+              id: todo.id,
+              attributes: {'completed-at': null},
             },
           },
           {headers: {'Content-Type': 'application/vnd.api+json'}},
