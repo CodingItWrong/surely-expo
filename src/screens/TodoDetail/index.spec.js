@@ -190,6 +190,47 @@ describe('TodoDetail', () => {
         );
       });
     });
+
+    it('allows deferring the todo', async () => {
+      const client = {
+        get: jest.fn().mockResolvedValue({
+          data: {data: todo},
+        }),
+        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // TODO: could test rejected
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const navigation = {
+        navigate: jest.fn(),
+      };
+
+      const route = {params: {id: todo.id}};
+      const {getByTestId} = render(
+        <TokenProvider loadToken={false}>
+          <AvailableTodoDetail route={route} navigation={navigation} />
+        </TokenProvider>,
+      );
+
+      await waitFor(() => getByTestId('defer-button'));
+
+      fireEvent.press(getByTestId('defer-button'));
+      fireEvent.press(getByTestId('defer-1-day-button'));
+
+      await waitFor(() => {
+        expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
+        expect(client.patch).toHaveBeenCalledWith(
+          `todos/${todo.id}?`,
+          {
+            data: {
+              type: 'todos',
+              id: todo.id,
+              attributes: {'deferred-until': expect.any(Date)},
+            },
+          },
+          {headers: {'Content-Type': 'application/vnd.api+json'}},
+        );
+      });
+    });
   });
 
   describe('when the todo is completed', () => {

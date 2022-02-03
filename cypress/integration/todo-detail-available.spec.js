@@ -119,21 +119,6 @@ describe('todo detail - available', () => {
       cy.contains('An error occurred');
     });
 
-    it('allows deferring the todo', () => {
-      cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-        fixture: 'todo/available.json',
-      }).as('update');
-
-      cy.getTestId('defer-button').click();
-      cy.getTestId('defer-1-day-button').click();
-
-      cy.wait('@update').then(({request}) => {
-        assert.isNotNull(request.body.data.attributes['deferred-until']);
-      });
-
-      cy.url().should('include', '/todos/available');
-    });
-
     it('shows a message when an error occurs deferring the todo', () => {
       cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
         statusCode: 500,
