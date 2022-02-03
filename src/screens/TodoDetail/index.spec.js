@@ -213,7 +213,7 @@ describe('TodoDetail', () => {
       },
     };
 
-    it.only('allows uncompleting the todo', async () => {
+    it('allows uncompleting the todo', async () => {
       const client = {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
