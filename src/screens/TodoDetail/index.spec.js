@@ -91,27 +91,27 @@ describe('TodoDetail', () => {
   });
 
   describe('when the todo is successfully loaded', () => {
-    it('allows completing the todo', async () => {
-      const todo = {
-        id: 'abc123',
-        type: 'todos',
-        attributes: {
-          name: 'My Available Todo',
-          notes: 'Notes for the todo',
-          'created-at': '2021-08-27T23:54:49.483Z',
-          'updated-at': '2021-08-27T23:54:49.483Z',
-          'deleted-at': null,
-          'completed-at': null,
-          'deferred-at': null,
-          'deferred-until': null,
+    const todo = {
+      id: 'abc123',
+      type: 'todos',
+      attributes: {
+        name: 'My Available Todo',
+        notes: 'Notes for the todo',
+        'created-at': '2021-08-27T23:54:49.483Z',
+        'updated-at': '2021-08-27T23:54:49.483Z',
+        'deleted-at': null,
+        'completed-at': null,
+        'deferred-at': null,
+        'deferred-until': null,
+      },
+      relationships: {
+        category: {
+          data: null,
         },
-        relationships: {
-          category: {
-            data: null,
-          },
-        },
-      };
+      },
+    };
 
+    it('allows completing the todo', async () => {
       const client = {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
@@ -144,6 +144,46 @@ describe('TodoDetail', () => {
               type: 'todos',
               id: todo.id,
               attributes: {'completed-at': expect.any(Date)},
+            },
+          },
+          {headers: {'Content-Type': 'application/vnd.api+json'}},
+        );
+      });
+    });
+
+    it('allows deleting the todo', async () => {
+      const client = {
+        get: jest.fn().mockResolvedValue({
+          data: {data: todo},
+        }),
+        patch: jest.fn().mockResolvedValue({data: {data: {}}}), // patch because it's a soft delete
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const navigation = {
+        navigate: jest.fn(),
+      };
+
+      const route = {params: {id: todo.id}};
+      const {getByTestId} = render(
+        <TokenProvider loadToken={false}>
+          <AvailableTodoDetail route={route} navigation={navigation} />
+        </TokenProvider>,
+      );
+
+      await waitFor(() => getByTestId('delete-button'));
+
+      fireEvent.press(getByTestId('delete-button'));
+
+      await waitFor(() => {
+        expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
+        expect(client.patch).toHaveBeenCalledWith(
+          `todos/${todo.id}?`,
+          {
+            data: {
+              type: 'todos',
+              id: todo.id,
+              attributes: {'deleted-at': expect.any(Date)},
             },
           },
           {headers: {'Content-Type': 'application/vnd.api+json'}},
