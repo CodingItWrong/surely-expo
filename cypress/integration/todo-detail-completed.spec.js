@@ -17,11 +17,6 @@ describe('todo detail - completed', () => {
     cy.contains('Completed 08/28/2021');
   });
 
-  it('allows going back to available todos', () => {
-    cy.getTestId('back-button').click();
-    cy.url().should('match', /\/todos\/completed/);
-  });
-
   it('shows a message when there is an error uncompleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       statusCode: 500,

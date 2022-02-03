@@ -13,11 +13,6 @@ describe('todo detail - tomorrow', () => {
     cy.visit(`/todos/tomorrow/${todoId}`);
   });
 
-  it('allows going back to tomorrow todos', () => {
-    cy.getTestId('back-button').click();
-    cy.url().should('match', /\/todos\/tomorrow/);
-  });
-
   it('allows editing the todo', () => {
     cy.intercept('GET', 'http://localhost:3000/categories?', {
       fixture: 'categories.json',

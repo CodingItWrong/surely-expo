@@ -18,11 +18,6 @@ describe('todo detail - completed', () => {
     cy.contains('Deleted 08/29/2021');
   });
 
-  it('allows going back to available todos', () => {
-    cy.getTestId('back-button').click();
-    cy.url().should('match', /\/todos\/deleted/);
-  });
-
   it('shows a message when there is an error undeleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       statusCode: 500,

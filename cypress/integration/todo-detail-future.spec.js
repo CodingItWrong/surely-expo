@@ -17,11 +17,6 @@ describe('todo detail - future', () => {
     cy.contains('Deferred until 08/27/2121');
   });
 
-  it('allows going back to future todos', () => {
-    cy.getTestId('back-button').click();
-    cy.url().should('match', /\/todos\/future/);
-  });
-
   it('allows editing the todo', () => {
     cy.intercept('GET', 'http://localhost:3000/categories?', {
       fixture: 'categories.json',
