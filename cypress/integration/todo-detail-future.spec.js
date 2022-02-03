@@ -22,37 +22,6 @@ describe('todo detail - future', () => {
     cy.url().should('match', /\/todos\/future/);
   });
 
-  it('allows completing the todo', () => {
-    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-      fixture: 'todo/future.json',
-    }).as('update');
-    cy.intercept('GET', 'http://localhost:3000/todos?*', {});
-
-    cy.getTestId('complete-button').click();
-
-    cy.wait('@update').then(({request}) => {
-      assert.isNotNull(request.body.data.attributes['completed-at']);
-    });
-
-    cy.url().should('include', '/todos/future');
-  });
-
-  it('allows deleting the todo', () => {
-    // PATCH because it is a soft delete
-    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-      fixture: 'todo/future.json',
-    }).as('delete');
-    cy.intercept('GET', 'http://localhost:3000/todos?*', {});
-
-    cy.getTestId('delete-button').click();
-
-    cy.wait('@delete').then(({request}) => {
-      assert.isNotNull(request.body.data.attributes['deleted-at']);
-    });
-
-    cy.url().should('include', '/todos/future');
-  });
-
   it('allows editing the todo', () => {
     cy.intercept('GET', 'http://localhost:3000/categories?', {
       fixture: 'categories.json',
