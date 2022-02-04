@@ -6,9 +6,8 @@ Backend is <https://api.surelytodo.com>. If you'd like to build the client yours
 
 ## Support
 
-You have three options for getting support with Surely:
+You have two options for getting support with Surely:
 
-- [Chat with the Surely community on Gitter](https://gitter.im/surelytodo/community)
 - [Open a GitHub Issue on this repo](https://github.com/CodingItWrong/surely-expo/issues)
 - Send a support email to support at surelytodo dot com
 
