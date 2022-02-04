@@ -20,6 +20,8 @@ You have three options for getting support with Surely:
 - [Cocoapods](https://guides.cocoapods.org/using/getting-started.html#installation)
 - [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/)
 
+Requirements and npm dependencies can be installed by running `bin/setup`
+
 ## Installation
 
 ```bash

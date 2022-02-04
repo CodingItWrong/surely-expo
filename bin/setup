@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+npm install -g expo-cli
+npm install -g eas-cli
+gem install cocoapods
+gem install fastlane
+yarn install
