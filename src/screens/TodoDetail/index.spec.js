@@ -116,7 +116,7 @@ describe('TodoDetail', () => {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
         }),
-        patch: jest.fn().mockResolvedValue({data: {data: {}}}), // TODO: could test rejected
+        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // TODO: could test rejected
       };
       authenticatedHttpClient.mockReturnValue(client);
 
@@ -156,7 +156,7 @@ describe('TodoDetail', () => {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
         }),
-        patch: jest.fn().mockResolvedValue({data: {data: {}}}), // patch because it's a soft delete
+        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // patch because it's a soft delete
       };
       authenticatedHttpClient.mockReturnValue(client);
 
@@ -259,7 +259,7 @@ describe('TodoDetail', () => {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
         }),
-        patch: jest.fn().mockResolvedValue({data: {data: {}}}), // TODO: could test rejected
+        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // TODO: could test rejected
       };
       authenticatedHttpClient.mockReturnValue(client);
 
@@ -321,7 +321,7 @@ describe('TodoDetail', () => {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
         }),
-        patch: jest.fn().mockResolvedValue({data: {data: {}}}), // TODO: could test rejected
+        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // TODO: could test rejected
       };
       authenticatedHttpClient.mockReturnValue(client);
 
