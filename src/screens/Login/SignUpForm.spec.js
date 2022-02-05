@@ -65,7 +65,7 @@ describe('SignUpForm', () => {
   });
 
   it('allows cancelling signup', async () => {
-    const {getByTestId, client, linkTo} = setUp();
+    const {getByTestId, linkTo} = setUp();
 
     fireEvent.press(getByTestId('cancel-button'));
 
