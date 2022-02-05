@@ -80,6 +80,7 @@ describe('navigation', () => {
   });
 
   // started flaking locally
+  // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('mobile', () => {
     beforeEach(() => {
       cy.viewport('iphone-x');
