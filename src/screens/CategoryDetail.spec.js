@@ -14,6 +14,14 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('CategoryDetail', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    console.error.mockRestore();
+  });
+
   describe('for a new category', () => {
     const name = 'New Category';
 
@@ -102,7 +110,7 @@ describe('CategoryDetail', () => {
       },
     };
 
-    function setUp({response} = {}) {
+    function setUp({response, deleteError = null, saveError = null} = {}) {
       const linkTo = jest.fn();
       useLinkTo.mockReturnValue(linkTo);
 
@@ -113,19 +121,36 @@ describe('CategoryDetail', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
+      if (saveError) {
+        client.patch.mockRejectedValue(saveError);
+      }
+
       if (response) {
         client.patch.mockResolvedValue(response);
       }
 
+      if (deleteError) {
+        client.delete.mockRejectedValue(deleteError);
+      } else {
+        client.delete.mockResolvedValue();
+      }
+
       const route = {params: {id: category.id}};
-      const {getByTestId} = render(
+      const {getByTestId, queryByText} = render(
         <TokenProvider loadToken={false}>
           <CategoryDetail route={route} />
         </TokenProvider>,
       );
 
-      return {getByTestId, client, linkTo};
+      return {getByTestId, queryByText, client, linkTo};
     }
+
+    it('displays the category name', async () => {
+      const {getByTestId} = setUp();
+      await waitFor(() =>
+        expect(getByTestId('name-field').props.value).toEqual('Category C'),
+      );
+    });
 
     it('allows editing the category', async () => {
       const updatedName = 'Updated Name';
@@ -155,6 +180,26 @@ describe('CategoryDetail', () => {
       });
     });
 
+    it('shows a message upon error saving edits to the category', async () => {
+      const saveError = 'saveError';
+      const updatedName = 'Updated Name';
+
+      const {getByTestId, queryByText, linkTo} = setUp({saveError});
+
+      await waitFor(() => getByTestId('save-button'));
+
+      fireEvent.changeText(getByTestId('name-field'), updatedName);
+      fireEvent.press(getByTestId('save-button'));
+
+      await waitFor(() => {
+        expect(
+          queryByText('An error occurred saving the category.'),
+        ).not.toBeNull();
+        expect(console.error).toHaveBeenCalledWith(saveError);
+        expect(linkTo).not.toHaveBeenCalled();
+      });
+    });
+
     it('allows deleting the category', async () => {
       const {getByTestId, linkTo, client} = setUp();
 
@@ -165,6 +210,23 @@ describe('CategoryDetail', () => {
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
         expect(client.delete).toHaveBeenCalledWith('categories/cat1');
+      });
+    });
+
+    it('shows a message upon error deleting the category', async () => {
+      const deleteError = 'deleteError';
+      const {getByTestId, queryByText, linkTo} = setUp({deleteError});
+
+      await waitFor(() => getByTestId('delete-button'));
+
+      fireEvent.press(getByTestId('delete-button'));
+
+      await waitFor(() => {
+        expect(
+          queryByText('An error occurred deleting the category.'),
+        ).not.toBeNull();
+        expect(console.error).toHaveBeenCalledWith(deleteError);
+        expect(linkTo).not.toHaveBeenCalled();
       });
     });
   });
