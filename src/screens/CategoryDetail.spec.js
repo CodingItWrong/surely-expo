@@ -110,7 +110,7 @@ describe('CategoryDetail', () => {
       },
     };
 
-    function setUp({response, deleteError = null} = {}) {
+    function setUp({response, deleteError = null, saveError = null} = {}) {
       const linkTo = jest.fn();
       useLinkTo.mockReturnValue(linkTo);
 
@@ -121,14 +121,18 @@ describe('CategoryDetail', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      if (deleteError) {
-        client.delete.mockRejectedValue(deleteError);
-      } else {
-        client.delete.mockResolvedValue();
+      if (saveError) {
+        client.patch.mockRejectedValue(saveError);
       }
 
       if (response) {
         client.patch.mockResolvedValue(response);
+      }
+
+      if (deleteError) {
+        client.delete.mockRejectedValue(deleteError);
+      } else {
+        client.delete.mockResolvedValue();
       }
 
       const route = {params: {id: category.id}};
@@ -166,6 +170,26 @@ describe('CategoryDetail', () => {
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
         expect(client.patch).toHaveBeenCalledWith(...request);
+      });
+    });
+
+    it('shows a message upon error saving edits to the category', async () => {
+      const saveError = 'saveError';
+      const updatedName = 'Updated Name';
+
+      const {getByTestId, queryByText, linkTo} = setUp({saveError});
+
+      await waitFor(() => getByTestId('save-button'));
+
+      fireEvent.changeText(getByTestId('name-field'), updatedName);
+      fireEvent.press(getByTestId('save-button'));
+
+      await waitFor(() => {
+        expect(
+          queryByText('An error occurred saving the category.'),
+        ).not.toBeNull();
+        expect(console.error).toHaveBeenCalledWith(saveError);
+        expect(linkTo).not.toHaveBeenCalled();
       });
     });
 
