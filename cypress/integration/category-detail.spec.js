@@ -15,14 +15,6 @@ describe('category detail', () => {
     cy.contains('Category C');
   });
 
-  it('shows a message upon error deleting the category', () => {
-    cy.intercept('DELETE', `http://localhost:3000/categories/${categoryId}`, {
-      statusCode: 500,
-    });
-    cy.getTestId('delete-button').click();
-    cy.contains('An error occurred deleting the category').should('be.visible');
-  });
-
   it('shows a message upon error saving edits to the category', () => {
     cy.intercept('PATCH', `http://localhost:3000/categories/${categoryId}?`, {
       statusCode: 500,

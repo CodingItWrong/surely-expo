@@ -14,6 +14,14 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('CategoryDetail', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    console.error.mockRestore();
+  });
+
   describe('for a new category', () => {
     const name = 'New Category';
 
@@ -102,7 +110,7 @@ describe('CategoryDetail', () => {
       },
     };
 
-    function setUp({response} = {}) {
+    function setUp({response, deleteError = null} = {}) {
       const linkTo = jest.fn();
       useLinkTo.mockReturnValue(linkTo);
 
@@ -113,18 +121,24 @@ describe('CategoryDetail', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
+      if (deleteError) {
+        client.delete.mockRejectedValue(deleteError);
+      } else {
+        client.delete.mockResolvedValue();
+      }
+
       if (response) {
         client.patch.mockResolvedValue(response);
       }
 
       const route = {params: {id: category.id}};
-      const {getByTestId} = render(
+      const {getByTestId, queryByText} = render(
         <TokenProvider loadToken={false}>
           <CategoryDetail route={route} />
         </TokenProvider>,
       );
 
-      return {getByTestId, client, linkTo};
+      return {getByTestId, queryByText, client, linkTo};
     }
 
     it('allows editing the category', async () => {
@@ -165,6 +179,23 @@ describe('CategoryDetail', () => {
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
         expect(client.delete).toHaveBeenCalledWith('categories/cat1');
+      });
+    });
+
+    it('shows a message upon error deleting the category', async () => {
+      const deleteError = 'deleteError';
+      const {getByTestId, queryByText, linkTo} = setUp({deleteError});
+
+      await waitFor(() => getByTestId('delete-button'));
+
+      fireEvent.press(getByTestId('delete-button'));
+
+      await waitFor(() => {
+        expect(
+          queryByText('An error occurred deleting the category.'),
+        ).not.toBeNull();
+        expect(console.error).toHaveBeenCalledWith(deleteError);
+        expect(linkTo).not.toHaveBeenCalled();
       });
     });
   });
