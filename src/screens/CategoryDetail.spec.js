@@ -145,6 +145,13 @@ describe('CategoryDetail', () => {
       return {getByTestId, queryByText, client, linkTo};
     }
 
+    it('displays the category name', async () => {
+      const {getByTestId} = setUp();
+      await waitFor(() =>
+        expect(getByTestId('name-field').props.value).toEqual('Category C'),
+      );
+    });
+
     it('allows editing the category', async () => {
       const updatedName = 'Updated Name';
       const request = [
