@@ -4422,10 +4422,10 @@ expo-status-bar@~1.2.0:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.2.0.tgz#16e73205da563f9536f562e439081e30e318a82e"
   integrity sha512-pVZZ/kDCXFK79E4dCtRecs3XLC8aiwlciutSd/fFmUPJSQZ1Txia6hlKajPt0GAYft8/YnT0V3URXzWZOBniYQ==
 
-expo-store-review@~5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.1.0.tgz#56e2fb7ee321d849ce27cb11fb328aa05faf8dd9"
-  integrity sha512-t6p32UXdMcDqE216KLBTYcEe4jiB2MvmN3NT7Ly12r1b136ZE14T9AynfmWNI49FTP2rGRLg7rCFHz/cfitvPQ==
+expo-store-review@~5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.1.1.tgz#4c14a3b89be084f3f52bc86c83a1c2bbd663b366"
+  integrity sha512-FiSDjN2MBKxUwM8I97svjq9m0q6jgYMkvGWpve66Mb7k/bT8mWzu32DC46UL+qccJgL8zFJk5lvI7d8PQIefRQ==
 
 expo@^44.0.0:
   version "44.0.0"
