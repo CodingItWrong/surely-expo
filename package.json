@@ -9,7 +9,7 @@
     "test": "jest src --watchAll",
     "cypress": "cypress open",
     "lint": "eslint cypress src \"*.js\"",
-    "deploy": "expo build:web && cp _redirects web-build && netlify deploy --prod",
+    "deploy:web": "expo build:web && cp _redirects web-build && netlify deploy --prod",
     "build:ios": "eas build --platform ios --local"
   },
   "dependencies": {
