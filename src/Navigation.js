@@ -281,17 +281,8 @@ const getDrawerTypeForBreakpoint = breakpoint =>
 
 function NavigationContents() {
   const {isLoggedIn} = useToken();
-  const navigation = useNavigation();
   const breakpoint = useBreakpoint();
-  const drawerTypeForBreakpoint = getDrawerTypeForBreakpoint(breakpoint);
-  const [drawerType, setDrawerType] = useState(drawerTypeForBreakpoint);
-
-  useEffect(() => {
-    navigation.dispatch(DrawerActions.closeDrawer());
-    setTimeout(() => {
-      setDrawerType(drawerTypeForBreakpoint);
-    }, 500);
-  }, [drawerTypeForBreakpoint, navigation]);
+  const drawerType = getDrawerTypeForBreakpoint(breakpoint);
 
   // IMPORTANT: NavigationContainer must not rerender too often because
   // it calls the history API, and Safari and Firefox place limits on
