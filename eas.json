@@ -1,13 +1,13 @@
 {
   "build": {
-    "release": {},
+    "production": {},
     "development": {
       "developmentClient": true,
       "distribution": "internal"
     }
   },
   "submit": {
-    "release": {}
+    "production": {}
   },
   "cli": {
     "version": ">= 0.38.2"
