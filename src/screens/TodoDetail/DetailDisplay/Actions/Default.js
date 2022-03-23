@@ -103,16 +103,6 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
             >
               Delete
             </Button>
-            <Button
-              testID="defer-button"
-              mode="outlined"
-              onPress={onDefer}
-              style={styles.button}
-              disabled={isLoading}
-              accessibilityLabel="Defer"
-            >
-              Defer
-            </Button>
             {isCompleted ? (
               <Button
                 testID="uncomplete-button"
@@ -126,17 +116,29 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
                 Uncomplete
               </Button>
             ) : (
-              <Button
-                testID="complete-button"
-                mode="contained"
-                icon="checkbox-marked"
-                onPress={handleComplete}
-                style={styles.button}
-                disabled={isLoading}
-                accessibilityLabel="Complete"
-              >
-                Complete
-              </Button>
+              <>
+                <Button
+                  testID="defer-button"
+                  mode="outlined"
+                  onPress={onDefer}
+                  style={styles.button}
+                  disabled={isLoading}
+                  accessibilityLabel="Defer"
+                >
+                  Defer
+                </Button>
+                <Button
+                  testID="complete-button"
+                  mode="contained"
+                  icon="checkbox-marked"
+                  onPress={handleComplete}
+                  style={styles.button}
+                  disabled={isLoading}
+                  accessibilityLabel="Complete"
+                >
+                  Complete
+                </Button>
+              </>
             )}
           </>
         )}
