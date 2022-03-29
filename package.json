@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
-    "@react-navigation/drawer": "^6.3.1",
+    "@react-navigation/drawer": "^6.3.3",
     "@react-navigation/native": "^6.0.8",
-    "@react-navigation/native-stack": "^6.5.0",
+    "@react-navigation/native-stack": "^6.5.2",
     "axios": "^0.26.1",
     "date-fns": "^2.28.0",
     "expo": "^44.0.0",
@@ -41,13 +41,13 @@
     "react-native-web": "0.17.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.7",
+    "@babel/core": "^7.17.8",
     "@babel/preset-typescript": "^7.16.7",
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^4.0.4",
-    "@testing-library/react-native": "^9.0.0",
+    "@testing-library/react-native": "^9.1.0",
     "babel-jest": "^26.6.3",
-    "cypress": "^9.5.2",
+    "cypress": "^9.5.3",
     "eslint": "^7.32.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "~2.25.4",
