@@ -13,6 +13,7 @@ updates:
       - dependency-name: "babel-jest"
       - dependency-name: "jest"
       # the following are locked to Expo and will be updated along with it
+      - dependency-name: "babel-core"
       - dependency-name: "expo"
       - dependency-name: "expo-secure-store"
       - dependency-name: "expo-status-bar"
