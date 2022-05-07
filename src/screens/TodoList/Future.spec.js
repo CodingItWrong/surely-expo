@@ -29,7 +29,7 @@ describe('Future', () => {
     mockUseFocusEffect();
   });
 
-  it('displays completed todos from the server', async () => {
+  it('displays future todos from the server', async () => {
     const response = {data: [todo]};
 
     const client = {

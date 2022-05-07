@@ -29,7 +29,7 @@ describe('Deleted', () => {
     mockUseFocusEffect();
   });
 
-  it('displays completed todos from the server', async () => {
+  it('displays deleted todos from the server', async () => {
     const response = {data: [todo]};
 
     const client = {
