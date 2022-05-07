@@ -34,6 +34,7 @@ export default function CategoryList() {
     setErrorMessage(null);
     try {
       const {data} = await categoryClient.all();
+      console.log({data});
       setCategories(sortBy(data, 'attributes.sort-order'));
       return data;
     } catch (error) {
