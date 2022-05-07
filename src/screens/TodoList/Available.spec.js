@@ -70,4 +70,26 @@ describe('Available', () => {
       'todos?filter[status]=available&include=category',
     );
   });
+
+  it('shows a message when no todos listed', async () => {
+    const response = {
+      data: [],
+      included: [],
+    };
+
+    const client = {
+      get: jest.fn().mockResolvedValue({data: response}),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    const {findByText} = render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>
+          <Available />
+        </TokenProvider>
+      </SafeAreaProvider>,
+    );
+
+    await findByText('You have no available todos. Nice work!');
+  });
 });
