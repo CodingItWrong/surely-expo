@@ -102,7 +102,7 @@ describe('TodoDetail', () => {
         'deleted-at': null,
         'completed-at': null,
         'deferred-at': null,
-        'deferred-until': null,
+        'deferred-until': '2121-08-27T23:54:49.483Z',
       },
       relationships: {
         category: {
@@ -129,6 +129,7 @@ describe('TodoDetail', () => {
       await findByText(todo.attributes.name);
       expect(queryByText(todo.attributes.notes)).not.toBeNull();
       expect(queryByText('Created 08/27/2021')).not.toBeNull();
+      expect(queryByText('Deferred until 08/27/2121')).not.toBeNull();
     });
 
     describe('completing the todo', () => {
