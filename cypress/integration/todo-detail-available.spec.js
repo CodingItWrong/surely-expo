@@ -14,14 +14,6 @@ describe('todo detail - available', () => {
       cy.visit(`/todos/available/${todoId}`);
     });
 
-    it('shows a message when there is an error completing the todo', () => {
-      cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-        statusCode: 500,
-      });
-      cy.getTestId('complete-button').click();
-      cy.contains('An error occurred');
-    });
-
     it('shows a message when there is an error deleting the todo', () => {
       cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
         statusCode: 500,

@@ -131,43 +131,72 @@ describe('TodoDetail', () => {
       expect(queryByText('Created 08/27/2021')).not.toBeNull();
     });
 
-    it('allows completing the todo', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
-        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // TODO: could test rejected
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+    describe('completing the todo', () => {
+      it('allows completing the todo', async () => {
+        const client = {
+          get: jest.fn().mockResolvedValue({
+            data: {data: todo},
+          }),
+          patch: jest.fn().mockResolvedValue({data: {data: todo}}),
+        };
+        authenticatedHttpClient.mockReturnValue(client);
 
-      const navigation = {
-        navigate: jest.fn(),
-      };
+        const navigation = {
+          navigate: jest.fn(),
+        };
 
-      const route = {params: {id: todo.id}};
-      const {getByTestId} = render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
-      );
-
-      await waitFor(() => getByTestId('complete-button'));
-
-      fireEvent.press(getByTestId('complete-button'));
-
-      await waitFor(() => {
-        expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
-        expect(client.patch).toHaveBeenCalledWith(
-          `todos/${todo.id}?`,
-          {
-            data: {
-              type: 'todos',
-              id: todo.id,
-              attributes: {'completed-at': expect.any(Date)},
-            },
-          },
-          {headers: {'Content-Type': 'application/vnd.api+json'}},
+        const route = {params: {id: todo.id}};
+        const {getByTestId} = render(
+          <TokenProvider loadToken={false}>
+            <AvailableTodoDetail route={route} navigation={navigation} />
+          </TokenProvider>,
         );
+
+        await waitFor(() => getByTestId('complete-button'));
+
+        fireEvent.press(getByTestId('complete-button'));
+
+        await waitFor(() => {
+          expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
+          expect(client.patch).toHaveBeenCalledWith(
+            `todos/${todo.id}?`,
+            {
+              data: {
+                type: 'todos',
+                id: todo.id,
+                attributes: {'completed-at': expect.any(Date)},
+              },
+            },
+            {headers: {'Content-Type': 'application/vnd.api+json'}},
+          );
+        });
+      });
+
+      it('shows a message when there is an error completing the todo', async () => {
+        const client = {
+          get: jest.fn().mockResolvedValue({
+            data: {data: todo},
+          }),
+          patch: jest.fn().mockRejectedValue(),
+        };
+        authenticatedHttpClient.mockReturnValue(client);
+
+        const navigation = {
+          navigate: jest.fn(),
+        };
+
+        const route = {params: {id: todo.id}};
+        const {findByText, findByTestId, getByTestId} = render(
+          <TokenProvider loadToken={false}>
+            <AvailableTodoDetail route={route} navigation={navigation} />
+          </TokenProvider>,
+        );
+
+        await findByTestId('complete-button');
+        fireEvent.press(getByTestId('complete-button'));
+
+        await findByText('An error occurred marking the todo complete.');
+        expect(navigation.navigate).not.toHaveBeenCalled();
       });
     });
 
