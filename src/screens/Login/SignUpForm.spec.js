@@ -27,13 +27,13 @@ describe('SignUpForm', () => {
       client.post.mockResolvedValue(response);
     }
 
-    const {getByTestId, queryByTestId} = render(
+    const {getByTestId, queryByTestId, queryByText} = render(
       <TokenProvider loadToken={false}>
         <SignUpForm />
       </TokenProvider>,
     );
 
-    return {getByTestId, queryByTestId, client, linkTo};
+    return {getByTestId, queryByTestId, queryByText, client, linkTo};
   }
 
   it('allows signing up', async () => {
@@ -62,6 +62,33 @@ describe('SignUpForm', () => {
     fireEvent.press(getByTestId('go-to-sign-in-button'));
 
     expect(linkTo).toHaveBeenCalledWith('/signin');
+  });
+
+  it('validates sign up form data', () => {
+    const email = 'example@example.com';
+    const password = 'password';
+
+    const {getByTestId, queryByText} = setUp();
+
+    const signUpButton = getByTestId('submit-sign-up-button');
+    fireEvent.press(signUpButton);
+
+    expect(queryByText('Email is required.')).not.toBeNull();
+
+    fireEvent.changeText(getByTestId('email-field'), email);
+    fireEvent.press(signUpButton);
+    expect(queryByText('Password is required.')).not.toBeNull();
+
+    fireEvent.changeText(getByTestId('password-field'), password);
+    fireEvent.press(signUpButton);
+    expect(queryByText('Password confirmation is required.')).not.toBeNull();
+
+    fireEvent.changeText(
+      getByTestId('password-confirmation-field'),
+      'incorrect',
+    );
+    fireEvent.press(signUpButton);
+    expect(queryByText('Passwords do not match.')).not.toBeNull();
   });
 
   it('allows cancelling signup', async () => {

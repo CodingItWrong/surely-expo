@@ -1,34 +1,6 @@
 describe('todo detail - available', () => {
   const todoId = 'abc123';
 
-  describe('when there is an error loading the todo', () => {
-    beforeEach(() => {
-      cy.signIn();
-
-      cy.intercept(
-        'GET',
-        `http://localhost:3000/todos/${todoId}?include=category`,
-        {statusCode: 500},
-      );
-
-      cy.visit(`/todos/available/${todoId}`);
-    });
-
-    it('shows an error message', () => {
-      cy.contains('An error occurred');
-
-      cy.intercept(
-        'GET',
-        `http://localhost:3000/todos/${todoId}?include=category`,
-        {fixture: 'todo/available.json'},
-      );
-
-      cy.getTestId('retry-button').click();
-
-      cy.contains('My Available Todo');
-    });
-  });
-
   describe('when the todo loads successfully', () => {
     beforeEach(() => {
       cy.signIn();
@@ -40,28 +12,6 @@ describe('todo detail - available', () => {
       );
 
       cy.visit(`/todos/available/${todoId}`);
-    });
-
-    it('displays the todo content', () => {
-      cy.contains('My Available Todo');
-      cy.contains('Notes for the todo');
-      cy.contains('Created 08/27/2021');
-    });
-
-    it('shows a message when there is an error completing the todo', () => {
-      cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-        statusCode: 500,
-      });
-      cy.getTestId('complete-button').click();
-      cy.contains('An error occurred');
-    });
-
-    it('shows a message when there is an error deleting the todo', () => {
-      cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-        statusCode: 500,
-      });
-      cy.getTestId('delete-button').click();
-      cy.contains('An error occurred');
     });
 
     it('allows editing the todo', () => {
@@ -116,16 +66,6 @@ describe('todo detail - available', () => {
       );
       cy.getTestId('edit-button').click();
       cy.getTestId('save-button').click();
-      cy.contains('An error occurred');
-    });
-
-    it('shows a message when an error occurs deferring the todo', () => {
-      cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-        statusCode: 500,
-      });
-
-      cy.getTestId('defer-button').click();
-      cy.getTestId('defer-1-day-button').click();
       cy.contains('An error occurred');
     });
   });
