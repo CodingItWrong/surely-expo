@@ -1,34 +1,6 @@
 describe('todo detail - available', () => {
   const todoId = 'abc123';
 
-  describe('when there is an error loading the todo', () => {
-    beforeEach(() => {
-      cy.signIn();
-
-      cy.intercept(
-        'GET',
-        `http://localhost:3000/todos/${todoId}?include=category`,
-        {statusCode: 500},
-      );
-
-      cy.visit(`/todos/available/${todoId}`);
-    });
-
-    it('shows an error message', () => {
-      cy.contains('An error occurred');
-
-      cy.intercept(
-        'GET',
-        `http://localhost:3000/todos/${todoId}?include=category`,
-        {fixture: 'todo/available.json'},
-      );
-
-      cy.getTestId('retry-button').click();
-
-      cy.contains('My Available Todo');
-    });
-  });
-
   describe('when the todo loads successfully', () => {
     beforeEach(() => {
       cy.signIn();
