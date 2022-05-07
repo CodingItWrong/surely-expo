@@ -11,11 +11,6 @@ describe('available todos', () => {
     cy.visit('/');
   });
 
-  it('lists existing available todos', () => {
-    cy.getTestId('todo-list').contains('My Category');
-    cy.getTestId('todo-list').contains('Todo 1');
-  });
-
   it('shows an error when loading todos fails', () => {
     cy.intercept(
       'GET',
