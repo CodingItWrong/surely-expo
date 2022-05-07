@@ -332,6 +332,24 @@ describe('TodoDetail', () => {
       },
     };
 
+    it('displays the completion date', async () => {
+      const client = {
+        get: jest.fn().mockResolvedValue({
+          data: {data: todo},
+        }),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const route = {params: {id: todo.id}};
+      const {findByText} = render(
+        <TokenProvider loadToken={false}>
+          <AvailableTodoDetail route={route} />
+        </TokenProvider>,
+      );
+
+      await findByText('Completed 08/27/2021');
+    });
+
     it('allows uncompleting the todo', async () => {
       const client = {
         get: jest.fn().mockResolvedValue({
