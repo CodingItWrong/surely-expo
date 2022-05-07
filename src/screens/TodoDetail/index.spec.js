@@ -371,6 +371,32 @@ describe('TodoDetail', () => {
         );
       });
     });
+
+    it('shows a message when there is an error uncompleting the todo', async () => {
+      const client = {
+        get: jest.fn().mockResolvedValue({
+          data: {data: todo},
+        }),
+        patch: jest.fn().mockRejectedValue(),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const navigation = {
+        navigate: jest.fn(),
+      };
+
+      const route = {params: {id: todo.id}};
+      const {findByTestId, findByText, getByTestId} = render(
+        <TokenProvider loadToken={false}>
+          <AvailableTodoDetail route={route} navigation={navigation} />
+        </TokenProvider>,
+      );
+
+      await findByTestId('uncomplete-button');
+      fireEvent.press(getByTestId('uncomplete-button'));
+
+      await findByText('An error occurred marking the todo incomplete.');
+    });
   });
 
   describe('when the todo is deleted', () => {

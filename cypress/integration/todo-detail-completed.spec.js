@@ -16,12 +16,4 @@ describe('todo detail - completed', () => {
   it('displays the todo completion date', () => {
     cy.contains('Completed 08/28/2021');
   });
-
-  it('shows a message when there is an error uncompleting the todo', () => {
-    cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-      statusCode: 500,
-    });
-    cy.getTestId('uncomplete-button').click();
-    cy.contains('An error occurred');
-  });
 });
