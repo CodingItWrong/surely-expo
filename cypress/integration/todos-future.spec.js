@@ -11,11 +11,6 @@ describe('future todos', () => {
     cy.visit('/todos/future');
   });
 
-  it('lists existing future todos', () => {
-    cy.getTestId('todo-list').contains('08/28/2021');
-    cy.getTestId('todo-list').contains('Todo 1');
-  });
-
   it('shows a message when no todos listed', () => {
     cy.intercept(
       'GET',
