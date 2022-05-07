@@ -386,7 +386,7 @@ describe('TodoDetail', () => {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
         }),
-        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // TODO: could test rejected
+        patch: jest.fn().mockResolvedValue({data: {data: todo}}),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
@@ -493,7 +493,7 @@ describe('TodoDetail', () => {
         get: jest.fn().mockResolvedValue({
           data: {data: todo},
         }),
-        patch: jest.fn().mockResolvedValue({data: {data: todo}}), // TODO: could test rejected
+        patch: jest.fn().mockResolvedValue({data: {data: todo}}),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
