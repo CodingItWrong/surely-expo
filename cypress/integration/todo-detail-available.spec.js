@@ -68,15 +68,5 @@ describe('todo detail - available', () => {
       cy.getTestId('save-button').click();
       cy.contains('An error occurred');
     });
-
-    it('shows a message when an error occurs deferring the todo', () => {
-      cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
-        statusCode: 500,
-      });
-
-      cy.getTestId('defer-button').click();
-      cy.getTestId('defer-1-day-button').click();
-      cy.contains('An error occurred');
-    });
   });
 });
