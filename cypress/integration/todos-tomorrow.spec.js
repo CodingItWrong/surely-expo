@@ -11,11 +11,6 @@ describe('tomorrow todos', () => {
     cy.visit('/todos/tomorrow');
   });
 
-  it('lists existing tomorrow todos', () => {
-    cy.getTestId('todo-list').contains('My Category');
-    cy.getTestId('todo-list').contains('Todo 1');
-  });
-
   it('shows a message when no todos listed', () => {
     cy.intercept(
       'GET',
