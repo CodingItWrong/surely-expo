@@ -52,4 +52,23 @@ describe('Deleted', () => {
       'todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=1',
     );
   });
+
+  it('shows a message when no todos listed', async () => {
+    const response = {data: []};
+
+    const client = {
+      get: jest.fn().mockResolvedValue({data: response}),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    const {findByText, queryByText} = render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>
+          <Deleted />
+        </TokenProvider>
+      </SafeAreaProvider>,
+    );
+
+    await findByText("You have no deleted todos. Don't be afraid to give up!");
+  });
 });

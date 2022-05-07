@@ -13,18 +13,6 @@ describe('deleted todos', () => {
     cy.visit('/todos/deleted');
   });
 
-  it('shows a message when no todos listed', () => {
-    cy.intercept(
-      'GET',
-      'http://localhost:3000/todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=1',
-      {fixture: 'todos/none.json'},
-    );
-
-    cy.visit('/todos/deleted');
-
-    cy.contains("You have no deleted todos. Don't be afraid to give up!");
-  });
-
   it('allows searching for todos', () => {
     cy.intercept(
       'GET',
