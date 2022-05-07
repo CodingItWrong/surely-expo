@@ -426,8 +426,8 @@ describe('TodoDetail', () => {
         notes: 'Notes for the todo',
         'created-at': '2021-08-27T23:54:49.483Z',
         'updated-at': '2021-08-27T23:54:49.483Z',
-        'deleted-at': '2021-08-27T23:54:49.483Z',
-        'completed-at': '2021-08-27T23:54:49.483Z',
+        'deleted-at': '2021-08-29T23:54:49.483Z',
+        'completed-at': '2021-08-28T23:54:49.483Z',
         'deferred-at': null,
         'deferred-until': null,
       },
@@ -437,6 +437,25 @@ describe('TodoDetail', () => {
         },
       },
     };
+
+    it('displays the todo dates', async () => {
+      const client = {
+        get: jest.fn().mockResolvedValue({
+          data: {data: todo},
+        }),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const route = {params: {id: todo.id}};
+      const {findByText, queryByText} = render(
+        <TokenProvider loadToken={false}>
+          <AvailableTodoDetail route={route} />
+        </TokenProvider>,
+      );
+
+      await findByText('Completed 08/28/2021');
+      expect(queryByText('Deleted 08/29/2021')).not.toBeNull();
+    });
 
     it('allows undeleting the todo', async () => {
       const client = {

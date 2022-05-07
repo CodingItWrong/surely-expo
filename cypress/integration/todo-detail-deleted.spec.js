@@ -13,11 +13,6 @@ describe('todo detail - completed', () => {
     cy.visit(`/todos/deleted/${todoId}`);
   });
 
-  it('displays the todo dates', () => {
-    cy.contains('Completed 08/28/2021');
-    cy.contains('Deleted 08/29/2021');
-  });
-
   it('shows a message when there is an error undeleting the todo', () => {
     cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
       statusCode: 500,
