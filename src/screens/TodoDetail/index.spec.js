@@ -111,6 +111,26 @@ describe('TodoDetail', () => {
       },
     };
 
+    it('displays the todo content', async () => {
+      const client = {
+        get: jest.fn().mockResolvedValue({
+          data: {data: todo},
+        }),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const route = {params: {id: todo.id}};
+      const {findByText, queryByText} = render(
+        <TokenProvider loadToken={false}>
+          <AvailableTodoDetail route={route} />
+        </TokenProvider>,
+      );
+
+      await findByText(todo.attributes.name);
+      expect(queryByText(todo.attributes.notes)).not.toBeNull();
+      expect(queryByText('Created 08/27/2021')).not.toBeNull();
+    });
+
     it('allows completing the todo', async () => {
       const client = {
         get: jest.fn().mockResolvedValue({

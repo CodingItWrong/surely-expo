@@ -14,12 +14,6 @@ describe('todo detail - available', () => {
       cy.visit(`/todos/available/${todoId}`);
     });
 
-    it('displays the todo content', () => {
-      cy.contains('My Available Todo');
-      cy.contains('Notes for the todo');
-      cy.contains('Created 08/27/2021');
-    });
-
     it('shows a message when there is an error completing the todo', () => {
       cy.intercept('PATCH', `http://localhost:3000/todos/${todoId}?`, {
         statusCode: 500,
