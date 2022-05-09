@@ -10,6 +10,7 @@ export default function SearchForm({value, onSubmit}) {
     <TextInput
       testID="search-field"
       label="search"
+      accessibilityLabel="search"
       value={searchText}
       onChangeText={setSearchText}
       onSubmitEditing={handleSubmit}
