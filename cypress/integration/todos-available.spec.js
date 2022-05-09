@@ -47,9 +47,4 @@ describe('available todos', () => {
 
     cy.getTestId('error-message').should('be.visible');
   });
-
-  it('allows navigating to a todo detail', () => {
-    cy.getTestId('todo-list').contains('Todo 1').click();
-    cy.url().should('include', '/todos/available/abc123');
-  });
 });

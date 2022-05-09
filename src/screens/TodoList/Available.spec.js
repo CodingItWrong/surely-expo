@@ -1,4 +1,5 @@
-import {render} from '@testing-library/react-native';
+import {useLinkTo} from '@react-navigation/native';
+import {fireEvent, render} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
@@ -99,7 +100,7 @@ describe('Available', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, queryByText} = render(
+      const {findByText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Available />
@@ -107,7 +108,7 @@ describe('Available', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, queryByText};
+      return {client, findByText, getByText, queryByText};
     }
 
     it('displays available todos from the server', async () => {
@@ -119,6 +120,18 @@ describe('Available', () => {
       expect(client.get).toHaveBeenCalledWith(
         'todos?filter[status]=available&include=category',
       );
+    });
+
+    it('allows navigating to a todo detail', async () => {
+      const linkTo = jest.fn().mockName('linkTo');
+      useLinkTo.mockReturnValue(linkTo);
+
+      const {findByText, getByText} = renderComponent();
+
+      await findByText('Todo 1');
+      fireEvent.press(getByText('Todo 1'));
+
+      expect(linkTo).toHaveBeenCalledWith('/todos/available/abc123');
     });
   });
 });
