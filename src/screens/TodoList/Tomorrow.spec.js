@@ -67,4 +67,23 @@ describe('Tomorrow', () => {
       'todos?filter[status]=tomorrow&include=category',
     );
   });
+
+  it('shows a message when no todos listed', async () => {
+    const response = {data: [], included: []};
+
+    const client = {
+      get: jest.fn().mockResolvedValue({data: response}),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    const {findByText} = render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>
+          <Tomorrow />
+        </TokenProvider>
+      </SafeAreaProvider>,
+    );
+
+    await findByText('You have no todos for tomorrow. Nice work!');
+  });
 });
