@@ -13,18 +13,6 @@ describe('deleted todos', () => {
     cy.visit('/todos/deleted');
   });
 
-  it('allows searching for todos', () => {
-    cy.intercept(
-      'GET',
-      `http://localhost:3000/todos?filter[status]=deleted&filter[search]=${searchText}&sort=-deletedAt&page[number]=1`,
-      {fixture: 'todos/deleted.json'},
-    ).as('search');
-
-    cy.getTestId('search-field').type(`${searchText}{enter}`);
-
-    cy.wait('@search');
-  });
-
   it('shows a message when no search results returned', () => {
     cy.intercept(
       'GET',
@@ -35,11 +23,6 @@ describe('deleted todos', () => {
     cy.getTestId('search-field').type(`${searchText}{enter}`);
 
     cy.contains('No deleted todos matched your search');
-  });
-
-  it('allows navigating to a todo detail', () => {
-    cy.getTestId('todo-list').contains('Todo 1').click();
-    cy.url().should('include', '/todos/deleted/abc123');
   });
 
   it('allows page navigation', () => {

@@ -11,18 +11,6 @@ describe('tomorrow todos', () => {
     cy.visit('/todos/tomorrow');
   });
 
-  it('shows a message when no todos listed', () => {
-    cy.intercept(
-      'GET',
-      'http://localhost:3000/todos?filter[status]=tomorrow&include=category',
-      {fixture: 'todos/none.json'},
-    );
-
-    cy.visit('/todos/tomorrow');
-
-    cy.contains('You have no todos for tomorrow. Nice work!');
-  });
-
   it('allows creating a tomorrow todo', () => {
     // wait for existing todos to load
     cy.getTestId('todo-list').contains('Todo 1');
@@ -47,10 +35,5 @@ describe('tomorrow todos', () => {
     });
 
     cy.getTestId('todo-list').contains(todoName);
-  });
-
-  it('allows navigating to a todo detail', () => {
-    cy.getTestId('todo-list').contains('Todo 1').click();
-    cy.url().should('include', '/todos/tomorrow/abc123');
   });
 });
