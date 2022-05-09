@@ -52,4 +52,23 @@ describe('Future', () => {
       'todos?filter[status]=future&filter[search]=&sort=name',
     );
   });
+
+  it('shows a message when no todos listed', async () => {
+    const response = {data: []};
+
+    const client = {
+      get: jest.fn().mockResolvedValue({data: response}),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    const {findByText} = render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>
+          <Future />
+        </TokenProvider>
+      </SafeAreaProvider>,
+    );
+
+    await findByText('You have no future todos. Nice work!');
+  });
 });

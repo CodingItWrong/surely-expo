@@ -11,18 +11,6 @@ describe('future todos', () => {
     cy.visit('/todos/future');
   });
 
-  it('shows a message when no todos listed', () => {
-    cy.intercept(
-      'GET',
-      'http://localhost:3000/todos?filter[status]=future&filter[search]=&sort=name',
-      {fixture: 'todos/none.json'},
-    );
-
-    cy.visit('/todos/future');
-
-    cy.contains('You have no future todos. Nice work!');
-  });
-
   it('allows searching for todos', () => {
     const searchText = 'MySearchText';
     cy.intercept(
