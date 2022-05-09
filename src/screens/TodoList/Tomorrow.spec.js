@@ -1,4 +1,5 @@
-import {render} from '@testing-library/react-native';
+import {useLinkTo} from '@react-navigation/native';
+import {fireEvent, render} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
@@ -74,7 +75,7 @@ describe('Tomorrow', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, queryByText} = render(
+      const {findByText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Tomorrow />
@@ -82,7 +83,7 @@ describe('Tomorrow', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, queryByText};
+      return {client, findByText, getByText, queryByText};
     }
 
     it('displays tomorrow todos from the server', async () => {
@@ -94,6 +95,18 @@ describe('Tomorrow', () => {
       expect(client.get).toHaveBeenCalledWith(
         'todos?filter[status]=tomorrow&include=category',
       );
+    });
+
+    it('allows navigating to a todo detail', async () => {
+      const linkTo = jest.fn().mockName('linkTo');
+      useLinkTo.mockReturnValue(linkTo);
+
+      const {findByText, getByText} = renderComponent();
+
+      await findByText('Todo 1');
+      fireEvent.press(getByText('Todo 1'));
+
+      expect(linkTo).toHaveBeenCalledWith('/todos/tomorrow/abc123');
     });
   });
 });

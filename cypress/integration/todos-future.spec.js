@@ -23,9 +23,4 @@ describe('future todos', () => {
 
     cy.wait('@search');
   });
-
-  it('allows navigating to a todo detail', () => {
-    cy.getTestId('todo-list').contains('Todo 1').click();
-    cy.url().should('include', '/todos/future/abc123');
-  });
 });

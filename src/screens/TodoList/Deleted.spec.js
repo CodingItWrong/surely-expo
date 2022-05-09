@@ -1,4 +1,5 @@
-import {render} from '@testing-library/react-native';
+import {useLinkTo} from '@react-navigation/native';
+import {fireEvent, render} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
@@ -61,7 +62,7 @@ describe('Deleted', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, queryByText} = render(
+      const {findByText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Deleted />
@@ -69,7 +70,7 @@ describe('Deleted', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, queryByText};
+      return {client, findByText, getByText, queryByText};
     }
 
     it('displays deleted todos from the server', async () => {
@@ -81,6 +82,18 @@ describe('Deleted', () => {
       expect(client.get).toHaveBeenCalledWith(
         'todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=1',
       );
+    });
+
+    it('allows navigating to a todo detail', async () => {
+      const linkTo = jest.fn().mockName('linkTo');
+      useLinkTo.mockReturnValue(linkTo);
+
+      const {findByText, getByText} = renderComponent();
+
+      await findByText('Todo 1');
+      fireEvent.press(getByText('Todo 1'));
+
+      expect(linkTo).toHaveBeenCalledWith('/todos/deleted/abc123');
     });
   });
 });

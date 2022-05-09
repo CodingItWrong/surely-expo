@@ -13,11 +13,6 @@ describe('completed todos', () => {
     cy.visit('/todos/completed');
   });
 
-  it('allows navigating to a todo detail', () => {
-    cy.getTestId('todo-list').contains('Todo 1').click();
-    cy.url().should('include', '/todos/completed/abc123');
-  });
-
   it('allows page navigation', () => {
     // wait for page to load
     cy.getTestId('todo-list').contains('Todo 1');

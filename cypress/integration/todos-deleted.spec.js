@@ -37,11 +37,6 @@ describe('deleted todos', () => {
     cy.contains('No deleted todos matched your search');
   });
 
-  it('allows navigating to a todo detail', () => {
-    cy.getTestId('todo-list').contains('Todo 1').click();
-    cy.url().should('include', '/todos/deleted/abc123');
-  });
-
   it('allows page navigation', () => {
     // wait for page to load
     cy.getTestId('todo-list').contains('Todo 1');
