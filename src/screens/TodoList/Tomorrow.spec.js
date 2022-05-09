@@ -44,46 +44,50 @@ describe('Tomorrow', () => {
     mockUseFocusEffect();
   });
 
-  it('displays tomorrow todos from the server', async () => {
-    const response = {data: [todo], included: [category]};
+  describe('when there are no tomorrow todos', () => {
+    it('shows an error message', async () => {
+      const response = {data: [], included: []};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText, queryByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Tomorrow />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Tomorrow />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText(todo.attributes.name);
-    expect(queryByText(`${category.attributes.name} (1)`)).not.toBeNull();
-
-    expect(client.get).toHaveBeenCalledWith(
-      'todos?filter[status]=tomorrow&include=category',
-    );
+      await findByText('You have no todos for tomorrow. Nice work!');
+    });
   });
 
-  it('shows a message when no todos listed', async () => {
-    const response = {data: [], included: []};
+  describe('when there are tomorrow todos', () => {
+    it('displays tomorrow todos from the server', async () => {
+      const response = {data: [todo], included: [category]};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Tomorrow />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText, queryByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Tomorrow />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText('You have no todos for tomorrow. Nice work!');
+      await findByText(todo.attributes.name);
+      expect(queryByText(`${category.attributes.name} (1)`)).not.toBeNull();
+
+      expect(client.get).toHaveBeenCalledWith(
+        'todos?filter[status]=tomorrow&include=category',
+      );
+    });
   });
 });

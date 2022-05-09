@@ -29,46 +29,50 @@ describe('Future', () => {
     mockUseFocusEffect();
   });
 
-  it('displays future todos from the server', async () => {
-    const response = {data: [todo]};
+  describe('when there are no available todos', () => {
+    it('shows an error message', async () => {
+      const response = {data: []};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText, queryByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Future />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Future />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText(todo.attributes.name);
-    expect(queryByText('08/28/2121 (1)')).not.toBeNull();
-
-    expect(client.get).toHaveBeenCalledWith(
-      'todos?filter[status]=future&filter[search]=&sort=name',
-    );
+      await findByText('You have no future todos. Nice work!');
+    });
   });
 
-  it('shows a message when no todos listed', async () => {
-    const response = {data: []};
+  describe('when there are future todos', () => {
+    it('displays future todos from the server', async () => {
+      const response = {data: [todo]};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Future />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText, queryByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Future />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText('You have no future todos. Nice work!');
+      await findByText(todo.attributes.name);
+      expect(queryByText('08/28/2121 (1)')).not.toBeNull();
+
+      expect(client.get).toHaveBeenCalledWith(
+        'todos?filter[status]=future&filter[search]=&sort=name',
+      );
+    });
   });
 });

@@ -29,46 +29,50 @@ describe('Completed', () => {
     mockUseFocusEffect();
   });
 
-  it('displays completed todos from the server', async () => {
-    const response = {data: [todo]};
+  describe('when there are no completed todos', () => {
+    it('shows an error message', async () => {
+      const response = {data: []};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText, queryByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Completed />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Completed />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText(todo.attributes.name);
-    expect(queryByText('08/28/2021 (1)')).not.toBeNull();
-
-    expect(client.get).toHaveBeenCalledWith(
-      'todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
-    );
+      await findByText("You have no completed todos. You'll get there!");
+    });
   });
 
-  it('shows a message when no todos listed', async () => {
-    const response = {data: []};
+  describe('when there are completed todos', () => {
+    it('displays completed todos from the server', async () => {
+      const response = {data: [todo]};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Completed />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText, queryByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Completed />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText("You have no completed todos. You'll get there!");
+      await findByText(todo.attributes.name);
+      expect(queryByText('08/28/2021 (1)')).not.toBeNull();
+
+      expect(client.get).toHaveBeenCalledWith(
+        'todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
+      );
+    });
   });
 });

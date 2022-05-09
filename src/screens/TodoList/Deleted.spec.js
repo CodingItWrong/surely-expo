@@ -29,46 +29,52 @@ describe('Deleted', () => {
     mockUseFocusEffect();
   });
 
-  it('displays deleted todos from the server', async () => {
-    const response = {data: [todo]};
+  describe('when there are no deleted todos', () => {
+    it('shows an error message', async () => {
+      const response = {data: []};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText, queryByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Deleted />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText, queryByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Deleted />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText(todo.attributes.name);
-    expect(queryByText('08/28/2021 (1)')).not.toBeNull();
-
-    expect(client.get).toHaveBeenCalledWith(
-      'todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=1',
-    );
+      await findByText(
+        "You have no deleted todos. Don't be afraid to give up!",
+      );
+    });
   });
 
-  it('shows a message when no todos listed', async () => {
-    const response = {data: []};
+  describe('when there are deleted todos', () => {
+    it('displays deleted todos from the server', async () => {
+      const response = {data: [todo]};
 
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+      const client = {
+        get: jest.fn().mockResolvedValue({data: response}),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
 
-    const {findByText, queryByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Deleted />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+      const {findByText, queryByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Deleted />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
-    await findByText("You have no deleted todos. Don't be afraid to give up!");
+      await findByText(todo.attributes.name);
+      expect(queryByText('08/28/2021 (1)')).not.toBeNull();
+
+      expect(client.get).toHaveBeenCalledWith(
+        'todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=1',
+      );
+    });
   });
 });
