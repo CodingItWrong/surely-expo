@@ -11,17 +11,6 @@ describe('available todos', () => {
     cy.visit('/');
   });
 
-  it('shows an error when loading todos fails', () => {
-    cy.intercept(
-      'GET',
-      'http://localhost:3000/todos?filter[status]=available&include=category',
-      {statusCode: 500},
-    );
-
-    cy.visit('/');
-    cy.contains('An error occurred');
-  });
-
   it('allows creating todos', () => {
     // wait for existing todos to load
     cy.getTestId('todo-list').contains('Todo 1');

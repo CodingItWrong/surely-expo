@@ -44,6 +44,25 @@ describe('Available', () => {
     mockUseFocusEffect();
   });
 
+  describe('when there is an error loading todos', () => {
+    it('shows an error message', async () => {
+      const client = {
+        get: jest.fn().mockRejectedValue(),
+      };
+      authenticatedHttpClient.mockReturnValue(client);
+
+      const {findByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Available />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
+
+      await findByText('An error occurred while loading todos.');
+    });
+  });
+
   describe('when there are no available todos', () => {
     it('shows a message when no todos listed', async () => {
       const response = {
