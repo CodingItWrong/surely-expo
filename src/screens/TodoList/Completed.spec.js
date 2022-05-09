@@ -1,5 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render} from '@testing-library/react-native';
+import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
@@ -60,7 +60,13 @@ describe('Completed', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByText, queryByText} = render(
+      const {
+        findByText,
+        getByLabelText,
+        getByText,
+        queryByLabelText,
+        queryByText,
+      } = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Completed />
@@ -68,7 +74,14 @@ describe('Completed', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByText, queryByText};
+      return {
+        client,
+        findByText,
+        getByLabelText,
+        getByText,
+        queryByLabelText,
+        queryByText,
+      };
     }
 
     it('displays completed todos from the server', async () => {
@@ -92,6 +105,24 @@ describe('Completed', () => {
       fireEvent.press(getByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/completed/abc123');
+    });
+
+    it('allows searching for todos', async () => {
+      const searchText = 'MySearchText';
+      const {client, findByText, getByLabelText, queryByLabelText} =
+        renderComponent();
+
+      await findByText('Todo 1');
+
+      const searchField = getByLabelText('search');
+      fireEvent.changeText(searchField, searchText);
+      fireEvent(searchField, 'submitEditing');
+
+      expect(client.get).toHaveBeenLastCalledWith(
+        `todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
+      );
+
+      await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
     });
   });
 });

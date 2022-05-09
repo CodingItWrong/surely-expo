@@ -30,18 +30,6 @@ describe('completed todos', () => {
     cy.getTestId('todo-list').contains('Todo 1');
   });
 
-  it('allows searching for todos', () => {
-    cy.intercept(
-      'GET',
-      `http://localhost:3000/todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
-      {fixture: 'todos/completed.json'},
-    ).as('search');
-
-    cy.getTestId('search-field').type(`${searchText}{enter}`);
-
-    cy.wait('@search');
-  });
-
   it('resets pagination upon search', () => {
     cy.intercept(
       'GET',
