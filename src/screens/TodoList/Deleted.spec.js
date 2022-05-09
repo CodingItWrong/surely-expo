@@ -53,9 +53,9 @@ describe('Deleted', () => {
   });
 
   describe('when there are deleted todos', () => {
-    it('displays deleted todos from the server', async () => {
-      const response = {data: [todo]};
+    const response = {data: [todo]};
 
+    function renderComponent() {
       const client = {
         get: jest.fn().mockResolvedValue({data: response}),
       };
@@ -68,6 +68,12 @@ describe('Deleted', () => {
           </TokenProvider>
         </SafeAreaProvider>,
       );
+
+      return {client, findByText, queryByText};
+    }
+
+    it('displays deleted todos from the server', async () => {
+      const {client, findByText, queryByText} = renderComponent();
 
       await findByText(todo.attributes.name);
       expect(queryByText('08/28/2021 (1)')).not.toBeNull();

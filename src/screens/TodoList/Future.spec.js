@@ -51,9 +51,9 @@ describe('Future', () => {
   });
 
   describe('when there are future todos', () => {
-    it('displays future todos from the server', async () => {
-      const response = {data: [todo]};
+    const response = {data: [todo]};
 
+    function renderComponent() {
       const client = {
         get: jest.fn().mockResolvedValue({data: response}),
       };
@@ -66,6 +66,12 @@ describe('Future', () => {
           </TokenProvider>
         </SafeAreaProvider>,
       );
+
+      return {client, findByText, queryByText};
+    }
+
+    it('displays future todos from the server', async () => {
+      const {client, findByText, queryByText} = renderComponent();
 
       await findByText(todo.attributes.name);
       expect(queryByText('08/28/2121 (1)')).not.toBeNull();

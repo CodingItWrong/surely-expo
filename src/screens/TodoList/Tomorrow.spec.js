@@ -66,9 +66,9 @@ describe('Tomorrow', () => {
   });
 
   describe('when there are tomorrow todos', () => {
-    it('displays tomorrow todos from the server', async () => {
-      const response = {data: [todo], included: [category]};
+    const response = {data: [todo], included: [category]};
 
+    function renderComponent() {
       const client = {
         get: jest.fn().mockResolvedValue({data: response}),
       };
@@ -81,6 +81,12 @@ describe('Tomorrow', () => {
           </TokenProvider>
         </SafeAreaProvider>,
       );
+
+      return {client, findByText, queryByText};
+    }
+
+    it('displays tomorrow todos from the server', async () => {
+      const {client, findByText, queryByText} = renderComponent();
 
       await findByText(todo.attributes.name);
       expect(queryByText(`${category.attributes.name} (1)`)).not.toBeNull();
