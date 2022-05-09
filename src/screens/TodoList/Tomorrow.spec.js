@@ -3,7 +3,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
 import {mockUseFocusEffect, safeAreaMetrics} from '../../testUtils';
-import Deleted from './Deleted';
+import Tomorrow from './Tomorrow';
 
 jest.mock('../../data/authenticatedHttpClient', () => ({
   __esModule: true,
@@ -15,13 +15,28 @@ jest.mock('@react-navigation/native', () => ({
   useLinkTo: jest.fn(),
 }));
 
-describe('Deleted', () => {
+describe('Tomorrow', () => {
+  const category = {
+    id: 'c1',
+    type: 'categories',
+    attributes: {
+      name: 'My Category',
+      'sort-order': 1,
+    },
+  };
   const todo = {
     id: 'abc123',
     type: 'todos',
     attributes: {
       name: 'Todo 1',
-      'deleted-at': '2021-08-28T23:54:49.483Z',
+    },
+    relationships: {
+      category: {
+        data: {
+          type: 'categories',
+          id: category.id,
+        },
+      },
     },
   };
 
@@ -29,8 +44,8 @@ describe('Deleted', () => {
     mockUseFocusEffect();
   });
 
-  it('displays deleted todos from the server', async () => {
-    const response = {data: [todo]};
+  it('displays tomorrow todos from the server', async () => {
+    const response = {data: [todo], included: [category]};
 
     const client = {
       get: jest.fn().mockResolvedValue({data: response}),
@@ -40,35 +55,16 @@ describe('Deleted', () => {
     const {findByText, queryByText} = render(
       <SafeAreaProvider initialMetrics={safeAreaMetrics}>
         <TokenProvider loadToken={false}>
-          <Deleted />
+          <Tomorrow />
         </TokenProvider>
       </SafeAreaProvider>,
     );
 
     await findByText(todo.attributes.name);
-    expect(queryByText('08/28/2021 (1)')).not.toBeNull();
+    expect(queryByText(`${category.attributes.name} (1)`)).not.toBeNull();
 
     expect(client.get).toHaveBeenCalledWith(
-      'todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=1',
+      'todos?filter[status]=tomorrow&include=category',
     );
-  });
-
-  it('shows a message when no todos listed', async () => {
-    const response = {data: []};
-
-    const client = {
-      get: jest.fn().mockResolvedValue({data: response}),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
-
-    const {findByText, queryByText} = render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <Deleted />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
-
-    await findByText("You have no deleted todos. Don't be afraid to give up!");
   });
 });

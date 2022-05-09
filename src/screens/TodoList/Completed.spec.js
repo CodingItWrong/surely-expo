@@ -52,4 +52,23 @@ describe('Completed', () => {
       'todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
     );
   });
+
+  it('shows a message when no todos listed', async () => {
+    const response = {data: []};
+
+    const client = {
+      get: jest.fn().mockResolvedValue({data: response}),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    const {findByText} = render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>
+          <Completed />
+        </TokenProvider>
+      </SafeAreaProvider>,
+    );
+
+    await findByText("You have no completed todos. You'll get there!");
+  });
 });

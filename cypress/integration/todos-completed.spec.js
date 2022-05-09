@@ -13,18 +13,6 @@ describe('completed todos', () => {
     cy.visit('/todos/completed');
   });
 
-  it('shows a message when no todos listed', () => {
-    cy.intercept(
-      'GET',
-      'http://localhost:3000/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
-      {fixture: 'todos/none.json'},
-    );
-
-    cy.visit('/todos/completed');
-
-    cy.contains("You have no completed todos. You'll get there!");
-  });
-
   it('allows navigating to a todo detail', () => {
     cy.getTestId('todo-list').contains('Todo 1').click();
     cy.url().should('include', '/todos/completed/abc123');
