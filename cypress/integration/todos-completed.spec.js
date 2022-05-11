@@ -52,16 +52,4 @@ describe('completed todos', () => {
     cy.getTestId('search-field').type(`${searchText}{enter}`);
     cy.getTestId('todo-list').contains('Todo 1');
   });
-
-  it('shows a message when no search results returned', () => {
-    cy.intercept(
-      'GET',
-      `http://localhost:3000/todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
-      {fixture: 'todos/none.json'},
-    );
-
-    cy.getTestId('search-field').type(`${searchText}{enter}`);
-
-    cy.contains('No completed todos matched your search');
-  });
 });

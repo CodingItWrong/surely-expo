@@ -107,22 +107,43 @@ describe('Completed', () => {
       expect(linkTo).toHaveBeenCalledWith('/todos/completed/abc123');
     });
 
-    it('allows searching for todos', async () => {
-      const searchText = 'MySearchText';
-      const {client, findByText, getByLabelText, queryByLabelText} =
-        renderComponent();
+    describe('searching', () => {
+      it('allows searching for todos', async () => {
+        const searchText = 'MySearchText';
+        const {client, findByText, getByLabelText, queryByLabelText} =
+          renderComponent();
 
-      await findByText('Todo 1');
+        await findByText('Todo 1');
 
-      const searchField = getByLabelText('search');
-      fireEvent.changeText(searchField, searchText);
-      fireEvent(searchField, 'submitEditing');
+        const searchField = getByLabelText('search');
+        fireEvent.changeText(searchField, searchText);
+        fireEvent(searchField, 'submitEditing');
 
-      expect(client.get).toHaveBeenLastCalledWith(
-        `todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
-      );
+        expect(client.get).toHaveBeenLastCalledWith(
+          `todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
+        );
 
-      await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
+        await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
+      });
+
+      it('shows a message when no search results returned', async () => {
+        const searchText = 'MySearchText';
+        const {client, findByText, getByLabelText, queryByLabelText} =
+          renderComponent();
+
+        await findByText('Todo 1');
+
+        client.get.mockResolvedValue({data: []});
+        const searchField = getByLabelText('search');
+        fireEvent.changeText(searchField, searchText);
+        fireEvent(searchField, 'submitEditing');
+
+        await waitFor(() =>
+          expect(
+            queryByLabelText('No completed todos matched your search'),
+          ).toBeNull(),
+        );
+      });
     });
   });
 });
