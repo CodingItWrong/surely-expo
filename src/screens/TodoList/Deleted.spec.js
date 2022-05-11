@@ -25,6 +25,14 @@ describe('Deleted', () => {
       'deleted-at': '2021-08-28T23:54:49.483Z',
     },
   };
+  const todo2 = {
+    id: 'abc123',
+    type: 'todos',
+    attributes: {
+      name: 'Todo 2',
+      'deleted-at': '2021-08-28T23:54:49.483Z',
+    },
+  };
 
   beforeEach(() => {
     mockUseFocusEffect();
@@ -65,6 +73,7 @@ describe('Deleted', () => {
       const {
         findByText,
         getByLabelText,
+        getByTestId,
         getByText,
         queryByLabelText,
         queryByText,
@@ -80,6 +89,7 @@ describe('Deleted', () => {
         client,
         findByText,
         getByLabelText,
+        getByTestId,
         getByText,
         queryByLabelText,
         queryByText,
@@ -95,6 +105,20 @@ describe('Deleted', () => {
       expect(client.get).toHaveBeenCalledWith(
         'todos?filter[status]=deleted&filter[search]=&sort=-deletedAt&page[number]=1',
       );
+    });
+
+    it('allows pagination', async () => {
+      const {client, findByText, getByTestId} = renderComponent();
+
+      await findByText(todo.attributes.name);
+
+      client.get.mockResolvedValue({data: {data: [todo2]}});
+      fireEvent.press(getByTestId('next-page-button'));
+      await findByText(todo2.attributes.name);
+
+      client.get.mockResolvedValue({data: {data: [todo]}});
+      fireEvent.press(getByTestId('previous-page-button'));
+      await findByText(todo.attributes.name);
     });
 
     it('allows navigating to a todo detail', async () => {
