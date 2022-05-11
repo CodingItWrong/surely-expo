@@ -13,23 +13,6 @@ describe('completed todos', () => {
     cy.visit('/todos/completed');
   });
 
-  it('allows page navigation', () => {
-    // wait for page to load
-    cy.getTestId('todo-list').contains('Todo 1');
-
-    cy.intercept(
-      'GET',
-      'http://localhost:3000/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=2',
-      {fixture: 'todos/completed-page2.json'},
-    );
-
-    cy.getTestId('next-page-button').click();
-    cy.getTestId('todo-list').contains('Todo 4');
-
-    cy.getTestId('previous-page-button').click();
-    cy.getTestId('todo-list').contains('Todo 1');
-  });
-
   it('resets pagination upon search', () => {
     cy.intercept(
       'GET',
