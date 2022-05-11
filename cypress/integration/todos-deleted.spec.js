@@ -1,6 +1,4 @@
 describe('deleted todos', () => {
-  const searchText = 'MySearchText';
-
   beforeEach(() => {
     cy.signIn();
 
@@ -11,18 +9,6 @@ describe('deleted todos', () => {
     );
 
     cy.visit('/todos/deleted');
-  });
-
-  it('shows a message when no search results returned', () => {
-    cy.intercept(
-      'GET',
-      `http://localhost:3000/todos?filter[status]=deleted&filter[search]=${searchText}&sort=-deletedAt&page[number]=1`,
-      {fixture: 'todos/none.json'},
-    );
-
-    cy.getTestId('search-field').type(`${searchText}{enter}`);
-
-    cy.contains('No deleted todos matched your search');
   });
 
   it('allows page navigation', () => {
