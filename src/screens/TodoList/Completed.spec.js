@@ -25,6 +25,14 @@ describe('Completed', () => {
       'completed-at': '2021-08-28T23:54:49.483Z',
     },
   };
+  const todo2 = {
+    id: 'abc123',
+    type: 'todos',
+    attributes: {
+      name: 'Todo 2',
+      'completed-at': '2021-08-28T23:54:49.483Z',
+    },
+  };
 
   beforeEach(() => {
     mockUseFocusEffect();
@@ -63,6 +71,7 @@ describe('Completed', () => {
       const {
         findByText,
         getByLabelText,
+        getByTestId,
         getByText,
         queryByLabelText,
         queryByText,
@@ -78,6 +87,7 @@ describe('Completed', () => {
         client,
         findByText,
         getByLabelText,
+        getByTestId,
         getByText,
         queryByLabelText,
         queryByText,
@@ -95,6 +105,20 @@ describe('Completed', () => {
       );
     });
 
+    it('allows pagination', async () => {
+      const {client, findByText, getByTestId} = renderComponent();
+
+      await findByText(todo.attributes.name);
+
+      client.get.mockResolvedValue({data: {data: [todo2]}});
+      fireEvent.press(getByTestId('next-page-button'));
+      await findByText(todo2.attributes.name);
+
+      client.get.mockResolvedValue({data: {data: [todo]}});
+      fireEvent.press(getByTestId('previous-page-button'));
+      await findByText(todo.attributes.name);
+    });
+
     it('allows navigating to a todo detail', async () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
@@ -107,22 +131,43 @@ describe('Completed', () => {
       expect(linkTo).toHaveBeenCalledWith('/todos/completed/abc123');
     });
 
-    it('allows searching for todos', async () => {
-      const searchText = 'MySearchText';
-      const {client, findByText, getByLabelText, queryByLabelText} =
-        renderComponent();
+    describe('searching', () => {
+      it('allows searching for todos', async () => {
+        const searchText = 'MySearchText';
+        const {client, findByText, getByLabelText, queryByLabelText} =
+          renderComponent();
 
-      await findByText('Todo 1');
+        await findByText('Todo 1');
 
-      const searchField = getByLabelText('search');
-      fireEvent.changeText(searchField, searchText);
-      fireEvent(searchField, 'submitEditing');
+        const searchField = getByLabelText('search');
+        fireEvent.changeText(searchField, searchText);
+        fireEvent(searchField, 'submitEditing');
 
-      expect(client.get).toHaveBeenLastCalledWith(
-        `todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
-      );
+        expect(client.get).toHaveBeenLastCalledWith(
+          `todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
+        );
 
-      await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
+        await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
+      });
+
+      it('shows a message when no search results returned', async () => {
+        const searchText = 'MySearchText';
+        const {client, findByText, getByLabelText, queryByLabelText} =
+          renderComponent();
+
+        await findByText('Todo 1');
+
+        client.get.mockResolvedValue({data: []});
+        const searchField = getByLabelText('search');
+        fireEvent.changeText(searchField, searchText);
+        fireEvent(searchField, 'submitEditing');
+
+        await waitFor(() =>
+          expect(
+            queryByLabelText('No completed todos matched your search'),
+          ).toBeNull(),
+        );
+      });
     });
   });
 });

@@ -1,5 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render} from '@testing-library/react-native';
+import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
@@ -72,10 +72,11 @@ describe('Tomorrow', () => {
     function renderComponent() {
       const client = {
         get: jest.fn().mockResolvedValue({data: response}),
+        post: jest.fn().mockResolvedValue({data: {}}),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByText, queryByText} = render(
+      const {findByText, getByTestId, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Tomorrow />
@@ -83,7 +84,7 @@ describe('Tomorrow', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByText, queryByText};
+      return {client, findByText, getByTestId, getByText, queryByText};
     }
 
     it('displays tomorrow todos from the server', async () => {
@@ -107,6 +108,31 @@ describe('Tomorrow', () => {
       fireEvent.press(getByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/tomorrow/abc123');
+    });
+
+    it('allows adding a todo', async () => {
+      const todoName = 'My New Todo';
+
+      const {client, findByText, getByTestId} = renderComponent();
+
+      await findByText('Todo 1');
+
+      const addField = getByTestId('new-todo-name');
+      fireEvent.changeText(addField, todoName);
+      fireEvent(addField, 'submitEditing');
+
+      expect(client.post).toHaveBeenCalledWith(
+        'todos?',
+        {
+          data: {
+            type: 'todos',
+            attributes: {name: todoName, 'deferred-until': expect.any(Date)},
+          },
+        },
+        {headers: {'Content-Type': 'application/vnd.api+json'}},
+      );
+
+      await waitFor(() => expect(client.get).toHaveBeenCalledTimes(2));
     });
   });
 });

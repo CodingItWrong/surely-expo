@@ -1,5 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render} from '@testing-library/react-native';
+import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
@@ -97,10 +97,11 @@ describe('Available', () => {
     function renderComponent() {
       const client = {
         get: jest.fn().mockResolvedValue({data: response}),
+        post: jest.fn(),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByText, queryByText} = render(
+      const {findByText, getByTestId, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Available />
@@ -108,7 +109,7 @@ describe('Available', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByText, queryByText};
+      return {client, findByText, getByTestId, getByText, queryByText};
     }
 
     it('displays available todos from the server', async () => {
@@ -132,6 +133,44 @@ describe('Available', () => {
       fireEvent.press(getByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/available/abc123');
+    });
+
+    describe('adding', () => {
+      const todoName = 'My New Todo';
+
+      it('allows adding a todo', async () => {
+        const {client, findByText, getByTestId} = renderComponent();
+        client.post.mockResolvedValue({data: {}});
+
+        await findByText('Todo 1');
+
+        const addField = getByTestId('new-todo-name');
+        fireEvent.changeText(addField, todoName);
+        fireEvent(addField, 'submitEditing');
+
+        expect(client.post).toHaveBeenCalledWith(
+          'todos?',
+          {data: {type: 'todos', attributes: {name: todoName}}},
+          {headers: {'Content-Type': 'application/vnd.api+json'}},
+        );
+
+        await waitFor(() => expect(client.get).toHaveBeenCalledTimes(2));
+      });
+
+      it('shows an error when adding a todo fails', async () => {
+        const {client, findByText, getByTestId} = renderComponent();
+        client.post.mockRejectedValue();
+
+        await findByText('Todo 1');
+
+        const addField = getByTestId('new-todo-name');
+        fireEvent.changeText(addField, todoName);
+        fireEvent(addField, 'submitEditing');
+
+        await findByText(
+          'An error occurred while creating the todo. Please try again.',
+        );
+      });
     });
   });
 });
