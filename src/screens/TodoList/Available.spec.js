@@ -97,7 +97,7 @@ describe('Available', () => {
     function renderComponent() {
       const client = {
         get: jest.fn().mockResolvedValue({data: response}),
-        post: jest.fn().mockResolvedValue({data: {}}),
+        post: jest.fn(),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
@@ -135,24 +135,42 @@ describe('Available', () => {
       expect(linkTo).toHaveBeenCalledWith('/todos/available/abc123');
     });
 
-    it('allows adding a todo', async () => {
+    describe('adding', () => {
       const todoName = 'My New Todo';
 
-      const {client, findByText, getByTestId} = renderComponent();
+      it('allows adding a todo', async () => {
+        const {client, findByText, getByTestId} = renderComponent();
+        client.post.mockResolvedValue({data: {}});
 
-      await findByText('Todo 1');
+        await findByText('Todo 1');
 
-      const addField = getByTestId('new-todo-name');
-      fireEvent.changeText(addField, todoName);
-      fireEvent(addField, 'submitEditing');
+        const addField = getByTestId('new-todo-name');
+        fireEvent.changeText(addField, todoName);
+        fireEvent(addField, 'submitEditing');
 
-      expect(client.post).toHaveBeenCalledWith(
-        'todos?',
-        {data: {type: 'todos', attributes: {name: todoName}}},
-        {headers: {'Content-Type': 'application/vnd.api+json'}},
-      );
+        expect(client.post).toHaveBeenCalledWith(
+          'todos?',
+          {data: {type: 'todos', attributes: {name: todoName}}},
+          {headers: {'Content-Type': 'application/vnd.api+json'}},
+        );
 
-      await waitFor(() => expect(client.get).toHaveBeenCalledTimes(2));
+        await waitFor(() => expect(client.get).toHaveBeenCalledTimes(2));
+      });
+
+      it('shows an error when adding a todo fails', async () => {
+        const {client, findByText, getByTestId} = renderComponent();
+        client.post.mockRejectedValue();
+
+        await findByText('Todo 1');
+
+        const addField = getByTestId('new-todo-name');
+        fireEvent.changeText(addField, todoName);
+        fireEvent(addField, 'submitEditing');
+
+        await findByText(
+          'An error occurred while creating the todo. Please try again.',
+        );
+      });
     });
   });
 });
