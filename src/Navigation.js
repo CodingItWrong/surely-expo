@@ -1,11 +1,6 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {
-  DrawerActions,
-  NavigationContainer,
-  useNavigation,
-} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useEffect, useState} from 'react';
 import {large, useBreakpoint} from './breakpoints';
 import CustomNavigationBar from './components/NavigationBar';
 import CustomNavigationDrawer from './components/NavigationDrawer';
