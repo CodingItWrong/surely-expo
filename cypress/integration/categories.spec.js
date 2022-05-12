@@ -9,16 +9,6 @@ describe('categories', () => {
     cy.visit('/categories');
   });
 
-  it('shows a message when no categories listed', () => {
-    cy.intercept('GET', 'http://localhost:3000/categories?', {
-      fixture: 'categories-none.json',
-    });
-
-    cy.visit('/categories');
-
-    cy.contains('No categories yet');
-  });
-
   it('allows navigating to create a category', () => {
     // wait for existing todos to load
     cy.getTestId('category-list').contains('Category A');

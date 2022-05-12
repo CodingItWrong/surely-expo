@@ -44,4 +44,25 @@ describe('CategoryList', () => {
     await findByText('Category A');
     expect(queryByText('Category B')).not.toBeNull();
   });
+
+  it('shows a message when no categories listed', async () => {
+    const client = {
+      get: jest.fn().mockResolvedValue({
+        data: {
+          data: [],
+        },
+      }),
+    };
+    authenticatedHttpClient.mockReturnValue(client);
+
+    const {findByText} = render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>
+          <CategoryList />
+        </TokenProvider>
+      </SafeAreaProvider>,
+    );
+
+    await findByText('No categories yet');
+  });
 });
