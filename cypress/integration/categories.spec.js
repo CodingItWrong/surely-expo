@@ -9,11 +9,6 @@ describe('categories', () => {
     cy.visit('/categories');
   });
 
-  it('allows navigating to a category detail', () => {
-    cy.getTestId('category-list').contains('Category A').click();
-    cy.url().should('include', '/categories/cat3');
-  });
-
   it('allows moving an item down in the sort order', () => {
     cy.intercept('PATCH', 'http://localhost:3000/categories/cat1?', {
       fixture: 'category.json',

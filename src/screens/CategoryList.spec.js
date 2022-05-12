@@ -58,7 +58,7 @@ describe('CategoryList', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByTestId, queryByText} = render(
+      const {findByText, getByTestId, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <CategoryList />
@@ -66,7 +66,7 @@ describe('CategoryList', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByTestId, queryByText};
+      return {client, findByText, getByTestId, getByText, queryByText};
     }
 
     it('lists categories from the server', async () => {
@@ -86,6 +86,18 @@ describe('CategoryList', () => {
 
       fireEvent.press(getByTestId('add-button'));
       expect(linkTo).toHaveBeenCalledWith('/categories/new');
+    });
+
+    it('allows navigating to a category detail', async () => {
+      const linkTo = jest.fn().mockName('linkTo');
+      useLinkTo.mockReturnValue(linkTo);
+
+      const {findByText, getByText} = renderComponent();
+
+      await findByText('Category A');
+      fireEvent.press(getByText('Category A'));
+
+      expect(linkTo).toHaveBeenCalledWith('/categories/1');
     });
   });
 });
