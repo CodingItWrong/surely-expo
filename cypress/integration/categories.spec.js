@@ -9,14 +9,6 @@ describe('categories', () => {
     cy.visit('/categories');
   });
 
-  it('allows navigating to create a category', () => {
-    // wait for existing todos to load
-    cy.getTestId('category-list').contains('Category A');
-
-    cy.getTestId('add-button').click();
-    cy.url().should('include', '/categories/new');
-  });
-
   it('allows navigating to a category detail', () => {
     cy.getTestId('category-list').contains('Category A').click();
     cy.url().should('include', '/categories/cat3');
