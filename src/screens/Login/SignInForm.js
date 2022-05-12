@@ -15,7 +15,7 @@ import sharedStyles from '../../sharedStyles';
 
 const httpClient = axios.create({baseURL: baseUrl});
 
-export default function LoginForm({navigation}) {
+export default function SignInForm({navigation}) {
   const {setToken} = useToken();
   const responsiveStyles = useStyleQueries(sharedStyleQueries);
   const onLogIn = ({username, password}) =>

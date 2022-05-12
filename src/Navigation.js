@@ -11,7 +11,7 @@ import SupportScreen from './screens/About/SupportScreen';
 import ThanksScreen from './screens/About/ThanksScreen';
 import CategoryDetail from './screens/CategoryDetail';
 import CategoryList from './screens/CategoryList';
-import LoginForm from './screens/Login/LoginForm';
+import SignInForm from './screens/Login/SignInForm';
 import SignUpForm from './screens/Login/SignUpForm';
 import {createTodoDetail} from './screens/TodoDetail';
 import AvailableTodos from './screens/TodoList/Available';
@@ -220,7 +220,7 @@ const SignIn = () => (
   >
     <SignInStack.Screen
       name="SignInScreen"
-      component={LoginForm}
+      component={SignInForm}
       options={{title: 'Sign in'}}
     />
   </SignInStack.Navigator>
