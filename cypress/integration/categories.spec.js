@@ -9,12 +9,6 @@ describe('categories', () => {
     cy.visit('/categories');
   });
 
-  it('lists existing categories', () => {
-    cy.getTestId('category-list').contains('Category A');
-    cy.getTestId('category-list').contains('Category B');
-    cy.getTestId('category-list').contains('Category C');
-  });
-
   it('shows a message when no categories listed', () => {
     cy.intercept('GET', 'http://localhost:3000/categories?', {
       fixture: 'categories-none.json',
