@@ -47,7 +47,7 @@ describe('Deleted', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, queryByText} = render(
+      const {findByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Deleted />
