@@ -7,6 +7,32 @@ import NavigationDrawer from './NavigationDrawer';
 jest.mock('../data/token', () => ({useToken: jest.fn()}));
 
 describe('NavigationDrawer', () => {
+  it('allows navigating to the passed-in routes', () => {
+    const navigation = {
+      navigate: jest.fn().mockName('navigation.navigate'),
+    };
+    const route = {
+      name: 'Available',
+      key: '123',
+    };
+    const state = {
+      routes: [route],
+    };
+    useToken.mockReturnValue({
+      isLoggedIn: false,
+    });
+
+    const {getByText} = render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <NavigationDrawer navigation={navigation} state={state} />
+      </SafeAreaProvider>,
+    );
+
+    fireEvent.press(getByText(route.name));
+
+    expect(navigation.navigate).toHaveBeenCalledWith(route.name);
+  });
+
   describe('when signed in', () => {
     it('allows signing out', async () => {
       const navigation = {
