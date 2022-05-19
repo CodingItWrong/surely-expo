@@ -74,7 +74,7 @@ export default function CategoryList() {
     try {
       await updateCategorySortOrder(categoriesAfterMove);
     } catch (error) {
-      setErrorMessage('An error occurred moving todo up.');
+      setErrorMessage('An error occurred moving category up.');
     }
   }
 
@@ -87,7 +87,7 @@ export default function CategoryList() {
     try {
       await updateCategorySortOrder(categoriesAfterMove);
     } catch (error) {
-      setErrorMessage('An error occurred moving todo down.');
+      setErrorMessage('An error occurred moving category down.');
     }
   }
 

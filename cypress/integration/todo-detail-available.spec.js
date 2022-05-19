@@ -14,6 +14,7 @@ describe('todo detail - available', () => {
       cy.visit(`/todos/available/${todoId}`);
     });
 
+    // TODO: find out why category dropdown doesn't work in RNTL
     it('allows editing the todo', () => {
       cy.intercept('GET', 'http://localhost:3000/categories?', {
         fixture: 'categories.json',

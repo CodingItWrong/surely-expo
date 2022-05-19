@@ -1,5 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render} from '@testing-library/react-native';
+import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../data/authenticatedHttpClient';
 import {TokenProvider} from '../data/token';
@@ -44,8 +44,27 @@ describe('CategoryList', () => {
 
   describe('when categories are loaded', () => {
     const categories = [
-      {id: '1', attributes: {name: 'Category A'}},
-      {id: '2', attributes: {name: 'Category B'}},
+      {
+        id: 'cat1',
+        attributes: {
+          name: 'Category C',
+          'sort-order': 3,
+        },
+      },
+      {
+        id: 'cat2',
+        attributes: {
+          name: 'Category B',
+          'sort-order': 2,
+        },
+      },
+      {
+        id: 'cat3',
+        attributes: {
+          name: 'Category A',
+          'sort-order': 1,
+        },
+      },
     ];
 
     function renderComponent() {
@@ -55,18 +74,27 @@ describe('CategoryList', () => {
             data: categories,
           },
         }),
+        patch: jest.fn().mockResolvedValue({data: {}}),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByTestId, getByText, queryByText} = render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <CategoryList />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      const {findByText, getAllByTestId, getByTestId, getByText, queryByText} =
+        render(
+          <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+            <TokenProvider loadToken={false}>
+              <CategoryList />
+            </TokenProvider>
+          </SafeAreaProvider>,
+        );
 
-      return {client, findByText, getByTestId, getByText, queryByText};
+      return {
+        client,
+        findByText,
+        getAllByTestId,
+        getByTestId,
+        getByText,
+        queryByText,
+      };
     }
 
     it('lists categories from the server', async () => {
@@ -97,7 +125,66 @@ describe('CategoryList', () => {
       await findByText('Category A');
       fireEvent.press(getByText('Category A'));
 
-      expect(linkTo).toHaveBeenCalledWith('/categories/1');
+      expect(linkTo).toHaveBeenCalledWith('/categories/cat3');
+    });
+
+    function summarizeSortCalls(patchMock) {
+      return patchMock.mock.calls.map(call => ({
+        id: call[1].data.id,
+        sortOrder: call[1].data.attributes['sort-order'],
+      }));
+    }
+
+    it('allows moving an item down in the sort order', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-down-button')[0]);
+
+      await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
+      const calls = summarizeSortCalls(client.patch);
+      expect(calls).toEqual([
+        {sortOrder: 0, id: 'cat2'},
+        {sortOrder: 1, id: 'cat3'},
+        {sortOrder: 2, id: 'cat1'},
+      ]);
+    });
+
+    it('shows a message when an error occurs moving an item down', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      client.patch.mockRejectedValue();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-down-button')[0]);
+
+      await findByText('An error occurred moving category down.');
+    });
+
+    it('allows moving an item up in the sort order', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-up-button')[2]);
+
+      await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
+      const calls = summarizeSortCalls(client.patch);
+      expect(calls).toEqual([
+        {sortOrder: 0, id: 'cat3'},
+        {sortOrder: 1, id: 'cat1'},
+        {sortOrder: 2, id: 'cat2'},
+      ]);
+    });
+
+    it('shows a message when an error occurs moving an item up', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      client.patch.mockRejectedValue();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-up-button')[0]);
+
+      await findByText('An error occurred moving category up.');
     });
   });
 });
