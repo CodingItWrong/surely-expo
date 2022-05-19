@@ -131,11 +131,13 @@ export default function CategoryList() {
                     <IconButton
                       testID="move-up-button"
                       icon="arrow-up"
+                      accessibilityLabel="Move up"
                       onPress={() => moveUpward(category)}
                     />
                     <IconButton
                       testID="move-down-button"
                       icon="arrow-down"
+                      accessibilityLabel="Move down"
                       onPress={() => moveDownward(category)}
                     />
                   </>

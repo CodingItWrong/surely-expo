@@ -22,11 +22,11 @@ describe('SignInForm', () => {
     const setToken = jest.fn();
     useToken.mockReturnValue({setToken});
 
-    const {getByTestId} = render(<SignInForm />);
+    const {getByLabelText, getByText} = render(<SignInForm />);
 
-    fireEvent.changeText(getByTestId('email-field'), email);
-    fireEvent.changeText(getByTestId('password-field'), password);
-    fireEvent.press(getByTestId('sign-in-button'));
+    fireEvent.changeText(getByLabelText('Email'), email);
+    fireEvent.changeText(getByLabelText('Password'), password);
+    fireEvent.press(getByText('Sign in'));
 
     await waitFor(() => expect(setToken).toHaveBeenCalledWith(testToken));
 

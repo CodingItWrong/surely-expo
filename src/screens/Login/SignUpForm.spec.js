@@ -27,16 +27,16 @@ describe('SignUpForm', () => {
       client.post.mockResolvedValue(response);
     }
 
-    const {findByTestId, getByTestId, queryByTestId, queryByText} = render(
+    const {findByText, getByLabelText, getByText, queryByText} = render(
       <TokenProvider loadToken={false}>
         <SignUpForm />
       </TokenProvider>,
     );
 
     return {
-      findByTestId,
-      getByTestId,
-      queryByTestId,
+      findByText,
+      getByLabelText,
+      getByText,
       queryByText,
       client,
       linkTo,
@@ -54,17 +54,21 @@ describe('SignUpForm', () => {
     ];
     const response = {data: {}};
 
-    const {findByTestId, getByTestId, client, linkTo} = setUp({response});
+    const {findByText, getByLabelText, getByText, client, linkTo} = setUp({
+      response,
+    });
 
-    fireEvent.changeText(getByTestId('email-field'), email);
-    fireEvent.changeText(getByTestId('password-field'), password);
-    fireEvent.changeText(getByTestId('password-confirmation-field'), password);
-    fireEvent.press(getByTestId('submit-sign-up-button'));
+    fireEvent.changeText(getByLabelText('Email'), email);
+    fireEvent.changeText(getByLabelText('Password'), password);
+    fireEvent.changeText(getByLabelText('Confirm password'), password);
+    fireEvent.press(getByText('Sign up'));
 
-    await findByTestId('sign-up-successful-message');
+    await findByText(
+      'Sign up successful. Sign in with the email and password you used to sign up.',
+    );
     expect(client.post).toHaveBeenCalledWith(...request);
 
-    fireEvent.press(getByTestId('go-to-sign-in-button'));
+    fireEvent.press(getByText('Go to sign in'));
 
     expect(linkTo).toHaveBeenCalledWith('/signin');
   });
@@ -73,33 +77,30 @@ describe('SignUpForm', () => {
     const email = 'example@example.com';
     const password = 'password';
 
-    const {getByTestId, queryByText} = setUp();
+    const {getByLabelText, getByText, queryByText} = setUp();
 
-    const signUpButton = getByTestId('submit-sign-up-button');
+    const signUpButton = getByText('Sign up');
     fireEvent.press(signUpButton);
 
     expect(queryByText('Email is required.')).not.toBeNull();
 
-    fireEvent.changeText(getByTestId('email-field'), email);
+    fireEvent.changeText(getByLabelText('Email'), email);
     fireEvent.press(signUpButton);
     expect(queryByText('Password is required.')).not.toBeNull();
 
-    fireEvent.changeText(getByTestId('password-field'), password);
+    fireEvent.changeText(getByLabelText('Password'), password);
     fireEvent.press(signUpButton);
     expect(queryByText('Password confirmation is required.')).not.toBeNull();
 
-    fireEvent.changeText(
-      getByTestId('password-confirmation-field'),
-      'incorrect',
-    );
+    fireEvent.changeText(getByLabelText('Confirm password'), 'incorrect');
     fireEvent.press(signUpButton);
     expect(queryByText('Passwords do not match.')).not.toBeNull();
   });
 
   it('allows cancelling signup', async () => {
-    const {getByTestId, linkTo} = setUp();
+    const {getByText, linkTo} = setUp();
 
-    fireEvent.press(getByTestId('cancel-button'));
+    fireEvent.press(getByText('Cancel'));
 
     await waitFor(() => {
       expect(linkTo).toHaveBeenCalledWith('/signin');
