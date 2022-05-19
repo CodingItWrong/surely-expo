@@ -21,20 +21,16 @@ describe('TodoDetail', () => {
 
       const todoId = '42';
       const route = {params: {id: todoId}};
-      const {queryByText} = render(
+      const {findByText} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} />
         </TokenProvider>,
       );
 
-      await waitFor(() => {
-        expect(
-          queryByText('An error occurred loading the todo.'),
-        ).not.toBeNull();
-        expect(client.get).toHaveBeenCalledWith(
-          `todos/${todoId}?include=category`,
-        );
-      });
+      await findByText('An error occurred loading the todo.');
+      expect(client.get).toHaveBeenCalledWith(
+        `todos/${todoId}?include=category`,
+      );
     });
 
     it('clears the error upon successful retry', async () => {
@@ -45,17 +41,13 @@ describe('TodoDetail', () => {
 
       const todoId = '42';
       const route = {params: {id: todoId}};
-      const {getByTestId, queryByText} = render(
+      const {findByText, getByTestId, queryByText} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} />
         </TokenProvider>,
       );
 
-      await waitFor(() =>
-        expect(
-          queryByText('An error occurred loading the todo.'),
-        ).not.toBeNull(),
-      );
+      await findByText('An error occurred loading the todo.');
 
       client.get.mockResolvedValue({
         data: {
@@ -83,10 +75,8 @@ describe('TodoDetail', () => {
 
       fireEvent.press(getByTestId('retry-button'));
 
-      await waitFor(() => {
-        expect(queryByText('My Available Todo')).not.toBeNull();
-        expect(queryByText('An error occurred loading the todo.')).toBeNull();
-      });
+      await findByText('My Available Todo');
+      expect(queryByText('An error occurred loading the todo.')).toBeNull();
     });
   });
 
@@ -219,14 +209,13 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {getByTestId} = render(
+        const {findByTestId, getByTestId} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await waitFor(() => getByTestId('complete-button'));
-
+        await findByTestId('complete-button');
         fireEvent.press(getByTestId('complete-button'));
 
         await waitFor(() => {
@@ -288,14 +277,13 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {getByTestId} = render(
+        const {findByTestId, getByTestId} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await waitFor(() => getByTestId('delete-button'));
-
+        await findByTestId('delete-button');
         fireEvent.press(getByTestId('delete-button'));
 
         await waitFor(() => {
@@ -357,14 +345,13 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {getByTestId} = render(
+        const {findByTestId, getByTestId} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await waitFor(() => getByTestId('defer-button'));
-
+        await findByTestId('defer-button');
         fireEvent.press(getByTestId('defer-button'));
         fireEvent.press(getByTestId('defer-1-day-button'));
 
@@ -467,14 +454,13 @@ describe('TodoDetail', () => {
       };
 
       const route = {params: {id: todo.id}};
-      const {getByTestId} = render(
+      const {findByTestId, getByTestId} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
 
-      await waitFor(() => getByTestId('uncomplete-button'));
-
+      await findByTestId('uncomplete-button');
       fireEvent.press(getByTestId('uncomplete-button'));
 
       await waitFor(() => {
@@ -574,14 +560,13 @@ describe('TodoDetail', () => {
       };
 
       const route = {params: {id: todo.id}};
-      const {getByTestId} = render(
+      const {findByTestId, getByTestId} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
 
-      await waitFor(() => getByTestId('undelete-button'));
-
+      await findByTestId('undelete-button');
       fireEvent.press(getByTestId('undelete-button'));
 
       await waitFor(() => {
