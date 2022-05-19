@@ -44,8 +44,27 @@ describe('CategoryList', () => {
 
   describe('when categories are loaded', () => {
     const categories = [
-      {id: '1', attributes: {name: 'Category A'}},
-      {id: '2', attributes: {name: 'Category B'}},
+      {
+        id: 'cat1',
+        attributes: {
+          name: 'Category C',
+          'sort-order': 3,
+        },
+      },
+      {
+        id: 'cat2',
+        attributes: {
+          name: 'Category B',
+          'sort-order': 2,
+        },
+      },
+      {
+        id: 'cat3',
+        attributes: {
+          name: 'Category A',
+          'sort-order': 1,
+        },
+      },
     ];
 
     function renderComponent() {
@@ -97,7 +116,7 @@ describe('CategoryList', () => {
       await findByText('Category A');
       fireEvent.press(getByText('Category A'));
 
-      expect(linkTo).toHaveBeenCalledWith('/categories/1');
+      expect(linkTo).toHaveBeenCalledWith('/categories/cat3');
     });
   });
 });
