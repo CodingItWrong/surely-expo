@@ -1,5 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render} from '@testing-library/react-native';
+import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import authenticatedHttpClient from '../data/authenticatedHttpClient';
 import {TokenProvider} from '../data/token';
@@ -74,18 +74,27 @@ describe('CategoryList', () => {
             data: categories,
           },
         }),
+        patch: jest.fn().mockResolvedValue({data: {}}),
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByTestId, getByText, queryByText} = render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <CategoryList />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      const {findByText, getAllByTestId, getByTestId, getByText, queryByText} =
+        render(
+          <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+            <TokenProvider loadToken={false}>
+              <CategoryList />
+            </TokenProvider>
+          </SafeAreaProvider>,
+        );
 
-      return {client, findByText, getByTestId, getByText, queryByText};
+      return {
+        client,
+        findByText,
+        getAllByTestId,
+        getByTestId,
+        getByText,
+        queryByText,
+      };
     }
 
     it('lists categories from the server', async () => {
@@ -117,6 +126,28 @@ describe('CategoryList', () => {
       fireEvent.press(getByText('Category A'));
 
       expect(linkTo).toHaveBeenCalledWith('/categories/cat3');
+    });
+
+    function summarizeSortCalls(patchMock) {
+      return patchMock.mock.calls.map(call => ({
+        id: call[1].data.id,
+        sortOrder: call[1].data.attributes['sort-order'],
+      }));
+    }
+
+    it('allows moving an item down in the sort order', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-down-button')[0]);
+
+      await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
+      const calls = summarizeSortCalls(client.patch);
+      expect(calls).toEqual([
+        {sortOrder: 0, id: 'cat2'},
+        {sortOrder: 1, id: 'cat3'},
+        {sortOrder: 2, id: 'cat1'},
+      ]);
     });
   });
 });
