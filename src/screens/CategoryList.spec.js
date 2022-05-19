@@ -149,5 +149,20 @@ describe('CategoryList', () => {
         {sortOrder: 2, id: 'cat1'},
       ]);
     });
+
+    it('allows moving an item up in the sort order', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-up-button')[2]);
+
+      await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
+      const calls = summarizeSortCalls(client.patch);
+      expect(calls).toEqual([
+        {sortOrder: 0, id: 'cat3'},
+        {sortOrder: 1, id: 'cat1'},
+        {sortOrder: 2, id: 'cat2'},
+      ]);
+    });
   });
 });
