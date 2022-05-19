@@ -27,13 +27,20 @@ describe('SignUpForm', () => {
       client.post.mockResolvedValue(response);
     }
 
-    const {getByTestId, queryByTestId, queryByText} = render(
+    const {findByTestId, getByTestId, queryByTestId, queryByText} = render(
       <TokenProvider loadToken={false}>
         <SignUpForm />
       </TokenProvider>,
     );
 
-    return {getByTestId, queryByTestId, queryByText, client, linkTo};
+    return {
+      findByTestId,
+      getByTestId,
+      queryByTestId,
+      queryByText,
+      client,
+      linkTo,
+    };
   }
 
   it('allows signing up', async () => {
@@ -47,17 +54,15 @@ describe('SignUpForm', () => {
     ];
     const response = {data: {}};
 
-    const {getByTestId, queryByTestId, client, linkTo} = setUp({response});
+    const {findByTestId, getByTestId, client, linkTo} = setUp({response});
 
     fireEvent.changeText(getByTestId('email-field'), email);
     fireEvent.changeText(getByTestId('password-field'), password);
     fireEvent.changeText(getByTestId('password-confirmation-field'), password);
     fireEvent.press(getByTestId('submit-sign-up-button'));
 
-    await waitFor(() => {
-      expect(queryByTestId('sign-up-successful-message')).not.toBeNull();
-      expect(client.post).toHaveBeenCalledWith(...request);
-    });
+    await findByTestId('sign-up-successful-message');
+    expect(client.post).toHaveBeenCalledWith(...request);
 
     fireEvent.press(getByTestId('go-to-sign-in-button'));
 
