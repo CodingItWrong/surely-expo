@@ -150,6 +150,17 @@ describe('CategoryList', () => {
       ]);
     });
 
+    it('shows a message when an error occurs moving an item down', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      client.patch.mockRejectedValue();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-down-button')[0]);
+
+      await findByText('An error occurred moving category down.');
+    });
+
     it('allows moving an item up in the sort order', async () => {
       const {client, findByText, getAllByTestId} = renderComponent();
 
@@ -163,6 +174,17 @@ describe('CategoryList', () => {
         {sortOrder: 1, id: 'cat1'},
         {sortOrder: 2, id: 'cat2'},
       ]);
+    });
+
+    it('shows a message when an error occurs moving an item up', async () => {
+      const {client, findByText, getAllByTestId} = renderComponent();
+
+      client.patch.mockRejectedValue();
+
+      await findByText('Category A');
+      fireEvent.press(getAllByTestId('move-up-button')[0]);
+
+      await findByText('An error occurred moving category up.');
     });
   });
 });
