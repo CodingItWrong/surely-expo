@@ -78,20 +78,18 @@ describe('CategoryList', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getAllByTestId, getByTestId, getByText, queryByText} =
-        render(
-          <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-            <TokenProvider loadToken={false}>
-              <CategoryList />
-            </TokenProvider>
-          </SafeAreaProvider>,
-        );
+      const {findByText, getAllByLabelText, getByText, queryByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <CategoryList />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
       return {
         client,
         findByText,
-        getAllByTestId,
-        getByTestId,
+        getAllByLabelText,
         getByText,
         queryByText,
       };
@@ -108,11 +106,11 @@ describe('CategoryList', () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText, getByTestId} = renderComponent();
+      const {findByText, getByText} = renderComponent();
 
       await findByText('Category A');
 
-      fireEvent.press(getByTestId('add-button'));
+      fireEvent.press(getByText('Add'));
       expect(linkTo).toHaveBeenCalledWith('/categories/new');
     });
 
@@ -136,10 +134,10 @@ describe('CategoryList', () => {
     }
 
     it('allows moving an item down in the sort order', async () => {
-      const {client, findByText, getAllByTestId} = renderComponent();
+      const {client, findByText, getAllByLabelText} = renderComponent();
 
       await findByText('Category A');
-      fireEvent.press(getAllByTestId('move-down-button')[0]);
+      fireEvent.press(getAllByLabelText('Move down')[0]);
 
       await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
       const calls = summarizeSortCalls(client.patch);
@@ -151,21 +149,21 @@ describe('CategoryList', () => {
     });
 
     it('shows a message when an error occurs moving an item down', async () => {
-      const {client, findByText, getAllByTestId} = renderComponent();
+      const {client, findByText, getAllByLabelText} = renderComponent();
 
       client.patch.mockRejectedValue();
 
       await findByText('Category A');
-      fireEvent.press(getAllByTestId('move-down-button')[0]);
+      fireEvent.press(getAllByLabelText('Move down')[0]);
 
       await findByText('An error occurred moving category down.');
     });
 
     it('allows moving an item up in the sort order', async () => {
-      const {client, findByText, getAllByTestId} = renderComponent();
+      const {client, findByText, getAllByLabelText} = renderComponent();
 
       await findByText('Category A');
-      fireEvent.press(getAllByTestId('move-up-button')[2]);
+      fireEvent.press(getAllByLabelText('Move up')[2]);
 
       await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
       const calls = summarizeSortCalls(client.patch);
@@ -177,12 +175,12 @@ describe('CategoryList', () => {
     });
 
     it('shows a message when an error occurs moving an item up', async () => {
-      const {client, findByText, getAllByTestId} = renderComponent();
+      const {client, findByText, getAllByLabelText} = renderComponent();
 
       client.patch.mockRejectedValue();
 
       await findByText('Category A');
-      fireEvent.press(getAllByTestId('move-up-button')[0]);
+      fireEvent.press(getAllByLabelText('Move up')[0]);
 
       await findByText('An error occurred moving category up.');
     });
