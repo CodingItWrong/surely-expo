@@ -39,13 +39,13 @@ describe('CategoryDetail', () => {
       }
 
       const route = {params: {id: 'new'}};
-      const {getByTestId} = render(
+      const {getByLabelText, getByText} = render(
         <TokenProvider loadToken={false}>
           <CategoryDetail route={route} />
         </TokenProvider>,
       );
 
-      return {getByTestId, client, linkTo};
+      return {getByLabelText, getByText, client, linkTo};
     }
 
     it('allows creating the category', async () => {
@@ -76,10 +76,12 @@ describe('CategoryDetail', () => {
         },
       };
 
-      const {getByTestId, client, linkTo} = setUp({response});
+      const {getByLabelText, getByText, client, linkTo} = setUp({
+        response,
+      });
 
-      fireEvent.changeText(getByTestId('name-field'), name);
-      fireEvent.press(getByTestId('save-button'));
+      fireEvent.changeText(getByLabelText('Category name'), name);
+      fireEvent.press(getByText('Save'));
 
       await waitFor(() => {
         expect(client.post).toHaveBeenCalledWith(...request);
@@ -88,10 +90,10 @@ describe('CategoryDetail', () => {
     });
 
     it('allows cancelling creation', async () => {
-      const {getByTestId, client, linkTo} = setUp();
+      const {getByLabelText, getByText, client, linkTo} = setUp();
 
-      fireEvent.changeText(getByTestId('name-field'), name);
-      fireEvent.press(getByTestId('cancel-button'));
+      fireEvent.changeText(getByLabelText('Category name'), name);
+      fireEvent.press(getByText('Cancel'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -136,16 +138,16 @@ describe('CategoryDetail', () => {
       }
 
       const route = {params: {id: category.id}};
-      const {findByTestId, getByTestId, findByText, queryByText} = render(
+      const {findByText, getByLabelText, getByText, queryByText} = render(
         <TokenProvider loadToken={false}>
           <CategoryDetail route={route} />
         </TokenProvider>,
       );
 
       return {
-        findByTestId,
-        getByTestId,
         findByText,
+        getByLabelText,
+        getByText,
         queryByText,
         client,
         linkTo,
@@ -153,9 +155,11 @@ describe('CategoryDetail', () => {
     }
 
     it('displays the category name', async () => {
-      const {getByTestId} = setUp();
+      const {getByLabelText} = setUp();
       await waitFor(() =>
-        expect(getByTestId('name-field').props.value).toEqual('Category C'),
+        expect(getByLabelText('Category name').props.value).toEqual(
+          'Category C',
+        ),
       );
     });
 
@@ -174,12 +178,14 @@ describe('CategoryDetail', () => {
       ];
       const response = {data: category};
 
-      const {findByTestId, getByTestId, linkTo, client} = setUp({response});
+      const {findByText, getByLabelText, getByText, linkTo, client} = setUp({
+        response,
+      });
 
-      await findByTestId('delete-button');
+      await findByText('Delete');
 
-      fireEvent.changeText(getByTestId('name-field'), updatedName);
-      fireEvent.press(getByTestId('save-button'));
+      fireEvent.changeText(getByLabelText('Category name'), updatedName);
+      fireEvent.press(getByText('Save'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -191,14 +197,14 @@ describe('CategoryDetail', () => {
       const saveError = 'saveError';
       const updatedName = 'Updated Name';
 
-      const {findByTestId, getByTestId, findByText, linkTo} = setUp({
+      const {findByText, getByLabelText, getByText, linkTo} = setUp({
         saveError,
       });
 
-      await findByTestId('save-button');
+      await findByText('Save');
 
-      fireEvent.changeText(getByTestId('name-field'), updatedName);
-      fireEvent.press(getByTestId('save-button'));
+      fireEvent.changeText(getByLabelText('Category name'), updatedName);
+      fireEvent.press(getByText('Save'));
 
       await findByText('An error occurred saving the category.');
       expect(console.error).toHaveBeenCalledWith(saveError);
@@ -206,10 +212,10 @@ describe('CategoryDetail', () => {
     });
 
     it('allows deleting the category', async () => {
-      const {findByTestId, getByTestId, linkTo, client} = setUp();
+      const {findByText, getByText, linkTo, client} = setUp();
 
-      await findByTestId('delete-button');
-      fireEvent.press(getByTestId('delete-button'));
+      await findByText('Delete');
+      fireEvent.press(getByText('Delete'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -219,13 +225,12 @@ describe('CategoryDetail', () => {
 
     it('shows a message upon error deleting the category', async () => {
       const deleteError = 'deleteError';
-      const {findByTestId, findByText, getByTestId, linkTo} = setUp({
+      const {findByText, getByText, linkTo} = setUp({
         deleteError,
       });
 
-      await findByTestId('delete-button');
-
-      fireEvent.press(getByTestId('delete-button'));
+      await findByText('Delete');
+      fireEvent.press(getByText('Delete'));
 
       await findByText('An error occurred deleting the category.');
       expect(console.error).toHaveBeenCalledWith(deleteError);
