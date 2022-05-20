@@ -71,7 +71,6 @@ describe('Completed', () => {
       const {
         findByText,
         getByLabelText,
-        getByTestId,
         getByText,
         queryByLabelText,
         queryByText,
@@ -87,7 +86,6 @@ describe('Completed', () => {
         client,
         findByText,
         getByLabelText,
-        getByTestId,
         getByText,
         queryByLabelText,
         queryByText,
@@ -106,16 +104,16 @@ describe('Completed', () => {
     });
 
     it('allows pagination', async () => {
-      const {client, findByText, getByTestId} = renderComponent();
+      const {client, findByText, getByLabelText} = renderComponent();
 
       await findByText(todo.attributes.name);
 
       client.get.mockResolvedValue({data: {data: [todo2]}});
-      fireEvent.press(getByTestId('next-page-button'));
+      fireEvent.press(getByLabelText('Go to next page'));
       await findByText(todo2.attributes.name);
 
       client.get.mockResolvedValue({data: {data: [todo]}});
-      fireEvent.press(getByTestId('previous-page-button'));
+      fireEvent.press(getByLabelText('Go to previous page'));
       await findByText(todo.attributes.name);
     });
 
