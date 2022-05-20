@@ -198,14 +198,13 @@ describe('CategoryDetail', () => {
       const saveError = 'saveError';
       const updatedName = 'Updated Name';
 
-      const {findByText, getByLabelText, getByText, linkTo} = setUp({
+      const {findByText, getByLabelText, linkTo} = setUp({
         saveError,
       });
 
-      await findByText('Save');
-
+      const saveButton = await findByText('Save');
       fireEvent.changeText(getByLabelText('Category name'), updatedName);
-      fireEvent.press(getByText('Save'));
+      fireEvent.press(saveButton);
 
       await findByText('An error occurred saving the category.');
       expect(console.error).toHaveBeenCalledWith(saveError);
@@ -213,10 +212,9 @@ describe('CategoryDetail', () => {
     });
 
     it('allows deleting the category', async () => {
-      const {findByText, getByText, linkTo, client} = setUp();
+      const {findByText, linkTo, client} = setUp();
 
-      await findByText('Delete');
-      fireEvent.press(getByText('Delete'));
+      fireEvent.press(await findByText('Delete'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -226,12 +224,11 @@ describe('CategoryDetail', () => {
 
     it('shows a message upon error deleting the category', async () => {
       const deleteError = 'deleteError';
-      const {findByText, getByText, linkTo} = setUp({
+      const {findByText, linkTo} = setUp({
         deleteError,
       });
 
-      await findByText('Delete');
-      fireEvent.press(getByText('Delete'));
+      fireEvent.press(await findByText('Delete'));
 
       await findByText('An error occurred deleting the category.');
       expect(console.error).toHaveBeenCalledWith(deleteError);

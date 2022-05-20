@@ -99,10 +99,9 @@ describe('Future', () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText, getByText} = renderComponent();
+      const {findByText} = renderComponent();
 
-      await findByText('Todo 1');
-      fireEvent.press(getByText('Todo 1'));
+      fireEvent.press(await findByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/future/abc123');
     });

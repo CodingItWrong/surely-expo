@@ -120,8 +120,7 @@ describe('CategoryList', () => {
 
       const {findByText, getByText} = renderComponent();
 
-      await findByText('Category A');
-      fireEvent.press(getByText('Category A'));
+      fireEvent.press(await findByText('Category A'));
 
       expect(linkTo).toHaveBeenCalledWith('/categories/cat3');
     });

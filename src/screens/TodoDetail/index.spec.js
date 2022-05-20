@@ -215,8 +215,7 @@ describe('TodoDetail', () => {
           </TokenProvider>,
         );
 
-        await findByText('Complete');
-        fireEvent.press(getByText('Complete'));
+        fireEvent.press(await findByText('Complete'));
 
         await waitFor(() => {
           expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
@@ -254,8 +253,7 @@ describe('TodoDetail', () => {
           </TokenProvider>,
         );
 
-        await findByText('Complete');
-        fireEvent.press(getByText('Complete'));
+        fireEvent.press(await findByText('Complete'));
 
         await findByText('An error occurred marking the todo complete.');
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -283,8 +281,7 @@ describe('TodoDetail', () => {
           </TokenProvider>,
         );
 
-        await findByText('Delete');
-        fireEvent.press(getByText('Delete'));
+        fireEvent.press(await findByText('Delete'));
 
         await waitFor(() => {
           expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
@@ -322,8 +319,7 @@ describe('TodoDetail', () => {
           </TokenProvider>,
         );
 
-        await findByText('Delete');
-        fireEvent.press(getByText('Delete'));
+        fireEvent.press(await findByText('Delete'));
 
         await findByText('An error occurred deleting the todo.');
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -351,8 +347,7 @@ describe('TodoDetail', () => {
           </TokenProvider>,
         );
 
-        await findByText('Defer');
-        fireEvent.press(getByText('Defer'));
+        fireEvent.press(await findByText('Defer'));
         fireEvent.press(getByTestId('defer-1-day-button'));
 
         await waitFor(() => {
@@ -391,8 +386,7 @@ describe('TodoDetail', () => {
           </TokenProvider>,
         );
 
-        await findByText('Defer');
-        fireEvent.press(getByText('Defer'));
+        fireEvent.press(await findByText('Defer'));
         fireEvent.press(getByTestId('defer-1-day-button'));
 
         await findByText('An error occurred deferring the todo.');
@@ -460,8 +454,7 @@ describe('TodoDetail', () => {
         </TokenProvider>,
       );
 
-      await findByText('Uncomplete');
-      fireEvent.press(getByText('Uncomplete'));
+      fireEvent.press(await findByText('Uncomplete'));
 
       await waitFor(() => {
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -499,8 +492,7 @@ describe('TodoDetail', () => {
         </TokenProvider>,
       );
 
-      await findByText('Uncomplete');
-      fireEvent.press(getByText('Uncomplete'));
+      fireEvent.press(await findByText('Uncomplete'));
 
       await findByText('An error occurred marking the todo incomplete.');
     });
@@ -566,8 +558,7 @@ describe('TodoDetail', () => {
         </TokenProvider>,
       );
 
-      await findByText('Undelete');
-      fireEvent.press(getByText('Undelete'));
+      fireEvent.press(await findByText('Undelete'));
 
       await waitFor(() => {
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -608,8 +599,7 @@ describe('TodoDetail', () => {
         </TokenProvider>,
       );
 
-      await findByText('Undelete');
-      fireEvent.press(getByText('Undelete'));
+      fireEvent.press(await findByText('Undelete'));
 
       await findByText('An error occurred undeleting the todo.');
     });
