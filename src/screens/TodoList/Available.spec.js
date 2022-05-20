@@ -101,7 +101,7 @@ describe('Available', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByTestId, getByText, queryByText} = render(
+      const {findByText, getByLabelText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Available />
@@ -109,7 +109,7 @@ describe('Available', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByTestId, getByText, queryByText};
+      return {client, findByText, getByLabelText, getByText, queryByText};
     }
 
     it('displays available todos from the server', async () => {
@@ -139,12 +139,12 @@ describe('Available', () => {
       const todoName = 'My New Todo';
 
       it('allows adding a todo', async () => {
-        const {client, findByText, getByTestId} = renderComponent();
+        const {client, findByText, getByLabelText} = renderComponent();
         client.post.mockResolvedValue({data: {}});
 
         await findByText('Todo 1');
 
-        const addField = getByTestId('new-todo-name');
+        const addField = getByLabelText('New todo name');
         fireEvent.changeText(addField, todoName);
         fireEvent(addField, 'submitEditing');
 
@@ -158,12 +158,12 @@ describe('Available', () => {
       });
 
       it('shows an error when adding a todo fails', async () => {
-        const {client, findByText, getByTestId} = renderComponent();
+        const {client, findByText, getByLabelText} = renderComponent();
         client.post.mockRejectedValue();
 
         await findByText('Todo 1');
 
-        const addField = getByTestId('new-todo-name');
+        const addField = getByLabelText('New todo name');
         fireEvent.changeText(addField, todoName);
         fireEvent(addField, 'submitEditing');
 
