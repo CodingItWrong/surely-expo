@@ -1,13 +1,8 @@
 import {useLinkTo} from '@react-navigation/native';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
-import authenticatedHttpClient from '../data/authenticatedHttpClient';
+import nock from 'nock';
 import {TokenProvider} from '../data/token';
 import CategoryDetail from './CategoryDetail';
-
-jest.mock('../data/authenticatedHttpClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
 
 jest.mock('@react-navigation/native', () => ({
   useLinkTo: jest.fn(),
@@ -25,18 +20,9 @@ describe('CategoryDetail', () => {
   describe('for a new category', () => {
     const name = 'New Category';
 
-    function setUp({response} = {}) {
+    function setUp() {
       const linkTo = jest.fn();
       useLinkTo.mockReturnValue(linkTo);
-
-      const client = {
-        post: jest.fn(),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
-
-      if (response) {
-        client.post.mockResolvedValue(response);
-      }
 
       const route = {params: {id: 'new'}};
       const {getByLabelText, getByText} = render(
@@ -45,15 +31,10 @@ describe('CategoryDetail', () => {
         </TokenProvider>,
       );
 
-      return {getByLabelText, getByText, client, linkTo};
+      return {getByLabelText, getByText, linkTo};
     }
 
     it('allows creating the category', async () => {
-      const request = [
-        'categories?',
-        {data: {attributes: {name: 'New Category'}, type: 'categories'}},
-        {headers: {'Content-Type': 'application/vnd.api+json'}},
-      ];
       const response = {
         data: {
           id: 'abc123',
@@ -75,8 +56,13 @@ describe('CategoryDetail', () => {
           },
         },
       };
+      const mockedServer = nock('http://localhost:3000')
+        .post('/categories?', {
+          data: {attributes: {name: 'New Category'}, type: 'categories'},
+        })
+        .reply(200, response);
 
-      const {getByLabelText, getByText, client, linkTo} = setUp({
+      const {getByLabelText, getByText, linkTo} = setUp({
         response,
       });
 
@@ -84,20 +70,20 @@ describe('CategoryDetail', () => {
       fireEvent.press(getByText('Save'));
 
       await waitFor(() => {
-        expect(client.post).toHaveBeenCalledWith(...request);
         expect(linkTo).toHaveBeenCalledWith('/categories');
       });
+
+      mockedServer.done();
     });
 
     it('allows cancelling creation', async () => {
-      const {getByLabelText, getByText, client, linkTo} = setUp();
+      const {getByLabelText, getByText, linkTo} = setUp();
 
       fireEvent.changeText(getByLabelText('Category name'), name);
       fireEvent.press(getByText('Cancel'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
-        expect(client.post).not.toHaveBeenCalled();
       });
     });
   });
@@ -116,26 +102,30 @@ describe('CategoryDetail', () => {
       const linkTo = jest.fn();
       useLinkTo.mockReturnValue(linkTo);
 
-      const client = {
-        get: () => Promise.resolve({data: {data: category}}),
-        patch: jest.fn(),
-        delete: jest.fn().mockResolvedValue(),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const mockedServer = nock('http://localhost:3000')
+        .get(`/categories/${category.id}?`)
+        .reply(200, {data: category});
 
-      if (saveError) {
-        client.patch.mockRejectedValue(saveError);
-      }
+      // const client = {
+      //   get: () => Promise.resolve({data: {data: category}}),
+      //   patch: jest.fn(),
+      //   delete: jest.fn().mockResolvedValue(),
+      // };
+      // authenticatedHttpClient.mockReturnValue(client);
 
-      if (response) {
-        client.patch.mockResolvedValue(response);
-      }
+      // if (saveError) {
+      //   client.patch.mockRejectedValue(saveError);
+      // }
 
-      if (deleteError) {
-        client.delete.mockRejectedValue(deleteError);
-      } else {
-        client.delete.mockResolvedValue();
-      }
+      // if (response) {
+      //   client.patch.mockResolvedValue(response);
+      // }
+
+      // if (deleteError) {
+      //   client.delete.mockRejectedValue(deleteError);
+      // } else {
+      //   client.delete.mockResolvedValue();
+      // }
 
       const route = {params: {id: category.id}};
       const {findByText, getByLabelText, getByText, queryByText} = render(
@@ -148,8 +138,8 @@ describe('CategoryDetail', () => {
         findByText,
         getByLabelText,
         getByText,
+        mockedServer,
         queryByText,
-        client,
         linkTo,
       };
     }
@@ -166,22 +156,19 @@ describe('CategoryDetail', () => {
 
     it('allows editing the category', async () => {
       const updatedName = 'Updated Name';
-      const request = [
-        'categories/cat1?',
-        {
+
+      const {findByText, getByLabelText, getByText, linkTo, mockedServer} =
+        setUp();
+
+      mockedServer
+        .patch('/categories/cat1?', {
           data: {
             type: 'categories',
             id: category.id,
             attributes: {name: updatedName},
           },
-        },
-        {headers: {'Content-Type': 'application/vnd.api+json'}},
-      ];
-      const response = {data: category};
-
-      const {findByText, getByLabelText, getByText, linkTo, client} = setUp({
-        response,
-      });
+        })
+        .reply(200, {data: category});
 
       await findByText('Delete');
 
@@ -190,49 +177,62 @@ describe('CategoryDetail', () => {
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
-        expect(client.patch).toHaveBeenCalledWith(...request);
       });
+
+      mockedServer.done();
     });
+
+    function lastCall(mockFn) {
+      return mockFn.mock.calls[mockFn.mock.calls.length - 1];
+    }
 
     it('shows a message upon error saving edits to the category', async () => {
       const saveError = 'saveError';
       const updatedName = 'Updated Name';
 
-      const {findByText, getByLabelText, linkTo} = setUp({
-        saveError,
-      });
+      const {findByText, getByLabelText, linkTo, mockedServer} = setUp();
+
+      mockedServer.patch('/categories/cat1?').reply(500, saveError);
 
       const saveButton = await findByText('Save');
       fireEvent.changeText(getByLabelText('Category name'), updatedName);
       fireEvent.press(saveButton);
 
       await findByText('An error occurred saving the category.');
-      expect(console.error).toHaveBeenCalledWith(saveError);
       expect(linkTo).not.toHaveBeenCalled();
+
+      expect(lastCall(console.error)[0].data).toEqual(saveError);
     });
 
     it('allows deleting the category', async () => {
-      const {findByText, linkTo, client} = setUp();
+      const {findByText, linkTo, mockedServer} = setUp();
+
+      mockedServer.delete('/categories/cat1?').reply(200, {});
 
       fireEvent.press(await findByText('Delete'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
-        expect(client.delete).toHaveBeenCalledWith('categories/cat1');
       });
+
+      mockedServer.done();
     });
 
     it('shows a message upon error deleting the category', async () => {
       const deleteError = 'deleteError';
-      const {findByText, linkTo} = setUp({
+
+      const {findByText, linkTo, mockedServer} = setUp({
         deleteError,
       });
+
+      mockedServer.delete('/categories/cat1?').reply(500, deleteError);
 
       fireEvent.press(await findByText('Delete'));
 
       await findByText('An error occurred deleting the category.');
-      expect(console.error).toHaveBeenCalledWith(deleteError);
       expect(linkTo).not.toHaveBeenCalled();
+
+      expect(lastCall(console.error)[0].data).toEqual(deleteError);
     });
   });
 });
