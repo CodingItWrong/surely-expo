@@ -76,7 +76,7 @@ describe('Tomorrow', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByTestId, getByText, queryByText} = render(
+      const {findByText, getByLabelText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Tomorrow />
@@ -84,7 +84,7 @@ describe('Tomorrow', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByTestId, getByText, queryByText};
+      return {client, findByText, getByLabelText, getByText, queryByText};
     }
 
     it('displays tomorrow todos from the server', async () => {
@@ -113,11 +113,11 @@ describe('Tomorrow', () => {
     it('allows adding a todo', async () => {
       const todoName = 'My New Todo';
 
-      const {client, findByText, getByTestId} = renderComponent();
+      const {client, findByText, getByLabelText} = renderComponent();
 
       await findByText('Todo 1');
 
-      const addField = getByTestId('new-todo-name');
+      const addField = getByLabelText('New todo name');
       fireEvent.changeText(addField, todoName);
       fireEvent(addField, 'submitEditing');
 

@@ -41,7 +41,7 @@ describe('TodoDetail', () => {
 
       const todoId = '42';
       const route = {params: {id: todoId}};
-      const {findByText, getByTestId, queryByText} = render(
+      const {findByText, queryByText, getByText} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} />
         </TokenProvider>,
@@ -73,7 +73,7 @@ describe('TodoDetail', () => {
         },
       });
 
-      fireEvent.press(getByTestId('retry-button'));
+      fireEvent.press(getByText('Retry'));
 
       await findByText('My Available Todo');
       expect(queryByText('An error occurred loading the todo.')).toBeNull();
@@ -209,14 +209,14 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {findByTestId, getByTestId} = render(
+        const {findByText, getByText} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await findByTestId('complete-button');
-        fireEvent.press(getByTestId('complete-button'));
+        await findByText('Complete');
+        fireEvent.press(getByText('Complete'));
 
         await waitFor(() => {
           expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
@@ -248,14 +248,14 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {findByText, findByTestId, getByTestId} = render(
+        const {findByText, getByText} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await findByTestId('complete-button');
-        fireEvent.press(getByTestId('complete-button'));
+        await findByText('Complete');
+        fireEvent.press(getByText('Complete'));
 
         await findByText('An error occurred marking the todo complete.');
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -277,14 +277,14 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {findByTestId, getByTestId} = render(
+        const {findByText, getByText} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await findByTestId('delete-button');
-        fireEvent.press(getByTestId('delete-button'));
+        await findByText('Delete');
+        fireEvent.press(getByText('Delete'));
 
         await waitFor(() => {
           expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
@@ -316,14 +316,14 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {findByTestId, findByText, getByTestId} = render(
+        const {findByText, getByText} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await findByTestId('delete-button');
-        fireEvent.press(getByTestId('delete-button'));
+        await findByText('Delete');
+        fireEvent.press(getByText('Delete'));
 
         await findByText('An error occurred deleting the todo.');
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -345,14 +345,14 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {findByTestId, getByTestId} = render(
+        const {findByText, getByTestId, getByText} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await findByTestId('defer-button');
-        fireEvent.press(getByTestId('defer-button'));
+        await findByText('Defer');
+        fireEvent.press(getByText('Defer'));
         fireEvent.press(getByTestId('defer-1-day-button'));
 
         await waitFor(() => {
@@ -385,14 +385,14 @@ describe('TodoDetail', () => {
         };
 
         const route = {params: {id: todo.id}};
-        const {findByTestId, findByText, getByTestId} = render(
+        const {findByText, getByTestId, getByText} = render(
           <TokenProvider loadToken={false}>
             <AvailableTodoDetail route={route} navigation={navigation} />
           </TokenProvider>,
         );
 
-        await findByTestId('defer-button');
-        fireEvent.press(getByTestId('defer-button'));
+        await findByText('Defer');
+        fireEvent.press(getByText('Defer'));
         fireEvent.press(getByTestId('defer-1-day-button'));
 
         await findByText('An error occurred deferring the todo.');
@@ -454,14 +454,14 @@ describe('TodoDetail', () => {
       };
 
       const route = {params: {id: todo.id}};
-      const {findByTestId, getByTestId} = render(
+      const {findByText, getByText} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
 
-      await findByTestId('uncomplete-button');
-      fireEvent.press(getByTestId('uncomplete-button'));
+      await findByText('Uncomplete');
+      fireEvent.press(getByText('Uncomplete'));
 
       await waitFor(() => {
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -493,14 +493,14 @@ describe('TodoDetail', () => {
       };
 
       const route = {params: {id: todo.id}};
-      const {findByTestId, findByText, getByTestId} = render(
+      const {findByText, getByText} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
 
-      await findByTestId('uncomplete-button');
-      fireEvent.press(getByTestId('uncomplete-button'));
+      await findByText('Uncomplete');
+      fireEvent.press(getByText('Uncomplete'));
 
       await findByText('An error occurred marking the todo incomplete.');
     });
@@ -560,14 +560,14 @@ describe('TodoDetail', () => {
       };
 
       const route = {params: {id: todo.id}};
-      const {findByTestId, getByTestId} = render(
+      const {findByText, getByText} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
 
-      await findByTestId('undelete-button');
-      fireEvent.press(getByTestId('undelete-button'));
+      await findByText('Undelete');
+      fireEvent.press(getByText('Undelete'));
 
       await waitFor(() => {
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -602,14 +602,14 @@ describe('TodoDetail', () => {
       };
 
       const route = {params: {id: todo.id}};
-      const {findByTestId, findByText, getByTestId} = render(
+      const {findByText, getByText} = render(
         <TokenProvider loadToken={false}>
           <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
 
-      await findByTestId('undelete-button');
-      fireEvent.press(getByTestId('undelete-button'));
+      await findByText('Undelete');
+      fireEvent.press(getByText('Undelete'));
 
       await findByText('An error occurred undeleting the todo.');
     });
