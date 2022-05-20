@@ -157,7 +157,8 @@ describe('CategoryDetail', () => {
     it('displays the category name', async () => {
       const {getByLabelText} = setUp();
       await waitFor(() =>
-        expect(getByLabelText('Category name').props.value).toEqual(
+        expect(getByLabelText('Category name')).toHaveProp(
+          'value',
           'Category C',
         ),
       );
