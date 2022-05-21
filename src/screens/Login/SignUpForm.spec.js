@@ -1,31 +1,17 @@
 import {useLinkTo} from '@react-navigation/native';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
-import authenticatedHttpClient from '../../data/authenticatedHttpClient';
+import nock from 'nock';
 import {TokenProvider} from '../../data/token';
 import SignUpForm from './SignUpForm';
-
-jest.mock('../../data/authenticatedHttpClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
 
 jest.mock('@react-navigation/native', () => ({
   useLinkTo: jest.fn(),
 }));
 
 describe('SignUpForm', () => {
-  function setUp({response} = {}) {
+  function setUp() {
     const linkTo = jest.fn();
     useLinkTo.mockReturnValue(linkTo);
-
-    const client = {
-      post: jest.fn(),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
-
-    if (response) {
-      client.post.mockResolvedValue(response);
-    }
 
     const {findByText, getByLabelText, getByText, queryByText} = render(
       <TokenProvider loadToken={false}>
@@ -38,7 +24,6 @@ describe('SignUpForm', () => {
       getByLabelText,
       getByText,
       queryByText,
-      client,
       linkTo,
     };
   }
@@ -47,16 +32,11 @@ describe('SignUpForm', () => {
     const email = 'example@example.com';
     const password = 'password';
 
-    const request = [
-      'users?',
-      {data: {type: 'users', attributes: {email, password}}},
-      {headers: {'Content-Type': 'application/vnd.api+json'}},
-    ];
-    const response = {data: {}};
+    const mockedServer = nock('http://localhost:3000')
+      .post('/users?', {data: {type: 'users', attributes: {email, password}}})
+      .reply(200, {data: {}});
 
-    const {findByText, getByLabelText, getByText, client, linkTo} = setUp({
-      response,
-    });
+    const {findByText, getByLabelText, getByText, linkTo} = setUp();
 
     fireEvent.changeText(getByLabelText('Email'), email);
     fireEvent.changeText(getByLabelText('Password'), password);
@@ -66,11 +46,12 @@ describe('SignUpForm', () => {
     await findByText(
       'Sign up successful. Sign in with the email and password you used to sign up.',
     );
-    expect(client.post).toHaveBeenCalledWith(...request);
 
     fireEvent.press(getByText('Go to sign in'));
 
     expect(linkTo).toHaveBeenCalledWith('/signin');
+
+    mockedServer.done();
   });
 
   it('validates sign up form data', () => {
