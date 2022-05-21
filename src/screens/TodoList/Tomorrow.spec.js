@@ -76,7 +76,7 @@ describe('Tomorrow', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {findByText, getByLabelText, getByText, queryByText} = render(
+      const {findByText, getByLabelText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Tomorrow />
@@ -84,7 +84,7 @@ describe('Tomorrow', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByLabelText, getByText, queryByText};
+      return {client, findByText, getByLabelText, queryByText};
     }
 
     it('displays tomorrow todos from the server', async () => {
@@ -102,7 +102,7 @@ describe('Tomorrow', () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText, getByText} = renderComponent();
+      const {findByText} = renderComponent();
 
       fireEvent.press(await findByText('Todo 1'));
 
