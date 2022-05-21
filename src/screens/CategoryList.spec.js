@@ -1,15 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import authenticatedHttpClient from '../data/authenticatedHttpClient';
 import {TokenProvider} from '../data/token';
 import {mockUseFocusEffect, safeAreaMetrics} from '../testUtils';
 import CategoryList from './CategoryList';
-
-jest.mock('../data/authenticatedHttpClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
 
 jest.mock('@react-navigation/native', () => ({
   useFocusEffect: jest.fn(),
@@ -22,14 +17,7 @@ describe('CategoryList', () => {
   });
 
   it('shows a message when no categories listed', async () => {
-    const client = {
-      get: jest.fn().mockResolvedValue({
-        data: {
-          data: [],
-        },
-      }),
-    };
-    authenticatedHttpClient.mockReturnValue(client);
+    nock('http://localhost:3000').get('/categories?').reply(200, {data: []});
 
     const {findByText} = render(
       <SafeAreaProvider initialMetrics={safeAreaMetrics}>
@@ -68,15 +56,9 @@ describe('CategoryList', () => {
     ];
 
     function renderComponent() {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {
-            data: categories,
-          },
-        }),
-        patch: jest.fn().mockResolvedValue({data: {}}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const mockedServer = nock('http://localhost:3000')
+        .get('/categories?')
+        .reply(200, {data: categories});
 
       const {findByText, getAllByLabelText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
@@ -87,10 +69,10 @@ describe('CategoryList', () => {
       );
 
       return {
-        client,
         findByText,
         getAllByLabelText,
         getByText,
+        mockedServer,
         queryByText,
       };
     }
@@ -118,39 +100,40 @@ describe('CategoryList', () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText, getByText} = renderComponent();
+      const {findByText} = renderComponent();
 
       fireEvent.press(await findByText('Category A'));
 
       expect(linkTo).toHaveBeenCalledWith('/categories/cat3');
     });
 
-    function summarizeSortCalls(patchMock) {
-      return patchMock.mock.calls.map(call => ({
-        id: call[1].data.id,
-        sortOrder: call[1].data.attributes['sort-order'],
-      }));
+    function mockSortCall({mockedServer, cat, sortOrder}) {
+      mockedServer
+        .patch(
+          `/categories/${cat}?`,
+          body => body.data.attributes['sort-order'] === sortOrder,
+        )
+        .reply(200, {data: {}});
     }
 
     it('allows moving an item down in the sort order', async () => {
-      const {client, findByText, getAllByLabelText} = renderComponent();
+      const {findByText, getAllByLabelText, mockedServer} = renderComponent();
+
+      mockSortCall({mockedServer, cat: 'cat2', sortOrder: 0});
+      mockSortCall({mockedServer, cat: 'cat3', sortOrder: 1});
+      mockSortCall({mockedServer, cat: 'cat1', sortOrder: 2});
+      mockedServer.get('/categories?').reply(200, {data: categories});
 
       await findByText('Category A');
       fireEvent.press(getAllByLabelText('Move down')[0]);
 
-      await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
-      const calls = summarizeSortCalls(client.patch);
-      expect(calls).toEqual([
-        {sortOrder: 0, id: 'cat2'},
-        {sortOrder: 1, id: 'cat3'},
-        {sortOrder: 2, id: 'cat1'},
-      ]);
+      await waitFor(() => expect(mockedServer.isDone()).toBe(true));
     });
 
     it('shows a message when an error occurs moving an item down', async () => {
-      const {client, findByText, getAllByLabelText} = renderComponent();
+      const {findByText, getAllByLabelText, mockedServer} = renderComponent();
 
-      client.patch.mockRejectedValue();
+      mockedServer.patch('/categories/cat2?').reply(500, {});
 
       await findByText('Category A');
       fireEvent.press(getAllByLabelText('Move down')[0]);
@@ -159,24 +142,23 @@ describe('CategoryList', () => {
     });
 
     it('allows moving an item up in the sort order', async () => {
-      const {client, findByText, getAllByLabelText} = renderComponent();
+      const {findByText, getAllByLabelText, mockedServer} = renderComponent();
+
+      mockSortCall({mockedServer, cat: 'cat3', sortOrder: 0});
+      mockSortCall({mockedServer, cat: 'cat1', sortOrder: 1});
+      mockSortCall({mockedServer, cat: 'cat2', sortOrder: 2});
+      mockedServer.get('/categories?').reply(200, {data: categories});
 
       await findByText('Category A');
       fireEvent.press(getAllByLabelText('Move up')[2]);
 
-      await waitFor(() => expect(client.patch.mock.calls.length).toEqual(3));
-      const calls = summarizeSortCalls(client.patch);
-      expect(calls).toEqual([
-        {sortOrder: 0, id: 'cat3'},
-        {sortOrder: 1, id: 'cat1'},
-        {sortOrder: 2, id: 'cat2'},
-      ]);
+      await waitFor(() => expect(mockedServer.isDone()).toBe(true));
     });
 
     it('shows a message when an error occurs moving an item up', async () => {
-      const {client, findByText, getAllByLabelText} = renderComponent();
+      const {findByText, getAllByLabelText, mockedServer} = renderComponent();
 
-      client.patch.mockRejectedValue();
+      mockedServer.patch('/categories/cat2?').reply(500, {});
 
       await findByText('Category A');
       fireEvent.press(getAllByLabelText('Move up')[0]);
