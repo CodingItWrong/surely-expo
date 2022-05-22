@@ -1,15 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
 import {mockUseFocusEffect, safeAreaMetrics} from '../../testUtils';
 import Future from './Future';
-
-jest.mock('../../data/authenticatedHttpClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
 
 jest.mock('@react-navigation/native', () => ({
   useFocusEffect: jest.fn(),
@@ -34,10 +29,9 @@ describe('Future', () => {
     it('shows an error message', async () => {
       const response = {data: []};
 
-      const client = {
-        get: jest.fn().mockResolvedValue({data: response}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      nock('http://localhost:3000')
+        .get('/todos?filter[status]=future&filter[search]=&sort=name')
+        .reply(200, response);
 
       const {findByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
@@ -55,10 +49,9 @@ describe('Future', () => {
     const response = {data: [todo]};
 
     function renderComponent() {
-      const client = {
-        get: jest.fn().mockResolvedValue({data: response}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const mockedServer = nock('http://localhost:3000')
+        .get('/todos?filter[status]=future&filter[search]=&sort=name')
+        .reply(200, response);
 
       const {
         findByText,
@@ -75,24 +68,20 @@ describe('Future', () => {
       );
 
       return {
-        client,
         findByText,
         getByLabelText,
         getByText,
+        mockedServer,
         queryByLabelText,
         queryByText,
       };
     }
 
     it('displays future todos from the server', async () => {
-      const {client, findByText, queryByText} = renderComponent();
+      const {findByText, queryByText} = renderComponent();
 
       await findByText(todo.attributes.name);
       expect(queryByText('08/28/2121 (1)')).not.toBeNull();
-
-      expect(client.get).toHaveBeenCalledWith(
-        'todos?filter[status]=future&filter[search]=&sort=name',
-      );
     });
 
     it('allows navigating to a todo detail', async () => {
@@ -108,8 +97,14 @@ describe('Future', () => {
 
     it('allows searching for todos', async () => {
       const searchText = 'MySearchText';
-      const {client, findByText, getByLabelText, queryByLabelText} =
+      const {findByText, getByLabelText, mockedServer, queryByLabelText} =
         renderComponent();
+
+      mockedServer
+        .get(
+          `/todos?filter[status]=future&filter[search]=${searchText}&sort=name`,
+        )
+        .reply(200, response);
 
       await findByText('Todo 1');
 
@@ -117,11 +112,9 @@ describe('Future', () => {
       fireEvent.changeText(searchField, searchText);
       fireEvent(searchField, 'submitEditing');
 
-      expect(client.get).toHaveBeenLastCalledWith(
-        `todos?filter[status]=future&filter[search]=${searchText}&sort=name`,
-      );
-
       await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
+
+      mockedServer.done();
     });
   });
 });
