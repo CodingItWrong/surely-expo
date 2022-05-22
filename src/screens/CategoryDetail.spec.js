@@ -9,14 +9,6 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('CategoryDetail', () => {
-  beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-  });
-
-  afterEach(() => {
-    console.error.mockRestore();
-  });
-
   describe('for a new category', () => {
     const name = 'New Category';
 
@@ -200,8 +192,6 @@ describe('CategoryDetail', () => {
 
       await findByText('An error occurred saving the category.');
       expect(linkTo).not.toHaveBeenCalled();
-
-      expect(lastCall(console.error)[0].data).toEqual(saveError);
     });
 
     it('allows deleting the category', async () => {
@@ -231,8 +221,6 @@ describe('CategoryDetail', () => {
 
       await findByText('An error occurred deleting the category.');
       expect(linkTo).not.toHaveBeenCalled();
-
-      expect(lastCall(console.error)[0].data).toEqual(deleteError);
     });
   });
 });

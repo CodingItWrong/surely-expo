@@ -7,6 +7,7 @@ import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
 import sharedStyles from '../../../../sharedStyles';
 import {dayOfWeek, deferDate} from '../../../../utils/time';
+import '../../../../logError';
 
 export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
@@ -33,7 +34,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
     } catch (error) {
       setIsLoading(false);
       setErrorMessage('An error occurred deferring the todo.');
-      console.error(error);
+      logError(error);
     }
   }
 
