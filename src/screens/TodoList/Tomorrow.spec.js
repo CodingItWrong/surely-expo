@@ -1,15 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
 import {mockUseFocusEffect, safeAreaMetrics} from '../../testUtils';
 import Tomorrow from './Tomorrow';
-
-jest.mock('../../data/authenticatedHttpClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
 
 jest.mock('@react-navigation/native', () => ({
   useFocusEffect: jest.fn(),
@@ -46,13 +41,12 @@ describe('Tomorrow', () => {
   });
 
   describe('when there are no tomorrow todos', () => {
-    it('shows an error message', async () => {
+    it('shows a message', async () => {
       const response = {data: [], included: []};
 
-      const client = {
-        get: jest.fn().mockResolvedValue({data: response}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      nock('http://localhost:3000')
+        .get('/todos?filter[status]=tomorrow&include=category')
+        .reply(200, response);
 
       const {findByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
@@ -70,11 +64,9 @@ describe('Tomorrow', () => {
     const response = {data: [todo], included: [category]};
 
     function renderComponent() {
-      const client = {
-        get: jest.fn().mockResolvedValue({data: response}),
-        post: jest.fn().mockResolvedValue({data: {}}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const mockedServer = nock('http://localhost:3000')
+        .get('/todos?filter[status]=tomorrow&include=category')
+        .reply(200, response);
 
       const {findByText, getByLabelText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
@@ -84,18 +76,14 @@ describe('Tomorrow', () => {
         </SafeAreaProvider>,
       );
 
-      return {client, findByText, getByLabelText, queryByText};
+      return {findByText, getByLabelText, mockedServer, queryByText};
     }
 
     it('displays tomorrow todos from the server', async () => {
-      const {client, findByText, queryByText} = renderComponent();
+      const {findByText, queryByText} = renderComponent();
 
       await findByText(todo.attributes.name);
       expect(queryByText(`${category.attributes.name} (1)`)).not.toBeNull();
-
-      expect(client.get).toHaveBeenCalledWith(
-        'todos?filter[status]=tomorrow&include=category',
-      );
     });
 
     it('allows navigating to a todo detail', async () => {
@@ -112,7 +100,18 @@ describe('Tomorrow', () => {
     it('allows adding a todo', async () => {
       const todoName = 'My New Todo';
 
-      const {client, findByText, getByLabelText} = renderComponent();
+      const {findByText, getByLabelText, mockedServer} = renderComponent();
+
+      mockedServer
+        .post(
+          '/todos?',
+          body =>
+            body.data.attributes.name === todoName &&
+            body.data.attributes['deferred-until'] !== null,
+        )
+        .reply(200, {data: {}})
+        .get('/todos?filter[status]=tomorrow&include=category')
+        .reply(200, response);
 
       await findByText('Todo 1');
 
@@ -120,18 +119,8 @@ describe('Tomorrow', () => {
       fireEvent.changeText(addField, todoName);
       fireEvent(addField, 'submitEditing');
 
-      expect(client.post).toHaveBeenCalledWith(
-        'todos?',
-        {
-          data: {
-            type: 'todos',
-            attributes: {name: todoName, 'deferred-until': expect.any(Date)},
-          },
-        },
-        {headers: {'Content-Type': 'application/vnd.api+json'}},
-      );
-
-      await waitFor(() => expect(client.get).toHaveBeenCalledTimes(2));
+      // wait for post and second get
+      await waitFor(() => expect(mockedServer.isDone()).toBe(true));
     });
   });
 });
