@@ -1,25 +1,39 @@
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
-import authenticatedHttpClient from '../../data/authenticatedHttpClient';
+import nock from 'nock';
 import {TokenProvider} from '../../data/token';
 import {createTodoDetail} from './index';
-
-jest.mock('../../data/authenticatedHttpClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
 
 describe('TodoDetail', () => {
   const parentRouteName = 'AvailableTodos';
   const AvailableTodoDetail = createTodoDetail(parentRouteName);
 
   describe('when there is an error loading the todo', () => {
-    it('shows an error message', async () => {
-      const client = {
-        get: jest.fn().mockRejectedValue(),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+    const todoId = '42';
+    const todo = {
+      id: 'abc123',
+      type: 'todos',
+      attributes: {
+        name: 'My Available Todo',
+        notes: 'Notes for the todo',
+        'created-at': '2021-08-27T23:54:49.483Z',
+        'updated-at': '2021-08-27T23:54:49.483Z',
+        'deleted-at': null,
+        'completed-at': null,
+        'deferred-at': null,
+        'deferred-until': null,
+      },
+      relationships: {
+        category: {
+          data: null,
+        },
+      },
+    };
 
-      const todoId = '42';
+    it('shows an error message', async () => {
+      nock('http://localhost:3000')
+        .get(`/todos/${todoId}?include=category`)
+        .reply(500, {});
+
       const route = {params: {id: todoId}};
       const {findByText} = render(
         <TokenProvider loadToken={false}>
@@ -28,18 +42,15 @@ describe('TodoDetail', () => {
       );
 
       await findByText('An error occurred loading the todo.');
-      expect(client.get).toHaveBeenCalledWith(
-        `todos/${todoId}?include=category`,
-      );
     });
 
     it('clears the error upon successful retry', async () => {
-      const client = {
-        get: jest.fn().mockRejectedValue(),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      nock('http://localhost:3000')
+        .get(`/todos/${todoId}?include=category`)
+        .reply(500, {})
+        .get(`/todos/${todoId}?include=category`)
+        .reply(200, {data: todo});
 
-      const todoId = '42';
       const route = {params: {id: todoId}};
       const {findByText, queryByText, getByText} = render(
         <TokenProvider loadToken={false}>
@@ -49,33 +60,9 @@ describe('TodoDetail', () => {
 
       await findByText('An error occurred loading the todo.');
 
-      client.get.mockResolvedValue({
-        data: {
-          data: {
-            id: 'abc123',
-            type: 'todos',
-            attributes: {
-              name: 'My Available Todo',
-              notes: 'Notes for the todo',
-              'created-at': '2021-08-27T23:54:49.483Z',
-              'updated-at': '2021-08-27T23:54:49.483Z',
-              'deleted-at': null,
-              'completed-at': null,
-              'deferred-at': null,
-              'deferred-until': null,
-            },
-            relationships: {
-              category: {
-                data: null,
-              },
-            },
-          },
-        },
-      });
-
       fireEvent.press(getByText('Retry'));
 
-      await findByText('My Available Todo');
+      await findByText(todo.attributes.name);
       expect(queryByText('An error occurred loading the todo.')).toBeNull();
     });
   });
@@ -101,20 +88,34 @@ describe('TodoDetail', () => {
       },
     };
 
-    it('displays the todo content', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
+    function setUp() {
+      const mockServer = nock('http://localhost:3000')
+        .get(`/todos/${todo.id}?include=category`)
+        .reply(200, {data: todo});
+
+      const navigation = {
+        navigate: jest.fn(),
       };
-      authenticatedHttpClient.mockReturnValue(client);
 
       const route = {params: {id: todo.id}};
-      const {findByText, queryByText} = render(
+      const {findByText, getByTestId, getByText, queryByText} = render(
         <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} />
+          <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
+
+      return {
+        findByText,
+        getByTestId,
+        getByText,
+        mockServer,
+        navigation,
+        queryByText,
+      };
+    }
+
+    it('displays the todo content', async () => {
+      const {findByText, queryByText} = setUp();
 
       await findByText(todo.attributes.name);
       expect(queryByText(todo.attributes.notes)).not.toBeNull();
@@ -122,136 +123,31 @@ describe('TodoDetail', () => {
       expect(queryByText('Deferred until 08/27/2121')).not.toBeNull();
     });
 
-    describe.skip('editing the todo', () => {
-      it('allows editing the todo', async () => {
-        const notes = 'Updated Notes';
-        const categories = [
-          {
-            id: 'cat1',
-            type: 'categories',
-            attributes: {
-              name: 'Category C',
-              'sort-order': 3,
-            },
-          },
-          {
-            id: 'cat2',
-            type: 'categories',
-            attributes: {
-              name: 'Category B',
-              'sort-order': 2,
-            },
-          },
-        ];
-
-        const client = {
-          async get(url) {
-            if (url.startsWith('todos')) {
-              return {data: {data: todo}};
-            } else if (url.startsWith('categories')) {
-              return {data: {data: categories}};
-            }
-          },
-          patch: jest.fn().mockResolvedValue({data: {data: todo}}),
-        };
-        authenticatedHttpClient.mockReturnValue(client);
-
-        const navigation = {
-          navigate: jest.fn(),
-        };
-
-        const route = {params: {id: todo.id}};
-        const {findByTestId, getByTestId} = render(
-          <TokenProvider loadToken={false}>
-            <AvailableTodoDetail route={route} navigation={navigation} />
-          </TokenProvider>,
-        );
-
-        await findByTestId('edit-button');
-        fireEvent.press(getByTestId('edit-button'));
-
-        // fireEvent.changeText(getByTestId('name-field'), name);
-        // fireEvent.changeText(getByTestId('notes-field'), notes);
-        // // TODO: choose category
-        // // cy.getTestId('choose-category-field').click();
-        // // cy.contains('Category B').click({force: true});
-        // fireEvent.press(getByTestId('save-button'));
-
-        // await waitFor(() => {
-        //   expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
-        //   expect(client.patch).toHaveBeenCalledWith(
-        //     `todos/${todo.id}?`,
-        //     {
-        //       data: {
-        //         type: 'todos',
-        //         id: todo.id,
-        //         attributes: {name, notes},
-        //       },
-        //     },
-        //     {headers: {'Content-Type': 'application/vnd.api+json'}},
-        //   );
-        // });
-      });
-    });
-
     describe('completing the todo', () => {
       it('allows completing the todo', async () => {
-        const client = {
-          get: jest.fn().mockResolvedValue({
-            data: {data: todo},
-          }),
-          patch: jest.fn().mockResolvedValue({data: {data: todo}}),
-        };
-        authenticatedHttpClient.mockReturnValue(client);
+        const {findByText, mockServer, navigation} = setUp();
 
-        const navigation = {
-          navigate: jest.fn(),
-        };
-
-        const route = {params: {id: todo.id}};
-        const {findByText, getByText} = render(
-          <TokenProvider loadToken={false}>
-            <AvailableTodoDetail route={route} navigation={navigation} />
-          </TokenProvider>,
-        );
+        mockServer
+          .patch(
+            `/todos/${todo.id}?`,
+            body =>
+              body.data.id === todo.id &&
+              body.data.attributes['completed-at'] !== null,
+          )
+          .reply(200, {data: {}});
 
         fireEvent.press(await findByText('Complete'));
 
-        await waitFor(() => {
-          expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
-          expect(client.patch).toHaveBeenCalledWith(
-            `todos/${todo.id}?`,
-            {
-              data: {
-                type: 'todos',
-                id: todo.id,
-                attributes: {'completed-at': expect.any(Date)},
-              },
-            },
-            {headers: {'Content-Type': 'application/vnd.api+json'}},
-          );
-        });
+        await waitFor(() =>
+          expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName),
+        );
+        mockServer.done();
       });
 
       it('shows a message when there is an error completing the todo', async () => {
-        const client = {
-          get: jest.fn().mockResolvedValue({
-            data: {data: todo},
-          }),
-          patch: jest.fn().mockRejectedValue(),
-        };
-        authenticatedHttpClient.mockReturnValue(client);
+        const {findByText, mockServer, navigation} = setUp();
 
-        const navigation = {
-          navigate: jest.fn(),
-        };
-
-        const route = {params: {id: todo.id}};
-        const {findByText, getByText} = render(
-          <TokenProvider loadToken={false}>
-            <AvailableTodoDetail route={route} navigation={navigation} />
-          </TokenProvider>,
-        );
+        mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
         fireEvent.press(await findByText('Complete'));
 
@@ -262,62 +158,28 @@ describe('TodoDetail', () => {
 
     describe('deleting the todo', () => {
       it('allows deleting the todo', async () => {
-        const client = {
-          get: jest.fn().mockResolvedValue({
-            data: {data: todo},
-          }),
-          patch: jest.fn().mockResolvedValue({data: {data: todo}}), // patch because it's a soft delete
-        };
-        authenticatedHttpClient.mockReturnValue(client);
+        const {findByText, mockServer, navigation} = setUp();
 
-        const navigation = {
-          navigate: jest.fn(),
-        };
-
-        const route = {params: {id: todo.id}};
-        const {findByText, getByText} = render(
-          <TokenProvider loadToken={false}>
-            <AvailableTodoDetail route={route} navigation={navigation} />
-          </TokenProvider>,
-        );
+        mockServer
+          .patch(
+            `/todos/${todo.id}?`,
+            body =>
+              body.data.id === todo.id &&
+              body.data.attributes['deleted-at'] !== null,
+          )
+          .reply(200, {data: {}});
 
         fireEvent.press(await findByText('Delete'));
 
-        await waitFor(() => {
-          expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
-          expect(client.patch).toHaveBeenCalledWith(
-            `todos/${todo.id}?`,
-            {
-              data: {
-                type: 'todos',
-                id: todo.id,
-                attributes: {'deleted-at': expect.any(Date)},
-              },
-            },
-            {headers: {'Content-Type': 'application/vnd.api+json'}},
-          );
-        });
+        await waitFor(() =>
+          expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName),
+        );
       });
 
       it('shows a message when there is an error deleting the todo', async () => {
-        const client = {
-          get: jest.fn().mockResolvedValue({
-            data: {data: todo},
-          }),
-          patch: jest.fn().mockRejectedValue(),
-        };
-        authenticatedHttpClient.mockReturnValue(client);
+        const {findByText, mockServer, navigation} = setUp();
 
-        const navigation = {
-          navigate: jest.fn(),
-        };
-
-        const route = {params: {id: todo.id}};
-        const {findByText, getByText} = render(
-          <TokenProvider loadToken={false}>
-            <AvailableTodoDetail route={route} navigation={navigation} />
-          </TokenProvider>,
-        );
+        mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
         fireEvent.press(await findByText('Delete'));
 
@@ -328,63 +190,29 @@ describe('TodoDetail', () => {
 
     describe('deferring the todo', () => {
       it('allows deferring the todo', async () => {
-        const client = {
-          get: jest.fn().mockResolvedValue({
-            data: {data: todo},
-          }),
-          patch: jest.fn().mockResolvedValue({data: {data: todo}}),
-        };
-        authenticatedHttpClient.mockReturnValue(client);
+        const {findByText, getByTestId, mockServer, navigation} = setUp();
 
-        const navigation = {
-          navigate: jest.fn(),
-        };
-
-        const route = {params: {id: todo.id}};
-        const {findByText, getByTestId, getByText} = render(
-          <TokenProvider loadToken={false}>
-            <AvailableTodoDetail route={route} navigation={navigation} />
-          </TokenProvider>,
-        );
+        mockServer
+          .patch(
+            `/todos/${todo.id}?`,
+            body =>
+              body.data.id === todo.id &&
+              body.data.attributes['deferred-until'] !== null,
+          )
+          .reply(200, {data: todo});
 
         fireEvent.press(await findByText('Defer'));
         fireEvent.press(getByTestId('defer-1-day-button'));
 
-        await waitFor(() => {
-          expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName);
-          expect(client.patch).toHaveBeenCalledWith(
-            `todos/${todo.id}?`,
-            {
-              data: {
-                type: 'todos',
-                id: todo.id,
-                attributes: {'deferred-until': expect.any(Date)},
-              },
-            },
-            {headers: {'Content-Type': 'application/vnd.api+json'}},
-          );
-        });
+        await waitFor(() =>
+          expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName),
+        );
       });
 
       it('shows a message when an error occurs deferring the todo', async () => {
-        const client = {
-          get: jest.fn().mockResolvedValue({
-            data: {data: todo},
-          }),
-          patch: jest.fn().mockRejectedValue(),
-        };
-        authenticatedHttpClient.mockReturnValue(client);
+        const {findByText, getByTestId, mockServer, navigation} = setUp();
 
-        const navigation = {
-          navigate: jest.fn(),
-        };
-
-        const route = {params: {id: todo.id}};
-        const {findByText, getByTestId, getByText} = render(
-          <TokenProvider loadToken={false}>
-            <AvailableTodoDetail route={route} navigation={navigation} />
-          </TokenProvider>,
-        );
+        mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
         fireEvent.press(await findByText('Defer'));
         fireEvent.press(getByTestId('defer-1-day-button'));
@@ -416,81 +244,58 @@ describe('TodoDetail', () => {
       },
     };
 
-    it('displays the completion date', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
+    function setUp() {
+      const mockServer = nock('http://localhost:3000')
+        .get(`/todos/${todo.id}?include=category`)
+        .reply(200, {data: todo});
+
+      const navigation = {
+        navigate: jest.fn(),
       };
-      authenticatedHttpClient.mockReturnValue(client);
 
       const route = {params: {id: todo.id}};
-      const {findByText} = render(
+      const {findByText, getByText, queryByText} = render(
         <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} />
+          <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
+
+      return {
+        findByText,
+        getByText,
+        mockServer,
+        navigation,
+        queryByText,
+      };
+    }
+
+    it('displays the completion date', async () => {
+      const {findByText} = setUp();
 
       await findByText('Completed 08/27/2021');
     });
 
     it('allows uncompleting the todo', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
-        patch: jest.fn().mockResolvedValue({data: {data: todo}}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const {findByText, mockServer, navigation} = setUp();
 
-      const navigation = {
-        navigate: jest.fn(),
-      };
-
-      const route = {params: {id: todo.id}};
-      const {findByText, getByText} = render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
-      );
+      mockServer
+        .patch(
+          `/todos/${todo.id}?`,
+          body =>
+            body.data.id === todo.id &&
+            body.data.attributes['completed-at'] === null,
+        )
+        .reply(200, {data: todo});
 
       fireEvent.press(await findByText('Uncomplete'));
 
-      await waitFor(() => {
-        expect(navigation.navigate).not.toHaveBeenCalled();
-        expect(client.patch).toHaveBeenCalledWith(
-          `todos/${todo.id}?`,
-          {
-            data: {
-              type: 'todos',
-              id: todo.id,
-              attributes: {'completed-at': null},
-            },
-          },
-          {headers: {'Content-Type': 'application/vnd.api+json'}},
-        );
-      });
+      await waitFor(() => expect(navigation.navigate).not.toHaveBeenCalled());
     });
 
     it('shows a message when there is an error uncompleting the todo', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
-        patch: jest.fn().mockRejectedValue(),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const {findByText, mockServer} = setUp();
 
-      const navigation = {
-        navigate: jest.fn(),
-      };
-
-      const route = {params: {id: todo.id}};
-      const {findByText, getByText} = render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
-      );
+      mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
       fireEvent.press(await findByText('Uncomplete'));
 
@@ -519,85 +324,61 @@ describe('TodoDetail', () => {
       },
     };
 
-    it('displays the todo dates', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
+    function setUp() {
+      const mockServer = nock('http://localhost:3000')
+        .get(`/todos/${todo.id}?include=category`)
+        .reply(200, {data: todo});
+
+      const navigation = {
+        navigate: jest.fn(),
       };
-      authenticatedHttpClient.mockReturnValue(client);
 
       const route = {params: {id: todo.id}};
-      const {findByText, queryByText} = render(
+      const {findByText, getByText, queryByText} = render(
         <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} />
+          <AvailableTodoDetail route={route} navigation={navigation} />
         </TokenProvider>,
       );
+
+      return {
+        findByText,
+        getByText,
+        mockServer,
+        navigation,
+        queryByText,
+      };
+    }
+
+    it('displays the todo dates', async () => {
+      const {findByText, queryByText} = setUp();
 
       await findByText('Completed 08/28/2021');
       expect(queryByText('Deleted 08/29/2021')).not.toBeNull();
     });
 
     it('allows undeleting the todo', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
-        patch: jest.fn().mockResolvedValue({data: {data: todo}}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const {findByText, mockServer, navigation} = setUp();
 
-      const navigation = {
-        navigate: jest.fn(),
-      };
-
-      const route = {params: {id: todo.id}};
-      const {findByText, getByText} = render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
-      );
+      mockServer
+        .patch(
+          `/todos/${todo.id}?`,
+          body =>
+            body.data.id === todo.id &&
+            body.data.attributes['deleted-at'] === null,
+        )
+        .reply(200, {data: todo});
 
       fireEvent.press(await findByText('Undelete'));
 
-      await waitFor(() => {
-        expect(navigation.navigate).not.toHaveBeenCalled();
-        expect(client.patch).toHaveBeenCalledWith(
-          `todos/${todo.id}?`,
-          {
-            data: {
-              type: 'todos',
-              id: todo.id,
-              attributes: {
-                'completed-at': null,
-                'deleted-at': null,
-              },
-            },
-          },
-          {headers: {'Content-Type': 'application/vnd.api+json'}},
-        );
-      });
+      await waitFor(() => expect(navigation.navigate).not.toHaveBeenCalled());
+
+      mockServer.done();
     });
 
     it('shows a message when there is an error undeleting the todo', async () => {
-      const client = {
-        get: jest.fn().mockResolvedValue({
-          data: {data: todo},
-        }),
-        patch: jest.fn().mockRejectedValue(),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const {findByText, mockServer} = setUp();
 
-      const navigation = {
-        navigate: jest.fn(),
-      };
-
-      const route = {params: {id: todo.id}};
-      const {findByText, getByText} = render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
-      );
+      mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
       fireEvent.press(await findByText('Undelete'));
 

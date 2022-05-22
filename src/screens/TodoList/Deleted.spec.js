@@ -70,25 +70,19 @@ describe('Deleted', () => {
       };
       authenticatedHttpClient.mockReturnValue(client);
 
-      const {
-        findByText,
-        getByLabelText,
-        getByText,
-        queryByLabelText,
-        queryByText,
-      } = render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Deleted />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      const {findByText, getByLabelText, queryByLabelText, queryByText} =
+        render(
+          <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+            <TokenProvider loadToken={false}>
+              <Deleted />
+            </TokenProvider>
+          </SafeAreaProvider>,
+        );
 
       return {
         client,
         findByText,
         getByLabelText,
-        getByText,
         queryByLabelText,
         queryByText,
       };
@@ -123,7 +117,7 @@ describe('Deleted', () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText, getByText} = renderComponent();
+      const {findByText} = renderComponent();
 
       fireEvent.press(await findByText('Todo 1'));
 
