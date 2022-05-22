@@ -1,15 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import authenticatedHttpClient from '../../data/authenticatedHttpClient';
 import {TokenProvider} from '../../data/token';
 import {mockUseFocusEffect, safeAreaMetrics} from '../../testUtils';
 import Completed from './Completed';
-
-jest.mock('../../data/authenticatedHttpClient', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
 
 jest.mock('@react-navigation/native', () => ({
   useFocusEffect: jest.fn(),
@@ -42,10 +37,11 @@ describe('Completed', () => {
     it('shows an error message', async () => {
       const response = {data: []};
 
-      const client = {
-        get: jest.fn().mockResolvedValue({data: response}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      nock('http://localhost:3000')
+        .get(
+          '/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
+        )
+        .reply(200, response);
 
       const {findByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
@@ -63,10 +59,11 @@ describe('Completed', () => {
     const response = {data: [todo]};
 
     function renderComponent() {
-      const client = {
-        get: jest.fn().mockResolvedValue({data: response}),
-      };
-      authenticatedHttpClient.mockReturnValue(client);
+      const mockedServer = nock('http://localhost:3000')
+        .get(
+          '/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
+        )
+        .reply(200, response);
 
       const {
         findByText,
@@ -83,38 +80,44 @@ describe('Completed', () => {
       );
 
       return {
-        client,
         findByText,
         getByLabelText,
         getByText,
+        mockedServer,
         queryByLabelText,
         queryByText,
       };
     }
 
     it('displays completed todos from the server', async () => {
-      const {client, findByText, queryByText} = renderComponent();
+      const {findByText, queryByText} = renderComponent();
 
       await findByText(todo.attributes.name);
       expect(queryByText('08/28/2021 (1)')).not.toBeNull();
-
-      expect(client.get).toHaveBeenCalledWith(
-        'todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
-      );
     });
 
     it('allows pagination', async () => {
-      const {client, findByText, getByLabelText} = renderComponent();
+      const {findByText, getByLabelText, mockedServer} = renderComponent();
+
+      mockedServer
+        .get(
+          '/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=2',
+        )
+        .reply(200, {data: [todo2]})
+        .get(
+          '/todos?filter[status]=completed&filter[search]=&sort=-completedAt&page[number]=1',
+        )
+        .reply(200, {data: [todo]});
 
       await findByText(todo.attributes.name);
 
-      client.get.mockResolvedValue({data: {data: [todo2]}});
       fireEvent.press(getByLabelText('Go to next page'));
       await findByText(todo2.attributes.name);
 
-      client.get.mockResolvedValue({data: {data: [todo]}});
       fireEvent.press(getByLabelText('Go to previous page'));
       await findByText(todo.attributes.name);
+
+      mockedServer.done();
     });
 
     it('allows navigating to a todo detail', async () => {
@@ -131,8 +134,14 @@ describe('Completed', () => {
     describe('searching', () => {
       it('allows searching for todos', async () => {
         const searchText = 'MySearchText';
-        const {client, findByText, getByLabelText, queryByLabelText} =
+        const {findByText, getByLabelText, mockedServer, queryByLabelText} =
           renderComponent();
+
+        mockedServer
+          .get(
+            `/todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
+          )
+          .reply(200, response);
 
         await findByText('Todo 1');
 
@@ -140,30 +149,28 @@ describe('Completed', () => {
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
-        expect(client.get).toHaveBeenLastCalledWith(
-          `todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
-        );
-
         await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
+
+        mockedServer.done();
       });
 
       it('shows a message when no search results returned', async () => {
         const searchText = 'MySearchText';
-        const {client, findByText, getByLabelText, queryByLabelText} =
-          renderComponent();
+        const {findByText, getByLabelText, mockedServer} = renderComponent();
+
+        mockedServer
+          .get(
+            `/todos?filter[status]=completed&filter[search]=${searchText}&sort=-completedAt&page[number]=1`,
+          )
+          .reply(200, {data: []});
 
         await findByText('Todo 1');
 
-        client.get.mockResolvedValue({data: []});
         const searchField = getByLabelText('search');
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
-        await waitFor(() =>
-          expect(
-            queryByLabelText('No completed todos matched your search'),
-          ).toBeNull(),
-        );
+        await findByText('No completed todos matched your search');
       });
     });
   });
