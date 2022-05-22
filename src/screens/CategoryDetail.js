@@ -9,6 +9,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ScreenBackground from '../components/ScreenBackground';
 import {useCategories} from '../data/categories';
+import logError from '../logError';
 import sharedStyleQueries from '../sharedStyleQueries';
 import sharedStyles from '../sharedStyles';
 import useIsMounted from '../utils/useIsMounted';
@@ -40,7 +41,7 @@ export default function CategoryDetail({route}) {
             setName(returnedCategory.attributes.name);
           }
         })
-        .catch(console.error);
+        .catch(logError);
     }
   }, [id, isNewCategory, categoryClient, isMounted]);
 
@@ -60,7 +61,7 @@ export default function CategoryDetail({route}) {
     } catch (e) {
       setIsLoading(false);
       setErrorMessage('An error occurred saving the category.');
-      console.error(e);
+      logError(e);
     }
   }
 
@@ -73,7 +74,7 @@ export default function CategoryDetail({route}) {
     } catch (error) {
       setIsLoading(false);
       setErrorMessage('An error occurred deleting the category.');
-      console.error(error);
+      logError(error);
     }
   }
 

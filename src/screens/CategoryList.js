@@ -10,6 +10,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import NoTodosMessage from '../components/NoTodosMessage';
 import ScreenBackground from '../components/ScreenBackground';
 import {useCategories} from '../data/categories';
+import logError from '../logError';
 import {
   arrayWithItemMovedDownward,
   arrayWithItemMovedUpward,
@@ -37,7 +38,7 @@ export default function CategoryList() {
       setCategories(sortBy(data, 'attributes.sort-order'));
       return data;
     } catch (error) {
-      console.error(error);
+      logError(error);
       setErrorMessage('An error occurred while loading todos.');
     }
   }, [categoryClient]);

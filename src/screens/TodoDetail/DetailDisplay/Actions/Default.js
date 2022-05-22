@@ -4,6 +4,7 @@ import {useStyleQueries} from 'react-native-style-queries';
 import ButtonGroup from '../../../../components/ButtonGroup';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
+import logError from '../../../../logError';
 import sharedStyleQueries from '../../../../sharedStyleQueries';
 
 export default function Default({todo, onUpdate, onGoBack, onDefer}) {
@@ -28,7 +29,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
     } catch (error) {
       setIsLoading(false);
       setErrorMessage('An error occurred marking the todo complete.');
-      console.error(error);
+      logError(error);
     }
   }
 
@@ -40,7 +41,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
       handleResponse(response);
     } catch (error) {
       setErrorMessage('An error occurred marking the todo incomplete.');
-      console.error(error);
+      logError(error);
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +56,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
     } catch (error) {
       setIsLoading(false);
       setErrorMessage('An error occurred deleting the todo.');
-      console.error(error);
+      logError(error);
     }
   }
 
@@ -70,7 +71,7 @@ export default function Default({todo, onUpdate, onGoBack, onDefer}) {
       handleResponse(response);
     } catch (error) {
       setErrorMessage('An error occurred undeleting the todo.');
-      console.error(error);
+      logError(error);
     } finally {
       setIsLoading(false);
     }

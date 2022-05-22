@@ -10,6 +10,7 @@ import DatePickerModal from '../../components/DatePickerModal';
 import ErrorMessage from '../../components/ErrorMessage';
 import PaperDropdown from '../../components/PaperDropdown';
 import {useCategories} from '../../data/categories';
+import logError from '../../logError';
 import sharedStyleQueries from '../../sharedStyleQueries';
 import sharedStyles from '../../sharedStyles';
 import {relativeDate} from '../../utils/time';
@@ -39,7 +40,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
         console.log({data});
         setCategories(sortBy(data, 'attributes.sort-order'));
       })
-      .catch(console.error);
+      .catch(logError);
   }, [categoryClient]);
 
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
@@ -62,7 +63,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
     } catch (error) {
       setIsLoading(false);
       setErrorMessage('An error occurred saving the todo.');
-      console.error(error);
+      logError(error);
     }
   }
 

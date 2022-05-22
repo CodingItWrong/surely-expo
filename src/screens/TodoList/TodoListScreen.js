@@ -10,6 +10,7 @@ import PaginationControls from '../../components/PaginationControls';
 import ScreenBackground from '../../components/ScreenBackground';
 import SearchForm from '../../components/SearchForm';
 import TodoList from '../../components/TodoList';
+import logError from '../../logError';
 import {groupsToSections} from '../../utils/ui';
 
 export default function TodoListScreen({
@@ -43,7 +44,7 @@ export default function TodoListScreen({
       setTodoSections(groupsToSections(todoGroups));
       return todoGroups;
     } catch (error) {
-      console.error(error);
+      logError(error);
       setErrorMessage('An error occurred while loading todos.');
     }
   }, [onLoadTodos, searchText, pageNumber]);
@@ -81,7 +82,7 @@ export default function TodoListScreen({
         'An error occurred while creating the todo. Please try again.',
       );
       setIsCreating(false);
-      console.error(error);
+      logError(error);
       throw error;
     }
 
