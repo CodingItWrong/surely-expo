@@ -65,13 +65,7 @@ describe('Completed', () => {
         )
         .reply(200, response);
 
-      const {
-        findByText,
-        getByLabelText,
-        getByText,
-        queryByLabelText,
-        queryByText,
-      } = render(
+      const {findByText, getByLabelText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Completed />
@@ -84,7 +78,6 @@ describe('Completed', () => {
         getByLabelText,
         getByText,
         mockedServer,
-        queryByLabelText,
         queryByText,
       };
     }
@@ -134,8 +127,7 @@ describe('Completed', () => {
     describe('searching', () => {
       it('allows searching for todos', async () => {
         const searchText = 'MySearchText';
-        const {findByText, getByLabelText, mockedServer, queryByLabelText} =
-          renderComponent();
+        const {findByText, getByLabelText, mockedServer} = renderComponent();
 
         mockedServer
           .get(
@@ -149,9 +141,7 @@ describe('Completed', () => {
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
-        await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
-
-        mockedServer.done();
+        await waitFor(() => expect(mockedServer.isDone()).toBe(true));
       });
 
       it('shows a message when no search results returned', async () => {
