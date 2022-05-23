@@ -53,13 +53,7 @@ describe('Future', () => {
         .get('/todos?filter[status]=future&filter[search]=&sort=name')
         .reply(200, response);
 
-      const {
-        findByText,
-        getByLabelText,
-        getByText,
-        queryByLabelText,
-        queryByText,
-      } = render(
+      const {findByText, getByLabelText, getByText, queryByText} = render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Future />
@@ -72,7 +66,6 @@ describe('Future', () => {
         getByLabelText,
         getByText,
         mockedServer,
-        queryByLabelText,
         queryByText,
       };
     }
@@ -97,8 +90,7 @@ describe('Future', () => {
 
     it('allows searching for todos', async () => {
       const searchText = 'MySearchText';
-      const {findByText, getByLabelText, mockedServer, queryByLabelText} =
-        renderComponent();
+      const {findByText, getByLabelText, mockedServer} = renderComponent();
 
       mockedServer
         .get(
@@ -112,9 +104,7 @@ describe('Future', () => {
       fireEvent.changeText(searchField, searchText);
       fireEvent(searchField, 'submitEditing');
 
-      await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
-
-      mockedServer.done();
+      await waitFor(() => expect(mockedServer.isDone()).toBe(true));
     });
   });
 });

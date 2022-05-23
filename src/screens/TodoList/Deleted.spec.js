@@ -67,20 +67,18 @@ describe('Deleted', () => {
         )
         .reply(200, response);
 
-      const {findByText, getByLabelText, queryByLabelText, queryByText} =
-        render(
-          <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-            <TokenProvider loadToken={false}>
-              <Deleted />
-            </TokenProvider>
-          </SafeAreaProvider>,
-        );
+      const {findByText, getByLabelText, queryByText} = render(
+        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+          <TokenProvider loadToken={false}>
+            <Deleted />
+          </TokenProvider>
+        </SafeAreaProvider>,
+      );
 
       return {
         findByText,
         getByLabelText,
         mockedServer,
-        queryByLabelText,
         queryByText,
       };
     }
@@ -129,8 +127,7 @@ describe('Deleted', () => {
       const searchText = 'MySearchText';
 
       it('allows searching for todos', async () => {
-        const {findByText, getByLabelText, mockedServer, queryByLabelText} =
-          renderComponent();
+        const {findByText, getByLabelText, mockedServer} = renderComponent();
 
         mockedServer
           .get(
@@ -144,9 +141,7 @@ describe('Deleted', () => {
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
-        await waitFor(() => expect(queryByLabelText('Loading')).toBeNull());
-
-        mockedServer.done();
+        await waitFor(() => expect(mockedServer.isDone()).toBe(true));
       });
 
       it('shows a message when no search results returned', async () => {
