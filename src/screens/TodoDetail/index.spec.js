@@ -289,7 +289,8 @@ describe('TodoDetail', () => {
 
       fireEvent.press(await findByText('Uncomplete'));
 
-      await waitFor(() => expect(navigation.navigate).not.toHaveBeenCalled());
+      await waitFor(() => expect(mockServer.isDone()).toBe(true));
+      expect(navigation.navigate).not.toHaveBeenCalled();
     });
 
     it('shows a message when there is an error uncompleting the todo', async () => {
@@ -370,9 +371,8 @@ describe('TodoDetail', () => {
 
       fireEvent.press(await findByText('Undelete'));
 
-      await waitFor(() => expect(navigation.navigate).not.toHaveBeenCalled());
-
-      mockServer.done();
+      await waitFor(() => expect(mockServer.isDone()).toBe(true));
+      expect(navigation.navigate).not.toHaveBeenCalled();
     });
 
     it('shows a message when there is an error undeleting the todo', async () => {
