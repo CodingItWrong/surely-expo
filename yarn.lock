@@ -4823,15 +4823,7 @@ expo-asset@~8.5.0:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
-expo-constants@~13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-13.1.0.tgz#797909733c84a86b8d88ef6e7c4a40c0c6c290ab"
-  integrity sha512-9TD4mKEy0bAMiSCvyOAHofE7Ig8yUmUrKvKG6xGFaFlrC06csWkGkWjtMB8XfycOiOBSVjBurwRFCUBsnZqrng==
-  dependencies:
-    "@expo/config" "^6.0.14"
-    uuid "^3.3.2"
-
-expo-constants@~13.1.1:
+expo-constants@~13.1.0, expo-constants@~13.1.1:
   version "13.1.1"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-13.1.1.tgz#78c26c760cc63cd5608bc4b51bd159d7339d8054"
   integrity sha512-QRVHrrMCLenBzWZ8M+EvCXM+jjdQzFMW27YQHRac3SGGoND1hWr81scOmGwlFo2wLZrYXm8HcYt1E6ry3IIwrA==
@@ -4874,10 +4866,10 @@ expo-linking@~3.1.0:
     qs "^6.9.1"
     url-parse "^1.5.9"
 
-expo-modules-autolinking@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.7.1.tgz#edd6da36cc28112d054e82dbb176fe4dccd7d476"
-  integrity sha512-HKPcwXuRztEjhQRHxwhLXyAblkOsSi3n7aaBV6qgrOOi0WL/E3di8E2fowlHiiQW/i9vJDemMcvq0ZTCYW+bFg==
+expo-modules-autolinking@0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.8.1.tgz#533c38192847d2272e9af986f8f4c58aae6dfff3"
+  integrity sha512-S8qfaXCv//7tQWV9M+JKx3CF7ypYhDdSUbkUQdaVO/r8D76/aRTArY/aRw1yEfaAOzyK8C8diDToV1itl51DfQ==
   dependencies:
     chalk "^4.1.0"
     commander "^7.2.0"
@@ -4896,10 +4888,10 @@ expo-modules-autolinking@~0.7.0:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.9.1.tgz#7c68c1d7abe4277a7b7b2a9a3a107a35e8ad93e9"
-  integrity sha512-B46RolbTz4HPt2tQMHxqBQpQzQbFVyKO8FCFuiJYU3wbWIjmj9wTyT+NPBQiz7C/C5+L/QuFadO8OjB28UG4Dg==
+expo-modules-core@0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.9.2.tgz#657a3d804e73f3d41e6fa35d40a44aee5a4a287e"
+  integrity sha512-p/C0GJxFIIDGwmrWi70Q0ggfsgeUFS25ZkkBgoaHT7MVgiMjlKA/DCC3D6ZUkHl/JlzUm0aTftIGS8LWXsnZBw==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
@@ -4927,10 +4919,10 @@ expo-store-review@~5.2.0:
   resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.2.0.tgz#f118ee8096f1d4814609bd6ce0a0b52848f29126"
   integrity sha512-52lsE5kEOw/ReQxO3W7a3DJKGcxbM6s00Hmxt3EZb1HmGWBIGc3pWk91+wc7SVdpukO5R/ep9WjtwGxFsIjG/Q==
 
-expo@^45.0.0:
-  version "45.0.0"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-45.0.0.tgz#f13ef04a0148968126a5908cb718563f0296010d"
-  integrity sha512-tcJCgQcwWeXeX3Z0lEWlbojmPxskS0k89Na+6O5iRyk0FyY35587cmYiR3NPNxhQCirWuNsoLIsrXhZFL3aG2w==
+expo@^45.0.4:
+  version "45.0.4"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-45.0.4.tgz#a34d250605d5603e3cea4acf169aedd288df477b"
+  integrity sha512-S/6rwmgG+1cyHP1hCmylk9FLnavUWd/haWgVc8sUNiavaMBu/vCjeLUESFVJdYRKKN9i+avSzHdAVdKytNYo6A==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/cli" "0.1.4"
@@ -4943,8 +4935,8 @@ expo@^45.0.0:
     expo-file-system "~14.0.0"
     expo-font "~10.1.0"
     expo-keep-awake "~10.1.1"
-    expo-modules-autolinking "0.7.1"
-    expo-modules-core "0.9.1"
+    expo-modules-autolinking "0.8.1"
+    expo-modules-core "0.9.2"
     fbemitter "^3.0.0"
     getenv "^1.0.0"
     invariant "^2.2.4"
@@ -7915,12 +7907,7 @@ node-fetch@2.6.1:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
-node-fetch@^2.2.0, node-fetch@^2.6.0:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.2.tgz#986996818b73785e47b1965cc34eb093a1d464d0"
-  integrity sha512-aLoxToI6RfZ+0NOjmWAgn9+LEd30YCkJKFSyWacNZdEKTit/ZMcKjGkTRo8uWEsnIb/hfKecNPEbln02PdWbcA==
-
-node-fetch@^2.6.1, node-fetch@^2.6.7:
+node-fetch@^2.2.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
