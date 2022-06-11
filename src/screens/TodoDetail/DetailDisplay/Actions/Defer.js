@@ -5,9 +5,9 @@ import {breakpointMedium} from '../../../../breakpoints';
 import DatePickerModal from '../../../../components/DatePickerModal';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import {useTodos} from '../../../../data/todos';
+import logError from '../../../../logError';
 import sharedStyles from '../../../../sharedStyles';
 import {dayOfWeek, deferDate} from '../../../../utils/time';
-import logError from '../../../../logError';
 
 export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   const [isDeferredUntilModalOpen, setIsDeferredUntilModalOpen] =
