@@ -174,10 +174,6 @@ describe('CategoryDetail', () => {
       mockedServer.done();
     });
 
-    function lastCall(mockFn) {
-      return mockFn.mock.calls[mockFn.mock.calls.length - 1];
-    }
-
     it('shows a message upon error saving edits to the category', async () => {
       const saveError = 'saveError';
       const updatedName = 'Updated Name';
