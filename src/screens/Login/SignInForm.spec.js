@@ -1,4 +1,9 @@
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import nock from 'nock';
 import {useToken} from '../../data/token';
 import SignInForm from './SignInForm';
@@ -22,11 +27,11 @@ describe('SignInForm', () => {
     const setToken = jest.fn();
     useToken.mockReturnValue({setToken});
 
-    const {getByLabelText, getByText} = render(<SignInForm />);
+    render(<SignInForm />);
 
-    fireEvent.changeText(getByLabelText('Email'), email);
-    fireEvent.changeText(getByLabelText('Password'), password);
-    fireEvent.press(getByText('Sign in'));
+    fireEvent.changeText(screen.getByLabelText('Email'), email);
+    fireEvent.changeText(screen.getByLabelText('Password'), password);
+    fireEvent.press(screen.getByText('Sign in'));
 
     await waitFor(() => expect(setToken).toHaveBeenCalledWith(testToken));
 
