@@ -1,5 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {TokenProvider} from '../../data/token';
@@ -43,7 +48,7 @@ describe('Completed', () => {
         )
         .reply(200, response);
 
-      const {findByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Completed />
@@ -51,7 +56,7 @@ describe('Completed', () => {
         </SafeAreaProvider>,
       );
 
-      await findByText("You have no completed todos. You'll get there!");
+      await screen.findByText("You have no completed todos. You'll get there!");
     });
   });
 
@@ -65,7 +70,7 @@ describe('Completed', () => {
         )
         .reply(200, response);
 
-      const {findByText, getByLabelText, getByText, queryByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Completed />
@@ -74,23 +79,19 @@ describe('Completed', () => {
       );
 
       return {
-        findByText,
-        getByLabelText,
-        getByText,
         mockedServer,
-        queryByText,
       };
     }
 
     it('displays completed todos from the server', async () => {
-      const {findByText, queryByText} = renderComponent();
+      renderComponent();
 
-      await findByText(todo.attributes.name);
-      expect(queryByText('08/28/2021 (1)')).not.toBeNull();
+      await screen.findByText(todo.attributes.name);
+      expect(screen.queryByText('08/28/2021 (1)')).not.toBeNull();
     });
 
     it('allows pagination', async () => {
-      const {findByText, getByLabelText, mockedServer} = renderComponent();
+      const {mockedServer} = renderComponent();
 
       mockedServer
         .get(
@@ -102,13 +103,13 @@ describe('Completed', () => {
         )
         .reply(200, {data: [todo]});
 
-      await findByText(todo.attributes.name);
+      await screen.findByText(todo.attributes.name);
 
-      fireEvent.press(getByLabelText('Go to next page'));
-      await findByText(todo2.attributes.name);
+      fireEvent.press(screen.getByLabelText('Go to next page'));
+      await screen.findByText(todo2.attributes.name);
 
-      fireEvent.press(getByLabelText('Go to previous page'));
-      await findByText(todo.attributes.name);
+      fireEvent.press(screen.getByLabelText('Go to previous page'));
+      await screen.findByText(todo.attributes.name);
 
       mockedServer.done();
     });
@@ -117,9 +118,9 @@ describe('Completed', () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText} = renderComponent();
+      renderComponent();
 
-      fireEvent.press(await findByText('Todo 1'));
+      fireEvent.press(await screen.findByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/completed/abc123');
     });
@@ -127,7 +128,7 @@ describe('Completed', () => {
     describe('searching', () => {
       it('allows searching for todos', async () => {
         const searchText = 'MySearchText';
-        const {findByText, getByLabelText, mockedServer} = renderComponent();
+        const {mockedServer} = renderComponent();
 
         mockedServer
           .get(
@@ -135,9 +136,9 @@ describe('Completed', () => {
           )
           .reply(200, response);
 
-        await findByText('Todo 1');
+        await screen.findByText('Todo 1');
 
-        const searchField = getByLabelText('search');
+        const searchField = screen.getByLabelText('search');
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
@@ -146,7 +147,7 @@ describe('Completed', () => {
 
       it('shows a message when no search results returned', async () => {
         const searchText = 'MySearchText';
-        const {findByText, getByLabelText, mockedServer} = renderComponent();
+        const {mockedServer} = renderComponent();
 
         mockedServer
           .get(
@@ -154,13 +155,13 @@ describe('Completed', () => {
           )
           .reply(200, {data: []});
 
-        await findByText('Todo 1');
+        await screen.findByText('Todo 1');
 
-        const searchField = getByLabelText('search');
+        const searchField = screen.getByLabelText('search');
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
-        await findByText('No completed todos matched your search');
+        await screen.findByText('No completed todos matched your search');
       });
     });
   });
