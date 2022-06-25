@@ -1,5 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {TokenProvider} from '../../data/token';
@@ -46,7 +51,7 @@ describe('Available', () => {
         .get('/todos?filter[status]=available&include=category')
         .reply(500, {});
 
-      const {findByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Available />
@@ -54,7 +59,7 @@ describe('Available', () => {
         </SafeAreaProvider>,
       );
 
-      await findByText('An error occurred while loading todos.');
+      await screen.findByText('An error occurred while loading todos.');
     });
   });
 
@@ -69,7 +74,7 @@ describe('Available', () => {
         .get('/todos?filter[status]=available&include=category')
         .reply(200, response);
 
-      const {findByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Available />
@@ -77,7 +82,7 @@ describe('Available', () => {
         </SafeAreaProvider>,
       );
 
-      await findByText('You have no available todos. Nice work!');
+      await screen.findByText('You have no available todos. Nice work!');
     });
   });
 
@@ -92,7 +97,7 @@ describe('Available', () => {
         .get('/todos?filter[status]=available&include=category')
         .reply(200, response);
 
-      const {findByText, getByLabelText, queryByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Available />
@@ -100,23 +105,23 @@ describe('Available', () => {
         </SafeAreaProvider>,
       );
 
-      return {findByText, getByLabelText, mockedServer, queryByText};
+      return {mockedServer};
     }
 
     it('displays available todos from the server', async () => {
-      const {findByText, queryByText} = renderComponent();
+      renderComponent();
 
-      await findByText(`${category.attributes.name} (1)`);
-      expect(queryByText(todo.attributes.name)).not.toBeNull();
+      await screen.findByText(`${category.attributes.name} (1)`);
+      expect(screen.queryByText(todo.attributes.name)).not.toBeNull();
     });
 
     it('allows navigating to a todo detail', async () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText} = renderComponent();
+      renderComponent();
 
-      fireEvent.press(await findByText('Todo 1'));
+      fireEvent.press(await screen.findByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/available/abc123');
     });
@@ -125,9 +130,9 @@ describe('Available', () => {
       const todoName = 'My New Todo';
 
       it('allows adding a todo', async () => {
-        const {findByText, getByLabelText, mockedServer} = renderComponent();
+        const {mockedServer} = renderComponent();
 
-        await findByText('Todo 1');
+        await screen.findByText('Todo 1');
 
         mockedServer
           .post('/todos?', {
@@ -137,7 +142,7 @@ describe('Available', () => {
           .get('/todos?filter[status]=available&include=category')
           .reply(200, response);
 
-        const addField = getByLabelText('New todo name');
+        const addField = screen.getByLabelText('New todo name');
         fireEvent.changeText(addField, todoName);
         fireEvent(addField, 'submitEditing');
 
@@ -146,17 +151,17 @@ describe('Available', () => {
       });
 
       it('shows an error when adding a todo fails', async () => {
-        const {findByText, getByLabelText, mockedServer} = renderComponent();
+        const {mockedServer} = renderComponent();
 
         mockedServer.post('/todos?').reply(500, {});
 
-        await findByText('Todo 1');
+        await screen.findByText('Todo 1');
 
-        const addField = getByLabelText('New todo name');
+        const addField = screen.getByLabelText('New todo name');
         fireEvent.changeText(addField, todoName);
         fireEvent(addField, 'submitEditing');
 
-        await findByText(
+        await screen.findByText(
           'An error occurred while creating the todo. Please try again.',
         );
       });
