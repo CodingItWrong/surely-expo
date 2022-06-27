@@ -1,5 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {TokenProvider} from '../../data/token';
@@ -43,7 +48,7 @@ describe('Deleted', () => {
         )
         .reply(200, response);
 
-      const {findByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Deleted />
@@ -51,7 +56,7 @@ describe('Deleted', () => {
         </SafeAreaProvider>,
       );
 
-      await findByText(
+      await screen.findByText(
         "You have no deleted todos. Don't be afraid to give up!",
       );
     });
@@ -67,7 +72,7 @@ describe('Deleted', () => {
         )
         .reply(200, response);
 
-      const {findByText, getByLabelText, queryByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Deleted />
@@ -76,22 +81,19 @@ describe('Deleted', () => {
       );
 
       return {
-        findByText,
-        getByLabelText,
         mockedServer,
-        queryByText,
       };
     }
 
     it('displays deleted todos from the server', async () => {
-      const {findByText, queryByText} = renderComponent();
+      renderComponent();
 
-      await findByText(todo.attributes.name);
-      expect(queryByText('08/28/2021 (1)')).not.toBeNull();
+      await screen.findByText(todo.attributes.name);
+      expect(screen.queryByText('08/28/2021 (1)')).not.toBeNull();
     });
 
     it('allows pagination', async () => {
-      const {findByText, getByLabelText, mockedServer} = renderComponent();
+      const {mockedServer} = renderComponent();
 
       mockedServer
         .get(
@@ -103,22 +105,22 @@ describe('Deleted', () => {
         )
         .reply(200, {data: [todo]});
 
-      await findByText(todo.attributes.name);
+      await screen.findByText(todo.attributes.name);
 
-      fireEvent.press(getByLabelText('Go to next page'));
-      await findByText(todo2.attributes.name);
+      fireEvent.press(screen.getByLabelText('Go to next page'));
+      await screen.findByText(todo2.attributes.name);
 
-      fireEvent.press(getByLabelText('Go to previous page'));
-      await findByText(todo.attributes.name);
+      fireEvent.press(screen.getByLabelText('Go to previous page'));
+      await screen.findByText(todo.attributes.name);
     });
 
     it('allows navigating to a todo detail', async () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText} = renderComponent();
+      renderComponent();
 
-      fireEvent.press(await findByText('Todo 1'));
+      fireEvent.press(await screen.findByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/deleted/abc123');
     });
@@ -127,7 +129,7 @@ describe('Deleted', () => {
       const searchText = 'MySearchText';
 
       it('allows searching for todos', async () => {
-        const {findByText, getByLabelText, mockedServer} = renderComponent();
+        const {mockedServer} = renderComponent();
 
         mockedServer
           .get(
@@ -135,9 +137,9 @@ describe('Deleted', () => {
           )
           .reply(200, response);
 
-        await findByText('Todo 1');
+        await screen.findByText('Todo 1');
 
-        const searchField = getByLabelText('search');
+        const searchField = screen.getByLabelText('search');
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
@@ -145,7 +147,7 @@ describe('Deleted', () => {
       });
 
       it('shows a message when no search results returned', async () => {
-        const {findByText, getByLabelText, mockedServer} = renderComponent();
+        const {mockedServer} = renderComponent();
 
         mockedServer
           .get(
@@ -153,13 +155,13 @@ describe('Deleted', () => {
           )
           .reply(200, {data: []});
 
-        await findByText('Todo 1');
+        await screen.findByText('Todo 1');
 
-        const searchField = getByLabelText('search');
+        const searchField = screen.getByLabelText('search');
         fireEvent.changeText(searchField, searchText);
         fireEvent(searchField, 'submitEditing');
 
-        await findByText('No deleted todos matched your search');
+        await screen.findByText('No deleted todos matched your search');
       });
     });
   });

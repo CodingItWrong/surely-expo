@@ -1,5 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import nock from 'nock';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {TokenProvider} from '../../data/token';
@@ -48,7 +53,7 @@ describe('Tomorrow', () => {
         .get('/todos?filter[status]=tomorrow&include=category')
         .reply(200, response);
 
-      const {findByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Tomorrow />
@@ -56,7 +61,7 @@ describe('Tomorrow', () => {
         </SafeAreaProvider>,
       );
 
-      await findByText('You have no todos for tomorrow. Nice work!');
+      await screen.findByText('You have no todos for tomorrow. Nice work!');
     });
   });
 
@@ -68,7 +73,7 @@ describe('Tomorrow', () => {
         .get('/todos?filter[status]=tomorrow&include=category')
         .reply(200, response);
 
-      const {findByText, getByLabelText, queryByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <TokenProvider loadToken={false}>
             <Tomorrow />
@@ -76,23 +81,25 @@ describe('Tomorrow', () => {
         </SafeAreaProvider>,
       );
 
-      return {findByText, getByLabelText, mockedServer, queryByText};
+      return {mockedServer};
     }
 
     it('displays tomorrow todos from the server', async () => {
-      const {findByText, queryByText} = renderComponent();
+      renderComponent();
 
-      await findByText(todo.attributes.name);
-      expect(queryByText(`${category.attributes.name} (1)`)).not.toBeNull();
+      await screen.findByText(todo.attributes.name);
+      expect(
+        screen.queryByText(`${category.attributes.name} (1)`),
+      ).not.toBeNull();
     });
 
     it('allows navigating to a todo detail', async () => {
       const linkTo = jest.fn().mockName('linkTo');
       useLinkTo.mockReturnValue(linkTo);
 
-      const {findByText} = renderComponent();
+      renderComponent();
 
-      fireEvent.press(await findByText('Todo 1'));
+      fireEvent.press(await screen.findByText('Todo 1'));
 
       expect(linkTo).toHaveBeenCalledWith('/todos/tomorrow/abc123');
     });
@@ -100,7 +107,7 @@ describe('Tomorrow', () => {
     it('allows adding a todo', async () => {
       const todoName = 'My New Todo';
 
-      const {findByText, getByLabelText, mockedServer} = renderComponent();
+      const {mockedServer} = renderComponent();
 
       mockedServer
         .post(
@@ -113,9 +120,9 @@ describe('Tomorrow', () => {
         .get('/todos?filter[status]=tomorrow&include=category')
         .reply(200, response);
 
-      await findByText('Todo 1');
+      await screen.findByText('Todo 1');
 
-      const addField = getByLabelText('New todo name');
+      const addField = screen.getByLabelText('New todo name');
       fireEvent.changeText(addField, todoName);
       fireEvent(addField, 'submitEditing');
 

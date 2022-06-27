@@ -1,4 +1,9 @@
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useToken} from '../data/token';
 import {safeAreaMetrics} from '../testUtils';
@@ -22,13 +27,13 @@ describe('NavigationDrawer', () => {
       isLoggedIn: false,
     });
 
-    const {getByText} = render(
+    render(
       <SafeAreaProvider initialMetrics={safeAreaMetrics}>
         <NavigationDrawer navigation={navigation} state={state} />
       </SafeAreaProvider>,
     );
 
-    fireEvent.press(getByText(route.name));
+    fireEvent.press(screen.getByText(route.name));
 
     expect(navigation.navigate).toHaveBeenCalledWith(route.name);
   });
@@ -47,13 +52,13 @@ describe('NavigationDrawer', () => {
         clearToken,
       });
 
-      const {getByText} = render(
+      render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
           <NavigationDrawer navigation={navigation} state={state} />
         </SafeAreaProvider>,
       );
 
-      fireEvent.press(getByText('Sign out'));
+      fireEvent.press(screen.getByText('Sign out'));
 
       expect(clearToken).toHaveBeenCalledWith();
 
