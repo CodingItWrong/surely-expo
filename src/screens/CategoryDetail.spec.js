@@ -1,5 +1,10 @@
 import {useLinkTo} from '@react-navigation/native';
-import {fireEvent, render, waitFor} from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import nock from 'nock';
 import {TokenProvider} from '../data/token';
 import CategoryDetail from './CategoryDetail';
@@ -17,13 +22,13 @@ describe('CategoryDetail', () => {
       useLinkTo.mockReturnValue(linkTo);
 
       const route = {params: {id: 'new'}};
-      const {getByLabelText, getByText} = render(
+      render(
         <TokenProvider loadToken={false}>
           <CategoryDetail route={route} />
         </TokenProvider>,
       );
 
-      return {getByLabelText, getByText, linkTo};
+      return {linkTo};
     }
 
     it('allows creating the category', async () => {
@@ -54,12 +59,12 @@ describe('CategoryDetail', () => {
         })
         .reply(200, response);
 
-      const {getByLabelText, getByText, linkTo} = setUp({
+      const {linkTo} = setUp({
         response,
       });
 
-      fireEvent.changeText(getByLabelText('Category name'), name);
-      fireEvent.press(getByText('Save'));
+      fireEvent.changeText(screen.getByLabelText('Category name'), name);
+      fireEvent.press(screen.getByText('Save'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -69,10 +74,10 @@ describe('CategoryDetail', () => {
     });
 
     it('allows cancelling creation', async () => {
-      const {getByLabelText, getByText, linkTo} = setUp();
+      const {linkTo} = setUp();
 
-      fireEvent.changeText(getByLabelText('Category name'), name);
-      fireEvent.press(getByText('Cancel'));
+      fireEvent.changeText(screen.getByLabelText('Category name'), name);
+      fireEvent.press(screen.getByText('Cancel'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -120,26 +125,22 @@ describe('CategoryDetail', () => {
       // }
 
       const route = {params: {id: category.id}};
-      const {findByText, getByLabelText, getByText, queryByText} = render(
+      render(
         <TokenProvider loadToken={false}>
           <CategoryDetail route={route} />
         </TokenProvider>,
       );
 
       return {
-        findByText,
-        getByLabelText,
-        getByText,
         mockedServer,
-        queryByText,
         linkTo,
       };
     }
 
     it('displays the category name', async () => {
-      const {getByLabelText} = setUp();
+      setUp();
       await waitFor(() =>
-        expect(getByLabelText('Category name')).toHaveProp(
+        expect(screen.getByLabelText('Category name')).toHaveProp(
           'value',
           'Category C',
         ),
@@ -149,8 +150,7 @@ describe('CategoryDetail', () => {
     it('allows editing the category', async () => {
       const updatedName = 'Updated Name';
 
-      const {findByText, getByLabelText, getByText, linkTo, mockedServer} =
-        setUp();
+      const {linkTo, mockedServer} = setUp();
 
       mockedServer
         .patch('/categories/cat1?', {
@@ -162,10 +162,10 @@ describe('CategoryDetail', () => {
         })
         .reply(200, {data: category});
 
-      await findByText('Delete');
+      await screen.findByText('Delete');
 
-      fireEvent.changeText(getByLabelText('Category name'), updatedName);
-      fireEvent.press(getByText('Save'));
+      fireEvent.changeText(screen.getByLabelText('Category name'), updatedName);
+      fireEvent.press(screen.getByText('Save'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -178,24 +178,24 @@ describe('CategoryDetail', () => {
       const saveError = 'saveError';
       const updatedName = 'Updated Name';
 
-      const {findByText, getByLabelText, linkTo, mockedServer} = setUp();
+      const {linkTo, mockedServer} = setUp();
 
       mockedServer.patch('/categories/cat1?').reply(500, saveError);
 
-      const saveButton = await findByText('Save');
-      fireEvent.changeText(getByLabelText('Category name'), updatedName);
+      const saveButton = await screen.findByText('Save');
+      fireEvent.changeText(screen.getByLabelText('Category name'), updatedName);
       fireEvent.press(saveButton);
 
-      await findByText('An error occurred saving the category.');
+      await screen.findByText('An error occurred saving the category.');
       expect(linkTo).not.toHaveBeenCalled();
     });
 
     it('allows deleting the category', async () => {
-      const {findByText, linkTo, mockedServer} = setUp();
+      const {linkTo, mockedServer} = setUp();
 
       mockedServer.delete('/categories/cat1?').reply(200, {});
 
-      fireEvent.press(await findByText('Delete'));
+      fireEvent.press(await screen.findByText('Delete'));
 
       await waitFor(() => {
         expect(linkTo).toHaveBeenCalledWith('/categories');
@@ -207,15 +207,15 @@ describe('CategoryDetail', () => {
     it('shows a message upon error deleting the category', async () => {
       const deleteError = 'deleteError';
 
-      const {findByText, linkTo, mockedServer} = setUp({
+      const {linkTo, mockedServer} = setUp({
         deleteError,
       });
 
       mockedServer.delete('/categories/cat1?').reply(500, deleteError);
 
-      fireEvent.press(await findByText('Delete'));
+      fireEvent.press(await screen.findByText('Delete'));
 
-      await findByText('An error occurred deleting the category.');
+      await screen.findByText('An error occurred deleting the category.');
       expect(linkTo).not.toHaveBeenCalled();
     });
   });
