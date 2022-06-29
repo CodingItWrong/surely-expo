@@ -6,13 +6,13 @@ Backend is <https://api.surelytodo.com>. If you'd like to build the client yours
 
 ## Code Features
 
-- Deployed to both iOS and web. Only blocker on Android is a dependency requiring [intl support](https://github.com/web-ridge/react-native-paper-dates#android-caveats).
+- Deployed to both [iOS](https://apps.apple.com/us/app/surely/id1586633713) and [web](https://surelytodo.com). Only blocker on Android is a dependency requiring [intl support](https://github.com/web-ridge/react-native-paper-dates#android-caveats).
 - Material Design with dark mode support on all platforms via React Native Paper.
 - Navigation via React Navigation including a drawer that smoothly transitions between persistent on large viewports and collapsible on small.
 - Uses a custom styling library, [`react-native-style-queries`](https://github.com/bignerdranch/BNR-react-native-style-queries), to apply responsive styles declaratively in a way inspired by media queries.
-- Since it is a "CRUD" app, uses JSON:API for the data layer to minimize client and server code needed to be written. Uses a custom client library, [`@codingitwrong/jsonapi-client`](https://github.com/CodingItWrong/jsonapi-client/).
 - Thoroughly tested via React Native Testing Library.
 - Dependencies kept up-to-date with minimal effort: when tests pass and app boots, can be confident nothing's broken.
+- Since it is a "CRUD" app, uses JSON:API for the data layer to minimize client and server code needed to be written. Uses a custom client library, [`@codingitwrong/jsonapi-client`](https://github.com/CodingItWrong/jsonapi-client/).
 
 ## Support
 
