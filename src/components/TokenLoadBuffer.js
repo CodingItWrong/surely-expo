@@ -1,3 +1,4 @@
+import {StyleSheet, View} from 'react-native';
 import {useToken} from '../data/token';
 
 export default function TokenLoadBuffer({children}) {
@@ -5,6 +6,12 @@ export default function TokenLoadBuffer({children}) {
   if (!isTokenLoaded) {
     return null;
   } else {
-    return children;
+    return <View style={styles.fill}>{children}</View>;
   }
 }
+
+const styles = StyleSheet.create({
+  fill: {
+    flex: 1,
+  },
+});
