@@ -6,6 +6,7 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import {en, registerTranslation} from 'react-native-paper-dates';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Navigation from './src/Navigation';
+import ScreenBackground from './src/components/ScreenBackground';
 import TokenLoadBuffer from './src/components/TokenLoadBuffer';
 import {TokenProvider} from './src/data/token';
 import useTheme from './src/useTheme';
@@ -21,9 +22,11 @@ export default function App() {
       <StatusBar style="auto" />
       <SafeAreaProvider>
         <TokenProvider>
-          <TokenLoadBuffer>
-            <Navigation />
-          </TokenLoadBuffer>
+          <ScreenBackground>
+            <TokenLoadBuffer>
+              <Navigation />
+            </TokenLoadBuffer>
+          </ScreenBackground>
         </TokenProvider>
       </SafeAreaProvider>
     </PaperProvider>
