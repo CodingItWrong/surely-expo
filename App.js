@@ -18,17 +18,17 @@ registerTranslation('en', en);
 export default function App() {
   const theme = useTheme();
   return (
-    <PaperProvider theme={theme}>
-      <StatusBar style="auto" />
-      <SafeAreaProvider>
-        <TokenProvider>
-          <ScreenBackground>
-            <TokenLoadBuffer>
+    <TokenProvider>
+      <TokenLoadBuffer>
+        <PaperProvider theme={theme}>
+          <StatusBar style="auto" />
+          <SafeAreaProvider>
+            <ScreenBackground>
               <Navigation />
-            </TokenLoadBuffer>
-          </ScreenBackground>
-        </TokenProvider>
-      </SafeAreaProvider>
-    </PaperProvider>
+            </ScreenBackground>
+          </SafeAreaProvider>
+        </PaperProvider>
+      </TokenLoadBuffer>
+    </TokenProvider>
   );
 }
