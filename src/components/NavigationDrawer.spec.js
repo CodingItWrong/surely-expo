@@ -12,6 +12,8 @@ import NavigationDrawer from './NavigationDrawer';
 jest.mock('../data/token', () => ({useToken: jest.fn()}));
 
 describe('NavigationDrawer', () => {
+  const ICON_BY_ROUTE = {};
+
   it('allows navigating to the passed-in routes', () => {
     const navigation = {
       navigate: jest.fn().mockName('navigation.navigate'),
@@ -29,7 +31,11 @@ describe('NavigationDrawer', () => {
 
     render(
       <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <NavigationDrawer navigation={navigation} state={state} />
+        <NavigationDrawer
+          iconByRoute={ICON_BY_ROUTE}
+          navigation={navigation}
+          state={state}
+        />
       </SafeAreaProvider>,
     );
 
@@ -54,7 +60,11 @@ describe('NavigationDrawer', () => {
 
       render(
         <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <NavigationDrawer navigation={navigation} state={state} />
+          <NavigationDrawer
+            iconByRoute={ICON_BY_ROUTE}
+            navigation={navigation}
+            state={state}
+          />
         </SafeAreaProvider>,
       );
 

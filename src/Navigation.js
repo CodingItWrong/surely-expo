@@ -274,6 +274,15 @@ const About = () => (
 const getDrawerTypeForBreakpoint = breakpoint =>
   breakpoint === large ? 'permanent' : 'back';
 
+const ICON_BY_ROUTE = {
+  Available: 'clock-outline',
+  Tomorrow: 'weather-night',
+  Future: 'calendar-blank',
+  Completed: 'checkbox-marked',
+  Deleted: 'delete',
+  Categories: 'tag',
+};
+
 function NavigationContents() {
   const {isLoggedIn} = useToken();
   const breakpoint = useBreakpoint();
@@ -290,7 +299,9 @@ function NavigationContents() {
         drawerType,
         drawerStyle: {width: 200},
       }}
-      drawerContent={props => <CustomNavigationDrawer {...props} />}
+      drawerContent={props => (
+        <CustomNavigationDrawer iconByRoute={ICON_BY_ROUTE} {...props} />
+      )}
     >
       {isLoggedIn ? (
         <>
