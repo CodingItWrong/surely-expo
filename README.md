@@ -8,7 +8,7 @@ Backend is <https://api.surelytodo.com>. If you'd like to build the client yours
 
 - Deployed to both [iOS](https://apps.apple.com/us/app/surely/id1586633713) and [web](https://surelytodo.com). Only blocker on Android is a dependency requiring [intl support](https://github.com/web-ridge/react-native-paper-dates#android-caveats).
 - Material Design with dark mode support on all platforms via React Native Paper.
-- Navigation via React Navigation including a drawer that smoothly transitions between persistent on large viewports and collapsible on small.
+- Navigation via React Navigation, including predictable web URLs and a drawer that smoothly transitions between persistent on large viewports and collapsible on small.
 - Uses a custom styling library, [`react-native-style-queries`](https://github.com/bignerdranch/BNR-react-native-style-queries), to apply responsive styles declaratively in a way inspired by media queries.
 - Thoroughly tested via React Native Testing Library.
 - Dependencies kept up-to-date with minimal effort: when tests pass and app boots, can be confident nothing's broken.
