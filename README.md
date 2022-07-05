@@ -12,6 +12,7 @@ Backend is <https://api.surelytodo.com>. If you'd like to build the client yours
 - Uses a custom styling library, [`react-native-style-queries`](https://github.com/bignerdranch/BNR-react-native-style-queries), to apply responsive styles declaratively in a way inspired by media queries.
 - Thoroughly tested via React Native Testing Library.
 - Dependencies kept up-to-date with minimal effort: when tests pass and app boots, can be confident nothing's broken.
+- Good accessibility labels, which I used via iOS Voice Control while I was experiencing some wrist pain.
 - Since it is a "CRUD" app, uses JSON:API for the data layer to minimize client and server code needed to be written. Uses a custom client library, [`@codingitwrong/jsonapi-client`](https://github.com/CodingItWrong/jsonapi-client/).
 
 ## Support
