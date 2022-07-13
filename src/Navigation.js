@@ -24,54 +24,61 @@ const linking = {
   config: {
     screens: {
       Available: {
+        path: '/todos/available',
         initialRouteName: 'AvailableTodos',
         screens: {
-          AvailableTodos: '/todos/available',
-          AvailableTodoDetail: '/todos/available/:id',
+          AvailableTodos: '',
+          AvailableTodoDetail: ':id',
         },
       },
       Tomorrow: {
+        path: '/todos/tomorrow',
         initialRouteName: 'TomorrowTodos',
         screens: {
-          TomorrowTodos: '/todos/tomorrow',
-          TomorrowTodoDetail: '/todos/tomorrow/:id',
+          TomorrowTodos: '',
+          TomorrowTodoDetail: ':id',
         },
       },
       Future: {
+        path: '/todos/future',
         initialRouteName: 'FutureTodos',
         screens: {
-          FutureTodos: '/todos/future',
-          FutureTodoDetail: '/todos/future/:id',
+          FutureTodos: '',
+          FutureTodoDetail: ':id',
         },
       },
       Completed: {
+        path: '/todos/completed',
         initialRouteName: 'CompletedTodos',
         screens: {
-          CompletedTodos: '/todos/completed',
-          CompletedTodoDetail: '/todos/completed/:id',
+          CompletedTodos: '',
+          CompletedTodoDetail: ':id',
         },
       },
       Deleted: {
+        path: '/todos/deleted',
         initialRouteName: 'DeletedTodos',
         screens: {
-          DeletedTodos: '/todos/deleted',
-          DeletedTodoDetail: '/todos/deleted/:id',
+          DeletedTodos: '',
+          DeletedTodoDetail: ':id',
         },
       },
       Categories: {
+        path: '/categories',
         initialRouteName: 'CategoryList',
         screens: {
-          CategoryList: '/categories',
-          CategoryDetail: '/categories/:id',
+          CategoryList: '',
+          CategoryDetail: ':id',
         },
       },
       About: {
+        path: '/about',
         initialRouteName: 'AboutScreen',
         screens: {
-          AboutScreen: '/about',
-          SupportScreen: '/about/support',
-          PrivacyScreen: '/about/privacy',
-          ThanksScreen: '/about/say-thanks',
+          AboutScreen: '',
+          SupportScreen: 'support',
+          PrivacyScreen: 'privacy',
+          ThanksScreen: 'say-thanks',
         },
       },
       'Sign in': {
