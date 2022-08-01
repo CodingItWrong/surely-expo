@@ -1521,17 +1521,10 @@
     pirates "^4.0.5"
     source-map-support "^0.5.16"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.18.6":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.14.0", "@babel/runtime@^7.18.6", "@babel/runtime@^7.8.4":
   version "7.18.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
   integrity sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
-"@babel/runtime@^7.14.0", "@babel/runtime@^7.8.4":
-  version "7.15.4"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.4.tgz#fd17d16bfdf878e6dd02d19753a39fa8a8d9c84a"
-  integrity sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1723,10 +1716,10 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/cli@0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.2.5.tgz#88e8e2041949fd335460d39488c9445e50b12f32"
-  integrity sha512-yzSRL8TMbdZClTEKLg3fXbyih+j8uMqbv+CqQlw+1G3gRgh+t6K9WM17dWuuj8oI+3X+hzqcEU6l3EgoI+VPCA==
+"@expo/cli@0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.2.6.tgz#b8048388f1d6148032656dc19725afc0c65a129a"
+  integrity sha512-WFt4P4oUjmOUyvWFxW5LSXzJqjy9Jx5FCFDFEvfRlcdEkDhCNPOZOybuSjxKIWUoJ57TtPzyeG2J0OzAfhBl8g==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/code-signing-certificates" "^0.0.2"
@@ -6565,10 +6558,10 @@ expo-asset@~8.6.1:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
-expo-constants@~13.2.0, expo-constants@~13.2.2:
-  version "13.2.2"
-  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-13.2.2.tgz#9ba47f2e2e4885f9989f5ca45d21987bcc45424d"
-  integrity sha512-2Dwbv2YYlBKnG5ja/PrEknaoa4AoOMkx6cJG7b5FFfPL8b4OK1ltmKHM1FiMBdSzbvY5rIeDgS5YIFzj9/if4Q==
+expo-constants@~13.2.0, expo-constants@~13.2.2, expo-constants@~13.2.3:
+  version "13.2.3"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-13.2.3.tgz#526711851d8ebec1f0b1f06d9b91271b119e4f33"
+  integrity sha512-2Rrp7GtSTeW7gNz3BsZ+AWMBbBaBnymELuo1ecTQ6fga8F5IRXgj1TW5yFpTmqOTtVfCiQfS0M1QO+JZEatPCQ==
   dependencies:
     "@expo/config" "~7.0.0"
     uuid "^3.3.2"
@@ -6609,10 +6602,10 @@ expo-linking@~3.2.2:
     qs "^6.9.1"
     url-parse "^1.5.9"
 
-expo-modules-autolinking@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.10.0.tgz#423551d22824ecb4a293acb7f63e5de08e9ade13"
-  integrity sha512-EZ+YfK4UMOPy+j5AxFQcynvvpFZxQUGqhxnVuJ2ZmXxLJ+qeYtcKwO3VotBzeHGfFQg/Qy0VFshirNRUmjIgwg==
+expo-modules-autolinking@0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.10.1.tgz#9d7e004cbfee7cb12245cc2686180c2d14ed9095"
+  integrity sha512-SxVjAO7XqRrwpJMxgBj2SCC1pGDSRKf1cirCPRywJUPFzN3PgZTfAjDMBZFGJGrmGreumFxZ8KmQeYyR7t3DoA==
   dependencies:
     chalk "^4.1.0"
     commander "^7.2.0"
@@ -6662,23 +6655,23 @@ expo-store-review@~5.3.0:
   resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-5.3.0.tgz#f8b1253a607b13e548889a442d8ee7bb0fa025a3"
   integrity sha512-abWgsgXnfeJnAINOVGWxFC0HXizZxBoxNZoekswqW2AtsQ6DR5nvWj5VyovVjd8DktRG/ly1ZKJwP0KNXqWffw==
 
-expo@^46.0.0-beta.6:
-  version "46.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-46.0.0-beta.6.tgz#1f863e14becd6747a0ad723c68c20c584c64bf9c"
-  integrity sha512-nyBb3ZW8BdYl7lfmK0n/gBHInmd1cPwwIMw2jqxSHjH0UthuMmPi6ZpR8y0CBAn1jyJs8yUHYSbPTS/A+InDNg==
+expo@^46.0.2:
+  version "46.0.2"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-46.0.2.tgz#6ee13b28b8d36dd224402575f523b37d8f153101"
+  integrity sha512-E7MEzsWnxUAVolFGxBGxI1UazQYPvRx9c+2RlRlr6Kpp4BTsIuRZiYgHywJe9jZVw9csc4C4aL3TYcKg+3lehg==
   dependencies:
     "@babel/runtime" "^7.14.0"
-    "@expo/cli" "0.2.5"
+    "@expo/cli" "0.2.6"
     "@expo/vector-icons" "^13.0.0"
     babel-preset-expo "~9.2.0"
     cross-spawn "^6.0.5"
     expo-application "~4.2.2"
     expo-asset "~8.6.1"
-    expo-constants "~13.2.2"
+    expo-constants "~13.2.3"
     expo-file-system "~14.1.0"
     expo-font "~10.2.0"
     expo-keep-awake "~10.2.0"
-    expo-modules-autolinking "0.10.0"
+    expo-modules-autolinking "0.10.1"
     expo-modules-core "0.11.3"
     fbemitter "^3.0.0"
     getenv "^1.0.0"
