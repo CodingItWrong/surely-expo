@@ -36,10 +36,7 @@ export default function DetailForm({todo, onSave, onCancel}) {
   useEffect(() => {
     categoryClient
       .all()
-      .then(({data}) => {
-        console.log({data});
-        setCategories(sortBy(data, 'attributes.sort-order'));
-      })
+      .then(({data}) => setCategories(sortBy(data, 'attributes.sort-order')))
       .catch(logError);
   }, [categoryClient]);
 
