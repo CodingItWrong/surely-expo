@@ -1,7 +1,7 @@
 {
   "expo": {
     "ios": {
-      "buildNumber": "56",
+      "buildNumber": "57",
       "appStoreUrl": "https://apps.apple.com/us/app/surely/id1586633713",
       "bundleIdentifier": "com.surelytodo",
       "supportsTablet": true,
