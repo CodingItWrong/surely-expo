@@ -10,6 +10,7 @@ module.exports = {
     'no-duplicate-imports': 'error',
     quotes: ['error', 'single', {avoidEscape: true}], // single quote unless using interpolation
     'react/jsx-uses-react': 'off',
+    'react/no-unstable-nested-components': ['warn', {allowAsProps: true}],
     'react/react-in-jsx-scope': 'off',
     'sort-imports': [
       'warn',
