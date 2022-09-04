@@ -1,10 +1,5 @@
 import {useColorScheme} from 'react-native';
-import {
-  MD2DarkTheme,
-  MD2LightTheme,
-  // MD3DarkTheme,
-  // MD3LightTheme,
-} from 'react-native-paper';
+import {DarkTheme, DefaultTheme} from 'react-native-paper';
 
 const SURELY_GREEN = '#4caf50';
 // const SURELY_LIGHT_GREEN = '#e1ede2';
@@ -13,10 +8,10 @@ const SURELY_GREEN = '#4caf50';
 const configValues = {
   2: {
     dark: {
-      baseTheme: MD2DarkTheme,
+      baseTheme: DarkTheme,
     },
     light: {
-      baseTheme: MD2LightTheme,
+      baseTheme: DefaultTheme,
     },
   },
   // 3: {
@@ -36,15 +31,14 @@ const materialVersionToUse = 2;
 export default function useTheme() {
   const colorScheme = useColorScheme() ?? 'light';
 
-  const {baseTheme, secondaryContainer} =
-    configValues[materialVersionToUse][colorScheme];
+  const {baseTheme} = configValues[materialVersionToUse][colorScheme];
 
   const theme = {
     ...baseTheme,
     colors: {
       ...baseTheme.colors,
       primary: SURELY_GREEN,
-      secondaryContainer,
+      // secondaryContainer,
     },
   };
 
