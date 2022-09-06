@@ -7,6 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest src --watchAll",
+    "test:coverage": "jest src --coverage",
     "cypress": "cypress open",
     "lint": "eslint cypress src \"*.js\"",
     "deploy:web": "expo export:web && cp _redirects web-build && netlify deploy --prod",
