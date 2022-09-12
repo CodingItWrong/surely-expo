@@ -3,7 +3,10 @@ import {APP_STORE_URL} from '../../constants';
 
 export default function DownloadOnTheAppStoreButton() {
   return (
-    <Pressable onPress={() => Linking.openURL(APP_STORE_URL)}>
+    <Pressable
+      accessibilityLabel="Download on the App Store"
+      onPress={() => Linking.openURL(APP_STORE_URL)}
+    >
       <Image
         source={require('./Download_on_the_App_Store_Badge.png')}
         style={styles.image}
