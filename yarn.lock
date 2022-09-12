@@ -11988,10 +11988,10 @@ react-native-keyboard-aware-scroll-view@^0.9.5:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-react-native-paper-dates@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.9.0.tgz#60b5ffb8781aed38c98dd370e6c486c144c643e0"
-  integrity sha512-W/Dr0CZT7pJFevah6SW75L7cQr50lUazDiTlqhd+xl45d/JpnFKti8Y1DeTyK04h+DjvvXI730mBpwdiZiAkUA==
+react-native-paper-dates@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.9.2.tgz#ae218c2c2aceeef6dd211e943bff5a5751ca874c"
+  integrity sha512-46dl848IIYVQgoeVRhZoE+9hT2oQa8ode4xd0L31d1otS5dzWDoQGMltRTgN8RkR7ogcVl2Okty0SDdDp6ZdEA==
   dependencies:
     caniuse-lite "^1.0.30001383"
     color "^3.2.1"
