@@ -17,3 +17,5 @@ web-build/
 
 # EAS local builds
 build-*.ipa
+
+coverage
