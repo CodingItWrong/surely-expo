@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 
+/* istanbul ignore next */
 export default function LoadingIndicator() {
   return (
     <ActivityIndicator
@@ -11,6 +12,7 @@ export default function LoadingIndicator() {
   );
 }
 
+/* istanbul ignore next */
 const styles = StyleSheet.create({
   loadingIndicator: {
     margin: 10,
