@@ -3,7 +3,7 @@ import {large, useBreakpoint} from '../breakpoints';
 
 const showDrawerToggleForBreakpoint = breakpoint => breakpoint !== large;
 
-export default function CustomNavigationBar({navigation, options, back}) {
+export default function NavigationBar({navigation, options, back}) {
   const breakpoint = useBreakpoint();
   const showDrawerToggle = showDrawerToggleForBreakpoint(breakpoint);
 
