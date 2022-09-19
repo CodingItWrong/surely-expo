@@ -22,7 +22,7 @@
     "axios": "^0.27.2",
     "date-fns": "^2.29.2",
     "expo": "^46.0.10",
-    "expo-constants": "~13.2.3",
+    "expo-constants": "~13.2.4",
     "expo-linking": "~3.2.2",
     "expo-secure-store": "~11.3.0",
     "expo-splash-screen": "~0.16.2",
