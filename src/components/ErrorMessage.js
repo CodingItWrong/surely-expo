@@ -1,3 +1,4 @@
+import {View} from 'react-native';
 import {Text, withTheme} from 'react-native-paper';
 
 function ErrorMessage({theme, children, style}) {
@@ -9,9 +10,11 @@ function ErrorMessage({theme, children, style}) {
 
   return (
     children && (
-      <Text testID="error-message" style={[errorMessageStyle, style]}>
-        {children}
-      </Text>
+      <View accessibilityRole="alert">
+        <Text testID="error-message" style={[errorMessageStyle, style]}>
+          {children}
+        </Text>
+      </View>
     )
   );
 }
