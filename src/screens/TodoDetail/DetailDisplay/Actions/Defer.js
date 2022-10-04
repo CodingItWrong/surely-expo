@@ -44,7 +44,6 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
       <View style={styles.buttonColumnWrapper}>
         <View style={styles.buttonColumn}>
           <Button
-            testID="cancel-defer-button"
             mode="outlined"
             onPress={onCancel}
             style={sharedStyles.buttonSpacing}
@@ -54,7 +53,6 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
             Cancel
           </Button>
           <DeferButton
-            testID="defer-1-day-button"
             todo={todo}
             numDays={1}
             label="1 Day"
@@ -62,7 +60,6 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
             disabled={isLoading}
           />
           <DeferButton
-            testID="defer-2-days-button"
             todo={todo}
             numDays={2}
             label="2 Days"
@@ -70,7 +67,6 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
             disabled={isLoading}
           />
           <DeferButton
-            testID="defer-3-days-button"
             todo={todo}
             numDays={3}
             label="3 Days"
@@ -78,7 +74,6 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
             disabled={isLoading}
           />
           <DeferButton
-            testID="defer-1-week-button"
             todo={todo}
             numDays={7}
             label="1 Week"
@@ -107,14 +102,13 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   );
 }
 
-function DeferButton({testID, todo, numDays, label, onDefer, disabled}) {
+function DeferButton({todo, numDays, label, onDefer, disabled}) {
   const date = deferDate({
     start: todo.attributes['deferred-until'],
     days: numDays,
   });
   return (
     <Button
-      testID={testID}
       mode="outlined"
       onPress={() => onDefer(date)}
       style={sharedStyles.buttonSpacing}

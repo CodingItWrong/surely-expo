@@ -65,7 +65,7 @@ describe('TodoDetail', () => {
 
       await screen.findByText('An error occurred loading the todo.');
 
-      fireEvent.press(screen.getByText('Retry'));
+      fireEvent.press(screen.getByRole('button', {name: 'Retry'}));
 
       await screen.findByText(todo.attributes.name);
       expect(
@@ -139,7 +139,7 @@ describe('TodoDetail', () => {
           )
           .reply(200, {data: {}});
 
-        fireEvent.press(await screen.findByText('Complete'));
+        fireEvent.press(await screen.findByRole('button', {name: 'Complete'}));
 
         await waitFor(() =>
           expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName),
@@ -152,7 +152,7 @@ describe('TodoDetail', () => {
 
         mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
-        fireEvent.press(await screen.findByText('Complete'));
+        fireEvent.press(await screen.findByRole('button', {name: 'Complete'}));
 
         await screen.findByText('An error occurred marking the todo complete.');
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -172,7 +172,7 @@ describe('TodoDetail', () => {
           )
           .reply(200, {data: {}});
 
-        fireEvent.press(await screen.findByText('Delete'));
+        fireEvent.press(await screen.findByRole('button', {name: 'Delete'}));
 
         await waitFor(() =>
           expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName),
@@ -184,7 +184,7 @@ describe('TodoDetail', () => {
 
         mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
-        fireEvent.press(await screen.findByText('Delete'));
+        fireEvent.press(await screen.findByRole('button', {name: 'Delete'}));
 
         await screen.findByText('An error occurred deleting the todo.');
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -204,8 +204,8 @@ describe('TodoDetail', () => {
           )
           .reply(200, {data: todo});
 
-        fireEvent.press(await screen.findByText('Defer'));
-        fireEvent.press(screen.getByTestId('defer-1-day-button'));
+        fireEvent.press(await screen.findByRole('button', {name: 'Defer'}));
+        fireEvent.press(await screen.findByRole('button', {name: /1 Day/i}));
 
         await waitFor(() =>
           expect(navigation.navigate).toHaveBeenCalledWith(parentRouteName),
@@ -217,8 +217,8 @@ describe('TodoDetail', () => {
 
         mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
-        fireEvent.press(await screen.findByText('Defer'));
-        fireEvent.press(screen.getByTestId('defer-1-day-button'));
+        fireEvent.press(await screen.findByRole('button', {name: 'Defer'}));
+        fireEvent.press(await screen.findByRole('button', {name: /1 Day/i}));
 
         await screen.findByText('An error occurred deferring the todo.');
         expect(navigation.navigate).not.toHaveBeenCalled();
@@ -287,7 +287,7 @@ describe('TodoDetail', () => {
         )
         .reply(200, {data: todo});
 
-      fireEvent.press(await screen.findByText('Uncomplete'));
+      fireEvent.press(await screen.findByRole('button', {name: 'Uncomplete'}));
 
       await waitFor(() => expect(mockServer.isDone()).toBe(true));
       expect(navigation.navigate).not.toHaveBeenCalled();
@@ -298,7 +298,7 @@ describe('TodoDetail', () => {
 
       mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
-      fireEvent.press(await screen.findByText('Uncomplete'));
+      fireEvent.press(await screen.findByRole('button', {name: 'Uncomplete'}));
 
       await screen.findByText('An error occurred marking the todo incomplete.');
     });
@@ -366,7 +366,7 @@ describe('TodoDetail', () => {
         )
         .reply(200, {data: todo});
 
-      fireEvent.press(await screen.findByText('Undelete'));
+      fireEvent.press(await screen.findByRole('button', {name: 'Undelete'}));
 
       await waitFor(() => expect(mockServer.isDone()).toBe(true));
       expect(navigation.navigate).not.toHaveBeenCalled();
@@ -377,7 +377,7 @@ describe('TodoDetail', () => {
 
       mockServer.patch(`/todos/${todo.id}?`).reply(500, {});
 
-      fireEvent.press(await screen.findByText('Undelete'));
+      fireEvent.press(await screen.findByRole('button', {name: 'Undelete'}));
 
       await screen.findByText('An error occurred undeleting the todo.');
     });
