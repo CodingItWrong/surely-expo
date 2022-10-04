@@ -39,7 +39,7 @@ describe('Deleted', () => {
   });
 
   describe('when there are no deleted todos', () => {
-    it('shows an error message', async () => {
+    it('shows a message', async () => {
       const response = {data: []};
 
       nock('http://localhost:3000')

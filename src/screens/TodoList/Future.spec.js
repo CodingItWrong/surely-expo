@@ -31,7 +31,7 @@ describe('Future', () => {
   });
 
   describe('when there are no available todos', () => {
-    it('shows an error message', async () => {
+    it('shows a message', async () => {
       const response = {data: []};
 
       nock('http://localhost:3000')
