@@ -4,7 +4,11 @@ import {relativeDate, relativeDatetime} from '../../../utils/time';
 
 function Entry({isPrimary, children}) {
   const style = {fontSize: isPrimary ? 14 : 12};
-  return <Text style={style}>{children}</Text>;
+  return (
+    <View accessibilityRole="text">
+      <Text style={style}>{children}</Text>
+    </View>
+  );
 }
 
 export default function EventLog({style, todo}) {

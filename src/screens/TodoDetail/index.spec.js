@@ -121,9 +121,13 @@ describe('TodoDetail', () => {
       setUp();
 
       await screen.findByText(todo.attributes.name);
-      expect(screen.queryByText(todo.attributes.notes)).not.toBeNull();
-      expect(screen.queryByText('Created 08/27/2021')).not.toBeNull();
-      expect(screen.queryByText('Deferred until 08/27/2121')).not.toBeNull();
+      expect(screen.getByText(todo.attributes.notes)).toBeTruthy();
+      expect(
+        screen.getByRole('text', {name: 'Created 08/27/2021'}),
+      ).toBeTruthy();
+      expect(
+        screen.getByRole('text', {name: 'Deferred until 08/27/2121'}),
+      ).toBeTruthy();
     });
 
     describe('completing the todo', () => {
