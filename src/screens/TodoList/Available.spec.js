@@ -114,7 +114,7 @@ describe('Available', () => {
       renderComponent();
 
       await screen.findByText(`${category.attributes.name} (1)`);
-      expect(screen.queryByText(todo.attributes.name)).not.toBeNull();
+      expect(screen.getByText(todo.attributes.name)).toBeTruthy();
     });
 
     it('allows navigating to a todo detail', async () => {

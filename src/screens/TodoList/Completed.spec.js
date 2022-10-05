@@ -87,7 +87,7 @@ describe('Completed', () => {
       renderComponent();
 
       await screen.findByText(todo.attributes.name);
-      expect(screen.queryByText('08/28/2021 (1)')).not.toBeNull();
+      expect(screen.getByText('08/28/2021 (1)')).toBeTruthy();
     });
 
     it('allows pagination', async () => {

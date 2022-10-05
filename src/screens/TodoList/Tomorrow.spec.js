@@ -88,9 +88,7 @@ describe('Tomorrow', () => {
       renderComponent();
 
       await screen.findByText(todo.attributes.name);
-      expect(
-        screen.queryByText(`${category.attributes.name} (1)`),
-      ).not.toBeNull();
+      expect(screen.getByText(`${category.attributes.name} (1)`)).toBeTruthy();
     });
 
     it('allows navigating to a todo detail', async () => {
