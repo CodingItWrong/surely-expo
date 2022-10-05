@@ -39,7 +39,7 @@ describe('Completed', () => {
   });
 
   describe('when there are no completed todos', () => {
-    it('shows an error message', async () => {
+    it('shows a message', async () => {
       const response = {data: []};
 
       nock('http://localhost:3000')

@@ -59,7 +59,9 @@ describe('Available', () => {
         </SafeAreaProvider>,
       );
 
-      await screen.findByText('An error occurred while loading todos.');
+      await screen.findByRole('alert', {
+        name: 'An error occurred while loading todos.',
+      });
     });
   });
 
@@ -161,9 +163,9 @@ describe('Available', () => {
         fireEvent.changeText(addField, todoName);
         fireEvent(addField, 'submitEditing');
 
-        await screen.findByText(
-          'An error occurred while creating the todo. Please try again.',
-        );
+        await screen.findByRole('alert', {
+          name: 'An error occurred while creating the todo. Please try again.',
+        });
       });
     });
   });
