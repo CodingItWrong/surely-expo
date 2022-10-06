@@ -82,7 +82,7 @@ describe('CategoryList', () => {
       renderComponent();
 
       await screen.findByText('Category A');
-      expect(screen.queryByText('Category B')).not.toBeNull();
+      expect(screen.getByText('Category B')).toBeTruthy();
     });
 
     it('allows navigating to create a category', async () => {

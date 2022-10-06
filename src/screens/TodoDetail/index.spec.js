@@ -355,7 +355,7 @@ describe('TodoDetail', () => {
       setUp();
 
       await screen.findByText('Completed 08/28/2021');
-      expect(screen.queryByText('Deleted 08/29/2021')).not.toBeNull();
+      expect(screen.getByText('Deleted 08/29/2021')).toBeTruthy();
     });
 
     it('allows undeleting the todo', async () => {

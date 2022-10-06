@@ -64,24 +64,22 @@ describe('SignUpForm', () => {
     const signUpButton = screen.getByText('Sign up');
     fireEvent.press(signUpButton);
 
-    expect(screen.queryByText('Email is required.')).not.toBeNull();
+    expect(screen.getByText('Email is required.')).toBeTruthy();
 
     fireEvent.changeText(screen.getByLabelText('Email'), email);
     fireEvent.press(signUpButton);
-    expect(screen.queryByText('Password is required.')).not.toBeNull();
+    expect(screen.getByText('Password is required.')).toBeTruthy();
 
     fireEvent.changeText(screen.getByLabelText('Password'), password);
     fireEvent.press(signUpButton);
-    expect(
-      screen.queryByText('Password confirmation is required.'),
-    ).not.toBeNull();
+    expect(screen.getByText('Password confirmation is required.')).toBeTruthy();
 
     fireEvent.changeText(
       screen.getByLabelText('Confirm password'),
       'incorrect',
     );
     fireEvent.press(signUpButton);
-    expect(screen.queryByText('Passwords do not match.')).not.toBeNull();
+    expect(screen.getByText('Passwords do not match.')).toBeTruthy();
   });
 
   it('allows cancelling signup', async () => {

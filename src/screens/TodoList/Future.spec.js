@@ -75,7 +75,7 @@ describe('Future', () => {
       renderComponent();
 
       await screen.findByText(todo.attributes.name);
-      expect(screen.queryByText('08/28/2121 (1)')).not.toBeNull();
+      expect(screen.getByText('08/28/2121 (1)')).toBeTruthy();
     });
 
     it('allows navigating to a todo detail', async () => {

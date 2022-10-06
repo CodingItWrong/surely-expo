@@ -8,7 +8,7 @@ describe('ErrorMessage', () => {
     render(<ErrorMessage>{errorMessage}</ErrorMessage>);
 
     expect(screen.getByRole('alert', {name: errorMessage})).toBeTruthy();
-    expect(screen.queryByTestId('error-message')).toBeTruthy();
+    expect(screen.getByTestId('error-message')).toBeTruthy();
   });
 
   it('does not render any elements when the error message is falsy', () => {

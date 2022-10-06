@@ -10,6 +10,6 @@ describe('ButtonGroup', () => {
       </ButtonGroup>,
     );
 
-    expect(screen.queryByText('Hello, RNTL')).toBeTruthy();
+    expect(screen.getByText('Hello, RNTL')).toBeTruthy();
   });
 });
