@@ -26,6 +26,14 @@ describe('Future', () => {
     },
   };
 
+  function providers(children) {
+    return (
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>{children}</TokenProvider>
+      </SafeAreaProvider>
+    );
+  }
+
   beforeEach(() => {
     mockUseFocusEffect();
   });
@@ -38,13 +46,7 @@ describe('Future', () => {
         .get('/todos?filter[status]=future&filter[search]=&sort=name')
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Future />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Future />));
 
       await screen.findByText('You have no future todos. Nice work!');
     });
@@ -58,13 +60,7 @@ describe('Future', () => {
         .get('/todos?filter[status]=future&filter[search]=&sort=name')
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Future />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Future />));
 
       return {
         mockedServer,
