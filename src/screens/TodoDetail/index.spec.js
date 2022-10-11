@@ -12,6 +12,10 @@ describe('TodoDetail', () => {
   const parentRouteName = 'AvailableTodos';
   const AvailableTodoDetail = createTodoDetail(parentRouteName);
 
+  function providers(children) {
+    return <TokenProvider loadToken={false}>{children}</TokenProvider>;
+  }
+
   describe('when there is an error loading the todo', () => {
     const todoId = '42';
     const todo = {
@@ -40,11 +44,7 @@ describe('TodoDetail', () => {
         .reply(500, {});
 
       const route = {params: {id: todoId}};
-      render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} />
-        </TokenProvider>,
-      );
+      render(providers(<AvailableTodoDetail route={route} />));
 
       await screen.findByText('An error occurred loading the todo.');
     });
@@ -57,11 +57,7 @@ describe('TodoDetail', () => {
         .reply(200, {data: todo});
 
       const route = {params: {id: todoId}};
-      render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} />
-        </TokenProvider>,
-      );
+      render(providers(<AvailableTodoDetail route={route} />));
 
       await screen.findByText('An error occurred loading the todo.');
 
@@ -106,9 +102,9 @@ describe('TodoDetail', () => {
 
       const route = {params: {id: todo.id}};
       render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
+        providers(
+          <AvailableTodoDetail route={route} navigation={navigation} />,
+        ),
       );
 
       return {
@@ -262,9 +258,9 @@ describe('TodoDetail', () => {
 
       const route = {params: {id: todo.id}};
       render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
+        providers(
+          <AvailableTodoDetail route={route} navigation={navigation} />,
+        ),
       );
 
       return {
@@ -340,9 +336,9 @@ describe('TodoDetail', () => {
 
       const route = {params: {id: todo.id}};
       render(
-        <TokenProvider loadToken={false}>
-          <AvailableTodoDetail route={route} navigation={navigation} />
-        </TokenProvider>,
+        providers(
+          <AvailableTodoDetail route={route} navigation={navigation} />,
+        ),
       );
 
       return {

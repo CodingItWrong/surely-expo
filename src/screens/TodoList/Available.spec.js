@@ -41,6 +41,14 @@ describe('Available', () => {
     },
   };
 
+  function providers(children) {
+    return (
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>{children}</TokenProvider>
+      </SafeAreaProvider>
+    );
+  }
+
   beforeEach(() => {
     mockUseFocusEffect();
   });
@@ -51,13 +59,7 @@ describe('Available', () => {
         .get('/todos?filter[status]=available&include=category')
         .reply(500, {});
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Available />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Available />));
 
       await screen.findByRole('alert', {
         name: 'An error occurred while loading todos.',
@@ -76,13 +78,7 @@ describe('Available', () => {
         .get('/todos?filter[status]=available&include=category')
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Available />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Available />));
 
       await screen.findByText('You have no available todos. Nice work!');
     });
@@ -99,13 +95,7 @@ describe('Available', () => {
         .get('/todos?filter[status]=available&include=category')
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Available />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Available />));
 
       return {mockedServer};
     }

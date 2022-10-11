@@ -14,6 +14,10 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('CategoryDetail', () => {
+  function providers(children) {
+    return <TokenProvider loadToken={false}>{children}</TokenProvider>;
+  }
+
   describe('for a new category', () => {
     const name = 'New Category';
 
@@ -22,11 +26,7 @@ describe('CategoryDetail', () => {
       useLinkTo.mockReturnValue(linkTo);
 
       const route = {params: {id: 'new'}};
-      render(
-        <TokenProvider loadToken={false}>
-          <CategoryDetail route={route} />
-        </TokenProvider>,
-      );
+      render(providers(<CategoryDetail route={route} />));
 
       return {linkTo};
     }
@@ -125,11 +125,7 @@ describe('CategoryDetail', () => {
       // }
 
       const route = {params: {id: category.id}};
-      render(
-        <TokenProvider loadToken={false}>
-          <CategoryDetail route={route} />
-        </TokenProvider>,
-      );
+      render(providers(<CategoryDetail route={route} />));
 
       return {
         mockedServer,

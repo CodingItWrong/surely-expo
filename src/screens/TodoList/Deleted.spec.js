@@ -34,6 +34,14 @@ describe('Deleted', () => {
     },
   };
 
+  function providers(children) {
+    return (
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>{children}</TokenProvider>
+      </SafeAreaProvider>
+    );
+  }
+
   beforeEach(() => {
     mockUseFocusEffect();
   });
@@ -48,13 +56,7 @@ describe('Deleted', () => {
         )
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Deleted />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Deleted />));
 
       await screen.findByText(
         "You have no deleted todos. Don't be afraid to give up!",
@@ -72,13 +74,7 @@ describe('Deleted', () => {
         )
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Deleted />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Deleted />));
 
       return {
         mockedServer,

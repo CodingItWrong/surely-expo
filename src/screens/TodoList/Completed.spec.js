@@ -34,6 +34,14 @@ describe('Completed', () => {
     },
   };
 
+  function providers(children) {
+    return (
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>{children}</TokenProvider>
+      </SafeAreaProvider>
+    );
+  }
+
   beforeEach(() => {
     mockUseFocusEffect();
   });
@@ -48,13 +56,7 @@ describe('Completed', () => {
         )
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Completed />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Completed />));
 
       await screen.findByText("You have no completed todos. You'll get there!");
     });
@@ -70,13 +72,7 @@ describe('Completed', () => {
         )
         .reply(200, response);
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <Completed />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<Completed />));
 
       return {
         mockedServer,

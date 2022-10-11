@@ -17,6 +17,14 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('CategoryList', () => {
+  function providers(children) {
+    return (
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <TokenProvider loadToken={false}>{children}</TokenProvider>
+      </SafeAreaProvider>
+    );
+  }
+
   beforeEach(() => {
     mockUseFocusEffect();
   });
@@ -24,13 +32,7 @@ describe('CategoryList', () => {
   it('shows a message when no categories listed', async () => {
     nock('http://localhost:3000').get('/categories?').reply(200, {data: []});
 
-    render(
-      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-        <TokenProvider loadToken={false}>
-          <CategoryList />
-        </TokenProvider>
-      </SafeAreaProvider>,
-    );
+    render(providers(<CategoryList />));
 
     await screen.findByText('No categories yet');
   });
@@ -65,13 +67,7 @@ describe('CategoryList', () => {
         .get('/categories?')
         .reply(200, {data: categories});
 
-      render(
-        <SafeAreaProvider initialMetrics={safeAreaMetrics}>
-          <TokenProvider loadToken={false}>
-            <CategoryList />
-          </TokenProvider>
-        </SafeAreaProvider>,
-      );
+      render(providers(<CategoryList />));
 
       return {
         mockedServer,
