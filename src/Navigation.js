@@ -101,9 +101,7 @@ const AvailableStack = createNativeStackNavigator();
 const Available = () => (
   <AvailableStack.Navigator
     initialRouteName="AvailableTodos"
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
+    screenOptions={{header: CustomNavigationBar}}
   >
     <AvailableStack.Screen
       name="AvailableTodos"
@@ -120,11 +118,7 @@ const Available = () => (
 
 const TomorrowStack = createNativeStackNavigator();
 const Tomorrow = () => (
-  <TomorrowStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <TomorrowStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <TomorrowStack.Screen
       name="TomorrowTodos"
       component={TomorrowTodos}
@@ -140,11 +134,7 @@ const Tomorrow = () => (
 
 const FutureStack = createNativeStackNavigator();
 const Future = () => (
-  <FutureStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <FutureStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <FutureStack.Screen
       name="FutureTodos"
       component={FutureTodos}
@@ -160,11 +150,7 @@ const Future = () => (
 
 const CompletedStack = createNativeStackNavigator();
 const Completed = () => (
-  <CompletedStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <CompletedStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <CompletedStack.Screen
       name="CompletedTodos"
       component={CompletedTodos}
@@ -180,11 +166,7 @@ const Completed = () => (
 
 const DeletedStack = createNativeStackNavigator();
 const Deleted = () => (
-  <DeletedStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <DeletedStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <DeletedStack.Screen
       name="DeletedTodos"
       component={DeletedTodos}
@@ -200,11 +182,7 @@ const Deleted = () => (
 
 const CategoryStack = createNativeStackNavigator();
 const Categories = () => (
-  <CategoryStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <CategoryStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <CategoryStack.Screen
       name="CategoryList"
       component={CategoryList}
@@ -220,11 +198,7 @@ const Categories = () => (
 
 const SignInStack = createNativeStackNavigator();
 const SignIn = () => (
-  <SignInStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <SignInStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <SignInStack.Screen
       name="SignInScreen"
       component={SignInForm}
@@ -235,11 +209,7 @@ const SignIn = () => (
 
 const SignUpStack = createNativeStackNavigator();
 const SignUp = () => (
-  <SignUpStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <SignUpStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <SignUpStack.Screen
       name="SignUpScreen"
       component={SignUpForm}
@@ -250,11 +220,7 @@ const SignUp = () => (
 
 const AboutStack = createNativeStackNavigator();
 const About = () => (
-  <AboutStack.Navigator
-    screenOptions={{
-      header: props => <CustomNavigationBar {...props} />,
-    }}
-  >
+  <AboutStack.Navigator screenOptions={{header: CustomNavigationBar}}>
     <AboutStack.Screen
       name="AboutScreen"
       component={AboutScreen}
