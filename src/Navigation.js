@@ -256,6 +256,10 @@ const ICON_BY_ROUTE = {
   Categories: 'tag',
 };
 
+function renderDrawer(props) {
+  return <CustomNavigationDrawer iconByRoute={ICON_BY_ROUTE} {...props} />;
+}
+
 function NavigationContents() {
   const {isLoggedIn} = useToken();
   const breakpoint = useBreakpoint();
@@ -272,9 +276,7 @@ function NavigationContents() {
         drawerType,
         drawerStyle: {width: 200},
       }}
-      drawerContent={props => (
-        <CustomNavigationDrawer iconByRoute={ICON_BY_ROUTE} {...props} />
-      )}
+      drawerContent={renderDrawer}
     >
       {isLoggedIn ? (
         <>
