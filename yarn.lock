@@ -12470,10 +12470,10 @@ react-native-style-queries@^0.1.1:
   resolved "https://registry.yarnpkg.com/react-native-style-queries/-/react-native-style-queries-0.1.1.tgz#16f89ef0738192a805814a93e56dcda007f925bc"
   integrity sha512-DMFLs9NGSrE4JkBG0glRNsybeQJWrkk3T9gSOZBJROwHrKCb0WxBXjdgIf8jEyWzCLJkrDWtuzw9Q4EKBjTX3Q==
 
-react-native-web@~0.18.7:
-  version "0.18.7"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.18.7.tgz#2b688502b3d389c49346fa3d8c9a20cfd52f507f"
-  integrity sha512-5DwcsrAqLjOvzJJk/XPozEtqCOF3hrCJ55buLOEPMxvS8lKxRdeMF9SZUI2zyqE8JcMFGtQzLhWAZGeaTrXaRg==
+react-native-web@~0.18.9:
+  version "0.18.10"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.18.10.tgz#fb4db047f4be7f9cf35f37ec8d52f7d1c450600f"
+  integrity sha512-YV2gtZa1n7ulTGp+HcxH+KsAtaDPBI/dKd9oOQS31zyFHURjObLUVkKnGjkmlYAUReWfvmlU64GzyNwoZF9/tA==
   dependencies:
     "@babel/runtime" "^7.18.6"
     create-react-class "^15.7.0"
