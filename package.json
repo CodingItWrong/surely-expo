@@ -11,7 +11,8 @@
     "cypress": "cypress open",
     "lint": "eslint cypress src \"*.js\"",
     "deploy:web": "expo export:web && cp _redirects web-build && netlify deploy --prod",
-    "build:ios": "eas build --platform ios --local"
+    "build:ios": "eas build --platform ios --local",
+    "build:ios:remote": "eas build --platform ios"
   },
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
