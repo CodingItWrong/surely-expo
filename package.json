@@ -18,7 +18,7 @@
     "@codingitwrong/jsonapi-client": "^0.0.11",
     "@expo/webpack-config": "^0.17.2",
     "@react-navigation/drawer": "^6.5.0",
-    "@react-navigation/native": "^6.0.13",
+    "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.1",
     "axios": "^1.2.0",
     "date-fns": "^2.29.3",
