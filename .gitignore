@@ -19,3 +19,4 @@ web-build/
 build-*.ipa
 
 coverage
+cypress/downloads
