@@ -4933,12 +4933,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001254, caniuse-lite@^1.0.30001264, caniuse-lite@^1.0.30001332, caniuse-lite@^1.0.30001366, caniuse-lite@^1.0.30001383:
-  version "1.0.30001384"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001384.tgz#029527c2d781a3cfef13fa63b3a78a6088e35973"
-  integrity sha512-BBWt57kqWbc0GYZXb47wTXpmAgqr5LSibPzNjk/AWMdmJMQhLqOl3c/Kd4OAU/tu4NLfYkMx8Tlq3RVBkOBolQ==
-
-caniuse-lite@^1.0.30001400:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001254, caniuse-lite@^1.0.30001264, caniuse-lite@^1.0.30001332, caniuse-lite@^1.0.30001366, caniuse-lite@^1.0.30001383, caniuse-lite@^1.0.30001400:
   version "1.0.30001425"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001425.tgz#52917791a453eb3265143d2cd08d80629e82c735"
   integrity sha512-/pzFv0OmNG6W0ym80P3NtapU0QEiDS3VuYAZMGoLLqiC7f6FJFe1MjpQDREGApeenD9wloeytmVDj+JLXPC6qw==
@@ -12364,10 +12359,10 @@ react-native-keyboard-aware-scroll-view@^0.9.5:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-react-native-paper-dates@^0.9.2:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.9.2.tgz#ae218c2c2aceeef6dd211e943bff5a5751ca874c"
-  integrity sha512-46dl848IIYVQgoeVRhZoE+9hT2oQa8ode4xd0L31d1otS5dzWDoQGMltRTgN8RkR7ogcVl2Okty0SDdDp6ZdEA==
+react-native-paper-dates@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dates/-/react-native-paper-dates-0.11.0.tgz#8453f3cc2d35a596080ad45f4b845202dd959362"
+  integrity sha512-GAVwvWYlw5Mifj49SsgoOYLbC8msS0nmAb3hMxgHmlh+i6/MBcfdoQa1xluqdgNqYWrU3kzKdJI0egfkDvAVow==
   dependencies:
     caniuse-lite "^1.0.30001383"
     color "^3.2.1"
