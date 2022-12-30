@@ -24,6 +24,7 @@ You have two options for getting support with Surely:
 
 ## Requirements
 
+- Node 16.x (18 and up not yet supported)
 - [Yarn](https://yarnpkg.com/en/docs/install)
 - [Expo CLI](https://docs.expo.dev/get-started/installation/)
 - [EAS CLI](https://docs.expo.dev/build/setup/#1-install-the-latest-eas-cli)
