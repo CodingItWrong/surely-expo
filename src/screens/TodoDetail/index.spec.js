@@ -118,12 +118,8 @@ describe('TodoDetail', () => {
 
       await screen.findByText(todo.attributes.name);
       expect(screen.getByText(todo.attributes.notes)).toBeTruthy();
-      expect(
-        screen.getByRole('text', {name: 'Created 08/27/2021'}),
-      ).toBeTruthy();
-      expect(
-        screen.getByRole('text', {name: 'Deferred until 08/27/2121'}),
-      ).toBeTruthy();
+      expect(screen.getByText('Created 08/27/2021')).toBeTruthy();
+      expect(screen.getByText('Deferred until 08/27/2121')).toBeTruthy();
     });
 
     describe('completing the todo', () => {
