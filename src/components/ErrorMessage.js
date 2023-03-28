@@ -10,7 +10,7 @@ function ErrorMessage({theme, children, style}) {
 
   return (
     children && (
-      <View accessibilityRole="alert">
+      <View accessible accessibilityRole="alert">
         <Text testID="error-message" style={[errorMessageStyle, style]}>
           {children}
         </Text>
