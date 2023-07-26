@@ -65,6 +65,7 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "modulePathIgnorePatterns": ["e2e"],
     "setupFiles": [
       "./jest-setup.js"
     ],
