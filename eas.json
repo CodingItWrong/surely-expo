@@ -4,6 +4,13 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal"
+    },
+    "development-detox": {
+      "distribution": "internal",
+      "channel": "development",
+      "ios": {
+        "simulator": true
+      }
     }
   },
   "submit": {
