@@ -1,4 +1,4 @@
-describe('App', () => {
+describe('Smoke Test', () => {
   beforeAll(async () => {
     await device.launchApp();
   });
@@ -7,7 +7,7 @@ describe('App', () => {
     await device.reloadReactNative();
   });
 
-  it('should show the hello message', async () => {
-    await expect(element(by.id('hello'))).toBeVisible();
+  it('should show the login form', async () => {
+    await expect(element(by.id('email-field'))).toBeVisible();
   });
 });
