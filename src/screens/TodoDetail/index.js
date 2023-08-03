@@ -116,5 +116,6 @@ export default function TodoDetail({navigation, route, parentRouteName}) {
   );
 }
 
-export const createTodoDetail = parentRouteName => props =>
-  <TodoDetail {...props} parentRouteName={parentRouteName} />;
+export const createTodoDetail = parentRouteName => props => (
+  <TodoDetail {...props} parentRouteName={parentRouteName} />
+);
