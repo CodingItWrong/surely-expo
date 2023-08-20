@@ -18,7 +18,7 @@ module.exports = {
     'ios.release': {
       type: 'ios.app',
       binaryPath: 'Surely.app',
-      build: 'eas build --local --profile development-detox --platform ios && tar -xvzf build-*.tar.gz && rm build-*.tar.gz'
+      build: 'export MOCK_API=true && eas build --local --profile development-detox --platform ios && tar -xvzf build-*.tar.gz && rm build-*.tar.gz'
     },
     'android.debug': {
       type: 'android.apk',
