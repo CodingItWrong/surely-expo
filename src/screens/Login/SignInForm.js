@@ -1,26 +1,23 @@
-import axios from 'axios';
 import {StyleSheet} from 'react-native';
 import {Button, TextInput, Title} from 'react-native-paper';
 import {useStyleQueries} from 'react-native-style-queries';
 import oauthLogin from '../../auth/oauthLogin';
 import useLoginForm from '../../auth/useLoginForm';
-import baseUrl from '../../baseUrl';
 import ButtonGroup from '../../components/ButtonGroup';
 import CenterColumn from '../../components/CenterColumn';
 import ErrorMessage from '../../components/ErrorMessage';
 import ScreenBackground from '../../components/ScreenBackground';
+import loginHttpClient from '../../data/loginHttpClient';
 import {useToken} from '../../data/token';
 import sharedStyleQueries from '../../sharedStyleQueries';
 import sharedStyles from '../../sharedStyles';
-
-const httpClient = axios.create({baseURL: baseUrl});
 
 export default function SignInForm({navigation}) {
   const {setToken} = useToken();
   const responsiveStyles = useStyleQueries(sharedStyleQueries);
   const onLogIn = ({username, password}) =>
     oauthLogin({
-      httpClient,
+      httpClient: loginHttpClient,
       username,
       password,
     }).then(setToken);
