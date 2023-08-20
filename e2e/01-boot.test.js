@@ -1,4 +1,4 @@
-describe('Smoke Test', () => {
+describe('01 - Boot Test', () => {
   beforeAll(async () => {
     await device.launchApp();
   });
