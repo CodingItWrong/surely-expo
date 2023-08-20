@@ -30,6 +30,7 @@
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
     "expo-store-review": "~6.2.1",
+    "expo-updates": "~0.16.4",
     "lodash": "^4.17.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -53,8 +54,10 @@
     "@testing-library/react-native": "^12.1.2",
     "babel-jest": "^29.2.2",
     "cypress": "^12.17.3",
+    "detox": "^20.11.1",
     "eslint": "^8.46.0",
     "eslint-plugin-cypress": "^2.14.0",
+    "eslint-plugin-detox": "^1.0.0",
     "eslint-plugin-ft-flow": "^3.0.0",
     "eslint-plugin-import": "~2.28.0",
     "eslint-plugin-testing-library": "^5.11.0",
@@ -65,6 +68,9 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "modulePathIgnorePatterns": [
+      "e2e"
+    ],
     "setupFiles": [
       "./jest-setup.js"
     ],
