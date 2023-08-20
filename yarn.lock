@@ -7516,10 +7516,10 @@ expo-status-bar@~1.4.4:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.4.4.tgz#6874ccfda5a270d66f123a9f220735a76692d114"
   integrity sha512-5DV0hIEWgatSC3UgQuAZBoQeaS9CqeWRZ3vzBR9R/+IUD87Adbi4FGhU10nymRqFXOizGsureButGZIXPs7zEA==
 
-expo-store-review@~6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-6.2.1.tgz#13bb842732b5581b9ee723c2d7511eb9830b1c3c"
-  integrity sha512-r157pvKORURbtrMTs9E/CNnQjeU0HRVYak0uOYCNv50WHaKZ2zYsS1BHhj4SnFcw/hQ9hc1EnBEugDAJVk6Xbg==
+expo-store-review@~6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-6.4.0.tgz#2a74a025aa64a218f9f0b0a0fec0b3d2a99b6be2"
+  integrity sha512-aD06KSOO9syeecaP9NfJO++FzmfQjg49HY7qeUQ9r826YqswW/FPAcnXY0RJLhfJTqeAPRSl/xzPLZA5vwdqLQ==
 
 expo-structured-headers@~3.1.0:
   version "3.1.2"
