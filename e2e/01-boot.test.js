@@ -7,7 +7,8 @@ describe('01 - Boot Test', () => {
     await device.reloadReactNative();
   });
 
-  it('should show the login form', async () => {
-    await expect(element(by.id('email-field'))).toBeVisible();
+  it('should show the About button in the drawer', async () => {
+    await element(by.id('toggle-navigation-button')).tap();
+    await expect(element(by.id('about-nav-button'))).toBeVisible();
   });
 });
