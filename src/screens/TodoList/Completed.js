@@ -15,14 +15,17 @@ export default function CompletedTodos() {
           filter: {status: 'completed', search: searchText},
           options: {sort: '-completedAt', 'page[number]': pageNumber},
         })
-        .then(todoResponse => ({
-          todoGroups: groupByDate({
-            todos: todoResponse.data,
-            attribute: 'completed-at',
-            reverse: true,
-          }),
-          maxPageNumber: todoResponse?.meta?.['page-count'],
-        })),
+        .then(todoResponse => {
+          console.log(todoResponse);
+          return {
+            todoGroups: groupByDate({
+              todos: todoResponse.data,
+              attribute: 'completed-at',
+              reverse: true,
+            }),
+            maxPageNumber: todoResponse?.meta?.['page-count'],
+          };
+        }),
     [todoClient],
   );
 

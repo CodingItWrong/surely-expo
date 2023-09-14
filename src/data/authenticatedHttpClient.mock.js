@@ -5,9 +5,26 @@ export default function authenticatedHttpClient() {
   return {
     async get(url) {
       if (url.startsWith('todos?')) {
+        const data = todos.filter(({attributes}) => {
+          if (/available/.test(url)) {
+            return (
+              attributes['completed-at'] == null &&
+              attributes['deleted-at'] == null
+            );
+          } else if (/completed/.test(url)) {
+            return (
+              attributes['completed-at'] != null &&
+              attributes['deleted-at'] == null
+            );
+          } else if (/deleted/.test(url)) {
+            return attributes['deleted-at'] != null;
+          }
+        });
+
         return {
           data: {
-            data: todos,
+            data,
+            meta: {'page-count': Math.ceil(todos.length / 10)},
           },
         };
       } else if (url.startsWith('todos/')) {
@@ -23,8 +40,6 @@ export default function authenticatedHttpClient() {
     },
 
     async post(url, body) {
-      console.log(url, body);
-
       if (url === 'todos?') {
         const newTodo = {
           id: nextId,
@@ -41,7 +56,11 @@ export default function authenticatedHttpClient() {
 
     async patch(url, body) {
       if (url.startsWith('todos/')) {
-        todos[0].attributes = body.data.attributes;
+        todos[0].attributes = {
+          ...todos[0].attributes,
+          ...body.data.attributes,
+        };
+        console.log(todos[0]);
         return {
           data: {
             data: todos[0],
