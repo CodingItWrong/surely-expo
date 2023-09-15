@@ -1,4 +1,4 @@
-describe('02 - Happy Path Test', () => {
+describe('03 - Happy Path Test', () => {
   beforeAll(async () => {
     await device.launchApp();
   });
@@ -29,14 +29,10 @@ describe('02 - Happy Path Test', () => {
     await element(by.id('edit-button')).tap();
 
     await element(by.id('name-field')).typeText(' again');
-    await element(by.id('save-button')).tap();
+    await element(by.text('SAVE')).tap();
 
-    await expect(element(by.id('save-button'))).not.toBeVisible();
+    await expect(element(by.text('SAVE'))).not.toBeVisible();
     await expect(element(by.text('Clean office desk again'))).toBeVisible();
-
-    // defer until tomorrow
-
-    // defer until further future
 
     // complete
     await element(by.text('COMPLETE')).tap();

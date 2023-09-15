@@ -58,6 +58,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
             label="1 Day"
             onDefer={handleDeferUntil}
             disabled={isLoading}
+            testID="defer-1-day-button"
           />
           <DeferButton
             todo={todo}
@@ -102,7 +103,7 @@ export default function Defer({todo, onUpdate, onCancel, onComplete}) {
   );
 }
 
-function DeferButton({todo, numDays, label, onDefer, disabled}) {
+function DeferButton({todo, numDays, label, onDefer, disabled, testID}) {
   const date = deferDate({
     start: todo.attributes['deferred-until'],
     days: numDays,
@@ -114,6 +115,7 @@ function DeferButton({todo, numDays, label, onDefer, disabled}) {
       style={sharedStyles.buttonSpacing}
       disabled={disabled}
       accessibilityLabel={label}
+      testID={testID}
     >
       {label} - {dayOfWeek(date)}
     </Button>
