@@ -25,11 +25,12 @@ You have two options for getting support with Surely:
 ## Requirements
 
 - Node 18.x
-- [Yarn](https://yarnpkg.com/en/docs/install)
+- [Yarn 1.x](https://yarnpkg.com/en/docs/install)
 - [Expo CLI](https://docs.expo.dev/get-started/installation/)
 - [EAS CLI](https://docs.expo.dev/build/setup/#1-install-the-latest-eas-cli)
 - [Cocoapods](https://guides.cocoapods.org/using/getting-started.html#installation)
 - [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/)
+- [Detox CLI](https://wix.github.io/Detox/docs/introduction/getting-started/#1-command-line-tools-detox-cli)
 
 Requirements and npm dependencies can be installed by running `bin/setup`
 
