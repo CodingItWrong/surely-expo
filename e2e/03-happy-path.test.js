@@ -29,9 +29,9 @@ describe('03 - Happy Path Test', () => {
     await element(by.id('edit-button')).tap();
 
     await element(by.id('name-field')).typeText(' again');
-    await element(by.text('SAVE')).tap();
+    await element(by.id('save-button')).multiTap(2); // first tap dismisses keyboard if shown
 
-    await expect(element(by.text('SAVE'))).not.toBeVisible();
+    await expect(element(by.id('save-button'))).not.toBeVisible();
     await expect(element(by.text('Clean office desk again'))).toBeVisible();
 
     // complete
