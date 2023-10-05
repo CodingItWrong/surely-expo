@@ -22,6 +22,7 @@ updates:
       - dependency-name: "expo-secure-store"
       - dependency-name: "expo-splash-screen"
       - dependency-name: "expo-status-bar"
+      - dependency-name: "expo-store-review"
       - dependency-name: "jest-expo"
       - dependency-name: "react"
       - dependency-name: "react-dom"
