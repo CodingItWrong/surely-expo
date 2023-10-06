@@ -58,7 +58,7 @@
     "cypress": "^13.3.0",
     "detox": "^20.11.4",
     "eslint": "^8.46.0",
-    "eslint-plugin-cypress": "^2.14.0",
+    "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-detox": "^1.0.0",
     "eslint-plugin-ft-flow": "^3.0.0",
     "eslint-plugin-import": "~2.28.1",
