@@ -6463,10 +6463,10 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
   integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
 
-detox@^20.11.4:
-  version "20.11.4"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-20.11.4.tgz#2347f320da0e7eae2a0c2691bf8986768d02d8ee"
-  integrity sha512-P48KAtK8qIDOxJKUl4q/syPkuHz67kAeFlNodBZg5aO4hJiH+RsbEkQfJSYkTCeZV800EcmUQwZK2M5amLoYaw==
+detox@^20.13.0:
+  version "20.13.0"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-20.13.0.tgz#923111638dfdb16089eea4f07bf4f0b56468d097"
+  integrity sha512-p9MUcoHWFTqSDaoaN+/hnJYdzNYqdelUr/sxzy3zLoS/qehnVJv2yG9pYqz/+gKpJaMIpw2+TVw9imdAx5JpaA==
   dependencies:
     ajv "^8.6.3"
     bunyan "^1.8.12"
