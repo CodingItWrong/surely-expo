@@ -16,7 +16,6 @@ export default function CompletedTodos() {
           options: {sort: '-completedAt', 'page[number]': pageNumber},
         })
         .then(todoResponse => {
-          console.log(todoResponse);
           return {
             todoGroups: groupByDate({
               todos: todoResponse.data,

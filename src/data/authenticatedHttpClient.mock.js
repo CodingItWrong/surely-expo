@@ -84,7 +84,6 @@ export default function authenticatedHttpClient() {
           ...todos[0].attributes,
           ...body.data.attributes,
         };
-        console.log(todos[0]);
         return {
           data: {
             data: todos[0],
