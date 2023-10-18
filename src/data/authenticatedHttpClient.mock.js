@@ -4,7 +4,6 @@ let nextId = 1;
 export default function authenticatedHttpClient() {
   return {
     async get(url) {
-      console.log(url);
       if (url.startsWith('todos?')) {
         const data = todos.filter(({attributes}) => {
           const now = new Date();
