@@ -4,6 +4,7 @@ let nextId = 1;
 export default function authenticatedHttpClient() {
   return {
     async get(url) {
+      console.log(url);
       if (url.startsWith('todos?')) {
         const data = todos.filter(({attributes}) => {
           const now = new Date();
@@ -21,7 +22,6 @@ export default function authenticatedHttpClient() {
             );
           } else if (/tomorrow/.test(url)) {
             const d = attributes['deferred-until'];
-            // NOTE: will fail on Dec 31
             return (
               attributes['completed-at'] == null &&
               attributes['deleted-at'] == null &&
@@ -29,6 +29,7 @@ export default function authenticatedHttpClient() {
               d.getFullYear() === now.getFullYear() &&
               d.getMonth() === now.getMonth() &&
               d.getDate() === now.getDate() + 1
+              // NOTE: will fail on month boundaries
             );
           } else if (/future/.test(url)) {
             const d = attributes['deferred-until'];
@@ -38,7 +39,7 @@ export default function authenticatedHttpClient() {
               d != null &&
               (d.getFullYear() !== now.getFullYear() ||
                 d.getMonth() !== now.getMonth() ||
-                d.getDate() !== now.getDate() + 1)
+                d.getDate() > now.getDate() + 1)
             );
           } else if (/deleted/.test(url)) {
             return attributes['deleted-at'] != null;
