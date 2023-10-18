@@ -23,6 +23,7 @@ describe('02 - Play Around Test', () => {
     await element(by.id('new-todo-name')).typeText('Clean office desk');
     await element(by.id('new-todo-name')).tapReturnKey();
 
+    await expect(element(by.id('new-todo-name'))).toHaveText('');
     await expect(element(by.text('Clean office desk'))).toBeVisible();
 
     await element(by.text('Clean office desk')).tap();
