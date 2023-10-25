@@ -1,5 +1,3 @@
-console.log('MOCK LOGIN CLIENT');
-
 export default {
   post() {
     return Promise.resolve({
