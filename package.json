@@ -21,7 +21,7 @@
     "@expo/webpack-config": "^19.0.0",
     "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/native": "^6.1.8",
-    "@react-navigation/native-stack": "^6.9.13",
+    "@react-navigation/native-stack": "^6.9.17",
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
     "eslint-plugin-prettier": "^5.0.0",
