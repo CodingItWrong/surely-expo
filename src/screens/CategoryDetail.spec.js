@@ -31,8 +31,7 @@ describe('CategoryDetail', () => {
       return {linkTo};
     }
 
-    // Timing out on CI
-    it.skip('allows creating the category', async () => {
+    it('allows creating the category', async () => {
       const response = {
         data: {
           id: 'abc123',
