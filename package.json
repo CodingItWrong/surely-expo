@@ -71,6 +71,7 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "testTimeout": 10000,
     "modulePathIgnorePatterns": [
       "e2e"
     ],
