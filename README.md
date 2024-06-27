@@ -95,7 +95,7 @@ $ yarn test
 ### Web
 
 ```bash
-$ expo build:web
+$ npx expo export:web
 ```
 
 - Copy the `web-build` folder to somewhere accessible on the public internet
