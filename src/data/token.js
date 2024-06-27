@@ -37,6 +37,14 @@ export function useToken() {
     setIsTokenLoaded,
   } = useContext(TokenContext);
 
+  const setToken = useCallback(
+    async function (newToken) {
+      await setStringAsync(ACCESS_TOKEN_KEY, newToken);
+      setTokenInternal(newToken);
+    },
+    [setTokenInternal],
+  );
+
   useEffect(() => {
     if (!isTokenLoaded) {
       getStringAsync(ACCESS_TOKEN_KEY).then(newToken => {
@@ -50,14 +58,6 @@ export function useToken() {
       });
     }
   }, [setToken, isTokenLoaded, setIsTokenLoaded]);
-
-  const setToken = useCallback(
-    async function (newToken) {
-      await setStringAsync(ACCESS_TOKEN_KEY, newToken);
-      setTokenInternal(newToken);
-    },
-    [setTokenInternal],
-  );
 
   async function clearToken() {
     await deleteStringAsync(ACCESS_TOKEN_KEY);
