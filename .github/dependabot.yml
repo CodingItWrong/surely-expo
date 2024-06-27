@@ -1,0 +1,37 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    ignore:
+      - dependency-name: "jest"
+      # the following are locked to Expo and will be updated along with it
+      - dependency-name: "@expo/webpack-config"
+      - dependency-name: "@babel/core"
+      - dependency-name: "babel-core"
+      - dependency-name: "babel-jest"
+      # - dependency-name: "expo" # commented to get notification
+      - dependency-name: "expo-constants"
+      - dependency-name: "expo-linking"
+      - dependency-name: "expo-secure-store"
+      - dependency-name: "expo-splash-screen"
+      - dependency-name: "expo-status-bar"
+      - dependency-name: "expo-store-review"
+      - dependency-name: "jest-expo"
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-gesture-handler"
+      - dependency-name: "react-native-paper"
+        versions: ["5.x"]
+      - dependency-name: "react-native-paper-dates"
+      - dependency-name: "react-native-reanimated"
+      - dependency-name: "react-native-safe-area-context"
+      - dependency-name: "react-native-screens"
+      - dependency-name: "react-native-web"
