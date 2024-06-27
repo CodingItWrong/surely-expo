@@ -24,7 +24,7 @@ You have two options for getting support with Surely:
 
 ## Requirements
 
-- Node 18.x
+- Node 20.x
 - [Yarn 1.x](https://yarnpkg.com/en/docs/install)
 - [Expo CLI](https://docs.expo.dev/get-started/installation/)
 - [EAS CLI](https://docs.expo.dev/build/setup/#1-install-the-latest-eas-cli)
@@ -42,11 +42,27 @@ $ yarn install
 
 ## Running
 
+### Web/Expo Go
+
 ```bash
 $ yarn start
 ```
 
 Then click "Run on iOS simulator" or "Run in web browser"
+
+### Local iOS Build
+
+- Open `src/baseUrl.js` and set a `LOCAL_IP` for the dev server
+
+```bash
+$ npx expo prebuild -p ios
+```
+
+- Open generated iOS `.xcworkspace` file in Xcode
+- Set development team
+- Under "Edit Scheme…" > "Info", change "Build Configuration" to "Release" to build in the JS
+- Plug in physical device
+- Build app onto physical device
 
 ## Testing
 
@@ -79,7 +95,7 @@ $ yarn test
 ### Web
 
 ```bash
-$ expo build:web
+$ npx expo export:web
 ```
 
 - Copy the `web-build` folder to somewhere accessible on the public internet

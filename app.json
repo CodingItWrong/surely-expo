@@ -1,7 +1,7 @@
 {
   "expo": {
     "ios": {
-      "buildNumber": "64",
+      "buildNumber": "67",
       "appStoreUrl": "https://apps.apple.com/us/app/surely/id1586633713",
       "bundleIdentifier": "com.surelytodo",
       "supportsTablet": true,
@@ -9,7 +9,7 @@
         "usesNonExemptEncryption": false
       }
     },
-    "version": "1.0.7",
+    "version": "1.0.8",
     "name": "Surely",
     "slug": "surely",
     "orientation": "portrait",
@@ -37,6 +37,9 @@
       "eas": {
         "projectId": "2eda6e68-0051-4fb2-b11a-8b33cb61a8d2"
       }
-    }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
