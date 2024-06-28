@@ -1,7 +1,7 @@
 import {fireEvent, render, screen} from '@testing-library/react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {large, medium, useBreakpoint} from '../breakpoints';
 import NavigationBar from './NavigationBar';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 jest.mock('../breakpoints');
 
