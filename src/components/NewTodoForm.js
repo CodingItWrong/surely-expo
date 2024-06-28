@@ -1,33 +1,28 @@
 import {useState} from 'react';
-import {Keyboard} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import {StyleSheet, TextInput} from 'react-native';
+// import {TextInput} from 'react-native-paper';
 
 export default function NewTodoForm({isCreating, onCreate}) {
   const [name, setName] = useState('');
 
-  async function handleCreate() {
-    try {
-      if (name !== '') {
-        await onCreate(name);
-        setName('');
-      }
-      Keyboard.dismiss();
-    } catch {
-      // no-op so browser sees promise rejection handled
-    }
-  }
-
   return (
     <TextInput
       testID="new-todo-name"
-      label="New todo name"
+      placeholder="New todo name"
       accessibilityLabel="New todo name"
       value={name}
       onChangeText={setName}
-      onSubmitEditing={handleCreate}
       autoCapitalize="sentences"
       autoCorrect
-      right={isCreating && <TextInput.Icon icon="clock-outline" />}
+      style={styles.textInput}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    borderColor: 'gray',
+    borderBottomWidth: 1,
+    padding: 10,
+  },
+});
