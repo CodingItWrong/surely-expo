@@ -19,7 +19,7 @@
   "dependencies": {
     "@codingitwrong/jsonapi-client": "^0.0.11",
     "@expo/webpack-config": "~19.0.1",
-    "@react-navigation/drawer": "^6.6.3",
+    "@react-navigation/drawer": "^6.7.0",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.10.0",
     "axios": "^1.5.1",
