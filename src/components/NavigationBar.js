@@ -1,14 +1,22 @@
+import {useColorScheme} from 'react-native';
 import {Appbar} from 'react-native-paper';
 import {large, useBreakpoint} from '../breakpoints';
+import {SURELY_GREEN} from '../useTheme';
 
 const showDrawerToggleForBreakpoint = breakpoint => breakpoint !== large;
 
 export default function NavigationBar({navigation, options, back}) {
   const breakpoint = useBreakpoint();
   const showDrawerToggle = showDrawerToggleForBreakpoint(breakpoint);
+  const colorScheme = useColorScheme() ?? 'light';
+
+  const lightHeaderStyle = {
+    backgroundColor: SURELY_GREEN,
+  };
+  const headerStyle = colorScheme === 'light' ? lightHeaderStyle : null;
 
   return (
-    <Appbar.Header>
+    <Appbar.Header style={headerStyle}>
       {back ? (
         <Appbar.BackAction
           testID="back-button"
