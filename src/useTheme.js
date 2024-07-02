@@ -6,7 +6,7 @@ import {
   MD3LightTheme,
 } from 'react-native-paper';
 
-// const SURELY_GREEN = '#4caf50';
+export const SURELY_GREEN = '#4caf50';
 // const SURELY_LIGHT_GREEN = '#e1ede2';
 // const SURELY_DARK_GREEN = '#19241a';
 
