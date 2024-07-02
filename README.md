@@ -92,6 +92,8 @@ $ yarn test
 - Run `yarn build:ios`
 - Once the build completes, upload the `.ipa` file it created to TestFlight using the Apple [Transporter](https://apps.apple.com/us/app/transporter/id1450874784?mt=12) app.
 
+If this doesn't work, do a prebuild (see instructions above) then archive the app in Xcode.
+
 ### Web
 
 ```bash
