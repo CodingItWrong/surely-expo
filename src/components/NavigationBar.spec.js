@@ -1,10 +1,24 @@
 import {fireEvent, render, screen} from '@testing-library/react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {large, medium, useBreakpoint} from '../breakpoints';
 import NavigationBar from './NavigationBar';
 
 jest.mock('../breakpoints');
 
 describe('NavigationBar', () => {
+  function wrapper(children) {
+    return (
+      <SafeAreaProvider
+        initialMetrics={{
+          frame: {x: 0, y: 0, width: 1000, height: 1000},
+          insets: {top: 0, left: 0, right: 0, bottom: 0},
+        }}
+      >
+        {children}
+      </SafeAreaProvider>
+    );
+  }
+
   describe('back button', () => {
     describe('when React Nav provides a truthy back prop', () => {
       it('renders a button that allows you to go back', () => {
@@ -14,7 +28,9 @@ describe('NavigationBar', () => {
         };
 
         render(
-          <NavigationBar back options={options} navigation={navigation} />,
+          wrapper(
+            <NavigationBar back options={options} navigation={navigation} />,
+          ),
         );
 
         fireEvent.press(screen.getByLabelText('Back'));
@@ -29,11 +45,13 @@ describe('NavigationBar', () => {
         const navigation = {};
 
         render(
-          <NavigationBar
-            back={false}
-            options={options}
-            navigation={navigation}
-          />,
+          wrapper(
+            <NavigationBar
+              back={false}
+              options={options}
+              navigation={navigation}
+            />,
+          ),
         );
 
         expect(screen.queryByLabelText('Back')).toBeNull();
@@ -49,7 +67,9 @@ describe('NavigationBar', () => {
         const options = {};
         const navigation = {};
 
-        render(<NavigationBar options={options} navigation={navigation} />);
+        render(
+          wrapper(<NavigationBar options={options} navigation={navigation} />),
+        );
 
         expect(screen.queryByLabelText('Menu')).toBeNull();
       });
@@ -64,7 +84,9 @@ describe('NavigationBar', () => {
           toggleDrawer: jest.fn().mockName('navigation.toggleDrawer'),
         };
 
-        render(<NavigationBar options={options} navigation={navigation} />);
+        render(
+          wrapper(<NavigationBar options={options} navigation={navigation} />),
+        );
 
         fireEvent.press(screen.getByLabelText('Menu'));
 
