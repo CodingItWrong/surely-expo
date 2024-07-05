@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: '@react-native-community',
+  extends: '@react-native',
   plugins: ['import', 'cypress', 'detox'],
   env: {
     'cypress/globals': true,
