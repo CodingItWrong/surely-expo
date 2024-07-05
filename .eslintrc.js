@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: '@react-native',
+  extends: ['expo', '@react-native', 'eslint:recommended'],
   plugins: ['import', 'cypress', 'detox'],
   env: {
     'cypress/globals': true,
