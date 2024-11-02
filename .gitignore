@@ -22,3 +22,7 @@ coverage
 cypress/downloads
 
 Surely.app
+
+# native project directories
+android
+ios
