@@ -1,8 +1,5 @@
-import addDays from 'date-fns/addDays';
-import format from 'date-fns/format';
-import formatRelative from 'date-fns/formatRelative';
-import enUS from 'date-fns/locale/en-US';
-import startOfDay from 'date-fns/startOfDay';
+import {addDays, format, formatRelative, startOfDay} from 'date-fns';
+import {enUS} from 'date-fns/locale';
 
 function getDateObject(dateObjectOrString) {
   if (typeof dateObjectOrString === 'string') {

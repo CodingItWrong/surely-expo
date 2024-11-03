@@ -1,4 +1,4 @@
-import startOfDay from 'date-fns/startOfDay';
+import {startOfDay} from 'date-fns';
 import {DatePickerModal} from 'react-native-paper-dates';
 
 export default function MyDatePickerModal({

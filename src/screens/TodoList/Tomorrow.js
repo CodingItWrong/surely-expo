@@ -1,6 +1,5 @@
 import {useLinkTo} from '@react-navigation/native';
-import addDays from 'date-fns/addDays';
-import startOfDay from 'date-fns/startOfDay';
+import {addDays, startOfDay} from 'date-fns';
 import {useCallback} from 'react';
 import {useTodos} from '../../data/todos';
 import {groupByCategory} from '../../utils/grouping';

@@ -1,4 +1,4 @@
-import startOfDay from 'date-fns/startOfDay';
+import {startOfDay} from 'date-fns';
 import groupBy from 'lodash/groupBy';
 import reverseFn from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
