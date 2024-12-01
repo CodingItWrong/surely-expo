@@ -304,7 +304,7 @@ function NavigationContents() {
       screenOptions={{
         headerShown: false,
         drawerType,
-        drawerStyle: {width: 200},
+        drawerStyle: {width: 220},
       }}
       drawerContent={props => (
         <CustomNavigationDrawer iconByRoute={ICON_BY_ROUTE} {...props} />
