@@ -48,7 +48,8 @@
     "react-native-style-queries": "^0.1.1",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.10",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "typescript": "^5.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
