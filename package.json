@@ -26,7 +26,7 @@
     "crypto-browserify": "^3.12.0",
     "date-fns": "4.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "expo": "~52.0.11",
+    "expo": "~52.0.23",
     "expo-constants": "~17.0.3",
     "expo-linking": "~7.0.3",
     "expo-secure-store": "~14.0.0",
