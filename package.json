@@ -60,7 +60,7 @@
     "@testing-library/react-native": "^12.7.2",
     "babel-jest": "^29.2.2",
     "cypress": "^13.17.0",
-    "detox": "^20.32.0",
+    "detox": "^20.34.4",
     "eslint": "^8.46.0",
     "eslint-config-expo": "~8.0.1",
     "eslint-plugin-cypress": "^3.3.0",
