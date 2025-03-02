@@ -57,7 +57,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@react-native/eslint-config": "^0.76.5",
     "@testing-library/jest-native": "^5.4.3",
-    "@testing-library/react-native": "^12.7.2",
+    "@testing-library/react-native": "^13.1.0",
     "babel-jest": "^29.2.2",
     "cypress": "^13.17.0",
     "detox": "^20.34.4",
