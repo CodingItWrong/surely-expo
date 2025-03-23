@@ -20,7 +20,7 @@ export default function AboutScreen() {
           <CenterColumn>
             <Title style={styles.title}>
               Surely {Constants.manifest.version}{' '}
-              {Constants.platform.ios
+              {Constants.platform?.ios
                 ? `(${Constants.platform.ios.buildNumber})`
                 : ''}
             </Title>
