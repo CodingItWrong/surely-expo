@@ -12,7 +12,8 @@
     "test:coverage": "jest src --coverage",
     "cypress:open": "cypress open",
     "lint": "eslint cypress src \"*.js\"",
-    "deploy:web": "expo export:web && cp _redirects web-build && netlify deploy --prod",
+    "deploy:web": "netlify deploy --prod",
+    "build:web": "expo export:web && cp _redirects web-build",
     "build:ios": "eas build --platform ios --local",
     "build:ios:remote": "eas build --platform ios"
   },
