@@ -1,0 +1,15 @@
+appId: ${MAESTRO_APP_ID}
+---
+- clearState
+- clearKeychain
+- launchApp
+- tapOn: 'http://localhost:8081'
+- runFlow:
+    when:
+      true: ${MAESTRO_IS_DEV == 'true'}
+    commands:
+      - swipe:
+          from:
+            text: 'Connected to:'
+          direction: DOWN
+      - assertNotVisible: 'Connected to:'
