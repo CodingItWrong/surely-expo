@@ -14,7 +14,7 @@ export default ({config}) => ({
         usesNonExemptEncryption: false,
       },
     },
-    version: '1.1.3',
+    version: '1.1.4',
     name,
     slug: 'surely',
     orientation: 'portrait',
