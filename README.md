@@ -97,7 +97,7 @@ If this doesn't work, do a prebuild (see instructions above) then archive the ap
 ### Web
 
 ```bash
-$ npx expo export:web
+$ yarn build:web
 ```
 
 - Copy the `web-build` folder to somewhere accessible on the public internet
