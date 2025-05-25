@@ -48,7 +48,7 @@ $ yarn install
 $ yarn start
 ```
 
-Then click "Run on iOS simulator" or "Run in web browser"
+Then press `i` to run on iOS or `w` to run in a web browser
 
 ### Local iOS Build
 
