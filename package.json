@@ -11,6 +11,7 @@
     "web": "expo start --web",
     "test": "jest src --watchAll",
     "test:coverage": "jest src --coverage",
+    "maestro": "MAESTRO_APP_ID=com.surelytodo MAESTRO_IS_DEV=true maestro test maestro/LaunchTest.yaml",
     "cypress:open": "cypress open",
     "lint": "eslint cypress src \"*.js\"",
     "deploy:web": "netlify deploy --prod",
