@@ -55,7 +55,7 @@ Then click "Run on iOS simulator" or "Run in web browser"
 - Open `src/baseUrl.js` and set a `LOCAL_IP` for the dev server
 
 ```bash
-$ npx expo prebuild -p ios
+$ yarn prebuild
 ```
 
 - Open generated iOS `.xcworkspace` file in Xcode
