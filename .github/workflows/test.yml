@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -23,7 +23,7 @@ jobs:
       - name: Install Sharp CLI
         run: yarn global add sharp-cli@^2.1.0
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           start: yarn web
           wait-on: 'http://localhost:19006'
