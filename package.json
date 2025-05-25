@@ -5,6 +5,7 @@
     "start": "expo start",
     "start:mock": "MOCK_API=true expo start",
     "android": "expo start --android",
+    "prebuild": "expo prebuild -p ios",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest src --watchAll",
