@@ -42,27 +42,35 @@ $ yarn install
 
 ## Running
 
-### Web/Expo Go
+### iOS
+
+Build and install native dev client on a simulator:
+
+```bash
+$ yarn ios
+```
+
+If the native dev client is already installed:
 
 ```bash
 $ yarn start
 ```
 
-Then press `i` to run on iOS or `w` to run in a web browser
+Then press `i`
 
-### Local iOS Build
-
-- Open `src/baseUrl.js` and set a `LOCAL_IP` for the dev server
+### Web
 
 ```bash
-$ yarn prebuild
+$ yarn start
 ```
 
-- Open generated iOS `.xcworkspace` file in Xcode
-- Set development team
-- Under "Edit Scheme…" > "Info", change "Build Configuration" to "Release" to build in the JS
+Then press `w` to run in a web browser
+
+### Physical iOS Device
+
+- Open `src/baseUrl.js` and set a `LOCAL_IP` for the dev server
 - Plug in physical device
-- Build app onto physical device
+- Run `yarn ios --device`
 
 ## Testing
 
