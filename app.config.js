@@ -6,7 +6,7 @@ const name = `Surely${IS_DEV ? ' Dev' : ''}`;
 export default ({config}) => ({
   expo: {
     ios: {
-      buildNumber: '77',
+      buildNumber: '78',
       appStoreUrl: 'https://apps.apple.com/us/app/surely/id1586633713',
       bundleIdentifier,
       supportsTablet: true,
