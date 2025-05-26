@@ -43,4 +43,4 @@ jobs:
           yarn serve:web:wait
 
       - name: Run Maestro tests
-        run: pnpm maestro:web
+        run: yarn maestro:web
