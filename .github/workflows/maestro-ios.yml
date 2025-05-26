@@ -31,7 +31,7 @@ jobs:
           bundler-cache: true
 
       - name: Set up Fastlane
-        run: gem install Fastlane
+        run: gem install fastlane
 
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
