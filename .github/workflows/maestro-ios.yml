@@ -48,7 +48,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build for Maestro iOS
-        run: eas build -p ios --local --non-interactive
+        run: eas build -p ios --local --non-interactive --output=build.tar.gz
 
       - name: Configure Maestro
         uses: dniHze/maestro-test-action@v1
