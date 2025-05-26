@@ -11,6 +11,11 @@
       "ios": {
         "simulator": true
       }
+    },
+    "test": {
+      "ios": {
+        "simulator": true
+      }
     }
   },
   "submit": {

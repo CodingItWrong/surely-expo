@@ -26,7 +26,7 @@ runs:
         model: iPhone 16 Pro Max
 
     - name: Build for Maestro iOS
-      run: eas build -p ios --local --non-interactive --output=build.tar.gz
+      run: eas build --profile test -p ios --local --non-interactive --output=build.tar.gz
       shell: bash
 
     - name: Install app on simulator
