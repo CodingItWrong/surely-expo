@@ -3,11 +3,11 @@ appId: ${MAESTRO_APP_ID}
 - clearState
 - clearKeychain
 - launchApp
-- tapOn: 'http://localhost:8081'
 - runFlow:
     when:
-      true: ${MAESTRO_IS_DEV == 'true'}
+      platform: ios
     commands:
+      - tapOn: 'http://localhost:8081'
       - swipe:
           from:
             text: 'Connected to:'
