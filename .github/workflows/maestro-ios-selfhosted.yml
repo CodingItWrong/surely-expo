@@ -19,6 +19,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build and Test iOS
-        uses: ./.github/actions/maestro-ios.yaml
+        uses: ./.github/actions/maestro-ios
         with:
           expo-token: ${{ secrets.EXPO_TOKEN }}
