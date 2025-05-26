@@ -34,13 +34,10 @@ jobs:
         with:
           model: iPhone 16 Pro Max
 
-      - name: Build React Native Web
-        run: yarn build:web
-
-      - name: Serve web
+      - name: Run web
         run: |
-          yarn serve:web &
-          yarn serve:web:wait
+          yarn web &
+          yarn web:wait
 
       - name: Run Maestro tests
         run: yarn maestro:web
