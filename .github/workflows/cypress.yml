@@ -1,4 +1,4 @@
-name: JS Checks
+name: Cypress
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  js-checks:
+  cypress:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -23,7 +23,12 @@ jobs:
           cache: yarn
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
-      - name: Unit Tests
-        run: yarn test --watchAll=false
-      - name: ESLint
-        run: yarn lint
+      - name: Install Expo CLI
+        run: yarn global add expo-cli
+      - name: Install Sharp CLI
+        run: yarn global add sharp-cli@^2.1.0
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          start: yarn web
+          wait-on: 'http://localhost:19006'
