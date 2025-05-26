@@ -1,4 +1,4 @@
-name: Maestro iOS
+name: Maestro iOS - Cloud
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  maestro-ios:
+  maestro-ios-cloud:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -38,28 +38,10 @@ jobs:
         with:
           xcode-version: "16.2"
 
-      - name: Set up EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build for Maestro iOS
-        run: eas build -p ios --local --non-interactive --output=build.tar.gz
-
       - name: Configure Maestro
         uses: dniHze/maestro-test-action@v1
 
-      - name: Set up simulator
-        uses: futureware-tech/simulator-action@v4
+      - name: Build and Test iOS
+        uses: ./.github/actions/maestro-ios.yaml
         with:
-          model: iPhone 16 Pro Max
-
-      - name: Install app on simulator
-        run: eas build:run -p ios --path build.tar.gz
-
-      - name: Run Maestro tests
-        run: yarn maestro:ios:ci
+          expo-token: ${{ secrets.EXPO_TOKEN }}
