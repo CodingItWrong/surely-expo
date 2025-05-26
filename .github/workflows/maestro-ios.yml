@@ -62,4 +62,4 @@ jobs:
         run: eas build:run -p ios --path build.tar.gz
 
       - name: Run Maestro tests
-        run: pnpm maestro:ios:ci
+        run: yarn maestro:ios:ci
