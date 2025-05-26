@@ -1,0 +1,24 @@
+name: Maestro iOS - Self-Hosted
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  maestro-ios-selfhosted:
+    runs-on: [self-hosted, macOS]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and Test iOS
+        uses: ./.github/actions/maestro-ios.yaml
+        with:
+          expo-token: ${{ secrets.EXPO_TOKEN }}
