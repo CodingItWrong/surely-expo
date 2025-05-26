@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   maestro-ios:
-    runs-on: macos-latest-large
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
