@@ -38,7 +38,9 @@ jobs:
         run: yarn build:web
 
       - name: Serve web
-        run: yarn serve:web
+        run: |
+          yarn serve:web &
+          yarn serve:web:wait
 
       - name: Run Maestro tests
         run: pnpm maestro:web
