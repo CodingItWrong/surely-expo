@@ -6,6 +6,7 @@ appId: ${MAESTRO_APP_ID}
 - runFlow:
     when:
       platform: ios
+      true: ${MAESTRO_IS_DEV == 'true'}
     commands:
       - tapOn: 'http://localhost:8081'
       - swipe:
