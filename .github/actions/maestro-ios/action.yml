@@ -24,6 +24,7 @@ runs:
       uses: futureware-tech/simulator-action@v4
       with:
         model: iPhone 16 Pro Max
+        shutdown_after_job: true
 
     - name: Build for Maestro iOS
       run: eas build --profile test -p ios --local --non-interactive --output=build.tar.gz
