@@ -45,6 +45,10 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+        shell: bash
+
       - name: Build for Maestro iOS
         run: eas build --profile test -p ios --local --non-interactive --output=build.tar.gz
         shell: bash
