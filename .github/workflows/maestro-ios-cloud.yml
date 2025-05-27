@@ -12,8 +12,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  maestro-ios-cloud:
+  build:
     runs-on: macos-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,10 +39,64 @@ jobs:
         with:
           xcode-version: "16.2"
 
+      - name: Set up EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build for Maestro iOS
+        run: eas build --profile test -p ios --local --non-interactive --output=build.tar.gz
+        shell: bash
+
+      - name: Upload build for test job
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build.tar.gz
+
+  test:
+    runs-on: macos-latest
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
       - name: Configure Maestro
         uses: dniHze/maestro-test-action@v1
 
-      - name: Build and Test iOS
-        uses: ./.github/actions/maestro-ios
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+        shell: bash
+
+      - name: Download build
+        uses: actions/download-artifact@v4
         with:
-          expo-token: ${{ secrets.EXPO_TOKEN }}
+          name: build
+
+      - name: Set up EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set up simulator
+        uses: futureware-tech/simulator-action@v4
+        with:
+          model: iPhone 16 Pro Max
+          shutdown_after_job: true
+
+      - name: Install app on simulator
+        run: eas build:run -p ios --path build.tar.gz
+        shell: bash
+
+      - name: Run Maestro tests
+        run: yarn maestro:ios:ci
+        shell: bash
