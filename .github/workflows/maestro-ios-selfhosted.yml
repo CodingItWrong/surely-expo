@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix-self-hosted # TEMP
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
